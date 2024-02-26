@@ -95,6 +95,7 @@
 		0A086E4C2B8D0DB700ACCD6B /* Recepies */ = {
 			isa = PBXGroup;
 			children = (
+				0A086E812B8D180100ACCD6B /* Modules */,
 				0A086E7E2B8D0FD900ACCD6B /* App */,
 				0A086E7D2B8D0F3F00ACCD6B /* SupportingFiles */,
 			);
@@ -135,6 +136,61 @@
 				0A086E4F2B8D0DB700ACCD6B /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		0A086E812B8D180100ACCD6B /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				0A086E872B8D1AF600ACCD6B /* TabBar */,
+				0A086E822B8D19D400ACCD6B /* SplashScreen */,
+				0A086E832B8D19E900ACCD6B /* Authorization */,
+				0A086E862B8D1A2500ACCD6B /* Recepies */,
+				0A086E852B8D1A1700ACCD6B /* Favorites */,
+				0A086E842B8D1A0C00ACCD6B /* Profile */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		0A086E822B8D19D400ACCD6B /* SplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SplashScreen;
+			sourceTree = "<group>";
+		};
+		0A086E832B8D19E900ACCD6B /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		0A086E842B8D1A0C00ACCD6B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		0A086E852B8D1A1700ACCD6B /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		0A086E862B8D1A2500ACCD6B /* Recepies */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Recepies;
+			sourceTree = "<group>";
+		};
+		0A086E872B8D1AF600ACCD6B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
