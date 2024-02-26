@@ -1,14 +1,9 @@
-//
-//  RecepiesUITestsLaunchTests.swift
-//  RecepiesUITests
-//
-//  Created by Dmitry on 26.02.2024.
-//
+// RecepiesUITestsLaunchTests.swift
+// Copyright © RoadMap. All rights reserved.
 
 import XCTest
 
 final class RecepiesUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
