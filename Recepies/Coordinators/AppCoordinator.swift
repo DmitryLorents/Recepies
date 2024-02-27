@@ -13,7 +13,7 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Public Methods
 
     override func start() {
-        if "login" == "loginn" {
+        if "login" == "login" {
             toMain()
         } else {
             toAuth()
@@ -38,8 +38,14 @@ final class AppCoordinator: BaseCoodinator {
         // Set Profile
         let profileModelView = builder.makeProfileModule()
         let profileCoordinator = ProfileCoordinator(rootController: profileModelView)
-        // TODO: - Uncomment when module is ready
-//        profileModelView.presenter?.coordinator = profileCoordinator
+        profileModelView.profilePresenter?.coordinator = profileCoordinator
+        profileCoordinator.onFinishFlow = { [weak self] in
+            self?.remove(coordinator: profileCoordinator)
+            self?.toMain()
+        }
+        add(coordinator: profileCoordinator)
+//        profileCoordinator.start()
+        // Set TabBarViewController
         tabBarViewController = MainTabBarViewController()
         tabBarViewController?.setViewControllers(
             [recipeCoordinator.rootController, favoritesCoordinator.rootController, profileCoordinator.rootController],
