@@ -18,6 +18,9 @@
 		0A086E8E2B8D209C00ACCD6B /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E8D2B8D209C00ACCD6B /* AuthPresenter.swift */; };
 		0A086E902B8D20FB00ACCD6B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */; };
 		0A086E922B8D26EA00ACCD6B /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E912B8D26EA00ACCD6B /* Builder.swift */; };
+		0A086E952B8DCC2C00ACCD6B /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E942B8DCC2C00ACCD6B /* BaseCoordinator.swift */; };
+		0A086E972B8DD4CC00ACCD6B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E962B8DD4CC00ACCD6B /* AppCoordinator.swift */; };
+		0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E9B2B8DD7D000ACCD6B /* MainTabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		0A086E8D2B8D209C00ACCD6B /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		0A086E912B8D26EA00ACCD6B /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		0A086E942B8DCC2C00ACCD6B /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		0A086E962B8DD4CC00ACCD6B /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		0A086E9B2B8DD7D000ACCD6B /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				0A086E7E2B8D0FD900ACCD6B /* App */,
+				0A086E932B8DCB5000ACCD6B /* Coordinators */,
 				0A086E812B8D180100ACCD6B /* Modules */,
 				0A086E7D2B8D0F3F00ACCD6B /* SupportingFiles */,
 			);
@@ -201,6 +208,7 @@
 		0A086E872B8D1AF600ACCD6B /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
+				0A086E9B2B8DD7D000ACCD6B /* MainTabBarViewController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -227,6 +235,15 @@
 				0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0A086E932B8DCB5000ACCD6B /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				0A086E942B8DCC2C00ACCD6B /* BaseCoordinator.swift */,
+				0A086E962B8DD4CC00ACCD6B /* AppCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,7 +424,10 @@
 				0A086E8E2B8D209C00ACCD6B /* AuthPresenter.swift in Sources */,
 				0A086E4E2B8D0DB700ACCD6B /* AppDelegate.swift in Sources */,
 				0A086E902B8D20FB00ACCD6B /* AuthService.swift in Sources */,
+				0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */,
 				0A086E502B8D0DB700ACCD6B /* SceneDelegate.swift in Sources */,
+				0A086E972B8DD4CC00ACCD6B /* AppCoordinator.swift in Sources */,
+				0A086E952B8DCC2C00ACCD6B /* BaseCoordinator.swift in Sources */,
 				0A086E8C2B8D207D00ACCD6B /* AuthView.swift in Sources */,
 				0A086E922B8D26EA00ACCD6B /* Builder.swift in Sources */,
 			);

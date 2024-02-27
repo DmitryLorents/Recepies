@@ -3,21 +3,21 @@
 
 import UIKit
 
-protocol Builder {
+protocol BuilderProtocol {
     static func makeAuthModule() -> UIViewController
     static func makeRecepiesModule() -> UIViewController
     static func makeFavoritesModule() -> UIViewController
     static func makeProfileModule() -> UIViewController
 }
 
-final class ModuleBuilder: Builder {
+final class Builder: BuilderProtocol {
     
     static func makeAuthModule() -> UIViewController {
         let authService = AuthService()
         let view = AuthView()
         let presenter = AuthPresenter(view: view, authService: authService)
         view.presenter = presenter
-        authService.presenter = presenter
+//        authService.presenter = presenter
         return view
     }
     

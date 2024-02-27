@@ -17,7 +17,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func configureWindow(scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let rootViewController = ModuleBuilder.makeAuthModule()
+        let rootViewController = Builder.makeAuthModule()
         window?.rootViewController = rootViewController
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()

@@ -6,8 +6,9 @@ protocol AuthPresenterProtocol: AnyObject {
 }
 
 final class AuthPresenter: AuthPresenterProtocol {
-    weak var view: AuthViewProtocol?
-    var authService: AuthServiceProtocol?
+    weak private var view: AuthViewProtocol?
+    private var authService: AuthServiceProtocol?
+    weak var authCoordinator: AuthCoordinator?
 
     init(view: AuthViewProtocol, authService: AuthServiceProtocol) {
         self.view = view
