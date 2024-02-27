@@ -19,7 +19,7 @@ class ProfileView: UIViewController {
         static let otherTableViewCellIdentifier = "OtherTableViewCell"
         static let editNameTitle = "Change your name and surname"
         static let cancelActionTitle = "Cancel"
-        static let comformActionTitle = "OK"
+        static let conformActionTitle = "OK"
         static let textFieldPlaceholder = "Name Surname"
     }
 
@@ -92,9 +92,7 @@ extension ProfileView: UITableViewDataSource {
             guard let profile = profilePresenter?.profileUser else { return UITableViewCell() }
             cell.setupCell(profile: profile)
             cell.editName = { [weak self] in
-                print(1 + 1)
-                self?.editNameAlert()
-//                self?.profilePresenter?.setupAlert()
+                self?.profilePresenter?.setupAlert()
             }
 
             return cell
@@ -116,11 +114,12 @@ extension ProfileView: UITableViewDataSource {
 // MARK: - ProfileViewController + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
-    func editNameAlert() {
+    func showEditNameAlert() {
         let alert = UIAlertController(title: Constants.editNameTitle, message: nil, preferredStyle: .alert)
-        let comformAction = UIAlertAction(title: Constants.comformActionTitle, style: .default) { _ in
+        let conformAction = UIAlertAction(title: Constants.conformActionTitle, style: .default) { _ in
             if let text = alert.textFields?[0] {
                 self.profilePresenter?.profileUser.userName = text.text ?? Constants.textFieldPlaceholder
+                self.tableView.reloadData()
             }
         }
         let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .default)
@@ -128,7 +127,7 @@ extension ProfileView: ProfileViewProtocol {
             textField.placeholder = Constants.textFieldPlaceholder
         }
 
-        alert.addAction(comformAction)
+        alert.addAction(conformAction)
         alert.addAction(cancelAction)
 
         present(alert, animated: true)

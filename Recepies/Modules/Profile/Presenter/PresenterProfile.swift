@@ -5,7 +5,7 @@ import Foundation
 
 /// Протокол экрана профиля
 protocol ProfileViewProtocol: AnyObject {
-    func editNameAlert()
+    func showEditNameAlert()
 }
 
 /// Протокол презентера профиля
@@ -25,6 +25,6 @@ class ProfilePresenter: ProfilePresenterProtocol {
     var options: [Options] = Options.makeOption()
     var profileUser = ProfileUser.makeProfile()
     func setupAlert() {
-        view?.editNameAlert()
+        view?.showEditNameAlert()
     }
 }
