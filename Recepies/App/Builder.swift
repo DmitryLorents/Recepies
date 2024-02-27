@@ -12,7 +12,7 @@ protocol BuilderProtocol {
     /// Function to Favorites module
     func makeFavoritesModule() -> UIViewController
     /// Function to Profile module
-    func makeProfileModule() -> UIViewController
+    func makeProfileModule() -> ProfileView
 }
 
 final class Builder: BuilderProtocol {
@@ -34,7 +34,11 @@ final class Builder: BuilderProtocol {
         .init()
     }
 
-    func makeProfileModule() -> UIViewController {
-        .init()
+    func makeProfileModule() -> ProfileView {
+        let profilePresenter = ProfilePresenter()
+        let profileView = ProfileView()
+        profileView.profilePresenter = profilePresenter
+        profilePresenter.view = profileView
+        return profileView
     }
 }
