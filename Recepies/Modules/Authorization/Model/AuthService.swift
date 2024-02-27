@@ -4,5 +4,5 @@
 protocol AuthServiceProtocol {}
 
 final class AuthService: AuthServiceProtocol {
-    var presenter: AuthPresenterProtocol?
+
 }

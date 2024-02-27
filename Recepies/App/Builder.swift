@@ -4,11 +4,15 @@
 import UIKit
 
 protocol Builder {
-    static func makeAuthView() -> UIViewController
+    static func makeAuthModule() -> UIViewController
+    static func makeRecepiesModule() -> UIViewController
+    static func makeFavoritesModule() -> UIViewController
+    static func makeProfileModule() -> UIViewController
 }
 
 final class ModuleBuilder: Builder {
-    static func makeAuthView() -> UIViewController {
+    
+    static func makeAuthModule() -> UIViewController {
         let authService = AuthService()
         let view = AuthView()
         let presenter = AuthPresenter(view: view, authService: authService)
@@ -16,4 +20,18 @@ final class ModuleBuilder: Builder {
         authService.presenter = presenter
         return view
     }
+    
+    static func makeRecepiesModule() -> UIViewController {
+        return .init()
+    }
+    
+    static func makeFavoritesModule() -> UIViewController {
+        return .init()
+    }
+    
+    static func makeProfileModule() -> UIViewController {
+        return .init()
+    }
+    
+    
 }
