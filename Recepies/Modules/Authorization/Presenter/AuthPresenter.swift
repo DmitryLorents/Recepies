@@ -4,6 +4,8 @@
 protocol AuthPresenterProtocol: AnyObject {
     var coordinator: BaseModuleCoordinator? { get set }
     init(view: AuthViewProtocol, authService: AuthServiceProtocol)
+
+    func tryLogin(email: String, password: String)
 }
 
 final class AuthPresenter: AuthPresenterProtocol {
@@ -15,5 +17,14 @@ final class AuthPresenter: AuthPresenterProtocol {
     init(view: AuthViewProtocol, authService: AuthServiceProtocol) {
         self.view = view
         self.authService = authService
+    }
+
+    func tryLogin(email: String, password: String) {
+        let success = authService?.checkUserData(email: email, password: password) ?? false
+        if success {
+            // move to
+        } else {
+            view?.badUserData()
+        }
     }
 }
