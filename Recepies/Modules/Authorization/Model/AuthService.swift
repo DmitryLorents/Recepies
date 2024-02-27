@@ -3,6 +3,4 @@
 
 protocol AuthServiceProtocol {}
 
-final class AuthService: AuthServiceProtocol {
-
-}
+final class AuthService: AuthServiceProtocol {}
