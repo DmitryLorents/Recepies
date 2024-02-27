@@ -2,13 +2,15 @@
 // Copyright © RoadMap. All rights reserved.
 
 protocol AuthPresenterProtocol: AnyObject {
+    var coordinator: BaseModuleCoordinator? { get set }
     init(view: AuthViewProtocol, authService: AuthServiceProtocol)
 }
 
 final class AuthPresenter: AuthPresenterProtocol {
-    weak private var view: AuthViewProtocol?
+    weak var coordinator: BaseModuleCoordinator?
+
+    private weak var view: AuthViewProtocol?
     private var authService: AuthServiceProtocol?
-    weak var authCoordinator: AuthCoordinator?
 
     init(view: AuthViewProtocol, authService: AuthServiceProtocol) {
         self.view = view

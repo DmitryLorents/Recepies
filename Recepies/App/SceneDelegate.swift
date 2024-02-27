@@ -4,6 +4,7 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    private var appCoordinator: AppCoordinator?
     var window: UIWindow?
 
     func scene(
@@ -17,9 +18,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func configureWindow(scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let rootViewController = Builder.makeAuthModule()
-        window?.rootViewController = rootViewController
-        window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()
+        appCoordinator = AppCoordinator()
+        appCoordinator?.start()
     }
 }

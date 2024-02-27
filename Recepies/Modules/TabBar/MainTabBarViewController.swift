@@ -1,9 +1,5 @@
-//
-//  MainTabBarViewController.swift
-//  Recepies
-//
-//  Created by Dmitry on 27.02.2024.
-//
+// MainTabBarViewController.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 

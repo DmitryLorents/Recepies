@@ -1,41 +1,52 @@
-//
-//  BaseCoordinator.swift
-//  Recepies
-//
-//  Created by Dmitry on 27.02.2024.
-//
+// BaseCoordinator.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-protocol BaseCoordinatorProtocol: AnyObject {
-    
-    var childCoordinators: [BaseCoordinatorProtocol] { get set }
-    func start()
-    
-    func add(coordinator: BaseCoordinatorProtocol)
-    
-    func remove(coordinator: BaseCoordinatorProtocol)
-    
-    func setAsRoot(_ controller: UIViewController)
-}
+/// Base class for App coordinator
+class BaseCoodinator {
+    // MARK: - Public Properties
 
-extension BaseCoordinatorProtocol {
-    
-    func add(coordinator: BaseCoordinatorProtocol) {
+    /// Coordinators to route in app's coordinator as childs
+    var childCoordinators: [BaseCoodinator] = []
+
+    // MARK: - Public Methods
+
+    /// Method to show the first view in module
+    func start() {
+        fatalError("child должен быть реализован")
+    }
+
+    /// Add new coordinator to childCoordinators
+    func add(coordinator: BaseCoodinator) {
         childCoordinators.append(coordinator)
     }
-    
-    func remove(coordinator: BaseCoordinatorProtocol) {
-        childCoordinators = childCoordinators.filter {$0 !== coordinator}
+
+    /// Remove coordinator from childCoordinators
+    func remove(coordinator: BaseCoodinator) {
+        childCoordinators = childCoordinators.filter { $0 !== coordinator }
     }
-    
+
+    /// Set controller as rootViewController for app's window
     func setAsRoot(_ controller: UIViewController) {
         let window = UIApplication
             .shared
             .connectedScenes
-            .compactMap {$0 as? UIWindowScene}
-            .flatMap {$0.windows}
-            .last { $0.isKeyWindow}
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+            .last { $0.isKeyWindow }
         window?.rootViewController = controller
+    }
+}
+
+/// Base class to inherit for modules coordinators
+class BaseModuleCoordinator: BaseCoodinator {
+    /// Root controller for nested UINavigationController
+    var rootController: UINavigationController
+    /// Action to finish navigation flow
+    var onFinishFlow: (() -> ())?
+    /// Base init for inheriting classes
+    init(rootController: UIViewController) {
+        self.rootController = UINavigationController(rootViewController: rootController)
     }
 }

@@ -3,35 +3,38 @@
 
 import UIKit
 
+/// General protocol for all builders in app
 protocol BuilderProtocol {
-    static func makeAuthModule() -> UIViewController
-    static func makeRecepiesModule() -> UIViewController
-    static func makeFavoritesModule() -> UIViewController
-    static func makeProfileModule() -> UIViewController
+    /// Function to Authorization module
+    func makeAuthModule() -> AuthView
+    /// Function to  Recipies module
+    func makeRecepiesModule() -> UIViewController
+    /// Function to Favorites module
+    func makeFavoritesModule() -> UIViewController
+    /// Function to Profile module
+    func makeProfileModule() -> UIViewController
 }
 
 final class Builder: BuilderProtocol {
-    
-    static func makeAuthModule() -> UIViewController {
+    // MARK: - Public Methods
+
+    func makeAuthModule() -> AuthView {
         let authService = AuthService()
         let view = AuthView()
         let presenter = AuthPresenter(view: view, authService: authService)
         view.presenter = presenter
-//        authService.presenter = presenter
         return view
     }
-    
-    static func makeRecepiesModule() -> UIViewController {
-        return .init()
+
+    func makeRecepiesModule() -> UIViewController {
+        .init()
     }
-    
-    static func makeFavoritesModule() -> UIViewController {
-        return .init()
+
+    func makeFavoritesModule() -> UIViewController {
+        .init()
     }
-    
-    static func makeProfileModule() -> UIViewController {
-        return .init()
+
+    func makeProfileModule() -> UIViewController {
+        .init()
     }
-    
-    
 }

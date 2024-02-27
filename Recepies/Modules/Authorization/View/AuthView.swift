@@ -14,6 +14,4 @@ final class AuthView: UIViewController {
     }
 }
 
-extension AuthView: AuthViewProtocol {
-    
-}
+extension AuthView: AuthViewProtocol {}
