@@ -41,13 +41,13 @@ final class ProfileView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTable()
-        view.backgroundColor = .white
+        setupNavBar()
     }
 
     // MARK: - Private Methods
 
-    private func configureTable() {
-        let nameLabel = UIBarButtonItem(title: Constants.titleLabel, style: .done, target: nil, action: nil)
+    private func setupNavBar() {
+        let nameLabel = UIBarButtonItem(title: Constants.titleLabel, style: .plain, target: nil, action: nil)
         nameLabel.tintColor = .black
         nameLabel.setTitleTextAttributes(
             [
@@ -57,6 +57,9 @@ final class ProfileView: UIViewController {
             for: .normal
         )
         navigationItem.leftBarButtonItem = nameLabel
+    }
+
+    private func configureTable() {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
@@ -65,10 +68,15 @@ final class ProfileView: UIViewController {
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: Constants.mainTableViewCellIdentifier)
         tableView.register(OtherTableViewCell.self, forCellReuseIdentifier: Constants.otherTableViewCellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        setConstarint()
+    }
+
+    private func setConstarint() {
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        view.backgroundColor = .white
     }
 }
 
