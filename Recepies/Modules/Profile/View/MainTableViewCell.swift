@@ -11,7 +11,7 @@ final class MainTableViewCell: UITableViewCell {
         static let fullNameLabelFont = "Verdana-Bold"
         static let editNameButtonImage = "ipensela"
     }
-
+  
     // MARK: - Visual Components
 
     private let avatarImageView: UIImageView = {
@@ -36,11 +36,8 @@ final class MainTableViewCell: UITableViewCell {
         button.addTarget(self, action: #selector(editLabel), for: .touchUpInside)
         return button
     }()
-
     // MARK: - Public Properties
-
-    var editName: (() -> ())?
-
+    var editNameHandler: (() -> ())?
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,7 +53,7 @@ final class MainTableViewCell: UITableViewCell {
     }
 
     // MARK: - Public Methods
-
+    
     func setupCell(profile: ProfileUserProtocol) {
         avatarImageView.image = UIImage(named: profile.avatarImage)
         fullName.text = profile.userName
@@ -91,8 +88,7 @@ final class MainTableViewCell: UITableViewCell {
 
         ])
     }
-
     @objc private func editLabel() {
-        editName?()
+        editNameHandler?()
     }
 }
