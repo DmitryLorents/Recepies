@@ -26,8 +26,10 @@ protocol ProfilePresenterProtocol: AnyObject {
     /// Загрузка алерта со сменой имени
     func setupAlert()
     /// Изменение имени в профиле
+    /// - Parameter :  name - Имя пользователя
     func setTitleNameUser(name: String)
     /// Выбор ячейки
+    /// - Parameter :  index - Индекс ячейки
     func didSetectItem(index: Int)
     /// Выход из профиля
     func logOutProfile()

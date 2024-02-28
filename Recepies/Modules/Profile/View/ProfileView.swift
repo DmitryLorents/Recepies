@@ -70,6 +70,7 @@ final class ProfileView: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         setConstarint()
     }
+
     private func setConstarint() {
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -106,7 +107,7 @@ extension ProfileView: UITableViewDataSource {
                 as? MainTableViewCell else { return UITableViewCell() }
             guard let profile = profilePresenter?.profileUser else { return UITableViewCell() }
             cell.setupCell(profile: profile)
-            cell.editNameH = { [weak self] in
+            cell.editNameHandler = { [weak self] in
                 self?.profilePresenter?.setupAlert()
             }
 
