@@ -5,14 +5,16 @@ import UIKit
 
 /// General protocol for all builders in app
 protocol BuilderProtocol {
-    /// Function to Authorization module
+    /// Function to build Authorization module
     func makeAuthModule() -> AuthView
-    /// Function to  Recipies module
+    /// Function to build  Recipies module
     func makeRecepiesModule() -> RecepiesViewController
-    /// Function to Favorites module
+    /// Function to  build Favorites module
     func makeFavoritesModule() -> FavoritesViewController
-    /// Function to Profile module
+    /// Function to  build Profile module
     func makeProfileModule() -> ProfileView
+    /// Function to  build Category module
+    func makeCategoryModule() -> CategoryView
 }
 
 final class Builder: BuilderProtocol {
@@ -57,5 +59,10 @@ final class Builder: BuilderProtocol {
             selectedImage: .profileSet
         )
         return profileView
+    }
+    func makeCategoryModule() -> CategoryView {
+        let view = CategoryView()
+        let presenter = CategoryPresenter(view: view)
+        
     }
 }

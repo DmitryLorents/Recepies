@@ -6,19 +6,19 @@ import UIKit
 /// Protocol for Authorisation view
 protocol CategoryViewProtocol: AnyObject {
     /// View's presenter
-    var presenter: AuthPresenterProtocol? { get set }
-    /// Notify user if email format is incorrect
-    /// - Parameter decision: defines necessity to notify the user
-    func showIncorrectEmailFormat(_ decision: Bool)
-    /// Notify user if password format is incorrect
-    /// - Parameter decision: defines necessity to notify the user
-    func showIncorrectPasswordFormat(_ decision: Bool)
-    /// Notify user if email or password are not valid
-    /// - Parameter decision: defines necessity to notify the user
-    func showIncorrectUserData(_ decision: Bool)
-    /// Set password textField in secure/nonsecure mode
-    /// - Parameter decision: defines necessity to set secure
-    func setPasswordSecured(isSecured: Bool)
+    var presenter: CategoryPresenterProtocol? { get set }
+//    /// Notify user if email format is incorrect
+//    /// - Parameter decision: defines necessity to notify the user
+//    func showIncorrectEmailFormat(_ decision: Bool)
+//    /// Notify user if password format is incorrect
+//    /// - Parameter decision: defines necessity to notify the user
+//    func showIncorrectPasswordFormat(_ decision: Bool)
+//    /// Notify user if email or password are not valid
+//    /// - Parameter decision: defines necessity to notify the user
+//    func showIncorrectUserData(_ decision: Bool)
+//    /// Set password textField in secure/nonsecure mode
+//    /// - Parameter decision: defines necessity to set secure
+//    func setPasswordSecured(isSecured: Bool)
 }
 
 /// View to show authorization screen
@@ -42,7 +42,7 @@ final class CategoryView: UIViewController {
 
     // MARK: - Public Properties
 
-    var presenter: AuthPresenterProtocol?
+    var presenter: CategoryPresenterProtocol?
 
     // MARK: - Private Properties
 
@@ -65,11 +65,11 @@ final class CategoryView: UIViewController {
     }
 }
 
-// MARK: - AuthView - CategoryViewProtocol
+ // MARK: - AuthView - CategoryViewProtocol
 
-// extension CategoryView: CategoryViewProtocol {
-//
-// }
+ extension CategoryView: CategoryViewProtocol {
+
+ }
 
 // MARK: - Constraints
 
