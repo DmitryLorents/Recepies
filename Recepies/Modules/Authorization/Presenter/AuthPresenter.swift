@@ -6,8 +6,8 @@ protocol AuthPresenterProtocol: AnyObject {
     init(view: AuthViewProtocol, authService: AuthServiceProtocol)
 
     func validateEmail(_ email: String)
-//    func validatePassword(_ password: String)
     func validateUserData(email: String, password: String)
+    func setPasswordeSecureStatus()
 }
 
 final class AuthPresenter: AuthPresenterProtocol {
@@ -19,6 +19,7 @@ final class AuthPresenter: AuthPresenterProtocol {
 
     private weak var view: AuthViewProtocol?
     private var authService: AuthServiceProtocol
+    private var isPasswordSecured = true
 
     // MARK: - Initialization
 
@@ -34,15 +35,16 @@ final class AuthPresenter: AuthPresenterProtocol {
         view?.showIncorrectEmailFormat(!format)
     }
 
-//    func validatePassword(_ password: String) {
-//        let success = authService.validatePassword(password)
-//        view?.showIncorrectpasswordWarning(!success)
-//    }
     func validateUserData(email: String, password: String) {
         let (isEmailFormatOk, isEmailValid) = authService.validateEmail(email)
         let (isPasswordFormatOk, isPasswordValid) = authService.validatePassword(password)
         view?.showIncorrectUserData(!isEmailValid || !isPasswordValid)
         view?.showIncorrectPasswordFormat(!isPasswordFormatOk)
         view?.showIncorrectEmailFormat(!isEmailFormatOk)
+    }
+
+    func setPasswordeSecureStatus() {
+        isPasswordSecured.toggle()
+        view?.setPasswordSecured(isSecured: isPasswordSecured)
     }
 }

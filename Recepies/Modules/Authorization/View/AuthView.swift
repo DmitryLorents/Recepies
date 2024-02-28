@@ -8,6 +8,7 @@ protocol AuthViewProtocol: AnyObject {
     func showIncorrectEmailFormat(_ decision: Bool)
     func showIncorrectPasswordFormat(_ decision: Bool)
     func showIncorrectUserData(_ decision: Bool)
+    func setPasswordSecured(isSecured: Bool)
 }
 
 /// View to show authorization screen
@@ -80,10 +81,18 @@ final class AuthView: UIViewController {
         textField.rightViewMode = .always
         textField.leftView = makeLeftView(lockImageView)
         textField.leftViewMode = .always
+        textField.isSecureTextEntry = true
         return textField
     }()
 
-    private lazy var secureImageView = makeSubImageView(image: .eyeClose)
+    private lazy var secureImageView: UIImageView = {
+        let view = makeSubImageView(image: .eyeClose)
+        view.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(securePasswordButtonAction))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+
     private lazy var emailImageView = makeSubImageView(image: .email)
     private lazy var lockImageView = makeSubImageView(image: .lock)
 
@@ -95,6 +104,8 @@ final class AuthView: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .makeVerdanaRegular(size: 16)
         button.addTarget(nil, action: #selector(loginButtonAction), for: .touchUpInside)
+        button.addSubview(activityIndicatorView)
+        button.disableTARMIC()
         return button
     }()
 
@@ -114,6 +125,12 @@ final class AuthView: UIViewController {
 
     private lazy var emailWarningLabel = makeAdviceRedLabel(title: Constants.emailWarningText)
     private lazy var passwordWarningLabel = makeAdviceRedLabel(title: Constants.passwordWarningText)
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.hidesWhenStopped = true
+        view.color = .white
+        return view
+    }()
 
     // MARK: - Life Cycle
 
@@ -196,11 +213,29 @@ final class AuthView: UIViewController {
         return label
     }
 
-    @objc func loginButtonAction() {
-        resignTextFields()
+    private func imitateNetworkRequest() {
+        loginButton.setTitle("", for: .normal)
+        activityIndicatorView.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.activityIndicatorView.stopAnimating()
+            self.loginButton.setTitle(Constants.loginButtonTitle, for: .normal)
+            self.startUserDataValidation()
+        }
+    }
+
+    private func startUserDataValidation() {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         presenter?.validateUserData(email: email, password: password)
+    }
+
+    @objc private func securePasswordButtonAction() {
+        presenter?.setPasswordeSecureStatus()
+    }
+
+    @objc func loginButtonAction() {
+        resignTextFields()
+        imitateNetworkRequest()
     }
 
     @objc func resignTextFields() {
@@ -247,9 +282,14 @@ extension AuthView: AuthViewProtocol {
             warningLabel.alpha = 0
         }
     }
+
+    func setPasswordSecured(isSecured: Bool) {
+        secureImageView.image = isSecured ? .eyeClose : .eyeOpen
+        passwordTextField.isSecureTextEntry = isSecured
+    }
 }
 
-// MARK: - Extension
+// MARK: - Constraints
 
 private extension AuthView {
     func setupConstraints() {
@@ -262,6 +302,7 @@ private extension AuthView {
         setupWarningLabelConstraints()
         setupEmailWarningLabelConstraints()
         setupPasswordWarningLabelConstraints()
+        setupActivityIndicatorConstraints()
     }
 
     func setupLoginLabelConstraints() {
@@ -337,7 +378,16 @@ private extension AuthView {
             passwordWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
         ])
     }
+
+    func setupActivityIndicatorConstraints() {
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor),
+        ])
+    }
 }
+
+// MARK: - AuthView - UITextFieldDelegate
 
 extension AuthView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
