@@ -6,7 +6,7 @@ import UIKit
 /// Protocol for Authorisation view
 protocol AuthViewProtocol: AnyObject {
     /// View's presenter
-    var presenter: AuthPresenterProtocol? {get set}
+    var presenter: AuthPresenterProtocol? { get set }
     /// Notify user if email format is incorrect
     /// - Parameter decision: defines necessity to notify the user
     func showIncorrectEmailFormat(_ decision: Bool)
