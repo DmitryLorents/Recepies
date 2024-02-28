@@ -20,7 +20,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        appCoordinator = AppCoordinator()
-        appCoordinator?.start()
+        let rootView = CategoryView()
+        let category = Category.makeCategory()[4]
+        let presenter = CategoryPresenter(view: rootView, category: category)
+        rootView.presenter = presenter
+        window?.rootViewController = rootView
+//        appCoordinator = AppCoordinator()
+//        appCoordinator?.start()
     }
 }

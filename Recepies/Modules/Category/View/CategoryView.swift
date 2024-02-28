@@ -7,9 +7,10 @@ import UIKit
 protocol CategoryViewProtocol: AnyObject {
     /// View's presenter
     var presenter: CategoryPresenterProtocol? { get set }
-//    /// Notify user if email format is incorrect
-//    /// - Parameter decision: defines necessity to notify the user
-//    func showIncorrectEmailFormat(_ decision: Bool)
+    /// Setting delegate and dataSource for recipesTableView
+    /// - Parameter delegate: UITableViewDelegate
+    /// - Parameter dataSource: UITableViewDataSource
+    func set(delegate: UITableViewDelegate, dataSource: UITableViewDataSource)
 //    /// Notify user if password format is incorrect
 //    /// - Parameter decision: defines necessity to notify the user
 //    func showIncorrectPasswordFormat(_ decision: Bool)
@@ -40,6 +41,18 @@ final class CategoryView: UIViewController {
 
     // MARK: - Visual components
 
+    private lazy var recipesTableView: UITableView = {
+        let tableView = UITableView()
+//        tableView.separatorStyle = .none
+        tableView.backgroundColor = .red
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 114
+        tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
+        tableView.dataSource = presenter as? UITableViewDataSource
+        tableView.delegate = presenter as? UITableViewDelegate
+        return tableView
+    }()
+
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
@@ -52,30 +65,38 @@ final class CategoryView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupVIew()
+//        presenter?.askForDelegateAndDataSource()
     }
 
     // MARK: - Private Methods
 
     private func setupVIew() {
+        view.backgroundColor = .systemMint
         view.addSubviews(
+            recipesTableView
         )
         view.disableTARMIC()
         setupConstraints()
     }
 }
 
- // MARK: - AuthView - CategoryViewProtocol
+// MARK: - AuthView - CategoryViewProtocol
 
- extension CategoryView: CategoryViewProtocol {
-
- }
+extension CategoryView: CategoryViewProtocol {
+    func set(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        recipesTableView.delegate = delegate
+        recipesTableView.dataSource = dataSource
+        recipesTableView.reloadData()
+    }
+}
 
 // MARK: - Constraints
 
 private extension CategoryView {
     func setupConstraints() {
-//        setupLoginLabelConstraints()
+        setupRecipesTableViewConstraints()
 //        setupEmailLabelConstraints()
 //        setupEmailTextFieldConstraints()
 //        setupPasswordLabelConstraints()
@@ -87,15 +108,14 @@ private extension CategoryView {
 //        setupActivityIndicatorConstraints()
     }
 
-//    func setupLoginLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            loginLabel.leadingAnchor.constraint(
-//                equalToSystemSpacingAfter: view.layoutMarginsGuide.leadingAnchor,
-//                multiplier: 1
-//            ),
-//            loginLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 82),
-//        ])
-//    }
+    func setupRecipesTableViewConstraints() {
+        NSLayoutConstraint.activate([
+            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            recipesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+            recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
 //
 //    func setupEmailLabelConstraints() {
 //        NSLayoutConstraint.activate([

@@ -60,10 +60,10 @@ final class Builder: BuilderProtocol {
         )
         return profileView
     }
-    
+
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView {
         let view = CategoryView()
-        let presenter = CategoryPresenter(view: view, coordinator: coordinator, category: category)
+        let presenter = CategoryPresenter(view: view, /* coordinator: coordinator, */ category: category)
         view.presenter = presenter
         return view
     }

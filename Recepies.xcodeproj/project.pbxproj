@@ -29,7 +29,8 @@
 		0ACD2ECA2B8E76A0000BA913 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */; };
 		0ACD2ECF2B8FAF1A000BA913 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2ECE2B8FAF1A000BA913 /* CategoryView.swift */; };
 		0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2ED02B8FAF2B000BA913 /* CategoryPresenter.swift */; };
-		1B994DC12B8FB58B00F729E0 /* Recepies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B994DC02B8FB58B00F729E0 /* Recepies.swift */; };
+		0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2ED32B8FC355000BA913 /* CategoryViewCell.swift */; };
+		1B994DC12B8FB58B00F729E0 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B994DC02B8FB58B00F729E0 /* Recipe.swift */; };
 		1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */; };
 		1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DE2B8E1DC200E774EB /* Options.swift */; };
 		1B9B36E12B8E1DC200E774EB /* ProfileUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */; };
@@ -86,7 +87,8 @@
 		0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		0ACD2ECE2B8FAF1A000BA913 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		0ACD2ED02B8FAF2B000BA913 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
-		1B994DC02B8FB58B00F729E0 /* Recepies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recepies.swift; sourceTree = "<group>"; };
+		0ACD2ED32B8FC355000BA913 /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
+		1B994DC02B8FB58B00F729E0 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenterProfile.swift; sourceTree = "<group>"; };
 		1B9B36DE2B8E1DC200E774EB /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUser.swift; sourceTree = "<group>"; };
@@ -196,11 +198,11 @@
 		0A086E812B8D180100ACCD6B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				0ACD2ECB2B8FAECF000BA913 /* Category */,
 				0A086E872B8D1AF600ACCD6B /* TabBar */,
 				0A086E822B8D19D400ACCD6B /* SplashScreen */,
 				0A086E832B8D19E900ACCD6B /* Authorization */,
 				0A086E862B8D1A2500ACCD6B /* Recepies */,
+				0ACD2ECB2B8FAECF000BA913 /* Category */,
 				0A086E852B8D1A1700ACCD6B /* Favorites */,
 				0A086E842B8D1A0C00ACCD6B /* Profile */,
 			);
@@ -319,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				0ACD2ECE2B8FAF1A000BA913 /* CategoryView.swift */,
+				0ACD2ED22B8FC32C000BA913 /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -331,10 +334,18 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		0ACD2ED22B8FC32C000BA913 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD2ED32B8FC355000BA913 /* CategoryViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1B994DBF2B8FB56200F729E0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1B994DC02B8FB58B00F729E0 /* Recepies.swift */,
+				1B994DC02B8FB58B00F729E0 /* Recipe.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -587,6 +598,7 @@
 				0A086E8E2B8D209C00ACCD6B /* AuthPresenter.swift in Sources */,
 				0A086E4E2B8D0DB700ACCD6B /* AppDelegate.swift in Sources */,
 				0A086E902B8D20FB00ACCD6B /* AuthService.swift in Sources */,
+				0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */,
 				0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */,
 				0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */,
 				1B9B36F22B8EB5E700E774EB /* FavoritesViewController.swift in Sources */,
@@ -607,7 +619,7 @@
 				0A086E8C2B8D207D00ACCD6B /* AuthView.swift in Sources */,
 				1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */,
 				0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */,
-				1B994DC12B8FB58B00F729E0 /* Recepies.swift in Sources */,
+				1B994DC12B8FB58B00F729E0 /* Recipe.swift in Sources */,
 				0A086E922B8D26EA00ACCD6B /* Builder.swift in Sources */,
 				1B9B36EF2B8EA6BD00E774EB /* PresenterBonus.swift in Sources */,
 			);
