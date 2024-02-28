@@ -19,6 +19,9 @@ final class AuthView: UIViewController {
         static let passwordLabelTitle = "Password"
         static let passwordPlaceholder = "Enter Password"
         static let loginButtonTitle = "Login"
+        static let warningLabelText = "Please check the accuracy of the entered credentials."
+        static let emailWarningText = "Incorrect format"
+        static let passwordWarningText = "You entered the wrong password"
     }
 
     // MARK: - Public Properties
@@ -93,6 +96,23 @@ final class AuthView: UIViewController {
         return button
     }()
 
+    private let warningLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .redWarning
+        label.layer.cornerRadius = 12
+        label.clipsToBounds = true
+        label.font = .makeVerdanaRegular(size: 18)
+        label.textColor = .systemBackground
+        label.text = Constants.warningLabelText
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+
+    private lazy var emailWarningLabel = makeAdviceRedLabel(title: Constants.emailWarningText)
+    private lazy var passwordWarningLabel = makeAdviceRedLabel(title: Constants.passwordWarningText)
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -109,7 +129,17 @@ final class AuthView: UIViewController {
 
     private func setupVIew() {
         view.layer.addSublayer(gradientLayer)
-        view.addSubviews(loginLabel, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton)
+        view.addSubviews(
+            loginLabel,
+            emailLabel,
+            emailTextField,
+            passwordLabel,
+            passwordTextField,
+            loginButton,
+            warningLabel,
+            emailWarningLabel,
+            passwordWarningLabel
+        )
         view.disableTARMIC()
         setupConstraints()
     }
@@ -152,6 +182,15 @@ final class AuthView: UIViewController {
         return imageView
     }
 
+    private func makeAdviceRedLabel(title: String) -> UILabel {
+        let label = UILabel()
+        label.font = .makeVerdanaBold(size: 12)
+        label.textColor = .redWarning
+        label.text = title
+        label.isHidden = true
+        return label
+    }
+
     @objc func loginButtonAction() {
         // TODO: Set correct data
         presenter?.tryLogin(email: "", password: "")
@@ -172,6 +211,9 @@ private extension AuthView {
         setupPasswordLabelConstraints()
         setupPasswordTextFieldConstraints()
         setupLoginButtonConstraints()
+        setupWarningLabelConstraints()
+        setupEmailWarningLabelConstraints()
+        setupPasswordWarningLabelConstraints()
     }
 
     func setupLoginLabelConstraints() {
@@ -222,6 +264,29 @@ private extension AuthView {
             loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
             loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37),
             loginButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+
+    func setupWarningLabelConstraints() {
+        NSLayoutConstraint.activate([
+            warningLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
+            warningLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
+            warningLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -49),
+            warningLabel.heightAnchor.constraint(equalToConstant: 87)
+        ])
+    }
+
+    func setupEmailWarningLabelConstraints() {
+        NSLayoutConstraint.activate([
+            emailWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
+            emailWarningLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+        ])
+    }
+
+    func setupPasswordWarningLabelConstraints() {
+        NSLayoutConstraint.activate([
+            passwordWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
+            passwordWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
         ])
     }
 }
