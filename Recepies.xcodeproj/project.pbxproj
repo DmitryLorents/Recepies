@@ -25,6 +25,8 @@
 		0A086EA02B8DEF4400ACCD6B /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086E9F2B8DEF4400ACCD6B /* AuthCoordinator.swift */; };
 		0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA12B8DEFDC00ACCD6B /* FavoritesCoordinator.swift */; };
 		0A086EA42B8DF00900ACCD6B /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */; };
+		0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */; };
+		0ACD2ECA2B8E76A0000BA913 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */; };
 		1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */; };
 		1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DE2B8E1DC200E774EB /* Options.swift */; };
 		1B9B36E12B8E1DC200E774EB /* ProfileUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */; };
@@ -73,6 +75,8 @@
 		0A086E9F2B8DEF4400ACCD6B /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		0A086EA12B8DEFDC00ACCD6B /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenterProfile.swift; sourceTree = "<group>"; };
 		1B9B36DE2B8E1DC200E774EB /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUser.swift; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 				0A086E932B8DCB5000ACCD6B /* Coordinators */,
 				0A086E812B8D180100ACCD6B /* Modules */,
 				0A086E7D2B8D0F3F00ACCD6B /* SupportingFiles */,
+				0ACD2EC62B8E6897000BA913 /* Extensions */,
 			);
 			path = Recepies;
 			sourceTree = "<group>";
@@ -271,6 +276,15 @@
 				0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		0ACD2EC62B8E6897000BA913 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */,
+				0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		1B9B36DA2B8E1DB900E774EB /* Presenter */ = {
@@ -490,9 +504,11 @@
 				1B9B36E82B8E1E3400E774EB /* OtherTableViewCell.swift in Sources */,
 				0A086E972B8DD4CC00ACCD6B /* AppCoordinator.swift in Sources */,
 				0A086E952B8DCC2C00ACCD6B /* BaseCoordinator.swift in Sources */,
+				0ACD2ECA2B8E76A0000BA913 /* UIView+Extension.swift in Sources */,
 				1B9B36E12B8E1DC200E774EB /* ProfileUser.swift in Sources */,
 				0A086E8C2B8D207D00ACCD6B /* AuthView.swift in Sources */,
 				1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */,
+				0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */,
 				0A086E922B8D26EA00ACCD6B /* Builder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
