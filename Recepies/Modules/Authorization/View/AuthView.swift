@@ -58,23 +58,29 @@ final class AuthView: UIViewController {
         return label
     }()
 
-    private let emailTextField: UITextField = {
-        let textField = UITextField()
+    private lazy var emailTextField: UITextField = {
+        let textField = createTextField()
         textField.placeholder = Constants.emailPlaceholder
-        textField.borderStyle = .roundedRect
         textField.keyboardType = .emailAddress
         textField.clearButtonMode = .whileEditing
-        textField.font = .makeVerdanaRegular(size: 18)
+        textField.leftView = makeLeftView(emailImageView)
+        textField.leftViewMode = .always
         return textField
     }()
 
-    private let passwordTextField: UITextField = {
-        let textField = UITextField()
+    private lazy var passwordTextField: UITextField = {
+        let textField = createTextField()
         textField.placeholder = Constants.passwordPlaceholder
-        textField.borderStyle = .roundedRect
-        textField.font = .makeVerdanaRegular(size: 18)
+        textField.rightView = makeRightView(secureImageView)
+        textField.rightViewMode = .always
+        textField.leftView = makeLeftView(lockImageView)
+        textField.leftViewMode = .always
         return textField
     }()
+
+    private lazy var secureImageView = makeSubImageView(image: .eyeClose)
+    private lazy var emailImageView = makeSubImageView(image: .email)
+    private lazy var lockImageView = makeSubImageView(image: .lock)
 
     private lazy var loginButton: UIButton = {
         let button = UIButton()
@@ -84,16 +90,7 @@ final class AuthView: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .makeVerdanaRegular(size: 16)
         button.addTarget(nil, action: #selector(loginButtonAction), for: .touchUpInside)
-//        button.isEnabled = false
-//        button.alpha = 0.5
         return button
-    }()
-
-    private lazy var secureImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 352, y: 423, width: 22, height: 19))
-        imageView.image = UIImage(systemName: "eye.slash")
-        imageView.tintColor = .gray
-        return imageView
     }()
 
     // MARK: - Life Cycle
@@ -112,9 +109,47 @@ final class AuthView: UIViewController {
 
     private func setupVIew() {
         view.layer.addSublayer(gradientLayer)
-        view.addSubviews(loginLabel, emailLabel, emailTextField, passwordLabel, passwordTextField)
+        view.addSubviews(loginLabel, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton)
         view.disableTARMIC()
         setupConstraints()
+    }
+
+    private func createTextField() -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = Constants.passwordPlaceholder
+        textField.layer.cornerRadius = 12
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.backgroundColor = .systemBackground
+        textField.font = .makeVerdanaRegular(size: 18)
+        return textField
+    }
+
+    private func makeRightView(_ view: UIView) -> UIView {
+        let rightView = UIView()
+        rightView.addSubview(view)
+        rightView.disableTARMIC()
+        view.trailingAnchor.constraint(equalTo: rightView.trailingAnchor, constant: -14).isActive = true
+        view.leadingAnchor.constraint(equalTo: rightView.leadingAnchor, constant: 0).isActive = true
+        view.centerYAnchor.constraint(equalTo: rightView.centerYAnchor).isActive = true
+        return rightView
+    }
+
+    private func makeLeftView(_ view: UIView) -> UIView {
+        let leftView = UIView()
+        leftView.addSubview(view)
+        leftView.disableTARMIC()
+        view.trailingAnchor.constraint(equalTo: leftView.trailingAnchor, constant: -13).isActive = true
+        view.leadingAnchor.constraint(equalTo: leftView.leadingAnchor, constant: 17).isActive = true
+        view.centerYAnchor.constraint(equalTo: leftView.centerYAnchor).isActive = true
+        return leftView
+    }
+
+    private func makeSubImageView(image: UIImage) -> UIImageView {
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = .gray
+        imageView.contentMode = .center
+        return imageView
     }
 
     @objc func loginButtonAction() {
@@ -136,6 +171,7 @@ private extension AuthView {
         setupEmailTextFieldConstraints()
         setupPasswordLabelConstraints()
         setupPasswordTextFieldConstraints()
+        setupLoginButtonConstraints()
     }
 
     func setupLoginLabelConstraints() {
@@ -177,6 +213,15 @@ private extension AuthView {
             passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 7),
             passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+
+    func setupLoginButtonConstraints() {
+        NSLayoutConstraint.activate([
+            loginButton.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+            loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37),
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 }
