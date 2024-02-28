@@ -5,9 +5,19 @@ import UIKit
 
 /// Protocol for Authorisation view
 protocol AuthViewProtocol: AnyObject {
+    /// View's presenter
+    var presenter: AuthPresenterProtocol? {get set}
+    /// Notify user if email format is incorrect
+    /// - Parameter decision: defines necessity to notify the user
     func showIncorrectEmailFormat(_ decision: Bool)
+    /// Notify user if password format is incorrect
+    /// - Parameter decision: defines necessity to notify the user
     func showIncorrectPasswordFormat(_ decision: Bool)
+    /// Notify user if email or password are not valid
+    /// - Parameter decision: defines necessity to notify the user
     func showIncorrectUserData(_ decision: Bool)
+    /// Set password textField in secure/nonsecure mode
+    /// - Parameter decision: defines necessity to set secure
     func setPasswordSecured(isSecured: Bool)
 }
 
@@ -25,11 +35,8 @@ final class AuthView: UIViewController {
         static let warningLabelText = "Please check the accuracy of the entered credentials."
         static let emailWarningText = "Incorrect format"
         static let passwordWarningText = "You entered the wrong password"
+        static let defaultLoginButtonBottomConstraintValue = -37.0
     }
-
-    // MARK: - Public Properties
-
-    var presenter: AuthPresenterProtocol?
 
     // MARK: - Visual components
 
@@ -132,6 +139,14 @@ final class AuthView: UIViewController {
         return view
     }()
 
+    // MARK: - Public Properties
+
+    var presenter: AuthPresenterProtocol?
+
+    // MARK: - Private Properties
+
+    var loginButtonBottomConstraint: NSLayoutConstraint?
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -142,6 +157,16 @@ final class AuthView: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer.frame = view.bounds
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        signToKeyboardNotifications()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsignFromKeyboarNotifications()
     }
 
     // MARK: - Private Methods
@@ -227,6 +252,43 @@ final class AuthView: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         presenter?.validateUserData(email: email, password: password)
+    }
+
+    private func signToKeyboardNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustUIForKeyboardPosition(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustUIForKeyboardPosition(_:)),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
+    }
+
+    private func unsignFromKeyboarNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+    }
+
+    @objc private func adjustUIForKeyboardPosition(_ notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+        else { return }
+        let keyboardFrame = keyboardValue.cgRectValue
+        switch notification.name {
+        case UIResponder.keyboardDidShowNotification:
+            let actualConstant = -keyboardFrame.height
+            loginButtonBottomConstraint?.constant = actualConstant
+        case UIResponder.keyboardWillHideNotification:
+            loginButtonBottomConstraint?.constant = Constants.defaultLoginButtonBottomConstraintValue
+        default:
+            return
+        }
     }
 
     @objc private func securePasswordButtonAction() {
@@ -348,10 +410,15 @@ private extension AuthView {
     }
 
     func setupLoginButtonConstraints() {
+        loginButtonBottomConstraint = loginButton.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+            constant: Constants.defaultLoginButtonBottomConstraintValue
+        )
+        loginButtonBottomConstraint?.isActive = true
+
         NSLayoutConstraint.activate([
             loginButton.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
             loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
-            loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37),
             loginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
@@ -396,7 +463,6 @@ extension AuthView: UITextFieldDelegate {
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(#function)
         UIView.animate(withDuration: 0.5) {
             self.warningLabel.alpha = 0
         }

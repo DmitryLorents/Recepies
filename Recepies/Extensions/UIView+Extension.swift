@@ -1,12 +1,6 @@
 // UIView+Extension.swift
 // Copyright © RoadMap. All rights reserved.
 
-//
-//  UIView+Extension.swift
-//  Recepies
-//
-//  Created by Dmitry on 27.02.2024.
-//
 import UIKit
 
 /// Adding useful functions to UIVIew
