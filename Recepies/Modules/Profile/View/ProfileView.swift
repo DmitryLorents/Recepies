@@ -6,9 +6,11 @@ import UIKit
 /// Экран профиля
 final class ProfileView: UIViewController {
     // MARK: - Types
-
+    
     private enum CellTypes {
+        /// Тип ячейки профиля
         case profile
+        /// Тип ячейки опций
         case options
     }
 

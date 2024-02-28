@@ -13,7 +13,7 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Public Methods
 
     override func start() {
-        if "login" == "ogin" {
+        if "login" == "lhogin" {
             toMain()
         } else {
             toAuth()
