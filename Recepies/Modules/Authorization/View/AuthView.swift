@@ -5,7 +5,9 @@ import UIKit
 
 /// Protocol for Authorisation view
 protocol AuthViewProtocol: AnyObject {
-    func badUserData()
+    func showIncorrectEmailFormat(_ decision: Bool)
+    func showIncorrectPasswordFormat(_ decision: Bool)
+    func showIncorrectUserData(_ decision: Bool)
 }
 
 /// View to show authorization screen
@@ -106,7 +108,7 @@ final class AuthView: UIViewController {
         label.text = Constants.warningLabelText
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.isHidden = true
+        label.alpha = 0
         return label
     }()
 
@@ -129,6 +131,8 @@ final class AuthView: UIViewController {
 
     private func setupVIew() {
         view.layer.addSublayer(gradientLayer)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignTextFields))
+        view.addGestureRecognizer(tapGesture)
         view.addSubviews(
             loginLabel,
             emailLabel,
@@ -152,6 +156,7 @@ final class AuthView: UIViewController {
         textField.layer.borderColor = UIColor.gray.cgColor
         textField.backgroundColor = .systemBackground
         textField.font = .makeVerdanaRegular(size: 18)
+        textField.delegate = self
         return textField
     }
 
@@ -192,16 +197,59 @@ final class AuthView: UIViewController {
     }
 
     @objc func loginButtonAction() {
-        // TODO: Set correct data
-        presenter?.tryLogin(email: "", password: "")
+        resignTextFields()
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        presenter?.validateUserData(email: email, password: password)
+    }
+
+    @objc func resignTextFields() {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
     }
 }
 
+// MARK: - AuthView - AuthViewProtocol
+
 extension AuthView: AuthViewProtocol {
-    func badUserData() {
-        // show some warning
+    func showIncorrectEmailFormat(_ decision: Bool) {
+        switch decision {
+        case true:
+            emailWarningLabel.isHidden = false
+            emailLabel.textColor = .redWarning
+            emailTextField.layer.borderColor = UIColor.red.cgColor
+        case false:
+            emailWarningLabel.isHidden = true
+            emailLabel.textColor = .darkGrayApp
+            emailTextField.layer.borderColor = UIColor.darkGrayApp.cgColor
+        }
+    }
+
+    func showIncorrectPasswordFormat(_ decision: Bool) {
+        switch decision {
+        case true:
+            passwordWarningLabel.isHidden = false
+            passwordLabel.textColor = .redWarning
+            passwordTextField.layer.borderColor = UIColor.red.cgColor
+        case false:
+            passwordWarningLabel.isHidden = true
+            passwordLabel.textColor = .darkGrayApp
+            passwordTextField.layer.borderColor = UIColor.darkGrayApp.cgColor
+        }
+    }
+
+    func showIncorrectUserData(_ decision: Bool) {
+        if decision {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.warningLabel.alpha = 1
+            })
+        } else {
+            warningLabel.alpha = 0
+        }
     }
 }
+
+// MARK: - Extension
 
 private extension AuthView {
     func setupConstraints() {
@@ -288,5 +336,19 @@ private extension AuthView {
             passwordWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
             passwordWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
         ])
+    }
+}
+
+extension AuthView: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard textField == emailTextField else { return }
+        presenter?.validateEmail(emailTextField.text ?? "")
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print(#function)
+        UIView.animate(withDuration: 0.5) {
+            self.warningLabel.alpha = 0
+        }
     }
 }
