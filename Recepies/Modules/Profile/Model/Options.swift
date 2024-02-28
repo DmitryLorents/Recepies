@@ -1,14 +1,20 @@
 // Options.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// ПРОТОКОЛ
 /// Название и картинка опции профиля
-struct Options {
+protocol OptionsProtocol {
     /// Иконка опции
-    let icon: String
+    var icon: String { get set }
     /// Название опции
-    let nameOptions: String
+    var nameOptions: String { get set }
     /// Создает массив опций
+    static func makeOption() -> [Self]
+}
+
+/// Рефлизация протокола
+struct Options: OptionsProtocol {
+    var icon: String
+    var nameOptions: String
     static func makeOption() -> [Options] {
         [
             .init(icon: "star", nameOptions: "Bonuses"),

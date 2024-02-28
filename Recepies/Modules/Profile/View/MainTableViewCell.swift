@@ -12,8 +12,6 @@ final class MainTableViewCell: UITableViewCell {
         static let editNameButtonImage = "ipensela"
     }
 
-    var editName: (() -> ())?
-
     // MARK: - Visual Components
 
     private let avatarImageView: UIImageView = {
@@ -39,6 +37,10 @@ final class MainTableViewCell: UITableViewCell {
         return button
     }()
 
+    // MARK: - Public Properties
+
+    var editName: (() -> ())?
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -55,7 +57,7 @@ final class MainTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(profile: ProfileUser) {
+    func setupCell(profile: ProfileUserProtocol) {
         avatarImageView.image = UIImage(named: profile.avatarImage)
         fullName.text = profile.userName
     }
@@ -63,6 +65,7 @@ final class MainTableViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func addItemCell() {
+        selectionStyle = .none
         contentView.addSubview(avatarImageView)
         contentView.addSubview(fullName)
         contentView.addSubview(editNameButton)

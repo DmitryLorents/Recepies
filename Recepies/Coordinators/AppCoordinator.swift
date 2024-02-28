@@ -41,10 +41,9 @@ final class AppCoordinator: BaseCoodinator {
         profileModelView.profilePresenter?.coordinator = profileCoordinator
         profileCoordinator.onFinishFlow = { [weak self] in
             self?.remove(coordinator: profileCoordinator)
-            self?.toMain()
+            self?.toAuth()
         }
         add(coordinator: profileCoordinator)
-//        profileCoordinator.start()
         // Set TabBarViewController
         tabBarViewController = MainTabBarViewController()
         tabBarViewController?.setViewControllers(

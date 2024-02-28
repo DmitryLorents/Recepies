@@ -8,14 +8,22 @@ protocol BuilderProtocol {
     /// Function to Authorization module
     func makeAuthModule() -> AuthView
     /// Function to  Recipies module
-    func makeRecepiesModule() -> UIViewController
+    func makeRecepiesModule() -> RecepiesViewController
     /// Function to Favorites module
-    func makeFavoritesModule() -> UIViewController
+    func makeFavoritesModule() -> FavoritesViewController
     /// Function to Profile module
     func makeProfileModule() -> ProfileView
 }
 
 final class Builder: BuilderProtocol {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let profileViewTitle = "Profile"
+        static let recepiesViewTitle = "Recipes"
+        static let favoritesViewTitle = "Favorites"
+    }
+
     // MARK: - Public Methods
 
     func makeAuthModule() -> AuthView {
@@ -26,12 +34,16 @@ final class Builder: BuilderProtocol {
         return view
     }
 
-    func makeRecepiesModule() -> UIViewController {
-        .init()
+    func makeRecepiesModule() -> RecepiesViewController {
+        let view = RecepiesViewController()
+        view.tabBarItem = UITabBarItem(title: Constants.recepiesViewTitle, image: .recipes, selectedImage: .recipesSet)
+        return view
     }
 
-    func makeFavoritesModule() -> UIViewController {
-        .init()
+    func makeFavoritesModule() -> FavoritesViewController {
+        let view = FavoritesViewController()
+        view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
+        return view
     }
 
     func makeProfileModule() -> ProfileView {
@@ -39,6 +51,11 @@ final class Builder: BuilderProtocol {
         let profileView = ProfileView()
         profileView.profilePresenter = profilePresenter
         profilePresenter.view = profileView
+        profileView.tabBarItem = UITabBarItem(
+            title: Constants.profileViewTitle,
+            image: .prof,
+            selectedImage: .profileSet
+        )
         return profileView
     }
 }
