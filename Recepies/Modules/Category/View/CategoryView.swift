@@ -46,6 +46,7 @@ final class CategoryView: UIViewController {
     private lazy var recipesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 114
         tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
