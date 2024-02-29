@@ -19,20 +19,10 @@ final class CategoryView: UIViewController {
     private enum Constants {
         static let caloriesButtonTitle = "Calories"
         static let timeButtonTitle = "Time"
+        static let searchPlaceholder = "Search recipes"
     }
 
     // MARK: - Visual components
-
-    private lazy var recipesTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorStyle = .none
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 114
-        tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
-        tableView.dataSource = self
-        tableView.delegate = self
-        return tableView
-    }()
 
     private lazy var caloriesButton: UIButton = makeSortingButton(
         title: Constants.caloriesButtonTitle,
@@ -42,6 +32,28 @@ final class CategoryView: UIViewController {
         title: Constants.timeButtonTitle,
         action: #selector(timeButtonAction)
     )
+
+    private let recipeSearchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = Constants.searchPlaceholder
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.layer.cornerRadius = 10
+        searchBar.searchTextField.backgroundColor = .searchBackground
+        searchBar.searchBarStyle = .minimal
+        return searchBar
+    }()
+
+    private lazy var recipesTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 114
+        tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
+    }()
 
     // MARK: - Public Properties
 
@@ -68,12 +80,15 @@ final class CategoryView: UIViewController {
     // MARK: - Private Methods
 
     private func setupVIew() {
+        view.backgroundColor = .systemBackground
         view.addSubviews(
             recipesTableView,
             timeButton,
-            caloriesButton
+            caloriesButton,
+            recipeSearchBar
         )
         view.disableTARMIC()
+        setNavigationItem()
         setupConstraints()
     }
 
@@ -81,13 +96,44 @@ final class CategoryView: UIViewController {
         recipesTableView.reloadData()
     }
 
+    private func setNavigationItem() {
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        backButton.setImage(.arrowLeft, for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+
+        let titleLabel = UILabel()
+        titleLabel.text = category?.name
+        titleLabel.font = .makeVerdanaBold(size: 28)
+        titleLabel.textAlignment = .left
+
+        let leftBarView = UIView()
+        leftBarView.addSubviews(backButton, titleLabel)
+        leftBarView.disableTARMIC()
+
+        NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalTo: leftBarView.leadingAnchor),
+            backButton.centerYAnchor.constraint(equalTo: leftBarView.centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: leftBarView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: leftBarView.bottomAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: leftBarView.trailingAnchor),
+
+            leftBarView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
+    }
+
     private func makeSortingButton(title: String, action: Selector) -> UIButton {
         let button = UIButton()
         button.backgroundColor = .cellBackground
-        button.titleLabel?.font = UIFont.makeVerdanaRegular(size: 14)
-        button.setTitle(title, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.makeVerdanaRegular(size: 16)
+        button.setTitle("    \(title)   ", for: .normal)
         button.setImage(.up, for: .normal)
         button.layer.cornerRadius = 18
+        button.semanticContentAttribute = .forceRightToLeft
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 12)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
@@ -98,6 +144,10 @@ final class CategoryView: UIViewController {
 
     @objc private func timeButtonAction() {
         print(#function)
+    }
+
+    @objc private func backButtonAction() {
+        presenter?.goBack()
     }
 }
 
@@ -113,24 +163,24 @@ extension CategoryView: CategoryViewProtocol {
 
 private extension CategoryView {
     func setupConstraints() {
+        recipeSearchBarConstraints()
         setupRecipesTableViewConstraints()
         setupCaloriesButtonConstraints()
         setupTimeButtonConstraints()
     }
 
-    func setupRecipesTableViewConstraints() {
+    func recipeSearchBarConstraints() {
         NSLayoutConstraint.activate([
-            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            recipesTableView.topAnchor.constraint(equalTo: caloriesButton.bottomAnchor, constant: 13),
-            recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            recipeSearchBar.leadingAnchor.constraint(equalTo: recipesTableView.leadingAnchor, constant: -8),
+            recipeSearchBar.trailingAnchor.constraint(equalTo: recipesTableView.trailingAnchor, constant: 8),
+            recipeSearchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
         ])
     }
 
     func setupCaloriesButtonConstraints() {
         NSLayoutConstraint.activate([
             caloriesButton.leadingAnchor.constraint(equalTo: recipesTableView.leadingAnchor),
-            caloriesButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 152),
+            caloriesButton.topAnchor.constraint(equalTo: recipeSearchBar.bottomAnchor, constant: 20),
             caloriesButton.heightAnchor.constraint(equalToConstant: 36),
         ])
     }
@@ -140,6 +190,15 @@ private extension CategoryView {
             timeButton.leadingAnchor.constraint(equalTo: caloriesButton.trailingAnchor, constant: 11),
             timeButton.topAnchor.constraint(equalTo: caloriesButton.topAnchor),
             timeButton.heightAnchor.constraint(equalTo: caloriesButton.heightAnchor),
+        ])
+    }
+
+    func setupRecipesTableViewConstraints() {
+        NSLayoutConstraint.activate([
+            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            recipesTableView.topAnchor.constraint(equalTo: caloriesButton.bottomAnchor, constant: 13),
+            recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }

@@ -9,4 +9,8 @@ final class RecipesCoordinator: BaseModuleCoordinator {
         let categoryScreen = Builder().makeCategoryModule(coordinator: self, category: category)
         publicRootController.pushViewController(categoryScreen, animated: true)
     }
+
+    func goBack() {
+        publicRootController.popViewController(animated: true)
+    }
 }
