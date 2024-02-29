@@ -17,16 +17,8 @@ final class CategoryView: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let loginLabelTitle = "Login"
-        static let emailLabelTitle = "Email Adress"
-        static let emailPlaceholder = "Enter Email Address"
-        static let passwordLabelTitle = "Password"
-        static let passwordPlaceholder = "Enter Password"
-        static let loginButtonTitle = "Login"
-        static let warningLabelText = "Please check the accuracy of the entered credentials."
-        static let emailWarningText = "Incorrect format"
-        static let passwordWarningText = "You entered the wrong password"
-        static let defaultLoginButtonBottomConstraintValue = -37.0
+        static let caloriesButtonTitle = "Calories"
+        static let timeButtonTitle = "Time"
     }
 
     // MARK: - Visual components
@@ -41,6 +33,15 @@ final class CategoryView: UIViewController {
         tableView.delegate = self
         return tableView
     }()
+
+    private lazy var caloriesButton: UIButton = makeSortingButton(
+        title: Constants.caloriesButtonTitle,
+        action: #selector(caloriesButtonAction)
+    )
+    private lazy var timeButton: UIButton = makeSortingButton(
+        title: Constants.timeButtonTitle,
+        action: #selector(timeButtonAction)
+    )
 
     // MARK: - Public Properties
 
@@ -68,14 +69,35 @@ final class CategoryView: UIViewController {
 
     private func setupVIew() {
         view.addSubviews(
-            recipesTableView
+            recipesTableView,
+            timeButton,
+            caloriesButton
         )
         view.disableTARMIC()
         setupConstraints()
     }
 
-    func setSubViews(with: Category) {
+    private func setSubViews(with: Category) {
         recipesTableView.reloadData()
+    }
+
+    private func makeSortingButton(title: String, action: Selector) -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .cellBackground
+        button.titleLabel?.font = UIFont.makeVerdanaRegular(size: 14)
+        button.setTitle(title, for: .normal)
+        button.setImage(.up, for: .normal)
+        button.layer.cornerRadius = 18
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
+    }
+
+    @objc private func caloriesButtonAction() {
+        print(#function)
+    }
+
+    @objc private func timeButtonAction() {
+        print(#function)
     }
 }
 
@@ -92,101 +114,34 @@ extension CategoryView: CategoryViewProtocol {
 private extension CategoryView {
     func setupConstraints() {
         setupRecipesTableViewConstraints()
-//        setupEmailLabelConstraints()
-//        setupEmailTextFieldConstraints()
-//        setupPasswordLabelConstraints()
-//        setupPasswordTextFieldConstraints()
-//        setupLoginButtonConstraints()
-//        setupWarningLabelConstraints()
-//        setupEmailWarningLabelConstraints()
-//        setupPasswordWarningLabelConstraints()
-//        setupActivityIndicatorConstraints()
+        setupCaloriesButtonConstraints()
+        setupTimeButtonConstraints()
     }
 
     func setupRecipesTableViewConstraints() {
         NSLayoutConstraint.activate([
             recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            recipesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+            recipesTableView.topAnchor.constraint(equalTo: caloriesButton.bottomAnchor, constant: 13),
             recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-//
-//    func setupEmailLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            emailLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            emailLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 23),
-//        ])
-//    }
-//
-//    func setupEmailTextFieldConstraints() {
-//        NSLayoutConstraint.activate([
-//            emailTextField.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 6),
-//            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            emailTextField.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-//    }
-//
-//    func setupPasswordLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            passwordLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 23),
-//        ])
-//    }
-//
-//    func setupPasswordTextFieldConstraints() {
-//        NSLayoutConstraint.activate([
-//            passwordTextField.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 7),
-//            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            passwordTextField.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-//    }
-//
-//    func setupLoginButtonConstraints() {
-//        loginButtonBottomConstraint = loginButton.bottomAnchor.constraint(
-//            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-//            constant: Constants.defaultLoginButtonBottomConstraintValue
-//        )
-//        loginButtonBottomConstraint?.isActive = true
-//
-//        NSLayoutConstraint.activate([
-//            loginButton.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
-//            loginButton.heightAnchor.constraint(equalToConstant: 48)
-//        ])
-//    }
-//
-//    func setupWarningLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            warningLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
-//            warningLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
-//            warningLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -49),
-//            warningLabel.heightAnchor.constraint(equalToConstant: 87)
-//        ])
-//    }
-//
-//    func setupEmailWarningLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            emailWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            emailWarningLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-//        ])
-//    }
-//
-//    func setupPasswordWarningLabelConstraints() {
-//        NSLayoutConstraint.activate([
-//            passwordWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-//            passwordWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
-//        ])
-//    }
-//
-//    func setupActivityIndicatorConstraints() {
-//        NSLayoutConstraint.activate([
-//            activityIndicatorView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
-//            activityIndicatorView.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor),
-//        ])
-//    }
+
+    func setupCaloriesButtonConstraints() {
+        NSLayoutConstraint.activate([
+            caloriesButton.leadingAnchor.constraint(equalTo: recipesTableView.leadingAnchor),
+            caloriesButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 152),
+            caloriesButton.heightAnchor.constraint(equalToConstant: 36),
+        ])
+    }
+
+    func setupTimeButtonConstraints() {
+        NSLayoutConstraint.activate([
+            timeButton.leadingAnchor.constraint(equalTo: caloriesButton.trailingAnchor, constant: 11),
+            timeButton.topAnchor.constraint(equalTo: caloriesButton.topAnchor),
+            timeButton.heightAnchor.constraint(equalTo: caloriesButton.heightAnchor),
+        ])
+    }
 }
 
 // MARK: - CategoryView - UITableViewDelegate
