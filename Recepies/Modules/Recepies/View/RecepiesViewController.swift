@@ -88,7 +88,7 @@ extension RecepiesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        recepiesPresenter?.getIndex(index: indexPath[1])
+        recepiesPresenter?.getIndex(index: indexPath.item)
     }
 }
 
