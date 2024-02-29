@@ -6,15 +6,16 @@ import UIKit
 /// General protocol for all builders in app
 protocol BuilderProtocol {
     /// Function to Authorization module
-    func makeAuthModule() -> AuthView
+    func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView
     /// Function to  Recipies module
-    func makeRecepiesModule() -> RecepiesViewController
+    func makeRecepiesModule(coordinator: BaseModuleCoordinator) -> RecepiesViewController
     /// Function to Favorites module
-    func makeFavoritesModule() -> FavoritesViewController
+    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesViewController
     /// Function to Profile module
-    func makeProfileModule() -> ProfileView
+    func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView
 }
 
+/// Builder for all modules in app
 final class Builder: BuilderProtocol {
     // MARK: - Constants
 
@@ -26,27 +27,27 @@ final class Builder: BuilderProtocol {
 
     // MARK: - Public Methods
 
-    func makeAuthModule() -> AuthView {
+    func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView {
         let authService = AuthService()
         let view = AuthView()
-        let presenter = AuthPresenter(view: view, authService: authService)
+        let presenter = AuthPresenter(view: view, authService: authService, coordinator: coordinator)
         view.presenter = presenter
         return view
     }
 
-    func makeRecepiesModule() -> RecepiesViewController {
+    func makeRecepiesModule(coordinator: BaseModuleCoordinator) -> RecepiesViewController {
         let view = RecepiesViewController()
         view.tabBarItem = UITabBarItem(title: Constants.recepiesViewTitle, image: .recipes, selectedImage: .recipesSet)
         return view
     }
 
-    func makeFavoritesModule() -> FavoritesViewController {
+    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesViewController {
         let view = FavoritesViewController()
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
     }
 
-    func makeProfileModule() -> ProfileView {
+    func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView {
         let profilePresenter = ProfilePresenter()
         let profileView = ProfileView()
         profileView.profilePresenter = profilePresenter

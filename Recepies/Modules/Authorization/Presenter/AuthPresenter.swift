@@ -3,10 +3,8 @@
 
 /// Protocol for Authorization screen presenter
 protocol AuthPresenterProtocol: AnyObject {
-    /// Presenter coordinator to perform navigation through app
-    var coordinator: BaseModuleCoordinator? { get set }
     /// Main initializer
-    init(view: AuthViewProtocol, authService: AuthServiceProtocol)
+    init(view: AuthViewProtocol, authService: AuthServiceProtocol, coordinator: BaseModuleCoordinator)
     /// Validates user email adress and ask view to notify user if email is wrong
     /// - Parameter email: string value of user's email
     func validateEmail(_ email: String)
@@ -19,21 +17,19 @@ protocol AuthPresenterProtocol: AnyObject {
 }
 
 final class AuthPresenter: AuthPresenterProtocol {
-    // MARK: - Publiv Properties
-
-    weak var coordinator: BaseModuleCoordinator?
-
     // MARK: - Private Properties
 
+    private weak var coordinator: BaseModuleCoordinator?
     private weak var view: AuthViewProtocol?
     private var authService: AuthServiceProtocol
     private var isPasswordSecured = true
 
     // MARK: - Initialization
 
-    init(view: AuthViewProtocol, authService: AuthServiceProtocol) {
+    init(view: AuthViewProtocol, authService: AuthServiceProtocol, coordinator: BaseModuleCoordinator) {
         self.view = view
         self.authService = authService
+        self.coordinator = coordinator
     }
 
     // MARK: - Public Methods

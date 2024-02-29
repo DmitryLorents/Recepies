@@ -9,11 +9,11 @@ final class AuthCoordinator: BaseModuleCoordinator {
         showLogin()
     }
 
-    func onFinish() {
-        onFinishFlow?()
+    func finishFlow() {
+        finishFlowHandler?()
     }
 
     private func showLogin() {
-        setAsRoot(rootController)
+        setAsRoot(publicRootController)
     }
 }
