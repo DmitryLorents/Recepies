@@ -7,6 +7,11 @@ import UIKit
 final class CategoryViewCell: UITableViewCell {
     // MARK: - Constants
 
+    private enum Constants {
+        static let timerLabelText = " min"
+        static let caloriesLabelText = " kkal"
+    }
+
     static let reuseID = String(describing: CategoryViewCell.self)
 
     // MARK: - Visual Components
@@ -18,6 +23,15 @@ final class CategoryViewCell: UITableViewCell {
         return imageView
     }()
 
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Simple fish and corn"
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.font = .makeVerdanaRegular(size: 14)
+        return label
+    }()
+
     private let grayBackgroundView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 12
@@ -25,7 +39,13 @@ final class CategoryViewCell: UITableViewCell {
         return view
     }()
 
-    // MARK: - Public Properties
+    private lazy var timerImageView = makeSmallImageView(image: .timer)
+    private lazy var pizzaImageView = makeSmallImageView(image: .pizza)
+
+    private lazy var timerLabel = makeBottomLabel(title: "60\(Constants.timerLabelText)")
+    private lazy var caloriesLabel = makeBottomLabel(title: "274\(Constants.caloriesLabelText)")
+
+    private let chevronImageView = UIImageView(image: .chevronRight)
 
     // MARK: - Private Properties
 
@@ -62,9 +82,31 @@ final class CategoryViewCell: UITableViewCell {
     private func setupView() {
         contentView.addSubview(grayBackgroundView)
         contentView.disableTARMIC()
-        grayBackgroundView.addSubviews(dishImageView)
+        grayBackgroundView.addSubviews(
+            dishImageView,
+            titleLabel,
+            chevronImageView,
+            timerImageView,
+            timerLabel,
+            pizzaImageView,
+            caloriesLabel
+        )
         grayBackgroundView.disableTARMIC()
         setupConstraints()
+    }
+
+    private func makeSmallImageView(image: UIImage) -> UIImageView {
+        let imageView = UIImageView(image: image)
+        imageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+        return imageView
+    }
+
+    private func makeBottomLabel(title: String) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = .makeVerdanaRegular(size: 12)
+        return label
     }
 
     private func configureSubview(with recipe: Recipe) {}
@@ -76,6 +118,12 @@ private extension CategoryViewCell {
     func setupConstraints() {
         setupGrayBackgroundViewConstraints()
         setupDishImageViewConstraints()
+        setupTitleLabelConstraints()
+        setupChevronImageViewConstraints()
+        setuptimerImageViewConstraints()
+        setuptimerLabelConstraints()
+        setupPizzaImageViewConstraints()
+        setupCaloriesLabelConstraints()
     }
 
     func setupGrayBackgroundViewConstraints() {
@@ -94,6 +142,51 @@ private extension CategoryViewCell {
             dishImageView.bottomAnchor.constraint(equalTo: grayBackgroundView.bottomAnchor, constant: -10),
             dishImageView.heightAnchor.constraint(equalToConstant: 80),
             dishImageView.widthAnchor.constraint(equalTo: dishImageView.widthAnchor),
+        ])
+    }
+
+    func setupTitleLabelConstraints() {
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: dishImageView.trailingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: dishImageView.topAnchor, constant: 12),
+        ])
+    }
+
+    func setupChevronImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            chevronImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 10),
+            chevronImageView.centerYAnchor.constraint(equalTo: dishImageView.centerYAnchor),
+            chevronImageView.trailingAnchor.constraint(equalTo: grayBackgroundView.trailingAnchor),
+            chevronImageView.heightAnchor.constraint(equalToConstant: 40),
+            chevronImageView.widthAnchor.constraint(equalTo: chevronImageView.widthAnchor),
+        ])
+    }
+
+    func setuptimerImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            timerImageView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timerImageView.bottomAnchor.constraint(equalTo: dishImageView.bottomAnchor, constant: -13),
+        ])
+    }
+
+    func setuptimerLabelConstraints() {
+        NSLayoutConstraint.activate([
+            timerLabel.leadingAnchor.constraint(equalTo: timerImageView.trailingAnchor, constant: 4),
+            timerLabel.centerYAnchor.constraint(equalTo: timerImageView.centerYAnchor),
+        ])
+    }
+
+    func setupPizzaImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            pizzaImageView.leadingAnchor.constraint(equalTo: timerImageView.trailingAnchor, constant: 70),
+            pizzaImageView.centerYAnchor.constraint(equalTo: timerImageView.centerYAnchor),
+        ])
+    }
+
+    func setupCaloriesLabelConstraints() {
+        NSLayoutConstraint.activate([
+            caloriesLabel.leadingAnchor.constraint(equalTo: pizzaImageView.trailingAnchor, constant: 4),
+            caloriesLabel.centerYAnchor.constraint(equalTo: timerImageView.centerYAnchor),
         ])
     }
 }
