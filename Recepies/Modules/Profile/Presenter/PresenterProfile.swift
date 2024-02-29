@@ -36,18 +36,24 @@ protocol ProfilePresenterProtocol: AnyObject {
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
+
     var options: [OptionsProtocol] = Options.makeOption()
     var profileUser: ProfileUserProtocol = ProfileUser.makeProfile()
+
     // MARK: - Private Properties
+
     private weak var view: ProfileViewProtocol?
     private var coordinator: BaseModuleCoordinator?
-    
+
     // MARK: - Initializers
+
     init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator) {
         self.view = view
         self.coordinator = coordinator
     }
-// MARK: - Public Methods
+
+    // MARK: - Public Methods
+
     func setTitleNameUser(name: String) {
         profileUser.userName = name
         view?.reloadData()
