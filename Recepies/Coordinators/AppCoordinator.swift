@@ -26,19 +26,20 @@ final class AppCoordinator: BaseCoodinator {
         // Set Recepies
         let recipeCoordinator = RecipesCoordinator()
         let recipeModuleView = builder.makeRecepiesModule(coordinator: recipeCoordinator)
-        // TODO: - Uncomment when module is ready
-//        recipeModuleView.presenter?.coordinator = recipeCoordinator
+        recipeCoordinator.setRootController(recipeModuleView)
+        add(coordinator: recipeCoordinator)
 
         // Set Favorites
         let favoritesCoordinator = FavoritesCoordinator()
         let favoritesModelView = builder.makeFavoritesModule(coordinator: favoritesCoordinator)
-        // TODO: - Uncomment when module is ready
-//        favoritesModelView.presenter?.coordinator = favoritesCoordinator
+        favoritesCoordinator.setRootController(favoritesModelView)
+        add(coordinator: favoritesCoordinator)
 
         // Set Profile
         let profileCoordinator = ProfileCoordinator()
         let profileModelView = builder.makeProfileModule(coordinator: profileCoordinator)
-        profileModelView.profilePresenter?.coordinator = profileCoordinator
+        profileCoordinator.setRootController(profileModelView)
+//        profileModelView.profilePresenter?.coordinator = profileCoordinator
         profileCoordinator.finishFlowHandler = { [weak self] in
             self?.remove(coordinator: profileCoordinator)
             self?.showAuthScreen()

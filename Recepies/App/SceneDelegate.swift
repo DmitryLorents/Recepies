@@ -4,8 +4,8 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
     private var appCoordinator: AppCoordinator?
+    var window: UIWindow?
 
     func scene(
         _ scene: UIScene,
@@ -20,12 +20,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        let rootView = CategoryView()
-        let category = Category.makeCategory()[4]
-        let presenter = CategoryPresenter(view: rootView, category: category)
-        rootView.presenter = presenter
-        window?.rootViewController = rootView
-//        appCoordinator = AppCoordinator()
-//        appCoordinator?.start()
+        appCoordinator = AppCoordinator()
+        appCoordinator?.start()
     }
 }

@@ -17,7 +17,7 @@ final class CategoryViewCell: UITableViewCell {
     // MARK: - Visual Components
 
     private let dishImageView: UIImageView = {
-        let imageView = UIImageView(image: .dish)
+        let imageView = UIImageView(image: .dish1)
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         return imageView
@@ -49,7 +49,7 @@ final class CategoryViewCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private var recipe: Recipe? {
+    private var recipe: Recepies? {
         didSet {
             if let recipe {
                 configureSubview(with: recipe)
@@ -73,7 +73,7 @@ final class CategoryViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(with recipe: Recipe?) {
+    func setupCell(with recipe: Recepies?) {
         self.recipe = recipe
     }
 
@@ -109,7 +109,7 @@ final class CategoryViewCell: UITableViewCell {
         return label
     }
 
-    private func configureSubview(with recipe: Recipe) {}
+    private func configureSubview(with recipe: Recepies) {}
 }
 
 // MARK: - Constraints

@@ -39,7 +39,13 @@ final class Builder: BuilderProtocol {
 
     func makeRecepiesModule(coordinator: BaseModuleCoordinator) -> RecepiesViewController {
         let view = RecepiesViewController()
-        view.tabBarItem = UITabBarItem(title: Constants.recepiesViewTitle, image: .recipes, selectedImage: .recipesSet)
+        let presenter = RecepiesPresenter(view: view, coordinator: coordinator)
+        view.recepiesPresenter = presenter
+        view.tabBarItem = UITabBarItem(
+            title: Constants.recepiesViewTitle,
+            image: .recipes,
+            selectedImage: .recipesSet
+        )
         return view
     }
 
