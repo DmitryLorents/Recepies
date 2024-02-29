@@ -36,7 +36,7 @@ final class ProfileView: UIViewController {
     // MARK: - Private Properties
 
     private var tableView = UITableView()
-    private let content: [CellTypes] = [.profile, .options]
+    private let contentTypes: [CellTypes] = [.profile, .options]
 
     // MARK: - Life Cycle
 
@@ -86,11 +86,11 @@ final class ProfileView: UIViewController {
 
 extension ProfileView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        content.count
+        contentTypes.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let countRow = content[section]
+        let countRow = contentTypes[section]
         switch countRow {
         case .profile:
             return 1
@@ -100,7 +100,7 @@ extension ProfileView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let items = content[indexPath.section]
+        let items = contentTypes[indexPath.section]
         switch items {
         case .profile:
             guard let cell = tableView.dequeueReusableCell(
@@ -133,7 +133,7 @@ extension ProfileView: UITableViewDataSource {
 
 extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let items = content[indexPath.section]
+        let items = contentTypes[indexPath.section]
         switch items {
         case .profile: break
         case .options:
