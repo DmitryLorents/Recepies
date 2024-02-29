@@ -3,12 +3,14 @@
 
 import UIKit
 
-/// class viewcontroller
-class ProfileView: UIViewController {
+/// Экран профиля
+final class ProfileView: UIViewController {
     // MARK: - Types
 
     private enum CellTypes {
+        /// Тип ячейки профиля
         case profile
+        /// Тип ячейки опций
         case options
     }
 
@@ -18,9 +20,13 @@ class ProfileView: UIViewController {
         static let mainTableViewCellIdentifier = "MainTableViewCell"
         static let otherTableViewCellIdentifier = "OtherTableViewCell"
         static let editNameTitle = "Change your name and surname"
+        static let showLogOutTitle = "Are you sure you want to log out?"
         static let cancelActionTitle = "Cancel"
         static let conformActionTitle = "OK"
+        static let yesActionTitle = "Yes"
         static let textFieldPlaceholder = "Name Surname"
+        static let titleLabel = "Profile"
+        static let veradanaBoldFont = "Verdana-Bold"
     }
 
     // MARK: - Public Properties
@@ -37,34 +43,46 @@ class ProfileView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTable()
-        view.backgroundColor = .white
+        setupNavBar()
     }
-
-    // MARK: - Public Methods
 
     // MARK: - Private Methods
 
-    private func configureTable() {
-        let nameLabel = UIBarButtonItem(title: "mary_rmLink", style: .done, target: nil, action: nil)
+    private func setupNavBar() {
+        let nameLabel = UIBarButtonItem(title: Constants.titleLabel, style: .plain, target: nil, action: nil)
         nameLabel.tintColor = .black
         nameLabel.setTitleTextAttributes(
-            [NSAttributedString.Key.font: UIFont(name: "Verdana-Bold", size: 18) ?? UIFont.systemFont(ofSize: 6)],
+            [
+                NSAttributedString.Key.font: UIFont(name: Constants.veradanaBoldFont, size: 28) ?? UIFont
+                    .systemFont(ofSize: 6)
+            ],
             for: .normal
         )
         navigationItem.leftBarButtonItem = nameLabel
+    }
+
+    private func configureTable() {
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: Constants.mainTableViewCellIdentifier)
         tableView.register(OtherTableViewCell.self, forCellReuseIdentifier: Constants.otherTableViewCellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        setConstarint()
+    }
+
+    private func setConstarint() {
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        view.backgroundColor = .white
     }
 }
+
+// MARK: - ProfileView + UITableViewDataSource
 
 extension ProfileView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -91,7 +109,7 @@ extension ProfileView: UITableViewDataSource {
                 as? MainTableViewCell else { return UITableViewCell() }
             guard let profile = profilePresenter?.profileUser else { return UITableViewCell() }
             cell.setupCell(profile: profile)
-            cell.editName = { [weak self] in
+            cell.editNameHandler = { [weak self] in
                 self?.profilePresenter?.setupAlert()
             }
 
@@ -104,22 +122,58 @@ extension ProfileView: UITableViewDataSource {
             ) as? OtherTableViewCell
             else { return UITableViewCell() }
             guard let options = profilePresenter?.options else { return UITableViewCell() }
-            cell.accessoryType = .detailButton
+            cell.accessoryType = .disclosureIndicator
             cell.setupCell(options: options[indexPath.row])
             return cell
         }
     }
 }
 
-// MARK: - ProfileViewController + ProfileViewProtocol
+// MARK: - ProfileView + UITableViewDelegate
+
+extension ProfileView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let items = content[indexPath.section]
+        switch items {
+        case .profile: break
+        case .options:
+            profilePresenter?.didSetectItem(index: indexPath.row)
+        }
+    }
+}
+
+// MARK: - ProfileView + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
+    func openBunusView() {
+        let bonusPresenter = BonusPresenter()
+        let bonusViewController = BonusViewController()
+        if let sheet = bonusViewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.preferredCornerRadius = 30
+        }
+        bonusViewController.bonusPresenter = bonusPresenter
+        bonusPresenter.view = bonusViewController
+        present(bonusViewController, animated: true)
+    }
+
+    func showLogOutAlert() {
+        let alert = UIAlertController(title: Constants.showLogOutTitle, message: nil, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: Constants.yesActionTitle, style: .default) { [weak self] _ in
+            self?.profilePresenter?.logOutProfile()
+        }
+        let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .default)
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
+    }
+
     func showEditNameAlert() {
         let alert = UIAlertController(title: Constants.editNameTitle, message: nil, preferredStyle: .alert)
-        let conformAction = UIAlertAction(title: Constants.conformActionTitle, style: .default) { _ in
+        let conformAction = UIAlertAction(title: Constants.conformActionTitle, style: .default) { [weak self] _ in
             if let text = alert.textFields?[0] {
-                self.profilePresenter?.profileUser.userName = text.text ?? Constants.textFieldPlaceholder
-                self.tableView.reloadData()
+                self?.profilePresenter?.setTitleNameUser(name: text.text ?? "")
             }
         }
         let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .default)
@@ -131,5 +185,9 @@ extension ProfileView: ProfileViewProtocol {
         alert.addAction(cancelAction)
 
         present(alert, animated: true)
+    }
+
+    func reloadData() {
+        tableView.reloadData()
     }
 }

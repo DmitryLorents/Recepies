@@ -55,7 +55,7 @@ final class OtherTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(options: Options) {
+    func setupCell(options: OptionsProtocol) {
         iconImageView.image = UIImage(named: options.icon)
         currentOptionsLabel.text = options.nameOptions
     }
