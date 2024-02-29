@@ -17,8 +17,8 @@ protocol ProfileViewProtocol: AnyObject {
 
 /// Протокол презентера профиля
 protocol ProfilePresenterProtocol: AnyObject {
-    /// Координатор
-    var coordinator: BaseModuleCoordinator? { get set }
+    /// Инициализация профиля
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator)
     /// Массив опций
     var options: [OptionsProtocol] { get set }
     /// Информация о пользователе
@@ -38,15 +38,18 @@ protocol ProfilePresenterProtocol: AnyObject {
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
-
-    weak var view: ProfileViewProtocol?
-
-    var coordinator: BaseModuleCoordinator?
     var options: [OptionsProtocol] = Options.makeOption()
     var profileUser: ProfileUserProtocol = ProfileUser.makeProfile()
-
-    // MARK: - Public Methods
-
+    // MARK: - Private Properties
+    private weak var view: ProfileViewProtocol?
+    private var coordinator: BaseModuleCoordinator?
+    
+    // MARK: - Initializers
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator) {
+        self.view = view
+        self.coordinator = coordinator
+    }
+// MARK: - Public Methods
     func setTitleNameUser(name: String) {
         profileUser.userName = name
         view?.reloadData()
