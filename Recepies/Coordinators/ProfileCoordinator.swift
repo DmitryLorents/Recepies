@@ -10,10 +10,10 @@ final class ProfileCoordinator: BaseModuleCoordinator {
     }
 
     func logOut() {
-        onFinishFlow?()
+        finishFlowHandler?()
     }
 
     private func showLogin() {
-        setAsRoot(rootController)
+        setAsRoot(publicRootController)
     }
 }

@@ -42,11 +42,19 @@ class BaseCoodinator {
 /// Base class to inherit for modules coordinators
 class BaseModuleCoordinator: BaseCoodinator {
     /// Root controller for nested UINavigationController
-    var rootController: UINavigationController
+    private var rootController: UINavigationController?
+    var publicRootController: UINavigationController {
+        if let rootController {
+            return rootController
+        } else {
+            return UINavigationController()
+        }
+    }
+
     /// Action to finish navigation flow
-    var onFinishFlow: (() -> ())?
-    /// Base init for inheriting classes
-    init(rootController: UIViewController) {
+    var finishFlowHandler: VoidHandler?
+    /// Injecting rootViewController
+    func setRootController(_ rootController: UIViewController) {
         self.rootController = UINavigationController(rootViewController: rootController)
     }
 }

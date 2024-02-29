@@ -7,59 +7,63 @@ import UIKit
 final class AppCoordinator: BaseCoodinator {
     // MARK: - Private Properties
 
-    private var tabBarViewController: MainTabBarViewController?
+    private var mainTabBarViewController: MainTabBarViewController?
     private var builder = Builder()
 
     // MARK: - Public Methods
 
     override func start() {
         if "login" == "login" {
-            toMain()
+            showMainTabBar()
         } else {
-            toAuth()
+            showAuthScreen()
         }
     }
 
     // MARK: - Private Methods
 
-    private func toMain() {
+    private func showMainTabBar() {
         // Set Recepies
-        let recipeModuleView = builder.makeRecepiesModule()
-        let recipeCoordinator = RecipesCoordinator(rootController: recipeModuleView)
+        let recipeCoordinator = RecipesCoordinator()
+        let recipeModuleView = builder.makeRecepiesModule(coordinator: recipeCoordinator)
         // TODO: - Uncomment when module is ready
 //        recipeModuleView.presenter?.coordinator = recipeCoordinator
 
         // Set Favorites
-        let favoritesModelView = builder.makeFavoritesModule()
-        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModelView)
+        let favoritesCoordinator = FavoritesCoordinator()
+        let favoritesModelView = builder.makeFavoritesModule(coordinator: favoritesCoordinator)
         // TODO: - Uncomment when module is ready
 //        favoritesModelView.presenter?.coordinator = favoritesCoordinator
 
         // Set Profile
-        let profileModelView = builder.makeProfileModule()
-        let profileCoordinator = ProfileCoordinator(rootController: profileModelView)
+        let profileCoordinator = ProfileCoordinator()
+        let profileModelView = builder.makeProfileModule(coordinator: profileCoordinator)
         profileModelView.profilePresenter?.coordinator = profileCoordinator
-        profileCoordinator.onFinishFlow = { [weak self] in
+        profileCoordinator.finishFlowHandler = { [weak self] in
             self?.remove(coordinator: profileCoordinator)
-            self?.toAuth()
+            self?.showAuthScreen()
         }
         add(coordinator: profileCoordinator)
         // Set TabBarViewController
-        tabBarViewController = MainTabBarViewController()
-        tabBarViewController?.setViewControllers(
-            [recipeCoordinator.rootController, favoritesCoordinator.rootController, profileCoordinator.rootController],
+        mainTabBarViewController = MainTabBarViewController()
+        mainTabBarViewController?.setViewControllers(
+            [
+                recipeCoordinator.publicRootController,
+                favoritesCoordinator.publicRootController,
+                profileCoordinator.publicRootController
+            ],
             animated: false
         )
-        setAsRoot(tabBarViewController ?? UIViewController())
+        setAsRoot(mainTabBarViewController ?? UIViewController())
     }
 
-    private func toAuth() {
-        let authModuleView = builder.makeAuthModule()
-        let authCoordinator = AuthCoordinator(rootController: authModuleView)
-        authModuleView.presenter?.coordinator = authCoordinator
-        authCoordinator.onFinishFlow = { [weak self] in
+    private func showAuthScreen() {
+        let authCoordinator = AuthCoordinator()
+        let authModuleView = builder.makeAuthModule(coordinator: authCoordinator)
+        authCoordinator.setRootController(authModuleView)
+        authCoordinator.finishFlowHandler = { [weak self] in
             self?.remove(coordinator: authCoordinator)
-            self?.toMain()
+            self?.showMainTabBar()
         }
         add(coordinator: authCoordinator)
         authCoordinator.start()

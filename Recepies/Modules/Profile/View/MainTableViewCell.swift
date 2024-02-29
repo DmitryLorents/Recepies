@@ -39,7 +39,7 @@ final class MainTableViewCell: UITableViewCell {
 
     // MARK: - Public Properties
 
-    var editNameHandler: (() -> ())?
+    var editNameHandler: VoidHandler?
 
     // MARK: - Initializers
 
