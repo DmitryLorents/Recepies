@@ -26,6 +26,8 @@ final class RecepiesViewController: UIViewController {
         return collectionView
     }()
 
+    // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setTitle()
@@ -33,7 +35,18 @@ final class RecepiesViewController: UIViewController {
         setConstraint()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deselectItem()
+    }
+
     // MARK: - Private Methods
+
+    private func deselectItem() {
+        if let selectedIndex = collectionView.indexPathsForSelectedItems?.first {
+            collectionView.deselectItem(at: selectedIndex, animated: false)
+        }
+    }
 
     private func setTitle() {
         let label = UILabel()
