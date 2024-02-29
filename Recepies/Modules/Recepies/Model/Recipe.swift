@@ -45,37 +45,37 @@ struct Category {
                 recipes: [.init(name: "", recipeImage: "", timeToCook: 0, calories: 0)]
             ),
             .init(name: "Fish", categoryImage: "salad", recipes: [.init(name: "Simple Fish And Corn",
-                                                                        recipeImage: "", timeToCook: 60,
+                                                                        recipeImage: "dish1", timeToCook: 60,
                                                                         calories: 274),
                                                                   .init(
-                                                                      name: "",
-                                                                      recipeImage: "",
-                                                                      timeToCook: 0,
-                                                                      calories: 0
+                                                                      name: "Baked Fish with Lemon Herb Sauce",
+                                                                      recipeImage: "dish2",
+                                                                      timeToCook: 90,
+                                                                      calories: 616
                                                                   ),
                                                                   .init(
-                                                                      name: "",
-                                                                      recipeImage: "",
-                                                                      timeToCook: 0,
-                                                                      calories: 0
+                                                                      name: "Lemon and Chilli Fish Burrito",
+                                                                      recipeImage: "dish3",
+                                                                      timeToCook: 99,
+                                                                      calories: 226
                                                                   ),
                                                                   .init(
-                                                                      name: "",
-                                                                      recipeImage: "",
-                                                                      timeToCook: 0,
-                                                                      calories: 0
+                                                                      name: "Fast Roast Fish & Show Peas Recipes",
+                                                                      recipeImage: "dish4",
+                                                                      timeToCook: 100,
+                                                                      calories: 410
                                                                   ),
                                                                   .init(
-                                                                      name: "",
-                                                                      recipeImage: "",
-                                                                      timeToCook: 0,
-                                                                      calories: 0
+                                                                      name: "Salmon with Cantaloupe and Fried Shallots",
+                                                                      recipeImage: "dish5",
+                                                                      timeToCook: 100,
+                                                                      calories: 94
                                                                   ),
                                                                   .init(
-                                                                      name: "",
-                                                                      recipeImage: "",
-                                                                      timeToCook: 0,
-                                                                      calories: 0
+                                                                      name: "Chilli and Tomato Fish",
+                                                                      recipeImage: "dish6",
+                                                                      timeToCook: 100,
+                                                                      calories: 174
                                                                   ),
                 ]),
             .init(
