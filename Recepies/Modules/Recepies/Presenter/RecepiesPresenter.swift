@@ -37,7 +37,9 @@ final class RecepiesPresenter: RecepiesPresenterProtocol {
     // MARK: - Public Methods
 
     func getIndex(index: Int) {
-//        coordinator?.publicRootController
-        print(index)
+        let selectedCategory = category[index]
+        if let recepiesCoordinator = coordinator as? RecipesCoordinator {
+            recepiesCoordinator.showCategoryScren(category: selectedCategory)
+        }
     }
 }
