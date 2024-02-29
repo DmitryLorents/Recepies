@@ -7,19 +7,9 @@ import UIKit
 protocol CategoryViewProtocol: AnyObject {
     /// View's presenter
     var presenter: CategoryPresenterProtocol? { get set }
-    /// Setting delegate and dataSource for recipesTableView
-    /// - Parameter delegate: UITableViewDelegate
-    /// - Parameter dataSource: UITableViewDataSource
-    func set(delegate: UITableViewDelegate, dataSource: UITableViewDataSource)
-//    /// Notify user if password format is incorrect
-//    /// - Parameter decision: defines necessity to notify the user
-//    func showIncorrectPasswordFormat(_ decision: Bool)
-//    /// Notify user if email or password are not valid
-//    /// - Parameter decision: defines necessity to notify the user
-//    func showIncorrectUserData(_ decision: Bool)
-//    /// Set password textField in secure/nonsecure mode
-//    /// - Parameter decision: defines necessity to set secure
-//    func setPasswordSecured(isSecured: Bool)
+    /// Setting category into view
+    /// - Parameter category: producnt category
+    func set(category: Category?)
 }
 
 /// View to show authorization screen
@@ -43,13 +33,12 @@ final class CategoryView: UIViewController {
 
     private lazy var recipesTableView: UITableView = {
         let tableView = UITableView()
-//        tableView.separatorStyle = .none
-        tableView.backgroundColor = .red
+        tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 114
         tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
-        tableView.dataSource = presenter as? UITableViewDataSource
-        tableView.delegate = presenter as? UITableViewDelegate
+        tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
 
@@ -59,36 +48,42 @@ final class CategoryView: UIViewController {
 
     // MARK: - Private Properties
 
-    var loginButtonBottomConstraint: NSLayoutConstraint?
+    private var category: Category? {
+        didSet {
+            if let category {
+                setSubViews(with: category)
+            }
+        }
+    }
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        presenter?.askForCategory()
         setupVIew()
-//        presenter?.askForDelegateAndDataSource()
     }
 
     // MARK: - Private Methods
 
     private func setupVIew() {
-        view.backgroundColor = .systemMint
         view.addSubviews(
             recipesTableView
         )
         view.disableTARMIC()
         setupConstraints()
     }
+
+    func setSubViews(with: Category) {
+        recipesTableView.reloadData()
+    }
 }
 
 // MARK: - AuthView - CategoryViewProtocol
 
 extension CategoryView: CategoryViewProtocol {
-    func set(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        recipesTableView.delegate = delegate
-        recipesTableView.dataSource = dataSource
-        recipesTableView.reloadData()
+    func set(category: Category?) {
+        self.category = category
     }
 }
 
@@ -192,4 +187,25 @@ private extension CategoryView {
 //            activityIndicatorView.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor),
 //        ])
 //    }
+}
+
+// MARK: - CategoryView - UITableViewDelegate
+
+extension CategoryView: UITableViewDelegate {}
+
+// MARK: - CategoryView - UITableViewDataSource
+
+extension CategoryView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        category?.recipes.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
+        else { return .init() }
+        let recipe = category?.recipes[indexPath.row]
+        cell.setupCell(with: recipe)
+        return cell
+    }
 }

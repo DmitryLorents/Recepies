@@ -11,6 +11,20 @@ final class CategoryViewCell: UITableViewCell {
 
     // MARK: - Visual Components
 
+    private let dishImageView: UIImageView = {
+        let imageView = UIImageView(image: .dish)
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private let grayBackgroundView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .cellBackground
+        return view
+    }()
+
     // MARK: - Public Properties
 
     // MARK: - Private Properties
@@ -46,7 +60,10 @@ final class CategoryViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func setupView() {
-        contentView.backgroundColor = .yellow
+        contentView.addSubview(grayBackgroundView)
+        contentView.disableTARMIC()
+        grayBackgroundView.addSubviews(dishImageView)
+        grayBackgroundView.disableTARMIC()
         setupConstraints()
     }
 
@@ -55,8 +72,28 @@ final class CategoryViewCell: UITableViewCell {
 
 // MARK: - Constraints
 
-extension CategoryViewCell {
-    private func setupConstraints() {
-        contentView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+private extension CategoryViewCell {
+    func setupConstraints() {
+        setupGrayBackgroundViewConstraints()
+        setupDishImageViewConstraints()
+    }
+
+    func setupGrayBackgroundViewConstraints() {
+        NSLayoutConstraint.activate([
+            grayBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            grayBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            grayBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
+            grayBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7),
+        ])
+    }
+
+    func setupDishImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            dishImageView.leadingAnchor.constraint(equalTo: grayBackgroundView.leadingAnchor, constant: 10),
+            dishImageView.topAnchor.constraint(equalTo: grayBackgroundView.topAnchor, constant: 10),
+            dishImageView.bottomAnchor.constraint(equalTo: grayBackgroundView.bottomAnchor, constant: -10),
+            dishImageView.heightAnchor.constraint(equalToConstant: 80),
+            dishImageView.widthAnchor.constraint(equalTo: dishImageView.widthAnchor),
+        ])
     }
 }

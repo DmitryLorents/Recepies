@@ -8,7 +8,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Main initializer
     init(view: CategoryViewProtocol, /* coordinator: BaseModuleCoordinator, */ category: Category)
     /// Asking presenter to set delegate and dataSource for TableView
-    func askForDelegateAndDataSource()
+    func askForCategory()
     //    /// Validates user email adress and password, ask view to notify user if email or password are wrong
     //    /// - Parameter email: string value of user's email
     //    /// - Parameter password: string value of user's password
@@ -17,7 +17,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     //    func setPasswordeSecureStatus()
 }
 
-final class CategoryPresenter: NSObject, CategoryPresenterProtocol {
+final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Private Properties
 
     private weak var coordinator: BaseModuleCoordinator?
@@ -34,28 +34,7 @@ final class CategoryPresenter: NSObject, CategoryPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func askForDelegateAndDataSource() {
-        view?.set(delegate: self, dataSource: self)
-    }
-}
-
-// MARK: - CategoryPresenter - UITableViewDelegate
-
-extension CategoryPresenter: UITableViewDelegate {}
-
-// MARK: - CategoryPresenter - UITableViewDataSource
-
-extension CategoryPresenter: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        category?.recipes.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
-        else { return .init() }
-        let recipe = category?.recipes[indexPath.row]
-        cell.setupCell(with: recipe)
-        return cell
+    func askForCategory() {
+        view?.set(category: category)
     }
 }
