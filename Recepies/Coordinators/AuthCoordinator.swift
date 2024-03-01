@@ -8,9 +8,11 @@ final class AuthCoordinator: BaseModuleCoordinator {
     override func start() {
         showLogin()
     }
+
     func finishFlow() {
         finishFlowHandler?()
     }
+
     private func showLogin() {
         setAsRoot(publicRootController)
     }
