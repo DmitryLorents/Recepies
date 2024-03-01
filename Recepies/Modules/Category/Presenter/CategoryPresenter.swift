@@ -11,6 +11,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category)
     /// Asking presenter to set delegate and dataSource for TableView
     func goBack()
+    /// Shows detailed recipe screen
+    func showDetailedScreen(for indexPath: IndexPath)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -36,6 +38,12 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     func goBack() {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
             recipesCoordinator.goBack()
+        }
+    }
+
+    func showDetailedScreen(for indexPath: IndexPath) {
+        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = category?.recipes[indexPath.row] {
+            recipesCoordinator.goToDetailed(recipe: recipe)
         }
     }
 }
