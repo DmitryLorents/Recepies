@@ -10,52 +10,52 @@ struct Category {
     /// Массив рецептов
     let recipes: [Recipe]
     /// Заполнение данных категории
-    static func makeCategory() -> [Category] {
+    static func makeMockCategory() -> [Category] {
         [
             .init(
                 name: "Salad",
                 categoryImage: "salad",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Soup",
                 categoryImage: "soup",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Chicken",
                 categoryImage: "chicken",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Meat",
                 categoryImage: "meat",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Side dish",
                 categoryImage: "side dish",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Drinks",
                 categoryImage: "drinks",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Pancakes",
                 categoryImage: "pancakes",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Desserts",
                 categoryImage: "desserts",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
             .init(
                 name: "Desserts",
                 categoryImage: "desserts",
-                recipes: Recipe.makeRecipes()
+                recipes: Recipe.makeMockRecipes()
             ),
         ]
     }

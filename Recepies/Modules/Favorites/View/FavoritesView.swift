@@ -92,7 +92,7 @@ final class FavoritesView: UIViewController {
         super.viewDidLoad()
         setupVIew()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEmptyNoticeVisibility()
@@ -108,7 +108,7 @@ final class FavoritesView: UIViewController {
         grayView.disableTARMIC()
         setupConstraints()
     }
-    
+
     private func setEmptyNoticeVisibility() {
         stackView.isHidden = (presenter?.recipes?.count ?? 0) > 0
     }
