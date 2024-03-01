@@ -7,7 +7,6 @@ protocol FavoritesPresenterProtocol: AnyObject {
     var recipes: [Recipe]? { get }
     /// Main initializer
     init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator)
-   
 }
 
 final class FavoritesPresenter: FavoritesPresenterProtocol {
@@ -28,7 +27,4 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     }
 
     // MARK: - Public Methods
-
-   
 }
-

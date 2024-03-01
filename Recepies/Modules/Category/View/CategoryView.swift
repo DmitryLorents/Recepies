@@ -181,7 +181,11 @@ private extension CategoryView {
 
 // MARK: - CategoryView - UITableViewDelegate
 
-extension CategoryView: UITableViewDelegate {}
+extension CategoryView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter?.showDetailedScreen(for: indexPath)
+    }
+}
 
 // MARK: - CategoryView - UITableViewDataSource
 

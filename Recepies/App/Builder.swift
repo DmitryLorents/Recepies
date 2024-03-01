@@ -53,6 +53,8 @@ final class Builder: BuilderProtocol {
 
     func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView {
         let view = FavoritesView()
+        let presenter = FavoritesPresenter(view: view, coordinator: coordinator)
+        view.presenter = presenter
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
     }

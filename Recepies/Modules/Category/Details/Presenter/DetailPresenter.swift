@@ -4,8 +4,7 @@
 import Foundation
 
 /// Протокол для экрана деталей
-protocol DetailViewProtocol: AnyObject {
-}
+protocol DetailViewProtocol: AnyObject {}
 
 /// Протокол презентера деталей
 protocol DetailPresenterProtocol: AnyObject {
@@ -25,5 +24,9 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
+    }
+
+    func getCategory(category: Category) {
+        recipesDetail = category
     }
 }
