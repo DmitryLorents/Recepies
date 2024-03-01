@@ -4,8 +4,8 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
     private var appCoordinator: AppCoordinator?
+    var window: UIWindow?
 
     func scene(
         _ scene: UIScene,
