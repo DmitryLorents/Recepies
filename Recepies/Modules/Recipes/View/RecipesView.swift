@@ -10,7 +10,7 @@ final class RecipesView: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let recipesCollectionViewCellIdentifier = "RecepiesCollectionViewCell"
+        static let recipesCollectionViewCellIdentifier = "RecipesCollectionViewCell"
         static let veradanaFontBold = "Verdana-Bold"
         static let setTitleText = "Recipes"
     }

@@ -38,8 +38,8 @@ final class RecipesPresenter: RecipesPresenterProtocol {
 
     func getIndex(index: Int) {
         let selectedCategory = category[index]
-        if let recepiesCoordinator = coordinator as? RecipesCoordinator {
-            recepiesCoordinator.showCategoryScren(category: selectedCategory)
+        if let recipesCoordinator = coordinator as? RecipesCoordinator {
+            recipesCoordinator.showCategoryScren(category: selectedCategory)
         }
     }
 }
