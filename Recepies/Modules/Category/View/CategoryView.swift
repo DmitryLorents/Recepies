@@ -3,16 +3,15 @@
 
 import UIKit
 
-/// Protocol for Authorisation view
+/// Protocol for Category view
 protocol CategoryViewProtocol: AnyObject {
     /// View's presenter
-    var presenter: CategoryPresenterProtocol? { get set }
-    /// Setting category into view
-    /// - Parameter category: producnt category
-    func set(category: Category?)
+    var presenter: CategoryPresenterProtocol? { get }
+    /// Reload tableView
+    func updateTableView()
 }
 
-/// View to show authorization screen
+/// View to show screen with recipes
 final class CategoryView: UIViewController {
     // MARK: - Constants
 
@@ -26,11 +25,11 @@ final class CategoryView: UIViewController {
 
     private lazy var caloriesButton: UIButton = makeSortingButton(
         title: Constants.caloriesButtonTitle,
-        action: #selector(caloriesButtonAction)
+        action: #selector(caloriesButtonAction(_:))
     )
     private lazy var timeButton: UIButton = makeSortingButton(
         title: Constants.timeButtonTitle,
-        action: #selector(timeButtonAction)
+        action: #selector(timeButtonAction(_:))
     )
 
     private let recipeSearchBar: UISearchBar = {
@@ -60,21 +59,10 @@ final class CategoryView: UIViewController {
 
     var presenter: CategoryPresenterProtocol?
 
-    // MARK: - Private Properties
-
-    private var category: Category? {
-        didSet {
-            if let category {
-                setSubViews(with: category)
-            }
-        }
-    }
-
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.askForCategory()
         setupVIew()
     }
 
@@ -93,17 +81,13 @@ final class CategoryView: UIViewController {
         setupConstraints()
     }
 
-    private func setSubViews(with: Category) {
-        recipesTableView.reloadData()
-    }
-
     private func setNavigationItem() {
         let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         backButton.setImage(.arrowLeft, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = category?.name
+        titleLabel.text = presenter?.category?.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -118,7 +102,6 @@ final class CategoryView: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: leftBarView.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: leftBarView.bottomAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: leftBarView.trailingAnchor),
-
             leftBarView.heightAnchor.constraint(equalToConstant: 30)
         ])
 
@@ -126,24 +109,16 @@ final class CategoryView: UIViewController {
     }
 
     private func makeSortingButton(title: String, action: Selector) -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = .cellBackground
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.makeVerdanaRegular(size: 16)
-        button.setTitle("    \(title)   ", for: .normal)
-        button.setImage(.up, for: .normal)
-        button.layer.cornerRadius = 18
-        button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 12)
+        let button = SortingButton(title: title, height: 36)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
 
-    @objc private func caloriesButtonAction() {
+    @objc private func caloriesButtonAction(_ sender: UIButton) {
         print(#function)
     }
 
-    @objc private func timeButtonAction() {
+    @objc private func timeButtonAction(_ sender: UIButton) {
         print(#function)
     }
 
@@ -155,8 +130,8 @@ final class CategoryView: UIViewController {
 // MARK: - AuthView - CategoryViewProtocol
 
 extension CategoryView: CategoryViewProtocol {
-    func set(category: Category?) {
-        self.category = category
+    func updateTableView() {
+        recipesTableView.reloadData()
     }
 }
 
@@ -212,14 +187,14 @@ extension CategoryView: UITableViewDelegate {}
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        category?.recepies.count ?? 0
+        presenter?.category?.recepies.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = category?.recepies[indexPath.row]
+        let recipe = presenter?.category?.recepies[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

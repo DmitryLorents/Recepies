@@ -5,20 +5,23 @@ import UIKit
 
 /// Protocol for Authorization screen presenter
 protocol CategoryPresenterProtocol: AnyObject {
+    /// Categories of product to show by view
+    var category: Category? { get }
     /// Main initializer
     init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category)
     /// Asking presenter to set delegate and dataSource for TableView
-    func askForCategory()
-    /// move back in navigation flow
     func goBack()
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
+    // MARK: - Public Properties
+
+    var category: Category?
+
     // MARK: - Private Properties
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
-    private var category: Category?
 
     // MARK: - Initialization
 
@@ -29,10 +32,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     // MARK: - Public Methods
-
-    func askForCategory() {
-        view?.set(category: category)
-    }
 
     func goBack() {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
