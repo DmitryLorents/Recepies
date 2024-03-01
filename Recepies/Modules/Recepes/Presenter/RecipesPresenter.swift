@@ -6,7 +6,7 @@ import Foundation
 // Протокол экрана бонусов
 protocol RecipesViewProtocol: AnyObject {}
 // Протокол для презентера экрана бонусов
-protocol RecepiesPresenterProtocol: AnyObject {
+protocol RecipesPresenterProtocol: AnyObject {
     /// Инициализация
     init(view: RecipesViewProtocol, coordinator: BaseModuleCoordinator)
     /// Координатор
@@ -17,7 +17,7 @@ protocol RecepiesPresenterProtocol: AnyObject {
     func getIndex(index: Int)
 }
 
-final class RecipesPresenter: RecepiesPresenterProtocol {
+final class RecipesPresenter: RecipesPresenterProtocol {
     // MARK: - Public Properties
 
     var category: [Category] = Category.makeCategory()

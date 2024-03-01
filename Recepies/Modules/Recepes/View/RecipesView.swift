@@ -11,7 +11,6 @@ final class RecipesView: UIViewController {
 
     private enum Constants {
         static let recipesCollectionViewCellIdentifier = "RecepiesCollectionViewCell"
-        static let thirdOfTheScreen = Int(UIScreen.main.bounds.width) / 3
         static let veradanaFontBold = "Verdana-Bold"
         static let setTitleText = "Recipes"
     }

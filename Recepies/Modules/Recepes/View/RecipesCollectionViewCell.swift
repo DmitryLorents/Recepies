@@ -30,7 +30,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    let view: UIView = {
+    private let view: UIView = {
         let view = UIView()
         view.backgroundColor = .grayAlfa
         view.translatesAutoresizingMaskIntoConstraints = false
