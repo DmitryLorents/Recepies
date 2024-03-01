@@ -16,7 +16,7 @@ protocol BuilderProtocol {
     /// Function to  build Category module
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView
     /// Function to  build Detail module
-    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView
+    func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView
 }
 
 /// Builder for all modules in app
@@ -76,9 +76,9 @@ final class Builder: BuilderProtocol {
         return view
     }
 
-    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView {
+    func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view, coordinator: coordinator)
+        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: Recipe)
         view.presenter = presenter
         return view
     }
