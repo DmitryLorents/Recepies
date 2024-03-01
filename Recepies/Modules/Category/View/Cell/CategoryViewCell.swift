@@ -49,7 +49,7 @@ final class CategoryViewCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private var recipe: Recepies? {
+    private var recipe: Recipe? {
         didSet {
             if let recipe {
                 configureSubview(with: recipe)
@@ -73,7 +73,7 @@ final class CategoryViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(with recipe: Recepies?) {
+    func setupCell(with recipe: Recipe?) {
         self.recipe = recipe
     }
 
@@ -109,7 +109,7 @@ final class CategoryViewCell: UITableViewCell {
         return label
     }
 
-    private func configureSubview(with recipe: Recepies) {
+    private func configureSubview(with recipe: Recipe) {
         dishImageView.image = UIImage(named: recipe.recipeImage)
         titleLabel.text = recipe.name
         timerLabel.text = "\(recipe.timeToCook)\(Constants.timerLabelText)"

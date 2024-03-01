@@ -1,14 +1,14 @@
-// RecepiesPresenter.swift
+// RecipesPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 // Протокол экрана бонусов
-protocol RecepiesViewProtocol: AnyObject {}
+protocol RecipesViewProtocol: AnyObject {}
 // Протокол для презентера экрана бонусов
 protocol RecepiesPresenterProtocol: AnyObject {
     /// Инициализация
-    init(view: RecepiesViewProtocol, coordinator: BaseModuleCoordinator)
+    init(view: RecipesViewProtocol, coordinator: BaseModuleCoordinator)
     /// Координатор
     var coordinator: BaseModuleCoordinator? { get set }
     /// Данные о рецептах
@@ -17,19 +17,19 @@ protocol RecepiesPresenterProtocol: AnyObject {
     func getIndex(index: Int)
 }
 
-final class RecepiesPresenter: RecepiesPresenterProtocol {
+final class RecipesPresenter: RecepiesPresenterProtocol {
     // MARK: - Public Properties
 
     var category: [Category] = Category.makeCategory()
 
     // MARK: - Private Properties
 
-    private weak var view: RecepiesViewProtocol?
+    private weak var view: RecipesViewProtocol?
     weak var coordinator: BaseModuleCoordinator?
 
     // MARK: - Initializers
 
-    init(view: RecepiesViewProtocol, coordinator: BaseModuleCoordinator) {
+    init(view: RecipesViewProtocol, coordinator: BaseModuleCoordinator) {
         self.view = view
         self.coordinator = coordinator
     }

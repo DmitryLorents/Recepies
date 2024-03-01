@@ -8,7 +8,7 @@ protocol BuilderProtocol {
     /// Function to Authorization module
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView
     /// Function to  Recipies module
-    func makeRecepiesModule(coordinator: BaseModuleCoordinator) -> RecepiesViewController
+    func makeRecipesModule(coordinator: BaseModuleCoordinator) -> RecipesView
     /// Function to Favorites module
     func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesViewController
     /// Function to Profile module
@@ -23,7 +23,7 @@ final class Builder: BuilderProtocol {
 
     private enum Constants {
         static let profileViewTitle = "Profile"
-        static let recepiesViewTitle = "Recipes"
+        static let recipesViewTitle = "Recipes"
         static let favoritesViewTitle = "Favorites"
     }
 
@@ -37,12 +37,12 @@ final class Builder: BuilderProtocol {
         return view
     }
 
-    func makeRecepiesModule(coordinator: BaseModuleCoordinator) -> RecepiesViewController {
-        let view = RecepiesViewController()
-        let presenter = RecepiesPresenter(view: view, coordinator: coordinator)
-        view.recepiesPresenter = presenter
+    func makeRecipesModule(coordinator: BaseModuleCoordinator) -> RecipesView {
+        let view = RecipesView()
+        let presenter = RecipesPresenter(view: view, coordinator: coordinator)
+        view.recipesPresenter = presenter
         view.tabBarItem = UITabBarItem(
-            title: Constants.recepiesViewTitle,
+            title: Constants.recipesViewTitle,
             image: .recipes,
             selectedImage: .recipesSet
         )

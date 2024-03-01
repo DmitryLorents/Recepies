@@ -1,16 +1,16 @@
-// RecepiesViewController.swift
+// RecipesView.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Экран с рецептами
-final class RecepiesViewController: UIViewController {
-    var recepiesPresenter: RecepiesPresenter?
+final class RecipesView: UIViewController {
+    var recipesPresenter: RecipesPresenter?
 
     // MARK: - Constants
 
     private enum Constants {
-        static let recepiesCollectionViewCellIdentifier = "RecepiesCollectionViewCell"
+        static let recipesCollectionViewCellIdentifier = "RecepiesCollectionViewCell"
         static let thirdOfTheScreen = Int(UIScreen.main.bounds.width) / 3
         static let veradanaFontBold = "Verdana-Bold"
         static let setTitleText = "Recipes"
@@ -63,8 +63,8 @@ final class RecepiesViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.register(
-            RecepiesCollectionViewCell.self,
-            forCellWithReuseIdentifier: Constants.recepiesCollectionViewCellIdentifier
+            RecipesCollectionViewCell.self,
+            forCellWithReuseIdentifier: Constants.recipesCollectionViewCellIdentifier
         )
     }
 
@@ -80,7 +80,7 @@ final class RecepiesViewController: UIViewController {
 
 // MARK: - CollectionPostTableViewCell + UICollectionViewDataSource
 
-extension RecepiesViewController: UICollectionViewDelegateFlowLayout {
+extension RecipesView: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -101,13 +101,13 @@ extension RecepiesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        recepiesPresenter?.getIndex(index: indexPath.item)
+        recipesPresenter?.getIndex(index: indexPath.item)
     }
 }
 
-extension RecepiesViewController: UICollectionViewDataSource {
+extension RecipesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        recepiesPresenter?.category.count ?? 0
+        recipesPresenter?.category.count ?? 0
     }
 
     func collectionView(
@@ -115,13 +115,13 @@ extension RecepiesViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: Constants.recepiesCollectionViewCellIdentifier,
+            withReuseIdentifier: Constants.recipesCollectionViewCellIdentifier,
             for: indexPath
-        ) as? RecepiesCollectionViewCell else { return UICollectionViewCell() }
-        guard let category = recepiesPresenter?.category else { return cell }
+        ) as? RecipesCollectionViewCell else { return UICollectionViewCell() }
+        guard let category = recipesPresenter?.category else { return cell }
         cell.setupCell(category: category[indexPath.item])
         return cell
     }
 }
 
-extension RecepiesViewController: RecepiesViewProtocol {}
+extension RecipesView: RecipesViewProtocol {}

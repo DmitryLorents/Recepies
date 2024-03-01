@@ -23,9 +23,9 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Private Methods
 
     private func showMainTabBar() {
-        // Set Recepies
+        // Set Recipes
         let recipeCoordinator = RecipesCoordinator()
-        let recipeModuleView = builder.makeRecepiesModule(coordinator: recipeCoordinator)
+        let recipeModuleView = builder.makeRecipesModule(coordinator: recipeCoordinator)
         recipeCoordinator.setRootController(recipeModuleView)
         add(coordinator: recipeCoordinator)
 

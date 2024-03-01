@@ -1,10 +1,10 @@
-// RecepiesCollectionViewCell.swift
+// RecipesCollectionViewCell.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Ячека категории
-final class RecepiesCollectionViewCell: UICollectionViewCell {
+final class RecipesCollectionViewCell: UICollectionViewCell {
     // MARK: - Constants
 
     private enum Constants {
