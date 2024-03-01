@@ -24,6 +24,8 @@
 		0A086EA42B8DF00900ACCD6B /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */; };
 		0A80A4722B91C8E900539C0A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4712B91C8E900539C0A /* Category.swift */; };
 		0A80A4752B923BE400539C0A /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */; };
+		0A80A4782B92700800539C0A /* PFCViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4772B92700800539C0A /* PFCViewCell.swift */; };
+		0A80A47A2B92716200539C0A /* PFCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4792B92716200539C0A /* PFCView.swift */; };
 		0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CE2DA2B91B41200D55802 /* SortingButton.swift */; };
 		0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */; };
 		0ACD2ECA2B8E76A0000BA913 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */; };
@@ -90,6 +92,8 @@
 		0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		0A80A4712B91C8E900539C0A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
+		0A80A4772B92700800539C0A /* PFCViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCViewCell.swift; sourceTree = "<group>"; };
+		0A80A4792B92716200539C0A /* PFCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCView.swift; sourceTree = "<group>"; };
 		0A9CE2DA2B91B41200D55802 /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -316,6 +320,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		0A80A4762B926FE900539C0A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0A80A4772B92700800539C0A /* PFCViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		0ACD2EC62B8E6897000BA913 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,7 +421,9 @@
 		1B9880A62B921D8C0020B796 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0A80A4762B926FE900539C0A /* Cells */,
 				1B9880AA2B921E100020B796 /* DetailView.swift */,
+				0A80A4792B92716200539C0A /* PFCView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -671,10 +685,12 @@
 				1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */,
 				0A80A4722B91C8E900539C0A /* Category.swift in Sources */,
 				1B9B36EA2B8E8F8D00E774EB /* BonusViewController.swift in Sources */,
+				0A80A4782B92700800539C0A /* PFCViewCell.swift in Sources */,
 				1B9B36E42B8E1DCC00E774EB /* ProfileView.swift in Sources */,
 				0A086EA02B8DEF4400ACCD6B /* AuthCoordinator.swift in Sources */,
 				0ACD2EEA2B91037E000BA913 /* Recipe.swift in Sources */,
 				1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */,
+				0A80A47A2B92716200539C0A /* PFCView.swift in Sources */,
 				0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */,
 				1B9B36E62B8E1E2F00E774EB /* MainTableViewCell.swift in Sources */,
 				0ACD2EDA2B9102AE000BA913 /* SceneDelegate.swift in Sources */,

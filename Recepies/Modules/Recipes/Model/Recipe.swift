@@ -26,12 +26,12 @@ struct Recipe {
         let fats: Double
         /// Углеводы
         let carbohydrates: Double
-        
+
         static func makeMockPFC() -> PFC {
             .init(proteins: 20.345, fats: 13.567, carbohydrates: 40.111)
         }
     }
-    
+
     static func makeMockRecipes() -> [Recipe] {
         [
             .init(
