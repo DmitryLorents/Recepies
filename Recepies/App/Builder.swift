@@ -80,7 +80,7 @@ final class Builder: BuilderProtocol {
 
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: Recipe)
+        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: recipe)
         view.presenter = presenter
         return view
     }

@@ -82,30 +82,30 @@ final class FavoritesView: UIViewController {
     }
 
     private func setNavigationItem() {
-        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        backButton.setImage(.arrowLeft, for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
-
-        let titleLabel = UILabel()
-        titleLabel.text = presenter?.recipes?.name
-        titleLabel.font = .makeVerdanaBold(size: 28)
-        titleLabel.textAlignment = .left
-
-        let leftBarView = UIView()
-        leftBarView.addSubviews(backButton, titleLabel)
-        leftBarView.disableTARMIC()
-
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: leftBarView.leadingAnchor),
-            backButton.centerYAnchor.constraint(equalTo: leftBarView.centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 20),
-            titleLabel.topAnchor.constraint(equalTo: leftBarView.topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: leftBarView.bottomAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: leftBarView.trailingAnchor),
-            leftBarView.heightAnchor.constraint(equalToConstant: 30)
-        ])
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
+//        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+//        backButton.setImage(.arrowLeft, for: .normal)
+//        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+//
+//        let titleLabel = UILabel()
+//        titleLabel.text = presenter?.recipes?.name
+//        titleLabel.font = .makeVerdanaBold(size: 28)
+//        titleLabel.textAlignment = .left
+//
+//        let leftBarView = UIView()
+//        leftBarView.addSubviews(backButton, titleLabel)
+//        leftBarView.disableTARMIC()
+//
+//        NSLayoutConstraint.activate([
+//            backButton.leadingAnchor.constraint(equalTo: leftBarView.leadingAnchor),
+//            backButton.centerYAnchor.constraint(equalTo: leftBarView.centerYAnchor),
+//            titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 20),
+//            titleLabel.topAnchor.constraint(equalTo: leftBarView.topAnchor),
+//            titleLabel.bottomAnchor.constraint(equalTo: leftBarView.bottomAnchor),
+//            titleLabel.trailingAnchor.constraint(equalTo: leftBarView.trailingAnchor),
+//            leftBarView.heightAnchor.constraint(equalToConstant: 30)
+//        ])
+//
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
     }
 
     private func makeSortingButton(title: String, action: Selector) -> UIButton {
@@ -122,9 +122,9 @@ final class FavoritesView: UIViewController {
         print(#function)
     }
 
-    @objc private func backButtonAction() {
-        presenter?.goBack()
-    }
+//    @objc private func backButtonAction() {
+//        presenter?.goBack()
+//    }
 }
 
 // MARK: - FavoritesView - FavoritesViewProtocol
@@ -187,15 +187,17 @@ extension FavoritesView: UITableViewDelegate {}
 
 extension FavoritesView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.recipes?.recipes.count ?? 0
+//        presenter?.recipes?.recipes.count ?? 0
+        0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
-        else { return .init() }
-        let recipe = presenter?.recipes?.recipes[indexPath.row]
-        cell.setupCell(with: recipe)
-        return cell
+//        guard let cell = tableView
+//            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
+//        else { return .init() }
+//        let recipe = presenter?.recipes?.recipes[indexPath.row]
+//        cell.setupCell(with: recipe)
+//        return cell
+        .init()
     }
 }
