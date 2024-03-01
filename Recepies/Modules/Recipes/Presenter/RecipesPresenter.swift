@@ -3,9 +3,7 @@
 
 import Foundation
 
-// Протокол экрана бонусов
-protocol RecipesViewProtocol: AnyObject {}
-// Протокол для презентера экрана бонусов
+// Протокол для презентера экрана рецептов
 protocol RecipesPresenterProtocol: AnyObject {
     /// Инициализация
     init(view: RecipesViewProtocol, coordinator: BaseModuleCoordinator)
@@ -14,9 +12,10 @@ protocol RecipesPresenterProtocol: AnyObject {
     /// Данные о рецептах
     var category: [Category] { get set }
     /// Получение индекса выбраной ячейки
-    func getIndex(index: Int)
+    func transitionToCategory(index: Int)
 }
 
+/// Презентер для экрана рецетов
 final class RecipesPresenter: RecipesPresenterProtocol {
     // MARK: - Public Properties
 
@@ -36,7 +35,7 @@ final class RecipesPresenter: RecipesPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func getIndex(index: Int) {
+    func transitionToCategory(index: Int) {
         let selectedCategory = category[index]
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
             recipesCoordinator.showCategoryScren(category: selectedCategory)

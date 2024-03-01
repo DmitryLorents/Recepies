@@ -69,8 +69,6 @@ final class CategoryViewCell: UITableViewCell {
         setupView()
     }
 
-    // MARK: - Life Cycle
-
     // MARK: - Public Methods
 
     func setupCell(with recipe: Recipe?) {

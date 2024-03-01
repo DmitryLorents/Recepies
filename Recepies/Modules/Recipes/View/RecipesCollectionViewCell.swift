@@ -26,7 +26,6 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         label.font = UIFont(name: Constants.veradanaFont, size: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
-        label.layer.cornerRadius = 15
         return label
     }()
 
@@ -41,7 +40,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            if isSelected == true {
+            if isSelected {
                 contentView.layer.borderWidth = 2
                 contentView.layer.borderColor = UIColor.currentBlue.cgColor
                 view.backgroundColor = .currentBlue.withAlphaComponent(0.82)
@@ -59,7 +58,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         nameLabel.text = category.name
         configureCell()
         setCostraints()
-        setupConstraitIsHeight()
+        heightSettingInViewConstraint()
     }
 
     // MARK: - Private Methods
@@ -69,23 +68,32 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(categoryImage)
         contentView.addSubview(nameLabel)
         contentView.layer.cornerRadius = contentView.bounds.width / 10
+        contentView.layer.shadowOpacity = 0.5
+        contentView.layer.masksToBounds = true
+        contentView.layer.cornerCurve = .continuous
+        setImageCostraints()
+        settingTheShadow()
+    }
+
+    private func settingTheShadow() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowRadius = 3
         layer.shadowOpacity = 0.5
         layer.masksToBounds = false
-        contentView.layer.shadowOpacity = 0.5
-        contentView.layer.masksToBounds = true
-        contentView.layer.cornerCurve = .continuous
     }
 
-    private func setCostraints() {
+    private func setImageCostraints() {
         NSLayoutConstraint.activate([
             categoryImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             categoryImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             categoryImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+    }
 
+    private func setCostraints() {
+        NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -96,7 +104,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         ])
     }
 
-    private func setupConstraitIsHeight() {
+    private func heightSettingInViewConstraint() {
         switch contentView.bounds.height {
         case 0 ... 150:
             view.heightAnchor.constraint(equalToConstant: contentView.bounds.height / 4).isActive = true

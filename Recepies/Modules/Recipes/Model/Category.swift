@@ -8,54 +8,54 @@ struct Category {
     /// Изображение ингридиента
     let categoryImage: String
     /// Массив рецептов
-    let recepes: [Recipe]
+    let recipes: [Recipe]
     /// Заполнение данных категории
     static func makeCategory() -> [Category] {
         [
             .init(
                 name: "Salad",
                 categoryImage: "salad",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Soup",
                 categoryImage: "soup",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Chicken",
                 categoryImage: "chicken",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Meat",
                 categoryImage: "meat",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Side dish",
                 categoryImage: "side dish",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Drinks",
                 categoryImage: "drinks",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Pancakes",
                 categoryImage: "pancakes",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Desserts",
                 categoryImage: "desserts",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
             .init(
                 name: "Desserts",
                 categoryImage: "desserts",
-                recepes: Recipe.makeRecipes()
+                recipes: Recipe.makeRecipes()
             ),
         ]
     }

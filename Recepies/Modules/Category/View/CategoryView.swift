@@ -187,14 +187,14 @@ extension CategoryView: UITableViewDelegate {}
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.category?.recepes.count ?? 0
+        presenter?.category?.recipes.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.category?.recepes[indexPath.row]
+        let recipe = presenter?.category?.recipes[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

@@ -3,9 +3,11 @@
 
 import UIKit
 
+// Протокол экрана рецептов
+protocol RecipesViewProtocol: AnyObject {}
 /// Экран с рецептами
 final class RecipesView: UIViewController {
-    var recipesPresenter: RecipesPresenter?
+    var presenter: RecipesPresenter?
 
     // MARK: - Constants
 
@@ -100,13 +102,13 @@ extension RecipesView: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        recipesPresenter?.getIndex(index: indexPath.item)
+        presenter?.transitionToCategory(index: indexPath.item)
     }
 }
 
 extension RecipesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        recipesPresenter?.category.count ?? 0
+        presenter?.category.count ?? 0
     }
 
     func collectionView(
@@ -117,7 +119,7 @@ extension RecipesView: UICollectionViewDataSource {
             withReuseIdentifier: Constants.recipesCollectionViewCellIdentifier,
             for: indexPath
         ) as? RecipesCollectionViewCell else { return UICollectionViewCell() }
-        guard let category = recipesPresenter?.category else { return cell }
+        guard let category = presenter?.category else { return cell }
         cell.setupCell(category: category[indexPath.item])
         return cell
     }

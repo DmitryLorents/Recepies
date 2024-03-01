@@ -39,7 +39,9 @@ final class SortingButton: UIButton {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        height = 0
+        title = ""
+        super.init(coder: coder)
     }
 
     // MARK: - Private Methods
