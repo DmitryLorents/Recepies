@@ -21,6 +21,13 @@ final class FavoritesView: UIViewController {
 
     // MARK: - Visual components
 
+    private let mainTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.title
+        label.font = .makeVerdanaBold(size: 28)
+        return label
+    }()
+
     private lazy var recipesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -48,15 +55,9 @@ final class FavoritesView: UIViewController {
 
     private func setupVIew() {
         view.backgroundColor = .systemBackground
-        view.addSubview(recipesTableView)
+        view.addSubviews(mainTitleLabel, recipesTableView)
         view.disableTARMIC()
-        setTitle()
         setupConstraints()
-    }
-
-    private func setTitle() {
-        title = Constants.title
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
 
@@ -72,14 +73,22 @@ extension FavoritesView: FavoritesViewProtocol {
 
 private extension FavoritesView {
     func setupConstraints() {
+        setupTitleLabelConstraints()
         setupRecipesTableViewConstraints()
+    }
+
+    func setupTitleLabelConstraints() {
+        NSLayoutConstraint.activate([
+            mainTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+        ])
     }
 
     func setupRecipesTableViewConstraints() {
         NSLayoutConstraint.activate([
-            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            recipesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            recipesTableView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 15),
             recipesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
@@ -87,7 +96,22 @@ private extension FavoritesView {
 
 // MARK: - FavoritesView - UITableViewDelegate
 
-extension FavoritesView: UITableViewDelegate {}
+extension FavoritesView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            presenter?.removeRecipe(at: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+}
 
 // MARK: - FavoritesView - UITableViewDataSource
 
