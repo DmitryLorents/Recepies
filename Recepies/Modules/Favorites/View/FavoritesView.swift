@@ -17,6 +17,8 @@ final class FavoritesView: UIViewController {
 
     private enum Constants {
         static let title = "Favorites"
+        static let nothingText = "There's nothing here yet"
+        static let addText = "Add interesting recipes to make ordering products convenient"
     }
 
     // MARK: - Visual components
@@ -40,6 +42,46 @@ final class FavoritesView: UIViewController {
         return tableView
     }()
 
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.addArrangedSubview(grayView)
+        stack.addArrangedSubview(nothingLabel)
+        stack.addArrangedSubview(addLabel)
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.spacing = 17
+        return stack
+    }()
+
+    private let grayView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .searchBackground
+        view.layer.cornerRadius = 12
+        return view
+    }()
+
+    private let favoriteImageView = UIImageView(image: .favoriteSmall)
+
+    private let nothingLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.nothingText
+        label.font = .makeVerdanaBold(size: 18)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+
+    private let addLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.addText
+        label.font = .makeVerdanaRegular(size: 14)
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+
     // MARK: - Public Properties
 
     var presenter: FavoritesPresenterProtocol?
@@ -50,14 +92,25 @@ final class FavoritesView: UIViewController {
         super.viewDidLoad()
         setupVIew()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setEmptyNoticeVisibility()
+    }
 
     // MARK: - Private Methods
 
     private func setupVIew() {
         view.backgroundColor = .systemBackground
-        view.addSubviews(mainTitleLabel, recipesTableView)
+        view.addSubviews(mainTitleLabel, recipesTableView, stackView)
         view.disableTARMIC()
+        grayView.addSubview(favoriteImageView)
+        grayView.disableTARMIC()
         setupConstraints()
+    }
+    
+    private func setEmptyNoticeVisibility() {
+        stackView.isHidden = (presenter?.recipes?.count ?? 0) > 0
     }
 }
 
@@ -75,6 +128,9 @@ private extension FavoritesView {
     func setupConstraints() {
         setupTitleLabelConstraints()
         setupRecipesTableViewConstraints()
+        setupStackViewConstraints()
+        setupGrayViewConstraints()
+        setupFavoriteImageViewConstraints()
     }
 
     func setupTitleLabelConstraints() {
@@ -90,6 +146,30 @@ private extension FavoritesView {
             recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             recipesTableView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 15),
             recipesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+
+    func setupStackViewConstraints() {
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
+
+    func setupGrayViewConstraints() {
+        NSLayoutConstraint.activate([
+            grayView.heightAnchor.constraint(equalToConstant: 50),
+            grayView.widthAnchor.constraint(equalTo: grayView.heightAnchor),
+        ])
+    }
+
+    func setupFavoriteImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            favoriteImageView.heightAnchor.constraint(equalToConstant: 24),
+            favoriteImageView.widthAnchor.constraint(equalTo: favoriteImageView.heightAnchor),
+            favoriteImageView.centerXAnchor.constraint(equalTo: grayView.centerXAnchor),
+            favoriteImageView.centerYAnchor.constraint(equalTo: grayView.centerYAnchor),
         ])
     }
 }
@@ -109,6 +189,7 @@ extension FavoritesView: UITableViewDelegate {
         if editingStyle == .delete {
             presenter?.removeRecipe(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            setEmptyNoticeVisibility()
         }
     }
 }
