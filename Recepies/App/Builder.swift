@@ -15,6 +15,8 @@ protocol BuilderProtocol {
     func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView
     /// Function to  build Category module
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView
+    /// Function to  build Detail module
+    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView
 }
 
 /// Builder for all modules in app
@@ -70,6 +72,13 @@ final class Builder: BuilderProtocol {
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView {
         let view = CategoryView()
         let presenter = CategoryPresenter(view: view, coordinator: coordinator, category: category)
+        view.presenter = presenter
+        return view
+    }
+
+    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView {
+        let view = DetailView()
+        let presenter = DetailPresenter(view: view, coordinator: coordinator)
         view.presenter = presenter
         return view
     }
