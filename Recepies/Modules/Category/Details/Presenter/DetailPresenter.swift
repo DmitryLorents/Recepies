@@ -15,10 +15,9 @@ protocol DetailPresenterProtocol: AnyObject {
 
 final class DetailPresenter: DetailPresenterProtocol {
     var recipe: Recipe?
-    
+
     weak var view: DetailViewProtocol?
     weak var coordinator: BaseModuleCoordinator?
-    
 
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe) {
         self.view = view
@@ -26,7 +25,7 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.recipe = recipe
     }
 
-    func getCategory(category: Category) {
-        recipesDetail = category
-    }
+//    func getCategory(category: Category) {
+//        recipe = category
+//    }
 }
