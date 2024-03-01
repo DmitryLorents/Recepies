@@ -40,7 +40,7 @@ final class Builder: BuilderProtocol {
     func makeRecipesModule(coordinator: BaseModuleCoordinator) -> RecipesView {
         let view = RecipesView()
         let presenter = RecipesPresenter(view: view, coordinator: coordinator)
-        view.recipesPresenter = presenter
+        view.presenter = presenter
         view.tabBarItem = UITabBarItem(
             title: Constants.recipesViewTitle,
             image: .recipes,
