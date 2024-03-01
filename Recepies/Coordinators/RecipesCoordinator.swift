@@ -13,4 +13,8 @@ final class RecipesCoordinator: BaseModuleCoordinator {
     func goBack() {
         publicRootController.popViewController(animated: true)
     }
+    
+    func goToDetailed(recipe: Recipe) {
+        
+    }
 }

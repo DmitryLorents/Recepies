@@ -10,13 +10,13 @@ protocol BuilderProtocol {
     /// Function to  Recipies module
     func makeRecipesModule(coordinator: BaseModuleCoordinator) -> RecipesView
     /// Function to Favorites module
-    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesViewController
+    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView
     /// Function to Profile module
     func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView
     /// Function to  build Category module
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView
     /// Function to  build Detail module
-    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView
+    func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView
 }
 
 /// Builder for all modules in app
@@ -51,8 +51,8 @@ final class Builder: BuilderProtocol {
         return view
     }
 
-    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesViewController {
-        let view = FavoritesViewController()
+    func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView {
+        let view = FavoritesView()
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
     }
@@ -76,9 +76,9 @@ final class Builder: BuilderProtocol {
         return view
     }
 
-    func makeDetailModule(coordinator: BaseModuleCoordinator) -> DetailView {
+    func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view, coordinator: coordinator)
+        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: Recipe)
         view.presenter = presenter
         return view
     }

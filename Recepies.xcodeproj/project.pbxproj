@@ -23,6 +23,7 @@
 		0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA12B8DEFDC00ACCD6B /* FavoritesCoordinator.swift */; };
 		0A086EA42B8DF00900ACCD6B /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */; };
 		0A80A4722B91C8E900539C0A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4712B91C8E900539C0A /* Category.swift */; };
+		0A80A4752B923BE400539C0A /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */; };
 		0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CE2DA2B91B41200D55802 /* SortingButton.swift */; };
 		0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */; };
 		0ACD2ECA2B8E76A0000BA913 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */; };
@@ -47,7 +48,7 @@
 		1B9B36E82B8E1E3400E774EB /* OtherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36E72B8E1E3400E774EB /* OtherTableViewCell.swift */; };
 		1B9B36EA2B8E8F8D00E774EB /* BonusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36E92B8E8F8D00E774EB /* BonusViewController.swift */; };
 		1B9B36EF2B8EA6BD00E774EB /* PresenterBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36EE2B8EA6BD00E774EB /* PresenterBonus.swift */; };
-		1B9B36F22B8EB5E700E774EB /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36F12B8EB5E700E774EB /* FavoritesViewController.swift */; };
+		1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		0A086EA12B8DEFDC00ACCD6B /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		0A80A4712B91C8E900539C0A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		0A9CE2DA2B91B41200D55802 /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -112,7 +114,7 @@
 		1B9B36E72B8E1E3400E774EB /* OtherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherTableViewCell.swift; sourceTree = "<group>"; };
 		1B9B36E92B8E8F8D00E774EB /* BonusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusViewController.swift; sourceTree = "<group>"; };
 		1B9B36EE2B8EA6BD00E774EB /* PresenterBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterBonus.swift; sourceTree = "<group>"; };
-		1B9B36F12B8EB5E700E774EB /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				1B9B36F02B8EB5CF00E774EB /* View */,
+				0A80A4732B923BD200539C0A /* Presenter */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -303,6 +306,14 @@
 				0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		0A80A4732B923BD200539C0A /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		0ACD2EC62B8E6897000BA913 /* Extensions */ = {
@@ -466,7 +477,7 @@
 		1B9B36F02B8EB5CF00E774EB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1B9B36F12B8EB5E700E774EB /* FavoritesViewController.swift */,
+				1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -657,7 +668,7 @@
 				0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */,
 				0ACD2EEB2B91037E000BA913 /* RecipesCollectionViewCell.swift in Sources */,
 				0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */,
-				1B9B36F22B8EB5E700E774EB /* FavoritesViewController.swift in Sources */,
+				1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */,
 				0A80A4722B91C8E900539C0A /* Category.swift in Sources */,
 				1B9B36EA2B8E8F8D00E774EB /* BonusViewController.swift in Sources */,
 				1B9B36E42B8E1DCC00E774EB /* ProfileView.swift in Sources */,
@@ -667,6 +678,7 @@
 				0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */,
 				1B9B36E62B8E1E2F00E774EB /* MainTableViewCell.swift in Sources */,
 				0ACD2EDA2B9102AE000BA913 /* SceneDelegate.swift in Sources */,
+				0A80A4752B923BE400539C0A /* FavoritesPresenter.swift in Sources */,
 				0A086EA42B8DF00900ACCD6B /* ProfileCoordinator.swift in Sources */,
 				0ACD2EF02B9106ED000BA913 /* AppCoordinator.swift in Sources */,
 				1B9B36E82B8E1E3400E774EB /* OtherTableViewCell.swift in Sources */,
