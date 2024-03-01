@@ -20,7 +20,7 @@ final class MainTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    private let fullName: UILabel = {
+    private let fullNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Constans.fullNameLabelFont, size: 25)
@@ -59,7 +59,7 @@ final class MainTableViewCell: UITableViewCell {
 
     func setupCell(profile: ProfileUserProtocol) {
         avatarImageView.image = UIImage(named: profile.avatarImage)
-        fullName.text = profile.userName
+        fullNameLabel.text = profile.userName
     }
 
     // MARK: - Private Methods
@@ -67,7 +67,7 @@ final class MainTableViewCell: UITableViewCell {
     private func addItemCell() {
         selectionStyle = .none
         contentView.addSubview(avatarImageView)
-        contentView.addSubview(fullName)
+        contentView.addSubview(fullNameLabel)
         contentView.addSubview(editNameButton)
     }
 
@@ -78,14 +78,14 @@ final class MainTableViewCell: UITableViewCell {
             avatarImageView.heightAnchor.constraint(equalToConstant: 160),
             avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
-            fullName.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
-            fullName.centerXAnchor.constraint(equalTo: centerXAnchor),
-            fullName.heightAnchor.constraint(equalToConstant: 30),
-            fullName.widthAnchor.constraint(equalToConstant: 256),
-            fullName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            fullNameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
+            fullNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            fullNameLabel.heightAnchor.constraint(equalToConstant: 30),
+            fullNameLabel.widthAnchor.constraint(equalToConstant: 256),
+            fullNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
 
-            editNameButton.leadingAnchor.constraint(equalTo: fullName.trailingAnchor, constant: 11),
-            editNameButton.centerYAnchor.constraint(equalTo: fullName.centerYAnchor),
+            editNameButton.leadingAnchor.constraint(equalTo: fullNameLabel.trailingAnchor, constant: 11),
+            editNameButton.centerYAnchor.constraint(equalTo: fullNameLabel.centerYAnchor),
             editNameButton.heightAnchor.constraint(equalToConstant: 18),
             editNameButton.widthAnchor.constraint(equalToConstant: 18),
 

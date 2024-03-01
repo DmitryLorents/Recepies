@@ -33,13 +33,13 @@ final class AppCoordinator: BaseCoodinator {
         let favoritesCoordinator = FavoritesCoordinator()
         let favoritesModelView = builder.makeFavoritesModule(coordinator: favoritesCoordinator)
         favoritesCoordinator.setRootController(favoritesModelView)
-        add(coordinator: favoritesCoordinator)
+        add(coordinator: favoritesCoordinator
 
         // Set Profile
         let profileCoordinator = ProfileCoordinator()
         let profileModelView = builder.makeProfileModule(coordinator: profileCoordinator)
         profileCoordinator.setRootController(profileModelView)
-//        profileModelView.profilePresenter?.coordinator = profileCoordinator
+            profileModelView.profilePresenter?.coordinator = profileCoordinator
         profileCoordinator.finishFlowHandler = { [weak self] in
             self?.remove(coordinator: profileCoordinator)
             self?.showAuthScreen()

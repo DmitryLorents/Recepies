@@ -17,8 +17,8 @@ protocol ProfileViewProtocol: AnyObject {
 
 /// Протокол презентера профиля
 protocol ProfilePresenterProtocol: AnyObject {
-    /// Координатор
-    var coordinator: BaseModuleCoordinator? { get set }
+    /// Инициализация профиля
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator)
     /// Массив опций
     var options: [OptionsProtocol] { get set }
     /// Информация о пользователе
@@ -26,10 +26,8 @@ protocol ProfilePresenterProtocol: AnyObject {
     /// Загрузка алерта со сменой имени
     func setupAlert()
     /// Изменение имени в профиле
-    /// - Parameter :  name - Имя пользователя
     func setTitleNameUser(name: String)
     /// Выбор ячейки
-    /// - Parameter :  index - Индекс ячейки
     func didSetectItem(index: Int)
     /// Выход из профиля
     func logOutProfile()
@@ -39,11 +37,20 @@ protocol ProfilePresenterProtocol: AnyObject {
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
 
-    weak var view: ProfileViewProtocol?
-
-    var coordinator: BaseModuleCoordinator?
     var options: [OptionsProtocol] = Options.makeOption()
     var profileUser: ProfileUserProtocol = ProfileUser.makeProfile()
+
+    // MARK: - Private Properties
+
+    private weak var view: ProfileViewProtocol?
+    private var coordinator: BaseModuleCoordinator?
+
+    // MARK: - Initializers
+
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator) {
+        self.view = view
+        self.coordinator = coordinator
+    }
 
     // MARK: - Public Methods
 
