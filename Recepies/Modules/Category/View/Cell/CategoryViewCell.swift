@@ -109,7 +109,12 @@ final class CategoryViewCell: UITableViewCell {
         return label
     }
 
-    private func configureSubview(with recipe: Recepies) {}
+    private func configureSubview(with recipe: Recepies) {
+        dishImageView.image = UIImage(named: recipe.recipeImage)
+        titleLabel.text = recipe.name
+        timerLabel.text = "\(recipe.timeToCook)\(Constants.timerLabelText)"
+        caloriesLabel.text = "\(recipe.calories)\(Constants.caloriesLabelText)"
+    }
 }
 
 // MARK: - Constraints
@@ -141,7 +146,7 @@ private extension CategoryViewCell {
             dishImageView.topAnchor.constraint(equalTo: grayBackgroundView.topAnchor, constant: 10),
             dishImageView.bottomAnchor.constraint(equalTo: grayBackgroundView.bottomAnchor, constant: -10),
             dishImageView.heightAnchor.constraint(equalToConstant: 80),
-            dishImageView.widthAnchor.constraint(equalTo: dishImageView.widthAnchor),
+            dishImageView.widthAnchor.constraint(equalTo: dishImageView.heightAnchor),
         ])
     }
 
