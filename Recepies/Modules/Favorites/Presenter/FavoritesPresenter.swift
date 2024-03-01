@@ -12,7 +12,7 @@ protocol FavoritesPresenterProtocol: AnyObject {
 final class FavoritesPresenter: FavoritesPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipes: [Recipe]?
+    var recipes: [Recipe]? = Recipe.makeRecipes()
 
     // MARK: - Private Properties
 
