@@ -10,22 +10,20 @@ protocol DetailViewProtocol: AnyObject {
 /// Протокол презентера деталей
 protocol DetailPresenterProtocol: AnyObject {
     /// Инициализация протокола
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator)
-    var recipesDetail: Category? { get set }
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
+    var recipe: Recipe? { get set }
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
-    var recipesDetail: Category?
+    var recipe: Recipe?
     
     weak var view: DetailViewProtocol?
     weak var coordinator: BaseModuleCoordinator?
+    
 
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator) {
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe) {
         self.view = view
         self.coordinator = coordinator
-    }
-    
-    func getCategory(category: Category) {
-        recipesDetail = category
+        self.recipe = recipe
     }
 }
