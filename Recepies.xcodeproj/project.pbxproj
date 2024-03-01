@@ -212,7 +212,7 @@
 				0A086E872B8D1AF600ACCD6B /* TabBar */,
 				0A086E822B8D19D400ACCD6B /* SplashScreen */,
 				0A086E832B8D19E900ACCD6B /* Authorization */,
-				0ACD2EDF2B91037E000BA913 /* Recepes */,
+				0ACD2EDF2B91037E000BA913 /* Recipes */,
 				0ACD2ECB2B8FAECF000BA913 /* Category */,
 				0A086E852B8D1A1700ACCD6B /* Favorites */,
 				0A086E842B8D1A0C00ACCD6B /* Profile */,
@@ -345,14 +345,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		0ACD2EDF2B91037E000BA913 /* Recepes */ = {
+		0ACD2EDF2B91037E000BA913 /* Recipes */ = {
 			isa = PBXGroup;
 			children = (
 				0ACD2EE32B91037E000BA913 /* Model */,
 				0ACD2EE52B91037E000BA913 /* View */,
 				0ACD2EE02B91037E000BA913 /* Presenter */,
 			);
-			path = Recepes;
+			path = Recipes;
 			sourceTree = "<group>";
 		};
 		0ACD2EE02B91037E000BA913 /* Presenter */ = {
