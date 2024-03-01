@@ -16,36 +16,23 @@ final class FavoritesView: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let caloriesButtonTitle = "Calories"
-        static let timeButtonTitle = "Time"
-        static let searchPlaceholder = "Search recipes"
+        static let title = "Favorites"
+        static let nothingText = "There's nothing here yet"
+        static let addText = "Add interesting recipes to make ordering products convenient"
     }
 
     // MARK: - Visual components
 
-    private lazy var caloriesButton: UIButton = makeSortingButton(
-        title: Constants.caloriesButtonTitle,
-        action: #selector(caloriesButtonAction(_:))
-    )
-    private lazy var timeButton: UIButton = makeSortingButton(
-        title: Constants.timeButtonTitle,
-        action: #selector(timeButtonAction(_:))
-    )
-
-    private let recipeSearchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = Constants.searchPlaceholder
-        searchBar.searchTextField.borderStyle = .none
-        searchBar.searchTextField.layer.cornerRadius = 10
-        searchBar.searchTextField.backgroundColor = .searchBackground
-        searchBar.searchBarStyle = .minimal
-        return searchBar
+    private let mainTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.title
+        label.font = .makeVerdanaBold(size: 28)
+        return label
     }()
 
     private lazy var recipesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 114
         tableView.register(CategoryViewCell.self, forCellReuseIdentifier: CategoryViewCell.reuseID)
@@ -53,6 +40,46 @@ final class FavoritesView: UIViewController {
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }()
+
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.addArrangedSubview(grayView)
+        stack.addArrangedSubview(nothingLabel)
+        stack.addArrangedSubview(addLabel)
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.spacing = 17
+        return stack
+    }()
+
+    private let grayView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .searchBackground
+        view.layer.cornerRadius = 12
+        return view
+    }()
+
+    private let favoriteImageView = UIImageView(image: .favoriteSmall)
+
+    private let nothingLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.nothingText
+        label.font = .makeVerdanaBold(size: 18)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+
+    private let addLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.addText
+        label.font = .makeVerdanaRegular(size: 14)
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
     }()
 
     // MARK: - Public Properties
@@ -65,66 +92,26 @@ final class FavoritesView: UIViewController {
         super.viewDidLoad()
         setupVIew()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setEmptyNoticeVisibility()
+    }
 
     // MARK: - Private Methods
 
     private func setupVIew() {
         view.backgroundColor = .systemBackground
-        view.addSubviews(
-            recipesTableView,
-            timeButton,
-            caloriesButton,
-            recipeSearchBar
-        )
+        view.addSubviews(mainTitleLabel, recipesTableView, stackView)
         view.disableTARMIC()
-        setNavigationItem()
+        grayView.addSubview(favoriteImageView)
+        grayView.disableTARMIC()
         setupConstraints()
     }
-
-    private func setNavigationItem() {
-//        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-//        backButton.setImage(.arrowLeft, for: .normal)
-//        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
-//
-//        let titleLabel = UILabel()
-//        titleLabel.text = presenter?.recipes?.name
-//        titleLabel.font = .makeVerdanaBold(size: 28)
-//        titleLabel.textAlignment = .left
-//
-//        let leftBarView = UIView()
-//        leftBarView.addSubviews(backButton, titleLabel)
-//        leftBarView.disableTARMIC()
-//
-//        NSLayoutConstraint.activate([
-//            backButton.leadingAnchor.constraint(equalTo: leftBarView.leadingAnchor),
-//            backButton.centerYAnchor.constraint(equalTo: leftBarView.centerYAnchor),
-//            titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 20),
-//            titleLabel.topAnchor.constraint(equalTo: leftBarView.topAnchor),
-//            titleLabel.bottomAnchor.constraint(equalTo: leftBarView.bottomAnchor),
-//            titleLabel.trailingAnchor.constraint(equalTo: leftBarView.trailingAnchor),
-//            leftBarView.heightAnchor.constraint(equalToConstant: 30)
-//        ])
-//
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
+    
+    private func setEmptyNoticeVisibility() {
+        stackView.isHidden = (presenter?.recipes?.count ?? 0) > 0
     }
-
-    private func makeSortingButton(title: String, action: Selector) -> UIButton {
-        let button = SortingButton(title: title, height: 36)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
-    }
-
-    @objc private func caloriesButtonAction(_ sender: UIButton) {
-        print(#function)
-    }
-
-    @objc private func timeButtonAction(_ sender: UIButton) {
-        print(#function)
-    }
-
-//    @objc private func backButtonAction() {
-//        presenter?.goBack()
-//    }
 }
 
 // MARK: - FavoritesView - FavoritesViewProtocol
@@ -139,65 +126,87 @@ extension FavoritesView: FavoritesViewProtocol {
 
 private extension FavoritesView {
     func setupConstraints() {
-        recipeSearchBarConstraints()
+        setupTitleLabelConstraints()
         setupRecipesTableViewConstraints()
-        setupCaloriesButtonConstraints()
-        setupTimeButtonConstraints()
+        setupStackViewConstraints()
+        setupGrayViewConstraints()
+        setupFavoriteImageViewConstraints()
     }
 
-    func recipeSearchBarConstraints() {
+    func setupTitleLabelConstraints() {
         NSLayoutConstraint.activate([
-            recipeSearchBar.leadingAnchor.constraint(equalTo: recipesTableView.leadingAnchor, constant: -8),
-            recipeSearchBar.trailingAnchor.constraint(equalTo: recipesTableView.trailingAnchor, constant: 8),
-            recipeSearchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-        ])
-    }
-
-    func setupCaloriesButtonConstraints() {
-        NSLayoutConstraint.activate([
-            caloriesButton.leadingAnchor.constraint(equalTo: recipesTableView.leadingAnchor),
-            caloriesButton.topAnchor.constraint(equalTo: recipeSearchBar.bottomAnchor, constant: 20),
-            caloriesButton.heightAnchor.constraint(equalToConstant: 36),
-        ])
-    }
-
-    func setupTimeButtonConstraints() {
-        NSLayoutConstraint.activate([
-            timeButton.leadingAnchor.constraint(equalTo: caloriesButton.trailingAnchor, constant: 11),
-            timeButton.topAnchor.constraint(equalTo: caloriesButton.topAnchor),
-            timeButton.heightAnchor.constraint(equalTo: caloriesButton.heightAnchor),
+            mainTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
         ])
     }
 
     func setupRecipesTableViewConstraints() {
         NSLayoutConstraint.activate([
-            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            recipesTableView.topAnchor.constraint(equalTo: caloriesButton.bottomAnchor, constant: 13),
-            recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            recipesTableView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 15),
+            recipesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+
+    func setupStackViewConstraints() {
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
+
+    func setupGrayViewConstraints() {
+        NSLayoutConstraint.activate([
+            grayView.heightAnchor.constraint(equalToConstant: 50),
+            grayView.widthAnchor.constraint(equalTo: grayView.heightAnchor),
+        ])
+    }
+
+    func setupFavoriteImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            favoriteImageView.heightAnchor.constraint(equalToConstant: 24),
+            favoriteImageView.widthAnchor.constraint(equalTo: favoriteImageView.heightAnchor),
+            favoriteImageView.centerXAnchor.constraint(equalTo: grayView.centerXAnchor),
+            favoriteImageView.centerYAnchor.constraint(equalTo: grayView.centerYAnchor),
         ])
     }
 }
 
 // MARK: - FavoritesView - UITableViewDelegate
 
-extension FavoritesView: UITableViewDelegate {}
+extension FavoritesView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            presenter?.removeRecipe(at: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            setEmptyNoticeVisibility()
+        }
+    }
+}
 
 // MARK: - FavoritesView - UITableViewDataSource
 
 extension FavoritesView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        presenter?.recipes?.recipes.count ?? 0
-        0
+        presenter?.recipes?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView
-//            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
-//        else { return .init() }
-//        let recipe = presenter?.recipes?.recipes[indexPath.row]
-//        cell.setupCell(with: recipe)
-//        return cell
-        .init()
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
+        else { return .init() }
+        let recipe = presenter?.recipes?[indexPath.row]
+        cell.setupCell(with: recipe)
+        return cell
     }
 }
