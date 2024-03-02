@@ -2,10 +2,11 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 /// View to show PFC detailed information
 final class PFCView: UIView {
     // MARK: - Visual Components
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .makeVerdanaRegular(size: 14)
@@ -14,7 +15,7 @@ final class PFCView: UIView {
         label.text = title
         return label
     }()
-    
+
     // MARK: - Private Properties
 
     private let title: String
@@ -33,17 +34,15 @@ final class PFCView: UIView {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        self.title = "title"
-        self.subtitle = "subtitle"
-        self.color = .gray
+        title = "title"
+        subtitle = "subtitle"
+        color = .gray
         super.init(coder: coder)
     }
 
     // MARK: - Private Methods
 
     private func configureView() {
-        
         layer.cornerRadius = 16
     }
 }
-
