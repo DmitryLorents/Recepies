@@ -27,8 +27,9 @@ final class PFCViewCell: UITableViewCell {
     private let proteinsView = PFCView(title: Constants.proteins)
 
     private lazy var stackView: UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [caloriesView, carbohydratesView, fatsView, proteinsView])
+        let stack = UIStackView(arrangedSubviews: [caloriesView, carbohydratesView, fatsView, proteinsView])
         stack.spacing = 5
+        stack.distribution = .fillEqually
         return stack
     }()
 
@@ -69,19 +70,18 @@ final class PFCViewCell: UITableViewCell {
     }
 
     private func configureSubview(with recipe: Recipe) {
-        let caloriesAmount = makeFormattedString(from: recipe.calories)
-        caloriesView.set(subtitle: caloriesAmount + Constants.kCal )
-        
+        caloriesView.set(subtitle: "\(recipe.calories)" + Constants.kCal)
+
         let carbohydratesAmount = makeFormattedString(from: recipe.pfc.carbohydrates)
         carbohydratesView.set(subtitle: carbohydratesAmount + Constants.gram)
-        
+
         let fatsAmount = makeFormattedString(from: recipe.pfc.fats)
-        carbohydratesView.set(subtitle: fatsAmount + Constants.gram)
-        
+        fatsView.set(subtitle: fatsAmount + Constants.gram)
+
         let proteinsAmount = makeFormattedString(from: recipe.pfc.proteins)
-        carbohydratesView.set(subtitle: proteinsAmount + Constants.gram)
+        proteinsView.set(subtitle: proteinsAmount + Constants.gram)
     }
-    
+
     private func makeFormattedString(from double: Double) -> String {
         String(format: "%0.2f", double)
     }
@@ -92,12 +92,11 @@ final class PFCViewCell: UITableViewCell {
 private extension PFCViewCell {
     func setupConstraints() {
         NSLayoutConstraint.activate([
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.sideInset),
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.sideInset),
-        stackView.heightAnchor.constraint(equalToConstant: 53),
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.sideInset),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.sideInset),
+            stackView.heightAnchor.constraint(equalToConstant: 53),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
-
     }
 }

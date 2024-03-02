@@ -6,9 +6,9 @@ import UIKit
 /// View to show PFC detailed information
 final class PFCView: UIView {
     // MARK: - Constants
-    
+
     private let heightRation = 31.0 / 53.0
-    
+
     // MARK: - Visual Components
 
     private lazy var titleLabel: UILabel = {
@@ -19,11 +19,13 @@ final class PFCView: UIView {
         label.text = title
         return label
     }()
+
     private lazy var topColoredView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = color
         return view
     }()
+
     private let bottomTransparentView = UIView()
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
@@ -33,7 +35,6 @@ final class PFCView: UIView {
         label.text = subtitle
         return label
     }()
-
 
     // MARK: - Private Properties
 
@@ -58,8 +59,9 @@ final class PFCView: UIView {
         color = .gray
         super.init(coder: coder)
     }
+
     // MARK: - Public Methods
-    
+
     func set(subtitle: String) {
         self.subtitle = subtitle
         subtitleLabel.text = subtitle
@@ -75,6 +77,7 @@ final class PFCView: UIView {
         clipsToBounds = true
         addSubviews(topColoredView, bottomTransparentView, titleLabel, subtitleLabel)
         disableTARMIC()
+        setupConstraints()
     }
 }
 
@@ -85,41 +88,40 @@ private extension PFCView {
         setupTopColoredViewConstraints()
         setupBottomTransparentViewConstraints()
         setupTitleLabelConstraints()
-        setupsubtitleLabelConstraints()
+        setupSubtitleLabelConstraints()
     }
-    
+
     func setupTopColoredViewConstraints() {
         NSLayoutConstraint.activate([
-        topColoredView.leadingAnchor.constraint(equalTo: leadingAnchor),
-        topColoredView.trailingAnchor.constraint(equalTo: trailingAnchor),
-        topColoredView.topAnchor.constraint(equalTo: topAnchor),
-        topColoredView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightRation)
+            topColoredView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            topColoredView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            topColoredView.topAnchor.constraint(equalTo: topAnchor),
+            topColoredView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightRation)
         ])
     }
-    
+
     func setupBottomTransparentViewConstraints() {
         NSLayoutConstraint.activate([
-        bottomTransparentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-        bottomTransparentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-        bottomTransparentView.topAnchor.constraint(equalTo: topColoredView.bottomAnchor),
-        bottomTransparentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomTransparentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bottomTransparentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomTransparentView.topAnchor.constraint(equalTo: topColoredView.bottomAnchor),
+            bottomTransparentView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     func setupTitleLabelConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: topColoredView.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: topColoredView.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: topColoredView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: topColoredView.trailingAnchor),
         ])
     }
-    
-    func setupsubtitleLabelConstraints() {
+
+    func setupSubtitleLabelConstraints() {
         NSLayoutConstraint.activate([
-            subtitleLabel.centerXAnchor.constraint(equalTo: bottomTransparentView.centerXAnchor),
+            subtitleLabel.centerYAnchor.constraint(equalTo: bottomTransparentView.centerYAnchor),
             subtitleLabel.leadingAnchor.constraint(equalTo: bottomTransparentView.leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: bottomTransparentView.trailingAnchor),
         ])
     }
-    
 }
