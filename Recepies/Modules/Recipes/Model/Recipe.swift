@@ -10,7 +10,7 @@ struct Recipe {
     /// Время на готовку блюда
     let timeToCook: Int
     /// Колличество калорий
-    let calories: Int
+    let calories: Double
     /// Детальный рецепт
     let description: String
     /// Вес блюда
