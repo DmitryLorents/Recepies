@@ -3,21 +3,29 @@
 
 import Foundation
 
-/// Протокол для экрана деталей
-protocol DetailViewProtocol: AnyObject {}
-
 /// Протокол презентера деталей
 protocol DetailPresenterProtocol: AnyObject {
     /// Инициализация протокола
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
+    /// Данные о рецепте
     var recipe: Recipe? { get set }
+    /// Вернуться на предыдущй контроллер
+    func goBack()
+    /// Добавить рецепт в избранное
+    func addRecipeForFavorites()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
+    // MARK: - Public Properties
+
     var recipe: Recipe?
 
-    weak var view: DetailViewProtocol?
-    weak var coordinator: BaseModuleCoordinator?
+    // MARK: - Private Properties
+
+    private weak var view: DetailViewProtocol?
+    private weak var coordinator: BaseModuleCoordinator?
+
+    // MARK: - Initializers
 
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe) {
         self.view = view
@@ -25,7 +33,15 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.recipe = recipe
     }
 
-//    func getCategory(category: Category) {
-//        recipe = category
-//    }
+    // MARK: - Public Methods
+
+    func addRecipeForFavorites() {
+        view?.setButtonImage()
+    }
+
+    func goBack() {
+        if let recipesCoordinator = coordinator as? RecipesCoordinator {
+            recipesCoordinator.goBack()
+        }
+    }
 }

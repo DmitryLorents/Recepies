@@ -67,6 +67,7 @@ final class PFCViewCell: UITableViewCell {
         contentView.addSubview(stackView)
         contentView.disableTARMIC()
         setupConstraints()
+        selectionStyle = .none
     }
 
     private func configureSubview(with recipe: Recipe) {
@@ -96,7 +97,7 @@ private extension PFCViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.sideInset),
             stackView.heightAnchor.constraint(equalToConstant: 53),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
     }
 }
