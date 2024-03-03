@@ -6,7 +6,7 @@ import UIKit
 /// Протокол для экрана деталей
 protocol DetailViewProtocol: AnyObject {
     /// Изменение цвета кнопки
-    func setButtonImage()
+    func setButtonColor()
 }
 
 /// Экран с детальной информацией о ячейке
@@ -34,12 +34,13 @@ final class DetailView: UIViewController {
 
     // MARK: - Private Properties
 
-    private let typeCell: [CellTypesDetail] = [.title, .characteristics, .fullDescription]
+    private let cellTypes: [CellTypesDetail] = [.title, .characteristics, .fullDescription]
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         setLeftNavigationItem()
         setRightNavigationItem()
         configureTableView()
@@ -47,29 +48,37 @@ final class DetailView: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setLeftNavigationItem() {
+    private func configureView() {
         view.backgroundColor = .white
-        let back = UIBarButtonItem(image: .arrowLeft, style: .plain, target: self, action: #selector(backButtonAction))
-        back.tintColor = .black
-        navigationItem.leftBarButtonItem = back
+    }
+
+    private func setLeftNavigationItem() {
+        let backButton = UIBarButtonItem(
+            image: .arrowLeft,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonAction)
+        )
+        backButton.tintColor = .black
+        navigationItem.leftBarButtonItem = backButton
     }
 
     private func setRightNavigationItem() {
-        addFavoritesButton.setImage(.vector, for: .normal)
+        addFavoritesButton.setImage(.favorites, for: .normal)
         addFavoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
 
-        let sheirButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        sheirButton.setImage(.send, for: .normal)
+        let shareButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        shareButton.setImage(.send, for: .normal)
 
         let rightBarView = UIView()
-        rightBarView.addSubviews(sheirButton, addFavoritesButton)
+        rightBarView.addSubviews(shareButton, addFavoritesButton)
         rightBarView.disableTARMIC()
 
         NSLayoutConstraint.activate([
             addFavoritesButton.trailingAnchor.constraint(equalTo: rightBarView.trailingAnchor),
             addFavoritesButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
-            sheirButton.trailingAnchor.constraint(equalTo: addFavoritesButton.leadingAnchor, constant: -8),
-            sheirButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
+            shareButton.trailingAnchor.constraint(equalTo: addFavoritesButton.leadingAnchor, constant: -8),
+            shareButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
             rightBarView.heightAnchor.constraint(equalToConstant: 30),
             rightBarView.widthAnchor.constraint(equalToConstant: 70)
         ])
@@ -88,6 +97,10 @@ final class DetailView: UIViewController {
             forCellReuseIdentifier: FullDescriptionTableViewCell.reuseID
         )
         tableView.register(PFCViewCell.self, forCellReuseIdentifier: PFCViewCell.reuseID)
+        setConstraint()
+    }
+
+    private func setConstraint() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -96,7 +109,7 @@ final class DetailView: UIViewController {
     }
 
     @objc private func addFavoritesRecipe() {
-        presenter?.addRecipeForFavorites()
+        presenter?.addRecipeToFavorites()
     }
 
     @objc private func backButtonAction() {
@@ -108,12 +121,12 @@ final class DetailView: UIViewController {
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        typeCell.count
+        cellTypes.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let items = typeCell[indexPath.row]
-        switch items {
+        let item = cellTypes[indexPath.row]
+        switch item {
         case .title:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: TitleTableViewCell.reuseID,
@@ -146,7 +159,7 @@ extension DetailView: UITableViewDataSource {
 // MARK: - DetailView + DetailViewProtocol
 
 extension DetailView: DetailViewProtocol {
-    func setButtonImage() {
-        addFavoritesButton.setImage(.vectorHig, for: .normal)
+    func setButtonColor() {
+        addFavoritesButton.setImage(.favoritesHig, for: .normal)
     }
 }

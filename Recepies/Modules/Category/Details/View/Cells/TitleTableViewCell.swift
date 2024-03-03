@@ -24,7 +24,7 @@ final class TitleTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    private let nameRecipeLabel: UILabel = {
+    private let recipeNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
@@ -108,7 +108,7 @@ final class TitleTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func setupView(recipe: Recipe) {
-        nameRecipeLabel.text = recipe.name
+        recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(recipe.weight) g"
         textCooKingTimeLabel.text = "Cooking time \(recipe.timeToCook) min"
     }
@@ -123,7 +123,7 @@ final class TitleTableViewCell: UITableViewCell {
         cooKingTimeView.addSubview(iconCooKingTimeImage)
         cooKingTimeView.addSubview(textCooKingTimeLabel)
         recipeImage.addSubview(cooKingTimeView)
-        contentView.addSubview(nameRecipeLabel)
+        contentView.addSubview(recipeNameLabel)
         contentView.addSubview(recipeImage)
         addConstraintCell()
     }
@@ -141,15 +141,15 @@ final class TitleTableViewCell: UITableViewCell {
 
     private func setNameRecipeLabelConstraint() {
         NSLayoutConstraint.activate([
-            nameRecipeLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            nameRecipeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nameRecipeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            recipeNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            recipeNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            recipeNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
         ])
     }
 
     private func configureRecipeImage() {
         NSLayoutConstraint.activate([
-            recipeImage.topAnchor.constraint(equalTo: nameRecipeLabel.bottomAnchor, constant: 20),
+            recipeImage.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 20),
             recipeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 45),
             recipeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -45),
             recipeImage.heightAnchor.constraint(equalTo: recipeImage.widthAnchor),

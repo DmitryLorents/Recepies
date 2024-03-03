@@ -15,7 +15,7 @@ final class FullDescriptionTableViewCell: UITableViewCell {
 
     // MARK: - Visual Components
 
-    private let nameRecipeLabel: UILabel = {
+    private let recipeNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
@@ -61,7 +61,7 @@ final class FullDescriptionTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func setupCell(recipe: Recipe) {
-        nameRecipeLabel.text = recipe.description
+        recipeNameLabel.text = recipe.description
     }
 
     // MARK: - Private Methods
@@ -69,25 +69,29 @@ final class FullDescriptionTableViewCell: UITableViewCell {
     private func configureView() {
         backGroundView.layer.addSublayer(gradientLayer)
         contentView.addSubview(backGroundView)
-        contentView.addSubview(nameRecipeLabel)
+        contentView.addSubview(recipeNameLabel)
+        setConstraints()
+        selectionStyle = .none
+    }
+
+    private func setConstraints() {
         setNameRecipeLabelConstraint()
         setBackGroundViewConstraint()
-        selectionStyle = .none
     }
 
     private func setNameRecipeLabelConstraint() {
         NSLayoutConstraint.activate([
-            nameRecipeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
-            nameRecipeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -27),
-            nameRecipeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 27),
-            nameRecipeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -27),
+            recipeNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
+            recipeNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -27),
+            recipeNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 27),
+            recipeNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -27),
         ])
     }
 
     private func setBackGroundViewConstraint() {
         NSLayoutConstraint.activate([
-            backGroundView.topAnchor.constraint(equalTo: nameRecipeLabel.topAnchor, constant: -27),
-            backGroundView.bottomAnchor.constraint(equalTo: nameRecipeLabel.bottomAnchor, constant: 27),
+            backGroundView.topAnchor.constraint(equalTo: recipeNameLabel.topAnchor, constant: -27),
+            backGroundView.bottomAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 27),
             backGroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             backGroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])

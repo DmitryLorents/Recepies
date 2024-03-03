@@ -8,11 +8,11 @@ protocol DetailPresenterProtocol: AnyObject {
     /// Инициализация протокола
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
     /// Данные о рецепте
-    var recipe: Recipe? { get set }
+    var recipe: Recipe? { get }
     /// Вернуться на предыдущй контроллер
     func goBack()
     /// Добавить рецепт в избранное
-    func addRecipeForFavorites()
+    func addRecipeToFavorites()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -35,8 +35,8 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func addRecipeForFavorites() {
-        view?.setButtonImage()
+    func addRecipeToFavorites() {
+        view?.setButtonColor()
     }
 
     func goBack() {
