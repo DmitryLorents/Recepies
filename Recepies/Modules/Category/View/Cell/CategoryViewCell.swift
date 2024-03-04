@@ -78,6 +78,7 @@ final class CategoryViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func setupView() {
+        selectionStyle = .none
         contentView.addSubview(grayBackgroundView)
         contentView.disableTARMIC()
         grayBackgroundView.addSubviews(
