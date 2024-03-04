@@ -45,6 +45,9 @@ final class AuthPresenter: AuthPresenterProtocol {
         view?.showIncorrectUserData(!isEmailValid || !isPasswordValid)
         view?.showIncorrectPasswordFormat(!isPasswordFormatOk)
         view?.showIncorrectEmailFormat(!isEmailFormatOk)
+        if isEmailValid, isPasswordValid, let coordinator = coordinator as? AuthCoordinator {
+            coordinator.finishFlow()
+        }
     }
 
     func setPasswordeSecureStatus() {
