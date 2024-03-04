@@ -126,19 +126,31 @@ final class CategoryView: UIViewController {
     }
 
     @objc func sortingButtonPressed() {
+        print(#function)
+        let caloriesSortingHandler: ((Recipe, Recipe) -> Bool)?
+        let timeSortingHandler: ((Recipe, Recipe) -> Bool)?
+        // Downcast buttons to SortingButton class
         if let caloriesButtonCasted = caloriesButton as? SortingButton,
            let timeButtonCasted = timeButton as? SortingButton
         {
-            let caloriesPredicate = caloriesButtonCasted.getSortingPredicate()
-            let caloriesGeneralPredicate: (Recipe, Recipe) -> Bool = { lhsRecipe, rhsRecipe in
-                caloriesPredicate(lhsRecipe.calories, rhsRecipe.calories)
-            }
-            let timePredicate = timeButtonCasted.getSortingPredicate()
-            let timeGeneralPredicate: (Recipe, Recipe) -> Bool = { lhsRecipe, rhsRecipe in
-                caloriesPredicate(lhsRecipe.timeToCook, rhsRecipe.timeToCook)
-            }
-            presenter?.sortRecipesBy(caloriesGeneralPredicate, timeGeneralPredicate)
+            // Set caloriesSortingHandler
+            if let caloriesButtonPredicate = caloriesButtonCasted.getSortingPredicate() {
+                caloriesSortingHandler = { lhsRecipe, rhsRecipe in
+                    caloriesButtonPredicate(lhsRecipe.calories, rhsRecipe.calories)
+                }
+            } else { caloriesSortingHandler = nil }
+            // Set timeSortingHandler
+            if let timePredicate = timeButtonCasted.getSortingPredicate() {
+                timeSortingHandler = { lhsRecipe, rhsRecipe in
+                    timePredicate(lhsRecipe.timeToCook, rhsRecipe.timeToCook)
+                }
+            } else { timeSortingHandler = nil }
+
+        } else {
+            caloriesSortingHandler = nil
+            timeSortingHandler = nil
         }
+        presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
 }
 

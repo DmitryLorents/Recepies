@@ -61,14 +61,12 @@ final class SortingButton: UIButton {
 //        return sortingHandler
 //    }
 
-    func getSortingPredicate() -> ((Int, Int) -> Bool) {
+    func getSortingPredicate() -> SortingHandler? {
 //        let sortingHandler: (SortingHandler<T>)?
-        let sortingHandler: SortingHandler
+        let sortingHandler: SortingHandler?
         switch sortingState {
         case .none:
-            sortingHandler = { lhs, rhs in
-                true
-            }
+            sortingHandler = nil
         case .lessToMore:
             sortingHandler = { lhs, rhs in
                 lhs < rhs

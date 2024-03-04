@@ -5,6 +5,8 @@ import UIKit
 
 /// Protocol for Authorization screen presenter
 protocol CategoryPresenterProtocol: AnyObject {
+    typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
+
     /// Categories of product to show by view
     var dataSource: Category? { get }
     /// Main initializer
@@ -16,17 +18,17 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Sorting recipes in category by given predicates
     /// - Parameter caloriesPredicate: sorting predicate from caloriesButton
     /// - Parameter timePredicate: sorting predicate from timeButton
-    func sortRecipesBy(
-        _ caloriesPredicate: @escaping (Recipe, Recipe) -> Bool,
-        _ timePredicate: @escaping (Recipe, Recipe) -> Bool
-    )
+    func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
+    // MARK: - Types
+
     // MARK: - Public Properties
 
     var dataSource: Category? {
         didSet {
+            print("Set datasource")
             view?.updateTableView()
         }
     }
@@ -37,6 +39,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     private weak var view: CategoryViewProtocol?
     private var category: Category? {
         didSet {
+            print("Set category")
             dataSource = category
         }
     }
@@ -47,6 +50,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         self.view = view
         self.coordinator = coordinator
         self.category = category
+        dataSource = category
     }
 
     // MARK: - Public Methods
@@ -63,19 +67,38 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         }
     }
 
-    func sortRecipesBy(
-        _ caloriesPredicate: @escaping (Recipe, Recipe) -> Bool,
-        _ timePredicate: @escaping (Recipe, Recipe) -> Bool
-    ) {
-        let sortedRecipe = dataSource?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
+    func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?) {
+        let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
+        switch predicates.count {
+        case 2:
+            sortByTwoPredicates(predicates)
+        case 1:
+            sortCategoryBy(predicates[0])
+        default:
+            dataSource = category
+        }
+    }
+
+    private func sortByTwoPredicates(_ predicates: [SortingRecipeHandler]) {
+        print(#function)
+        if let sortedRecipes = category?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
             if lhsRecipe.calories == rhsRecipe.calories {
-                return timePredicate(lhsRecipe, rhsRecipe)
+                return predicates[1](lhsRecipe, rhsRecipe)
             }
-            return caloriesPredicate(lhsRecipe, rhsRecipe)
-        })
-        if let sortedRecipe {
+            return predicates[0](lhsRecipe, rhsRecipe)
+
+        }) {
             var sortedCategory = category
-            sortedCategory?.recipes = sortedRecipe
+            sortedCategory?.recipes = sortedRecipes
+            dataSource = sortedCategory
+        }
+    }
+
+    private func sortCategoryBy(_ predicate: SortingRecipeHandler) {
+        print(#function)
+        if let sortedRecipes = category?.recipes.sorted(by: { predicate($0, $1) }) {
+            var sortedCategory = category
+            sortedCategory?.recipes = sortedRecipes
             dataSource = sortedCategory
         }
     }

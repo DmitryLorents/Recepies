@@ -56,7 +56,7 @@ struct Recipe {
                 name: "Simple Fish And Corn",
                 recipeImage: "dish1",
                 timeToCook: 60,
-                calories: 274,
+                calories: 300,
                 description: Recipe.descriptionText,
                 weight: 1300,
                 pfc: PFC.makeMockPFC()
@@ -64,8 +64,8 @@ struct Recipe {
             .init(
                 name: "Baked Fish with Lemon Herb Sauce",
                 recipeImage: "dish2",
-                timeToCook: 90,
-                calories: 616,
+                timeToCook: 80,
+                calories: 300,
                 description: "MAny many text",
                 weight: 1300,
                 pfc: PFC.makeMockPFC()
@@ -73,8 +73,8 @@ struct Recipe {
             .init(
                 name: "Lemon and Chilli Fish Burrito",
                 recipeImage: "dish3",
-                timeToCook: 99,
-                calories: 226,
+                timeToCook: 90,
+                calories: 300,
                 description: "MAny many text",
                 weight: 1300,
                 pfc: PFC.makeMockPFC()
@@ -91,8 +91,8 @@ struct Recipe {
             .init(
                 name: "Salmon with Cantaloupe and Fried Shallots",
                 recipeImage: "dish5",
-                timeToCook: 100,
-                calories: 94,
+                timeToCook: 120,
+                calories: 410,
                 description: "MAny many text",
                 weight: 1300,
                 pfc: PFC.makeMockPFC()
