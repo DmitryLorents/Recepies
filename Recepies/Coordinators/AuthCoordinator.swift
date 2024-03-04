@@ -12,8 +12,14 @@ final class AuthCoordinator: BaseModuleCoordinator {
     func finishFlow() {
         finishFlowHandler?()
     }
+    
+    func showTabBar() {
+       finishFlowHandler?()
+    }
 
     private func showLogin() {
         setAsRoot(publicRootController)
     }
+    
+    
 }
