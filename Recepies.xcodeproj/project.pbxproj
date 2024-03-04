@@ -230,6 +230,7 @@
 				0A086E832B8D19E900ACCD6B /* Authorization */,
 				0ACD2EDF2B91037E000BA913 /* Recipes */,
 				0ACD2ECB2B8FAECF000BA913 /* Category */,
+				1B9880A52B921D6F0020B796 /* Details */,
 				0A086E852B8D1A1700ACCD6B /* Favorites */,
 				0A086E842B8D1A0C00ACCD6B /* Profile */,
 			);
@@ -348,7 +349,6 @@
 		0ACD2ECB2B8FAECF000BA913 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				1B9880A52B921D6F0020B796 /* Details */,
 				0ACD2ECC2B8FAEEF000BA913 /* View */,
 				0ACD2ECD2B8FAEFA000BA913 /* Presenter */,
 			);
@@ -430,9 +430,9 @@
 		1B9880A62B921D8C0020B796 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0A80A4762B926FE900539C0A /* Cells */,
 				1B9880AA2B921E100020B796 /* DetailView.swift */,
 				0A80A4792B92716200539C0A /* PFCView.swift */,
+				0A80A4762B926FE900539C0A /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
