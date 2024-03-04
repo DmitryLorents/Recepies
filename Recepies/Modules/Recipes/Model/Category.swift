@@ -8,7 +8,7 @@ struct Category {
     /// Изображение ингридиента
     let categoryImage: String
     /// Массив рецептов
-    let recipes: [Recipe]
+    var recipes: [Recipe]
     /// Заполнение данных категории
     static func makeMockCategory() -> [Category] {
         [

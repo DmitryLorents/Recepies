@@ -25,11 +25,11 @@ final class CategoryView: UIViewController {
 
     private lazy var caloriesButton: UIButton = makeSortingButton(
         title: Constants.caloriesButtonTitle,
-        action: #selector(caloriesButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
     private lazy var timeButton: UIButton = makeSortingButton(
         title: Constants.timeButtonTitle,
-        action: #selector(timeButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
 
     private let recipeSearchBar: UISearchBar = {
@@ -86,7 +86,7 @@ final class CategoryView: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = presenter?.category?.name
+        titleLabel.text = presenter?.dataSource?.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -123,6 +123,22 @@ final class CategoryView: UIViewController {
 
     @objc private func backButtonAction() {
         presenter?.goBack()
+    }
+
+    @objc func sortingButtonPressed() {
+        if let caloriesButtonCasted = caloriesButton as? SortingButton,
+           let timeButtonCasted = timeButton as? SortingButton
+        {
+            let caloriesPredicate = caloriesButtonCasted.getSortingPredicate()
+            let caloriesGeneralPredicate: (Recipe, Recipe) -> Bool = { lhsRecipe, rhsRecipe in
+                caloriesPredicate(lhsRecipe.calories, rhsRecipe.calories)
+            }
+            let timePredicate = timeButtonCasted.getSortingPredicate()
+            let timeGeneralPredicate: (Recipe, Recipe) -> Bool = { lhsRecipe, rhsRecipe in
+                caloriesPredicate(lhsRecipe.timeToCook, rhsRecipe.timeToCook)
+            }
+            presenter?.sortRecipesBy(caloriesGeneralPredicate, timeGeneralPredicate)
+        }
     }
 }
 
@@ -190,14 +206,14 @@ extension CategoryView: UITableViewDelegate {
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.category?.recipes.count ?? 0
+        presenter?.dataSource?.recipes.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.category?.recipes[indexPath.row]
+        let recipe = presenter?.dataSource?.recipes[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

@@ -44,6 +44,43 @@ final class SortingButton: UIButton {
         super.init(coder: coder)
     }
 
+    // MARK: - Public Methods
+
+//    func getSortingPredicate<T: Comparable>() -> (SortingHandler<T>)? {
+//        let sortingHandler: (SortingHandler<T>)?
+//        switch sortingState {
+//        case .none:
+//            sortingHandler = nil
+//        case .lessToMore:
+//            sortingHandler = { lhs, rhs in
+//            return lhs < rhs}
+//        case .moreToLess:
+//            sortingHandler = { lhs, rhs in
+//                return lhs > rhs}
+//        }
+//        return sortingHandler
+//    }
+
+    func getSortingPredicate() -> ((Int, Int) -> Bool) {
+//        let sortingHandler: (SortingHandler<T>)?
+        let sortingHandler: SortingHandler
+        switch sortingState {
+        case .none:
+            sortingHandler = { lhs, rhs in
+                true
+            }
+        case .lessToMore:
+            sortingHandler = { lhs, rhs in
+                lhs < rhs
+            }
+        case .moreToLess:
+            sortingHandler = { lhs, rhs in
+                lhs > rhs
+            }
+        }
+        return sortingHandler
+    }
+
     // MARK: - Private Methods
 
     private func configureView() {
