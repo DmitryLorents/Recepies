@@ -62,7 +62,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         view2.frame = contentView.bounds
         view2.backgroundColor = .systemGray4
         view2.layer.cornerRadius = contentView.bounds.width / 10
-        view2.startShimmeringAnimation(animationSpeed: 1.4, direction: .leftToRight, repeatCount: 3)
+        view2.startShimmeringAnimation(animationSpeed: 1.4, repeatCount: 3)
 //        case .end:
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
             categoryImage.image = UIImage(named: category.categoryImage)

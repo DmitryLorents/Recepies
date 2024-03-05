@@ -79,6 +79,8 @@ final class CategoryViewCell: UITableViewCell {
         self.recipe = recipe
     }
 
+    func startShimmer() {}
+
     // MARK: - Private Methods
 
     private func setupView() {
