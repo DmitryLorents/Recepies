@@ -7,8 +7,4 @@ import Foundation
 enum State {
     case start
     case end
-
-    func nextState() -> State {
-        .end
-    }
 }

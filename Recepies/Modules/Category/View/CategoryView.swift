@@ -155,7 +155,7 @@ final class CategoryView: UIViewController {
         presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
 }
-
+// MARK: - CategoryView + UISearchBarDelegate
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter?.filterCategory(text: searchText)

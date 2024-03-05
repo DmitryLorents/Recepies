@@ -55,15 +55,8 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(category: Category /* , state: State */ ) {
-//        switch state{
-//        case .start:
-        contentView.addSubview(view2)
-        view2.frame = contentView.bounds
-        view2.backgroundColor = .systemGray4
-        view2.layer.cornerRadius = contentView.bounds.width / 10
-        view2.startShimmeringAnimation(animationSpeed: 1.4, repeatCount: 3)
-//        case .end:
+    func setupCell(category: Category) {
+        contentView.startShimmeringAnimation(animationSpeed: 1.4, repeatCount: 2)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
             categoryImage.image = UIImage(named: category.categoryImage)
             nameLabel.text = category.name
