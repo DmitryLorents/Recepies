@@ -36,7 +36,7 @@ final class TermsView: UIView {
         button.setImage(UIImage(systemName: Constants.cancelImage), for: .normal)
         button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(tapCancelButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -55,22 +55,18 @@ final class TermsView: UIView {
 
     // MARK: - Public Properties
 
-    var darkHandler: VoidHandler?
+    var closeViewHandler: VoidHandler?
 
     // MARK: - Private Properties
 
     private let cardHeight: CGFloat = 750
     private let cardHandlerAreaHeight: CGFloat = -50
-
-    private var cardVisible = false
-
-    private var nextState: ViewState {
-        cardVisible ? .collapsed : .expanded
-    }
-
+    private var isViewVisible = false
     private var animationsProgressWhenInterrupted: CGFloat = 0
-
     private var runningAnimations: [UIViewPropertyAnimator] = .init()
+    private var nextState: ViewState {
+        isViewVisible ? .collapsed : .expanded
+    }
 
     // MARK: - Initializers
 
@@ -89,10 +85,7 @@ final class TermsView: UIView {
     // MARK: - Private Methods
 
     private func configureView() {
-        addSubview(handleArea)
-        addSubview(nameTermsLabel)
-        addSubview(textTermsLabel)
-        addSubview(cancelButton)
+        addSubviews(handleArea, nameTermsLabel, textTermsLabel, cancelButton)
         layer.cornerRadius = 20
         backgroundColor = .white
         setConstraint()
@@ -142,7 +135,7 @@ final class TermsView: UIView {
     private func setupView() {
         let tapGestureRecoconizer = UITapGestureRecognizer(
             target: self,
-            action: #selector(handleCardTap(recognizer:))
+            action: #selector(handleAreaCardTapped(recognizer:))
         )
         let panGestureRecognizer = UIPanGestureRecognizer(
             target: self,
@@ -159,12 +152,12 @@ final class TermsView: UIView {
                 case .expanded:
                     self.frame.origin.y = self.frame.height - self.cardHeight
                 case .collapsed:
-                    self.darkHandler?()
+                    self.closeViewHandler?()
                     self.frame.origin.y = self.frame.height - self.cardHandlerAreaHeight
                 }
             }
             frameAnimator.addCompletion { _ in
-                self.cardVisible = !self.cardVisible
+                self.isViewVisible.toggle()
                 self.runningAnimations.removeAll()
             }
             frameAnimator.startAnimation()
@@ -194,12 +187,12 @@ final class TermsView: UIView {
         }
     }
 
-    @objc private func tapCancelButton() {
-        darkHandler?()
+    @objc private func cancelButtonTapped() {
+        closeViewHandler?()
         animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
     }
 
-    @objc private func handleCardTap(recognizer: UITapGestureRecognizer) {
+    @objc private func handleAreaCardTapped(recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
         case .ended:
             animateTransitionIfNeeded(state: nextState, duration: 0.9)
@@ -215,7 +208,7 @@ final class TermsView: UIView {
         case .changed:
             let traslation = recognizer.translation(in: handleArea)
             var fractionComplete = traslation.y / cardHeight
-            fractionComplete = cardVisible ? fractionComplete : -fractionComplete
+            fractionComplete = isViewVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             continueInteractiveTRasition()
