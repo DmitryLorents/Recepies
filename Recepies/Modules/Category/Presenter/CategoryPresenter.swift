@@ -69,34 +69,16 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?) {
         let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
-        switch predicates.count {
-        case 2:
-            sortByTwoPredicates(predicates)
-        case 1:
-            sortCategoryBy(predicates[0])
-        default:
-            dataSource = category
-        }
-    }
-
-    private func sortByTwoPredicates(_ predicates: [SortingRecipeHandler]) {
-        print(#function)
-        if let sortedRecipes = category?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
-            if lhsRecipe.calories == rhsRecipe.calories {
-                return predicates[1](lhsRecipe, rhsRecipe)
+        let sortedRecipes = category?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
+            for predicate in predicates {
+                if !predicate(lhsRecipe, rhsRecipe), !predicate(rhsRecipe, lhsRecipe) {
+                    continue
+                }
+                return predicate(lhsRecipe, rhsRecipe)
             }
-            return predicates[0](lhsRecipe, rhsRecipe)
-
-        }) {
-            var sortedCategory = category
-            sortedCategory?.recipes = sortedRecipes
-            dataSource = sortedCategory
-        }
-    }
-
-    private func sortCategoryBy(_ predicate: SortingRecipeHandler) {
-        print(#function)
-        if let sortedRecipes = category?.recipes.sorted(by: { predicate($0, $1) }) {
+            return false
+        })
+        if let sortedRecipes {
             var sortedCategory = category
             sortedCategory?.recipes = sortedRecipes
             dataSource = sortedCategory
