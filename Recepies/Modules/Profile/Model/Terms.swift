@@ -5,9 +5,9 @@
 struct Terms {
     static let titleTerms = "Terms of Use"
     static let textTerms = """
-    Welcome to our recipe app! We're thrilled to have you on board.
-    To ensure a delightful experience for everyone,
-    please take a moment to familiarize yourself with our rules:
+    Welcome to our recipe app! We're thrilled to 
+    have you on board.To ensure a delightful experience for everyone, please take a moment
+    to familiarize yourself with our rules:
     User Accounts:
     Maintain one account per user.
     Safeguard your login credentials; don't share them with others.
