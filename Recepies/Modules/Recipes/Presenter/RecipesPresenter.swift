@@ -21,6 +21,8 @@ final class RecipesPresenter: RecipesPresenterProtocol {
 
     var category: [Category] = Category.makeMockCategory()
 
+//    var state: State = .start
+
     // MARK: - Private Properties
 
     private weak var view: RecipesViewProtocol?

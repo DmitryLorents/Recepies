@@ -80,7 +80,12 @@ final class ProfileView: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         view.backgroundColor = .white
     }
+
+    var cardViewController: TermsView!
+    var visualEffectView: UIVisualEffectView!
 }
+
+//
 
 // MARK: - ProfileView + UITableViewDataSource
 
@@ -145,6 +150,38 @@ extension ProfileView: UITableViewDelegate {
 // MARK: - ProfileView + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
+    func setupTermsView() {
+        cardViewController = TermsView(frame: CGRect(
+            x: 0,
+            y: view.frame.height - 200,
+            width: view.bounds.width,
+            height: view.bounds.height
+        ))
+        visualEffectView = UIVisualEffectView()
+        visualEffectView.frame = view.frame
+        view.addSubview(visualEffectView)
+        let blurAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1) {
+            self.visualEffectView.effect = UIBlurEffect(style: .dark)
+        }
+        blurAnimator.startAnimation()
+        let scene = UIApplication.shared.connectedScenes
+        let windowScene = scene.first as? UIWindowScene
+
+        UIView.animate(withDuration: 2) {
+            windowScene?.windows.last?.addSubview(self.cardViewController)
+        }
+        cardViewController.darkHandler = { [weak self] in
+            let blurAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1) {
+                self?.visualEffectView.effect = nil
+            }
+            blurAnimator.startAnimation()
+            self?.visualEffectView.isUserInteractionEnabled = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.cardViewController.removeFromSuperview()
+            }
+        }
+    }
+
     func openBunusView() {
         let bonusPresenter = BonusPresenter()
         let bonusViewController = BonusViewController()

@@ -13,6 +13,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func goBack()
     /// Shows detailed recipe screen
     func showDetailedScreen(for indexPath: IndexPath)
+    /// Функция поиска нужного лемента
+    func filterCategory(text: String)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -21,6 +23,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     var category: Category?
 
     // MARK: - Private Properties
+
+    private var conteinerCategory: Category?
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
@@ -31,9 +35,22 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         self.view = view
         self.coordinator = coordinator
         self.category = category
+        conteinerCategory = category
     }
 
     // MARK: - Public Methods
+
+    func filterCategory(text: String) {
+        if text.count < 3 {
+            category = conteinerCategory
+            view?.updateTableView()
+        } else {
+            guard let categorySearch = category else { return }
+            let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+            category?.recipes = searchingRecipe
+            view?.updateTableView()
+        }
+    }
 
     func goBack() {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {

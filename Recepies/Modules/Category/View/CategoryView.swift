@@ -32,13 +32,14 @@ final class CategoryView: UIViewController {
         action: #selector(timeButtonAction(_:))
     )
 
-    private let recipeSearchBar: UISearchBar = {
+    private lazy var recipeSearchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = Constants.searchPlaceholder
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.searchTextField.backgroundColor = .searchBackground
         searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
         return searchBar
     }()
 
@@ -123,6 +124,12 @@ final class CategoryView: UIViewController {
 
     @objc private func backButtonAction() {
         presenter?.goBack()
+    }
+}
+
+extension CategoryView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.filterCategory(text: searchText)
     }
 }
 

@@ -13,6 +13,8 @@ protocol ProfileViewProtocol: AnyObject {
     func reloadData()
     /// Открытие шторки с бонусами
     func openBunusView()
+    /// Открытие экрана  Terms
+    func setupTermsView()
 }
 
 /// Протокол презентера профиля
@@ -64,10 +66,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func didSetectItem(index: Int) {
-        if index == 0 {
-            view?.openBunusView()
-        } else if index == 2 {
-            view?.showLogOutAlert()
+        switch index {
+        case 0: view?.openBunusView()
+        case 1: view?.setupTermsView()
+        case 2: view?.showLogOutAlert()
+        default:
+            break
         }
     }
 
