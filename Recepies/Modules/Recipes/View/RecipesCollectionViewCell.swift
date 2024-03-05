@@ -36,6 +36,8 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
+    let view2 = UIView()
+
     // MARK: - Public Properties
 
     override var isSelected: Bool {
@@ -53,12 +55,23 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(category: Category) {
-        categoryImage.image = UIImage(named: category.categoryImage)
-        nameLabel.text = category.name
-        configureCell()
-        setCostraints()
-        heightSettingInViewConstraint()
+    func setupCell(category: Category /* , state: State */ ) {
+//        switch state{
+//        case .start:
+        contentView.addSubview(view2)
+        view2.frame = contentView.bounds
+        view2.backgroundColor = .systemGray4
+        view2.layer.cornerRadius = contentView.bounds.width / 10
+        view2.startShimmeringAnimation(animationSpeed: 1.4, direction: .leftToRight, repeatCount: 3)
+//        case .end:
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
+            categoryImage.image = UIImage(named: category.categoryImage)
+            nameLabel.text = category.name
+            configureCell()
+            setCostraints()
+            heightSettingInViewConstraint()
+            view2.removeFromSuperview()
+        }
     }
 
     // MARK: - Private Methods

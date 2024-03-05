@@ -11,6 +11,8 @@ protocol CategoryViewProtocol: AnyObject {
     var presenter: CategoryPresenterProtocol? { get }
     /// Reload tableView
     func updateTableView()
+    /// Set sorting buttons state .none
+    func clearSortingButtonStates()
 }
 
 /// View to show screen with recipes
@@ -34,13 +36,14 @@ final class CategoryView: UIViewController {
         action: #selector(sortingButtonPressed)
     )
 
-    private let recipeSearchBar: UISearchBar = {
+    private lazy var recipeSearchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = Constants.searchPlaceholder
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.searchTextField.backgroundColor = .searchBackground
         searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
         return searchBar
     }()
 
@@ -139,9 +142,20 @@ final class CategoryView: UIViewController {
     }
 }
 
+extension CategoryView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.filterCategory(text: searchText)
+    }
+}
+
 // MARK: - AuthView - CategoryViewProtocol
 
 extension CategoryView: CategoryViewProtocol {
+    func clearSortingButtonStates() {
+        caloriesButton.sortingState = .none
+        timeButton.sortingState = .none
+    }
+
     func updateTableView() {
         recipesTableView.reloadData()
     }

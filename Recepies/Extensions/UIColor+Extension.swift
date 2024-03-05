@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 /// To implement Lightwight pattern
 extension UIColor {
     /// Storage for already initiate colors in app

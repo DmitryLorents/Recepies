@@ -19,6 +19,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// - Parameter caloriesPredicate: sorting predicate from caloriesButton
     /// - Parameter timePredicate: sorting predicate from timeButton
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
+    /// Функция поиска нужного лемента
+    func filterCategory(text: String)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -31,6 +33,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     // MARK: - Private Properties
+
+    private var conteinerCategory: Category?
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
@@ -51,6 +55,19 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     // MARK: - Public Methods
 
+    func filterCategory(text: String) {
+        if text.count < 3 {
+            dataSource = category
+            view?.clearSortingButtonStates()
+            view?.updateTableView()
+        } else {
+            guard let categorySearch = dataSource else { return }
+            let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+            dataSource?.recipes = searchingRecipe
+            view?.updateTableView()
+        }
+    }
+
     func goBack() {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
             recipesCoordinator.goBack()
@@ -67,7 +84,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         // Remova all nil predicates and put predicates in correct order in array
         let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
         // Sorting recipes in category
-        let sortedRecipes = category?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
+        let sortedRecipes = dataSource?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
             for predicate in predicates {
                 // Case lhs == rhs
                 if !predicate(lhsRecipe, rhsRecipe), !predicate(rhsRecipe, lhsRecipe) {

@@ -17,7 +17,7 @@ final class SortingButton: UIButton {
         case moreToLess
     }
 
-    private(set) var sortingState: SortingType = .none {
+    var sortingState: SortingType = .none {
         didSet {
             updateAppearance(with: sortingState)
         }
