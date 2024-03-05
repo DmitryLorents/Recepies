@@ -70,6 +70,20 @@ final class CategoryView: UIViewController {
         setupVIew()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        caloriesButton.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4)
+        recipeSearchBar.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4)
+        let cells = recipesTableView.visibleCells
+        for cell in cells {
+            let subviews = cell.contentView.subviews
+            for subview in subviews {
+                let subSubviews = subview.subviews
+                subSubviews.forEach { $0.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4) }
+            }
+        }
+    }
+
     // MARK: - Private Methods
 
     private func setupVIew() {
