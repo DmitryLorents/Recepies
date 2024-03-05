@@ -5,8 +5,8 @@ import UIKit
 
 /// Protocol for Authorization screen presenter
 protocol CategoryPresenterProtocol: AnyObject {
+    /// Type of handler from sorting button
     typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
-
     /// Categories of product to show by view
     var dataSource: Category? { get }
     /// Main initializer
@@ -22,13 +22,10 @@ protocol CategoryPresenterProtocol: AnyObject {
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
-    // MARK: - Types
-
     // MARK: - Public Properties
 
     var dataSource: Category? {
         didSet {
-            print("Set datasource")
             view?.updateTableView()
         }
     }
@@ -39,7 +36,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     private weak var view: CategoryViewProtocol?
     private var category: Category? {
         didSet {
-            print("Set category")
             dataSource = category
         }
     }
@@ -68,9 +64,12 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?) {
+        // Remova all nil predicates and put predicates in correct order in array
         let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
+        // Sorting recipes in category
         let sortedRecipes = category?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
             for predicate in predicates {
+                // Case lhs == rhs
                 if !predicate(lhsRecipe, rhsRecipe), !predicate(rhsRecipe, lhsRecipe) {
                     continue
                 }
@@ -78,6 +77,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             }
             return false
         })
+        // Set new dataSource
         if let sortedRecipes {
             var sortedCategory = category
             sortedCategory?.recipes = sortedRecipes
