@@ -35,6 +35,8 @@ final class ProfileView: UIViewController {
 
     // MARK: - Private Properties
 
+    private var termsView: TermsView!
+    private var visualEffectView: UIVisualEffectView!
     private var tableView = UITableView()
     private let contentTypes: [CellTypes] = [.profile, .options]
 
@@ -80,9 +82,6 @@ final class ProfileView: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         view.backgroundColor = .white
     }
-
-    var cardViewController: TermsView!
-    var visualEffectView: UIVisualEffectView!
 }
 
 //
@@ -140,9 +139,10 @@ extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let items = contentTypes[indexPath.section]
         switch items {
-        case .profile: break
         case .options:
             profilePresenter?.didSetectItem(index: indexPath.row)
+        default:
+            break
         }
     }
 }
@@ -151,7 +151,7 @@ extension ProfileView: UITableViewDelegate {
 
 extension ProfileView: ProfileViewProtocol {
     func setupTermsView() {
-        cardViewController = TermsView(frame: CGRect(
+        termsView = TermsView(frame: CGRect(
             x: 0,
             y: view.frame.height - 200,
             width: view.bounds.width,
@@ -168,16 +168,16 @@ extension ProfileView: ProfileViewProtocol {
         let windowScene = scene.first as? UIWindowScene
 
         UIView.animate(withDuration: 2) {
-            windowScene?.windows.last?.addSubview(self.cardViewController)
+            windowScene?.windows.last?.addSubview(self.termsView)
         }
-        cardViewController.darkHandler = { [weak self] in
+        termsView.closeViewHandler = { [weak self] in
             let blurAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1) {
                 self?.visualEffectView.effect = nil
             }
             blurAnimator.startAnimation()
-            self?.visualEffectView.isUserInteractionEnabled = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self?.cardViewController.removeFromSuperview()
+                self?.termsView.removeFromSuperview()
+                self?.visualEffectView.removeFromSuperview()
             }
         }
     }
