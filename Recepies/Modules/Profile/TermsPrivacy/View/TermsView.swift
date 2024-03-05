@@ -118,7 +118,7 @@ final class TermsView: UIView {
     private func setTitleConstraint() {
         NSLayoutConstraint.activate([
             nameTermsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
-            nameTermsLabel.topAnchor.constraint(equalTo: topAnchor, constant: 26)
+            nameTermsLabel.topAnchor.constraint(equalTo: topAnchor, constant: 40)
 
         ])
     }
