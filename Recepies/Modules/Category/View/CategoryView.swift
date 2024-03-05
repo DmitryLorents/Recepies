@@ -5,6 +5,8 @@ import UIKit
 
 /// Protocol for Category view
 protocol CategoryViewProtocol: AnyObject {
+    /// Type of handler from sorting button
+    typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
     /// View's presenter
     var presenter: CategoryPresenterProtocol? { get }
     /// Reload tableView
@@ -23,13 +25,13 @@ final class CategoryView: UIViewController {
 
     // MARK: - Visual components
 
-    private lazy var caloriesButton: UIButton = makeSortingButton(
+    private lazy var caloriesButton: SortingButton = makeSortingButton(
         title: Constants.caloriesButtonTitle,
-        action: #selector(caloriesButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
-    private lazy var timeButton: UIButton = makeSortingButton(
+    private lazy var timeButton: SortingButton = makeSortingButton(
         title: Constants.timeButtonTitle,
-        action: #selector(timeButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
 
     private let recipeSearchBar: UISearchBar = {
@@ -86,7 +88,7 @@ final class CategoryView: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = presenter?.category?.name
+        titleLabel.text = presenter?.dataSource?.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -107,22 +109,33 @@ final class CategoryView: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
     }
 
-    private func makeSortingButton(title: String, action: Selector) -> UIButton {
+    private func makeSortingButton(title: String, action: Selector) -> SortingButton {
         let button = SortingButton(title: title, height: 36)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
 
-    @objc private func caloriesButtonAction(_ sender: UIButton) {
-        print(#function)
-    }
-
-    @objc private func timeButtonAction(_ sender: UIButton) {
-        print(#function)
-    }
-
     @objc private func backButtonAction() {
         presenter?.goBack()
+    }
+
+    @objc func sortingButtonPressed() {
+        let caloriesSortingHandler: SortingRecipeHandler?
+        let timeSortingHandler: SortingRecipeHandler?
+
+        if let caloriesButtonPredicate = caloriesButton.getSortingPredicate() {
+            caloriesSortingHandler = { lhsRecipe, rhsRecipe in
+                caloriesButtonPredicate(lhsRecipe.calories, rhsRecipe.calories)
+            }
+        } else { caloriesSortingHandler = nil }
+
+        if let timePredicate = timeButton.getSortingPredicate() {
+            timeSortingHandler = { lhsRecipe, rhsRecipe in
+                timePredicate(lhsRecipe.timeToCook, rhsRecipe.timeToCook)
+            }
+        } else { timeSortingHandler = nil }
+
+        presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
 }
 
@@ -190,14 +203,14 @@ extension CategoryView: UITableViewDelegate {
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.category?.recipes.count ?? 0
+        presenter?.dataSource?.recipes.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.category?.recipes[indexPath.row]
+        let recipe = presenter?.dataSource?.recipes[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

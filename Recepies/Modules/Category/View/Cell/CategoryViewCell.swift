@@ -45,7 +45,11 @@ final class CategoryViewCell: UITableViewCell {
     private lazy var timerLabel = makeBottomLabel(title: "60\(Constants.timerLabelText)")
     private lazy var caloriesLabel = makeBottomLabel(title: "274\(Constants.caloriesLabelText)")
 
-    private let chevronImageView = UIImageView(image: .chevronRight)
+    private let chevronImageView: UIImageView = {
+        let imageView = UIImageView(image: .chevronRight)
+        imageView.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        return imageView
+    }()
 
     // MARK: - Private Properties
 
@@ -78,6 +82,7 @@ final class CategoryViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func setupView() {
+        chevronImageView.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         selectionStyle = .none
         contentView.addSubview(grayBackgroundView)
         contentView.disableTARMIC()
