@@ -31,7 +31,7 @@ extension UIView {
 
         CATransaction.begin()
         let animation = makeAnimation(animationSpeed: animationSpeed)
-        gradientLayer.add(animation, forKey: "shimmerAnimation")
+        gradientLayer.add(animation, forKey: "")
         CATransaction.commit()
     }
 
@@ -58,16 +58,22 @@ extension UIView {
 
     /// Adds gray color layer to top of view
     private func addGrayShimmerLayer() {
+        let maxPossibleRadius = 12.0
+        let minHeightForDynamicRadius = 60.0
+        let usefullDevider = 5.0
         let grayShimmerLayer = CALayer()
         grayShimmerLayer.backgroundColor = UIColor.systemGray4.cgColor
         grayShimmerLayer.frame = bounds
-        grayShimmerLayer.cornerRadius = grayShimmerLayer.frame.height > 60 ? 12 : grayShimmerLayer.frame.height / 5
+        let radius = grayShimmerLayer.frame.height > minHeightForDynamicRadius ? maxPossibleRadius : grayShimmerLayer
+            .frame.height / usefullDevider
+        grayShimmerLayer.cornerRadius = radius
         grayShimmerLayer.masksToBounds = true
         layer.addSublayer(grayShimmerLayer)
     }
 
     /// Makes animation with desired parameters
     ///  - Parameter animationSpeed: time interval for animation repeating
+    ///  - Returns: Basic animation instance
     private func makeAnimation(animationSpeed: CGFloat) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "locations")
         animation.fromValue = [0.0, 0.1, 0.2]
