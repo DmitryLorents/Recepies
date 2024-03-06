@@ -9,5 +9,5 @@ public typealias BoolHandler = (Bool) -> ()
 public typealias StringHandler = (String) -> ()
 public typealias DateHandler = (Date) -> ()
 public typealias OptionalDateHandler = (Date?) -> ()
-public typealias SortingHandler = (Int, Int) -> Bool // <T: Comparable> = (T, T) -> Bool
+public typealias SortingHandler = (Int, Int) -> Bool
 // swiftlint:enable all

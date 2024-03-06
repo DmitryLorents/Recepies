@@ -7,12 +7,16 @@ import UIKit
 protocol CategoryViewProtocol: AnyObject {
     /// Type of handler from sorting button
     typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
+    /// State of category screen, changes view appearance
+    var state: CategoryState { get }
     /// View's presenter
     var presenter: CategoryPresenterProtocol? { get }
     /// Reload tableView
     func updateTableView()
     /// Set sorting buttons state .none
-    func clearSortingButtonStates()
+    func clearSortingButtonState()
+    /// Set new state to view
+    func updateState(with state: CategoryState)
 }
 
 /// View to show screen with recipes
@@ -62,26 +66,17 @@ final class CategoryView: UIViewController {
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
+    var state: CategoryState = .initial {
+        didSet {
+            updateViewAppearance(for: state)
+        }
+    }
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVIew()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        caloriesButton.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4)
-        recipeSearchBar.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4)
-        let cells = recipesTableView.visibleCells
-        for cell in cells {
-            let subviews = cell.contentView.subviews
-            for subview in subviews {
-                let subSubviews = subview.subviews
-                subSubviews.forEach { $0.startShimmeringAnimation(animationSpeed: 1, repeatCount: 4) }
-            }
-        }
     }
 
     // MARK: - Private Methods
@@ -132,6 +127,20 @@ final class CategoryView: UIViewController {
         return button
     }
 
+    private func updateViewAppearance(for state: CategoryState) {
+        recipesTableView.reloadData()
+        let cells = recipesTableView.visibleCells as? [CategoryViewCell]
+        switch state {
+        case .loading:
+            cells?.forEach { $0.startCellShimmerAnimation() }
+        case .loaded, .error:
+            cells?.forEach { $0.stopCellShimmerAnimation() }
+            recipesTableView.reloadData()
+        default:
+            break
+        }
+    }
+
     @objc private func backButtonAction() {
         presenter?.goBack()
     }
@@ -155,7 +164,9 @@ final class CategoryView: UIViewController {
         presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
 }
+
 // MARK: - CategoryView + UISearchBarDelegate
+
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter?.filterCategory(text: searchText)
@@ -165,13 +176,17 @@ extension CategoryView: UISearchBarDelegate {
 // MARK: - AuthView - CategoryViewProtocol
 
 extension CategoryView: CategoryViewProtocol {
-    func clearSortingButtonStates() {
+    func clearSortingButtonState() {
         caloriesButton.sortingState = .none
         timeButton.sortingState = .none
     }
 
     func updateTableView() {
         recipesTableView.reloadData()
+    }
+
+    func updateState(with state: CategoryState) {
+        self.state = state
     }
 }
 
@@ -231,7 +246,14 @@ extension CategoryView: UITableViewDelegate {
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.dataSource?.recipes.count ?? 0
+        switch state {
+        case .initial:
+            return 0
+        case .loading:
+            return 10
+        default:
+            return presenter?.dataSource?.recipes.count ?? 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -19,7 +19,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// - Parameter caloriesPredicate: sorting predicate from caloriesButton
     /// - Parameter timePredicate: sorting predicate from timeButton
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
-    /// Функция поиска нужного лемента
+    /// Search necessary element
+    /// - Parameter text: text value from searchBar
     func filterCategory(text: String)
 }
 
@@ -51,6 +52,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         self.coordinator = coordinator
         self.category = category
         dataSource = category
+        imitateNetworkRequest()
     }
 
     // MARK: - Public Methods
@@ -58,7 +60,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     func filterCategory(text: String) {
         if text.count < 3 {
             dataSource = category
-            view?.clearSortingButtonStates()
+            view?.clearSortingButtonState()
             view?.updateTableView()
         } else {
             guard let categorySearch = dataSource else { return }
@@ -99,6 +101,15 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             var sortedCategory = category
             sortedCategory?.recipes = sortedRecipes
             dataSource = sortedCategory
+        }
+    }
+
+    private func imitateNetworkRequest() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.view?.updateState(with: .loading)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.view?.updateState(with: .loaded)
         }
     }
 }
