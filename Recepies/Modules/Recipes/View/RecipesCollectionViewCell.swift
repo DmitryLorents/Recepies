@@ -56,7 +56,7 @@ final class RecipesCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
 
     func setupCell(category: Category) {
-        contentView.startShimmeringAnimation(animationSpeed: 1.4, repeatCount: 2)
+        contentView.startShimmeringAnimation()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
             categoryImage.image = UIImage(named: category.categoryImage)
             nameLabel.text = category.name

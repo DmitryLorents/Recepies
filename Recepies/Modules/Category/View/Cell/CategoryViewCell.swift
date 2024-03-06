@@ -61,6 +61,10 @@ final class CategoryViewCell: UITableViewCell {
         }
     }
 
+    private var viewsForShimmerEffect: [UIView] {
+        grayBackgroundView.subviews
+    }
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -79,7 +83,13 @@ final class CategoryViewCell: UITableViewCell {
         self.recipe = recipe
     }
 
-    func startShimmer() {}
+    func startCellShimmerAnimation() {
+        viewsForShimmerEffect.forEach { $0.startShimmeringAnimation() }
+    }
+
+    func stopCellShimmerAnimation() {
+        viewsForShimmerEffect.forEach { $0.stopShimmeringAnimation() }
+    }
 
     // MARK: - Private Methods
 

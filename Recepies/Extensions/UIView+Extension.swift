@@ -17,9 +17,10 @@ extension UIView {
     }
 
     /// Add shimmer effect to view
-    func startShimmeringAnimation(animationSpeed: Float, repeatCount: Float) {
+    func startShimmeringAnimation() {
         let lightColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).cgColor
         let blackColor = UIColor.black.cgColor
+        let animationSpeed = 1.0
 
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [blackColor, lightColor, blackColor]
@@ -34,12 +35,12 @@ extension UIView {
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.locations = [0.35, 0.50, 0.65]
 
-        let grayLayer = CALayer()
-        grayLayer.backgroundColor = UIColor.systemGray4.cgColor
-        grayLayer.frame = bounds
-        grayLayer.cornerRadius = grayLayer.frame.height > 60 ? 12 : grayLayer.frame.height / 5
-        grayLayer.masksToBounds = true
-        layer.addSublayer(grayLayer)
+        let grayShimmerLayer = CALayer()
+        grayShimmerLayer.backgroundColor = UIColor.systemGray4.cgColor
+        grayShimmerLayer.frame = bounds
+        grayShimmerLayer.cornerRadius = grayShimmerLayer.frame.height > 60 ? 12 : grayShimmerLayer.frame.height / 5
+        grayShimmerLayer.masksToBounds = true
+        layer.addSublayer(grayShimmerLayer)
         layer.mask = gradientLayer
 
         CATransaction.begin()
@@ -47,11 +48,11 @@ extension UIView {
         animation.fromValue = [0.0, 0.1, 0.2]
         animation.toValue = [0.8, 0.9, 1.0]
         animation.duration = CFTimeInterval(animationSpeed)
-        animation.repeatCount = repeatCount
+        animation.repeatCount = .infinity
         CATransaction.setCompletionBlock { [weak self] in
             guard let self = self else { return }
             self.layer.mask = nil
-            grayLayer.removeFromSuperlayer()
+            grayShimmerLayer.removeFromSuperlayer()
         }
         gradientLayer.add(animation, forKey: "shimmerAnimation")
         CATransaction.commit()
@@ -59,6 +60,6 @@ extension UIView {
 
     func stopShimmeringAnimation() {
         layer.mask = nil
-//        gradientLayer.removeFromSuperlayer()
+        layer.sublayers?.first?.removeFromSuperlayer()
     }
 }
