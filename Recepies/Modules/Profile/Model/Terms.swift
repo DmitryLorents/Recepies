@@ -1,7 +1,7 @@
 // Terms.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Data from the Terms of Use screen
+/// Data for the Terms of Use screen
 struct Terms {
     static let titleTerms = "Terms of Use"
     static let textTerms = """

@@ -16,8 +16,9 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Shows detailed recipe screen
     func showDetailedScreen(for indexPath: IndexPath)
     /// Sorting recipes in category by given predicates
-    /// - Parameter caloriesPredicate: sorting predicate from caloriesButton
-    /// - Parameter timePredicate: sorting predicate from timeButton
+    /// - Parameters:
+    /// caloriesPredicate: sorting predicate from caloriesButton
+    /// timePredicate: sorting predicate from timeButton
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
     /// Search necessary element
     /// - Parameter text: text value from searchBar
@@ -28,7 +29,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let countText = 3
+        static let minTextLenght = 3
     }
 
     // MARK: - Public Properties
@@ -58,23 +59,10 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         self.coordinator = coordinator
         self.category = category
         dataSource = category
-        imitateNetworkRequest()
+        imitateNetworkRequest {}
     }
 
     // MARK: - Public Methods
-
-    func filterCategory(text: String) {
-        if text.count < Constants.countText {
-            dataSource = category
-            view?.clearSortingButtonState()
-            view?.updateTableView()
-        } else {
-            guard let categorySearch = dataSource else { return }
-            let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
-            dataSource?.recipes = searchingRecipe
-            view?.updateTableView()
-        }
-    }
 
     func goBack() {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
@@ -110,12 +98,28 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         }
     }
 
-    private func imitateNetworkRequest() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+    private func imitateNetworkRequest(completionHandler: @escaping VoidHandler) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.view?.updateState(with: .loading)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.view?.updateState(with: .loaded)
+            completionHandler()
+        }
+    }
+
+    func filterCategory(text: String) {
+        if text.count < Constants.minTextLenght {
+            dataSource = category
+            view?.clearSortingButtonState()
+            view?.updateTableView()
+        } else {
+            imitateNetworkRequest { [weak self] in
+                guard let self else { return }
+                guard let categorySearch = dataSource else { return }
+                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+                dataSource?.recipes = searchingRecipe
+            }
         }
     }
 }
