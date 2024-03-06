@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Ячейка с дополнительными возможностями
+/// Cell with additional features
 final class OtherTableViewCell: UITableViewCell {
     // MARK: - Constants
 

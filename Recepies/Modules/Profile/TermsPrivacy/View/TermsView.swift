@@ -3,19 +3,21 @@
 
 import UIKit
 
-///  Экран Terms of Use
+///  Screen Terms of Use
 final class TermsView: UIView {
     // MARK: - Types
 
     private enum Constants {
         static let cancelImage = "xmark"
+        static let cardHeightValue = 750
+        static let cardHandlerAreaHeightValue = -50
     }
 
-    /// Виды показа вью
+    /// Types of view display
     private enum ViewState {
-        /// Полное открытие вью
+        /// Full opening of the view
         case expanded
-        /// Закрытие вью
+        /// Closing the view
         case collapsed
     }
 
@@ -59,8 +61,8 @@ final class TermsView: UIView {
 
     // MARK: - Private Properties
 
-    private let cardHeight: CGFloat = 750
-    private let cardHandlerAreaHeight: CGFloat = -50
+    private let cardHeight: CGFloat = .init(Constants.cardHeightValue)
+    private let cardHandlerAreaHeight: CGFloat = .init(Constants.cardHandlerAreaHeightValue)
     private var isViewVisible = false
     private var animationsProgressWhenInterrupted: CGFloat = 0
     private var runningAnimations: [UIViewPropertyAnimator] = .init()

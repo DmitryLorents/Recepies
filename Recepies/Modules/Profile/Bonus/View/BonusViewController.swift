@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Экран с колличеством обуви
+/// Screen with number of shoes
 final class BonusViewController: UIViewController {
     // MARK: - Constants
 

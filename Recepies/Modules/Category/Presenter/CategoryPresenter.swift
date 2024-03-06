@@ -25,6 +25,11 @@ protocol CategoryPresenterProtocol: AnyObject {
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
+    
+    // MARK: - Constants
+    private enum Constants {
+        static let countText = 3
+    }
     // MARK: - Public Properties
 
     var dataSource: Category? {
@@ -58,7 +63,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Public Methods
 
     func filterCategory(text: String) {
-        if text.count < 3 {
+        if text.count < Constants.countText {
             dataSource = category
             view?.clearSortingButtonState()
             view?.updateTableView()

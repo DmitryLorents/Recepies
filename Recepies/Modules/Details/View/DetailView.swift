@@ -3,23 +3,23 @@
 
 import UIKit
 
-/// Протокол для экрана деталей
+/// Protocol for detail screen
 protocol DetailViewProtocol: AnyObject {
-    /// Изменение цвета кнопки
+    /// Change button color
     func setButtonColor()
 }
 
-/// Экран с детальной информацией о ячейке
+/// Screen with detailed information about the cell
 final class DetailView: UIViewController {
     // MARK: - Types
 
-    /// Разновидности ячеек
+    /// Types of cells
     enum CellTypesDetail {
-        /// Ячейка с тайтлом и картинкой
+        /// Cell with title and picture
         case title
-        /// Ячейка с характеристиками
+        /// Cell with characteristics
         case characteristics
-        /// Ячека с полным описанием рецепта
+        /// Box with a full description of the recipe
         case fullDescription
     }
 

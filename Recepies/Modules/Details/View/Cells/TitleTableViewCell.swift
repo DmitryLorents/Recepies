@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Титульная ячека с общей информацией о рецепте
+/// Title box with general information about the recipe
 final class TitleTableViewCell: UITableViewCell {
     // MARK: - Constants
 

@@ -3,35 +3,35 @@
 
 import Foundation
 
-/// Протокол экрана профиля
+/// Profile screen protocol
 protocol ProfileViewProtocol: AnyObject {
-    /// Вызов алерта со сменой имени
+    /// Calling an alert with a name change
     func showEditNameAlert()
-    /// Вызов алерта выхода из профиля
+    /// Calling a profile exit alert
     func showLogOutAlert()
-    /// Обновление данных в таблице
+    /// Updating data in a table
     func reloadData()
-    /// Открытие шторки с бонусами
+    /// Opening the curtain with bonuses
     func openBunusView()
-    /// Открытие экрана  Terms
+    /// Open the Terms screen
     func setupTermsView()
 }
 
-/// Протокол презентера профиля
+/// Profile presenter protocol
 protocol ProfilePresenterProtocol: AnyObject {
-    /// Инициализация профиля
+    /// Profile initialization
     init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator)
-    /// Массив опций
+    /// Array of options
     var options: [OptionsProtocol] { get set }
-    /// Информация о пользователе
+    /// User information
     var profileUser: ProfileUserProtocol { get set }
-    /// Загрузка алерта со сменой имени
+    /// Loading an alert with a name change
     func setupAlert()
-    /// Изменение имени в профиле
+    /// Changing your profile name
     func setTitleNameUser(name: String)
-    /// Выбор ячейки
+    /// Cell selection
     func didSetectItem(index: Int)
-    /// Выход из профиля
+    /// Exit profile
     func logOutProfile()
 }
 
@@ -67,9 +67,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func didSetectItem(index: Int) {
         switch index {
-        case 0: view?.openBunusView()
-        case 1: view?.setupTermsView()
-        case 2: view?.showLogOutAlert()
+        case 0:
+            view?.openBunusView()
+        case 1:
+            view?.setupTermsView()
+        case 2:
+            view?.showLogOutAlert()
         default:
             break
         }

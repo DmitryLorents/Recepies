@@ -3,25 +3,23 @@
 
 import Foundation
 
-// Протокол для презентера экрана рецептов
+/// Protocol for recipe screen presenter
 protocol RecipesPresenterProtocol: AnyObject {
-    /// Инициализация
+    /// Initialization
     init(view: RecipesViewProtocol, coordinator: BaseModuleCoordinator)
-    /// Координатор
+    /// Coordinator
     var coordinator: BaseModuleCoordinator? { get set }
-    /// Данные о рецептах
+    /// Recipe data
     var category: [Category] { get set }
-    /// Получение индекса выбраной ячейки
+    /// Getting the index of the selected cell
     func transitionToCategory(index: Int)
 }
 
-/// Презентер для экрана рецетов
+/// Presenter for recipes screen
 final class RecipesPresenter: RecipesPresenterProtocol {
     // MARK: - Public Properties
 
     var category: [Category] = Category.makeMockCategory()
-
-//    var state: State = .start
 
     // MARK: - Private Properties
 

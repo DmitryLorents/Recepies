@@ -47,7 +47,6 @@ final class SortingButton: UIButton {
     // MARK: - Public Methods
 
     func getSortingPredicate() -> SortingHandler? {
-//        let sortingHandler: (SortingHandler<T>)?
         let sortingHandler: SortingHandler?
         switch sortingState {
         case .none:

@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Ячека категории
+/// Category cel
 final class RecipesCollectionViewCell: UICollectionViewCell {
     // MARK: - Constants
 

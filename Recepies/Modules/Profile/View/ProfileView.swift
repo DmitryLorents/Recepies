@@ -3,14 +3,14 @@
 
 import UIKit
 
-/// Экран профиля
+/// Profile screen
 final class ProfileView: UIViewController {
     // MARK: - Types
 
     private enum CellTypes {
-        /// Тип ячейки профиля
+        /// Profile cell type
         case profile
-        /// Тип ячейки опций
+        /// Option cell type
         case options
     }
 

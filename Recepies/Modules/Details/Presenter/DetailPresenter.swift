@@ -3,15 +3,15 @@
 
 import Foundation
 
-/// Протокол презентера деталей
+/// Parts presenter protocol
 protocol DetailPresenterProtocol: AnyObject {
-    /// Инициализация протокола
+    /// Protocol initialization
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
-    /// Данные о рецепте
+    /// Recipe data
     var recipe: Recipe? { get }
-    /// Вернуться на предыдущй контроллер
+    /// Return to previous controller
     func goBack()
-    /// Добавить рецепт в избранное
+    /// Add recipe to favorites
     func addRecipeToFavorites()
 }
 

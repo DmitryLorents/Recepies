@@ -145,7 +145,7 @@ final class CategoryView: UIViewController {
         presenter?.goBack()
     }
 
-    @objc func sortingButtonPressed() {
+    @objc private func sortingButtonPressed() {
         let caloriesSortingHandler: SortingRecipeHandler?
         let timeSortingHandler: SortingRecipeHandler?
 

@@ -1,7 +1,6 @@
 // CategoryState.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
 
 /// Describes possible states for СategoryView
 enum CategoryState {

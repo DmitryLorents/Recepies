@@ -3,9 +3,9 @@
 
 import UIKit
 
-// Протокол экрана рецептов
+// Recipe screen protocol
 protocol RecipesViewProtocol: AnyObject {}
-/// Экран с рецептами
+/// Screen with recipes
 final class RecipesView: UIViewController {
     var presenter: RecipesPresenter?
 

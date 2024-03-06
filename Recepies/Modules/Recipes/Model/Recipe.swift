@@ -1,21 +1,21 @@
 // Recipe.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Название и описание рецепта
+/// Name and description of the recipe
 struct Recipe {
-    /// Название рецепта
+    /// Recipe name
     let name: String
-    /// Изображение рецепта
+    /// Recipe image
     let recipeImage: String
-    /// Время на готовку блюда
+    /// Time to prepare the dish
     let timeToCook: Int
-    /// Колличество калорий
+    /// Number of calories
     let calories: Int
-    /// Детальный рецепт
+    /// Detailed recipe
     let description: String
-    /// Вес блюда
+    /// Weight of the dish
     let weight: Int
-    /// БЖУ
+    /// BJU
     let pfc: PFC
 
     static let descriptionText = """
