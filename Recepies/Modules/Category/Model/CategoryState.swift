@@ -1,7 +1,6 @@
 // CategoryState.swift
 // Copyright © RoadMap. All rights reserved.
 
-
 /// Describes possible states for СategoryView
 enum CategoryState {
     /// no data loaded, empty category data

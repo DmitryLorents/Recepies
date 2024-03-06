@@ -25,11 +25,12 @@ protocol CategoryPresenterProtocol: AnyObject {
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
-    
     // MARK: - Constants
+
     private enum Constants {
         static let countText = 3
     }
+
     // MARK: - Public Properties
 
     var dataSource: Category? {

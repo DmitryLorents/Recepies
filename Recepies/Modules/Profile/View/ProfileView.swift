@@ -153,7 +153,7 @@ extension ProfileView: ProfileViewProtocol {
     func setupTermsView() {
         termsView = TermsView(frame: CGRect(
             x: 0,
-            y: view.frame.height - 200,
+            y: view.frame.height / 2,
             width: view.bounds.width,
             height: view.bounds.height
         ))
