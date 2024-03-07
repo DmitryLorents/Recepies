@@ -16,7 +16,7 @@ final class RecipesCoordinator: BaseModuleCoordinator {
         let recipeScreenName = "Recipe"
         let categoryScreen = builder.makeCategoryModule(coordinator: self, category: category)
         publicRootController.pushViewController(categoryScreen, animated: true)
-        loggerInvoker.addLogCommand(.userMove(fromCategory: category.name, toScreen: recipeScreenName))
+        loggerInvoker.addLogCommand(.move(fromCategory: category.name, toScreen: recipeScreenName))
     }
 
     func goBack() {

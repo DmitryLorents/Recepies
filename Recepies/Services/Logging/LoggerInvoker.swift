@@ -27,8 +27,8 @@ final class LoggerInvoker {
 
     private func executeCommandsIfNeeded() {
         guard commands.count >= batchSize else { return }
-        commands.forEach {
-            logger.writeMessageToLog($0.logMessage)
+        for command in commands {
+            logger.writeMessageToLog(command.logMessage)
             commands = []
         }
     }

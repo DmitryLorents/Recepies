@@ -69,7 +69,7 @@ final class AppCoordinator: BaseCoodinator {
             animated: false
         )
         setAsRoot(mainTabBarViewController ?? UIViewController())
-        loggerInvoker.addLogCommand(.userOpenScreen(screenName: Constants.categoriesScreenName))
+        loggerInvoker.addLogCommand(.openScreen(screenName: Constants.categoriesScreenName))
     }
 
     private func showAuthScreen() {
@@ -82,6 +82,6 @@ final class AppCoordinator: BaseCoodinator {
         }
         add(coordinator: authCoordinator)
         authCoordinator.start()
-        loggerInvoker.addLogCommand(.userOpenScreen(screenName: Constants.authScreenName))
+        loggerInvoker.addLogCommand(.openScreen(screenName: Constants.authScreenName))
     }
 }
