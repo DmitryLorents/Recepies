@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Ячейка с автаркой и именем пользователя
+/// Cell with avatar and username
 final class MainTableViewCell: UITableViewCell {
     // MARK: - Constants
 

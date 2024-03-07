@@ -1,15 +1,15 @@
 // Category.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Основной ингридиент рецепта
+/// Main ingredient of the recipe
 struct Category {
-    /// Название ингридиента
+    /// Ingredient name
     let name: String
-    /// Изображение ингридиента
+    /// Ingredient image
     let categoryImage: String
-    /// Массив рецептов
-    let recipes: [Recipe]
-    /// Заполнение данных категории
+    /// Array of recipes
+    var recipes: [Recipe]
+    /// Filling in category data
     static func makeMockCategory() -> [Category] {
         [
             .init(

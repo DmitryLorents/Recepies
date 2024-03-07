@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Ячейка с подробным описанием рецепта
+/// Recipe detail box
 final class FullDescriptionTableViewCell: UITableViewCell {
     // MARK: - Constants
 

@@ -1,13 +1,13 @@
 // PFC.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Содержиние белков, жиров и углеводов
+/// Content of proteins, fats and carbohydrates
 struct PFC {
-    /// Белки
+    /// Proteins
     let proteins: Double
-    /// Жиры
+    /// Fats
     let fats: Double
-    /// Углеводы
+    /// Carbohydrates
     let carbohydrates: Double
 
     static func makeMockPFC() -> PFC {

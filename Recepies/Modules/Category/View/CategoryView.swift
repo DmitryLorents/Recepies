@@ -5,10 +5,18 @@ import UIKit
 
 /// Protocol for Category view
 protocol CategoryViewProtocol: AnyObject {
+    /// Type of handler from sorting button
+    typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
+    /// State of category screen, changes view appearance
+    var state: CategoryState { get }
     /// View's presenter
     var presenter: CategoryPresenterProtocol? { get }
     /// Reload tableView
     func updateTableView()
+    /// Set sorting buttons state .none
+    func clearSortingButtonState()
+    /// Set new state to view
+    func updateState(with state: CategoryState)
 }
 
 /// View to show screen with recipes
@@ -23,22 +31,23 @@ final class CategoryView: UIViewController {
 
     // MARK: - Visual components
 
-    private lazy var caloriesButton: UIButton = makeSortingButton(
+    private lazy var caloriesButton: SortingButton = makeSortingButton(
         title: Constants.caloriesButtonTitle,
-        action: #selector(caloriesButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
-    private lazy var timeButton: UIButton = makeSortingButton(
+    private lazy var timeButton: SortingButton = makeSortingButton(
         title: Constants.timeButtonTitle,
-        action: #selector(timeButtonAction(_:))
+        action: #selector(sortingButtonPressed)
     )
 
-    private let recipeSearchBar: UISearchBar = {
+    private lazy var recipeSearchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = Constants.searchPlaceholder
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.searchTextField.backgroundColor = .searchBackground
         searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
         return searchBar
     }()
 
@@ -57,6 +66,11 @@ final class CategoryView: UIViewController {
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
+    var state: CategoryState = .initial {
+        didSet {
+            updateViewAppearance(for: state)
+        }
+    }
 
     // MARK: - Life Cycle
 
@@ -86,7 +100,7 @@ final class CategoryView: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = presenter?.category?.name
+        titleLabel.text = presenter?.dataSource?.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -107,30 +121,72 @@ final class CategoryView: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarView)
     }
 
-    private func makeSortingButton(title: String, action: Selector) -> UIButton {
+    private func makeSortingButton(title: String, action: Selector) -> SortingButton {
         let button = SortingButton(title: title, height: 36)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
 
-    @objc private func caloriesButtonAction(_ sender: UIButton) {
-        print(#function)
-    }
-
-    @objc private func timeButtonAction(_ sender: UIButton) {
-        print(#function)
+    private func updateViewAppearance(for state: CategoryState) {
+        recipesTableView.reloadData()
+        let cells = recipesTableView.visibleCells as? [CategoryViewCell]
+        switch state {
+        case .loading:
+            cells?.forEach { $0.startCellShimmerAnimation() }
+        case .loaded, .error:
+            cells?.forEach { $0.stopCellShimmerAnimation() }
+            recipesTableView.reloadData()
+        default:
+            break
+        }
     }
 
     @objc private func backButtonAction() {
         presenter?.goBack()
+    }
+
+    @objc private func sortingButtonPressed() {
+        let caloriesSortingHandler: SortingRecipeHandler?
+        let timeSortingHandler: SortingRecipeHandler?
+
+        if let caloriesButtonPredicate = caloriesButton.getSortingPredicate() {
+            caloriesSortingHandler = { lhsRecipe, rhsRecipe in
+                caloriesButtonPredicate(lhsRecipe.calories, rhsRecipe.calories)
+            }
+        } else { caloriesSortingHandler = nil }
+
+        if let timePredicate = timeButton.getSortingPredicate() {
+            timeSortingHandler = { lhsRecipe, rhsRecipe in
+                timePredicate(lhsRecipe.timeToCook, rhsRecipe.timeToCook)
+            }
+        } else { timeSortingHandler = nil }
+
+        presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
+    }
+}
+
+// MARK: - CategoryView + UISearchBarDelegate
+
+extension CategoryView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.filterCategory(text: searchText)
     }
 }
 
 // MARK: - AuthView - CategoryViewProtocol
 
 extension CategoryView: CategoryViewProtocol {
+    func clearSortingButtonState() {
+        caloriesButton.sortingState = .none
+        timeButton.sortingState = .none
+    }
+
     func updateTableView() {
         recipesTableView.reloadData()
+    }
+
+    func updateState(with state: CategoryState) {
+        self.state = state
     }
 }
 
@@ -190,14 +246,21 @@ extension CategoryView: UITableViewDelegate {
 
 extension CategoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.category?.recipes.count ?? 0
+        switch state {
+        case .initial:
+            return 0
+        case .loading:
+            return 10
+        default:
+            return presenter?.dataSource?.recipes.count ?? 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.category?.recipes[indexPath.row]
+        let recipe = presenter?.dataSource?.recipes[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

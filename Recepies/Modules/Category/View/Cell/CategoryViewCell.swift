@@ -45,7 +45,11 @@ final class CategoryViewCell: UITableViewCell {
     private lazy var timerLabel = makeBottomLabel(title: "60\(Constants.timerLabelText)")
     private lazy var caloriesLabel = makeBottomLabel(title: "274\(Constants.caloriesLabelText)")
 
-    private let chevronImageView = UIImageView(image: .chevronRight)
+    private let chevronImageView: UIImageView = {
+        let imageView = UIImageView(image: .chevronRight)
+        imageView.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        return imageView
+    }()
 
     // MARK: - Private Properties
 
@@ -55,6 +59,10 @@ final class CategoryViewCell: UITableViewCell {
                 configureSubview(with: recipe)
             }
         }
+    }
+
+    private var viewsForShimmerEffect: [UIView] {
+        grayBackgroundView.subviews
     }
 
     // MARK: - Initializers
@@ -75,9 +83,18 @@ final class CategoryViewCell: UITableViewCell {
         self.recipe = recipe
     }
 
+    func startCellShimmerAnimation() {
+        viewsForShimmerEffect.forEach { $0.startShimmeringAnimation() }
+    }
+
+    func stopCellShimmerAnimation() {
+        viewsForShimmerEffect.forEach { $0.stopShimmeringAnimation() }
+    }
+
     // MARK: - Private Methods
 
     private func setupView() {
+        chevronImageView.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         selectionStyle = .none
         contentView.addSubview(grayBackgroundView)
         contentView.disableTARMIC()

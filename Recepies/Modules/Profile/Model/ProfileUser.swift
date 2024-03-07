@@ -1,17 +1,17 @@
 // ProfileUser.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Профиль пользователя
+// User profile
 protocol ProfileUserProtocol {
-    /// Имя и фамилия пользователя
+    /// User's first and last name
     var userName: String { get set }
-    /// Аватар пользователя
+    /// User avatar
     var avatarImage: String { get set }
-    /// Фукция создает пользователя
+    /// The function creates a user
     static func makeProfile() -> Self
 }
 
-/// Реализация протокола
+/// Protocol implementation
 struct ProfileUser: ProfileUserProtocol {
     var userName: String
     var avatarImage: String

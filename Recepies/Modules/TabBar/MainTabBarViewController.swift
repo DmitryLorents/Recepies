@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Таб бар нашего приложения
+/// Tab bar of our application
 final class MainTabBarViewController: UITabBarController {
     // MARK: - Life Cycle
 

@@ -3,14 +3,14 @@
 
 import UIKit
 
-/// Экран профиля
+/// Profile screen
 final class ProfileView: UIViewController {
     // MARK: - Types
 
     private enum CellTypes {
-        /// Тип ячейки профиля
+        /// Profile cell type
         case profile
-        /// Тип ячейки опций
+        /// Option cell type
         case options
     }
 
@@ -35,6 +35,8 @@ final class ProfileView: UIViewController {
 
     // MARK: - Private Properties
 
+    private var termsView: TermsView!
+    private var visualEffectView: UIVisualEffectView!
     private var tableView = UITableView()
     private let contentTypes: [CellTypes] = [.profile, .options]
 
@@ -81,6 +83,8 @@ final class ProfileView: UIViewController {
         view.backgroundColor = .white
     }
 }
+
+//
 
 // MARK: - ProfileView + UITableViewDataSource
 
@@ -135,9 +139,10 @@ extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let items = contentTypes[indexPath.section]
         switch items {
-        case .profile: break
         case .options:
             profilePresenter?.didSetectItem(index: indexPath.row)
+        default:
+            break
         }
     }
 }
@@ -145,6 +150,38 @@ extension ProfileView: UITableViewDelegate {
 // MARK: - ProfileView + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
+    func setupTermsView() {
+        termsView = TermsView(frame: CGRect(
+            x: 0,
+            y: view.frame.height / 2,
+            width: view.bounds.width,
+            height: view.bounds.height
+        ))
+        visualEffectView = UIVisualEffectView()
+        visualEffectView.frame = view.frame
+        view.addSubview(visualEffectView)
+        let blurAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1) {
+            self.visualEffectView.effect = UIBlurEffect(style: .dark)
+        }
+        blurAnimator.startAnimation()
+        let scene = UIApplication.shared.connectedScenes
+        let windowScene = scene.first as? UIWindowScene
+
+        UIView.animate(withDuration: 2) {
+            windowScene?.windows.last?.addSubview(self.termsView)
+        }
+        termsView.closeViewHandler = { [weak self] in
+            let blurAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1) {
+                self?.visualEffectView.effect = nil
+            }
+            blurAnimator.startAnimation()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.termsView.removeFromSuperview()
+                self?.visualEffectView.removeFromSuperview()
+            }
+        }
+    }
+
     func openBunusView() {
         let bonusPresenter = BonusPresenter()
         let bonusViewController = BonusViewController()

@@ -3,14 +3,14 @@
 
 import Foundation
 
-/// Протокол для презентера экрана бонусов
+///  Protocol for bonus screen presenter
 protocol BonusPresenterProtocol: AnyObject {
-    /// Закрытие экрана бонусов
+    /// Closing the bonus screen
     func dismisView()
 }
 
 protocol BonusViewProtocol: AnyObject {
-    /// Вызов закрытия экрана
+    /// Call to close the screen
     func closeView()
 }
 

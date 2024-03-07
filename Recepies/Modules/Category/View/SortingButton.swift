@@ -17,7 +17,7 @@ final class SortingButton: UIButton {
         case moreToLess
     }
 
-    private(set) var sortingState: SortingType = .none {
+    var sortingState: SortingType = .none {
         didSet {
             updateAppearance(with: sortingState)
         }
@@ -42,6 +42,25 @@ final class SortingButton: UIButton {
         height = 0
         title = ""
         super.init(coder: coder)
+    }
+
+    // MARK: - Public Methods
+
+    func getSortingPredicate() -> SortingHandler? {
+        let sortingHandler: SortingHandler?
+        switch sortingState {
+        case .none:
+            sortingHandler = nil
+        case .lessToMore:
+            sortingHandler = { lhs, rhs in
+                lhs < rhs
+            }
+        case .moreToLess:
+            sortingHandler = { lhs, rhs in
+                lhs > rhs
+            }
+        }
+        return sortingHandler
     }
 
     // MARK: - Private Methods
