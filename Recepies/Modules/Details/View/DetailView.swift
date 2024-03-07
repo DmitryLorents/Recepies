@@ -69,6 +69,7 @@ final class DetailView: UIViewController {
 
         let shareButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         shareButton.setImage(.send, for: .normal)
+        shareButton.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
 
         let rightBarView = UIView()
         rightBarView.addSubviews(shareButton, addFavoritesButton)
@@ -115,9 +116,13 @@ final class DetailView: UIViewController {
     @objc private func backButtonAction() {
         presenter?.goBack()
     }
+
+    @objc private func shareButtonAction() {
+        presenter?.shareRecipe()
+    }
 }
 
-// MARK: - DetailView +
+// MARK: - DetailView + UITableViewDataSource
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

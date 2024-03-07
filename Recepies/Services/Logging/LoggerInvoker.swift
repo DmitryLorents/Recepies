@@ -7,7 +7,7 @@ import Foundation
 final class LoggerInvoker {
     // MARK: - Singletone
 
-    static let shated = LoggerInvoker()
+    static let shared = LoggerInvoker()
     private init() {}
 
     // MARK: - Private Prperties
@@ -27,6 +27,9 @@ final class LoggerInvoker {
 
     private func executeCommandsIfNeeded() {
         guard commands.count >= batchSize else { return }
-        commands.forEach { logger.writeMessageToLog($0.message) }
+        commands.forEach {
+            logger.writeMessageToLog($0.logMessage)
+            commands = []
+        }
     }
 }
