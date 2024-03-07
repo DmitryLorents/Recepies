@@ -17,7 +17,9 @@ final class MainTableViewCell: UITableViewCell {
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "avatar")
+        imageView.layer.cornerRadius = 80
+        imageView.backgroundColor = .gray
+        imageView.clipsToBounds = true
         return imageView
     }()
 

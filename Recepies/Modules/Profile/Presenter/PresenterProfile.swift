@@ -43,10 +43,7 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
-    func saveAvatar(image: Data) {
-        Caretaker.shared.saveImage(data: image)
-        view?.reloadData()
-    }
+    
 
     // MARK: - Public Properties
 
@@ -66,6 +63,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     // MARK: - Public Methods
+    func saveAvatar(image: Data) {
+        Caretaker.shared.saveImage(data: image)
+        view?.reloadData()
+    }
 
     func setupGalary() {
         view?.showEditerImage()
@@ -74,7 +75,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func setTitleNameUser(name: String) {
         Caretaker.shared.updateNameUser(name: name)
         profileUser = Caretaker.shared.loadUser()
-        print(Caretaker.shared.loadUser())
         view?.reloadData()
     }
 

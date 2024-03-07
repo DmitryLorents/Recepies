@@ -27,6 +27,8 @@ final class ProfileView: UIViewController, UINavigationControllerDelegate {
         static let textFieldPlaceholder = "Name Surname"
         static let titleLabel = "Profile"
         static let veradanaBoldFont = "Verdana-Bold"
+        static let galary = "Выбрать из галереи"
+        static let selfPhoto = "Сделать фото"
     }
 
     // MARK: - Public Properties
@@ -83,8 +85,6 @@ final class ProfileView: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = .white
     }
 }
-
-//
 
 // MARK: - ProfileView + UITableViewDataSource
 
@@ -156,17 +156,17 @@ extension ProfileView: ProfileViewProtocol {
     func showEditerImage() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let chooseFromGalleryAction = UIAlertAction(title: "Выбрать из галереи", style: .default) { action in
+        let chooseFromGalleryAction = UIAlertAction(title: Constants.galary, style: .default) { action in
             self.showImagePicker(sourceType: .photoLibrary)
         }
         actionSheet.addAction(chooseFromGalleryAction)
 
-        let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { action in
+        let takePhotoAction = UIAlertAction(title: Constants.selfPhoto, style: .default) { action in
             self.showImagePicker(sourceType: .camera)
         }
         actionSheet.addAction(takePhotoAction)
 
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .cancel, handler: nil)
         actionSheet.addAction(cancelAction)
 
         present(actionSheet, animated: true, completion: nil)
