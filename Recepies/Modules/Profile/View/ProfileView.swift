@@ -4,7 +4,7 @@
 import UIKit
 
 /// Profile screen
-final class ProfileView: UIViewController {
+final class ProfileView: UIViewController, UINavigationControllerDelegate {
     // MARK: - Types
 
     private enum CellTypes {
@@ -27,6 +27,8 @@ final class ProfileView: UIViewController {
         static let textFieldPlaceholder = "Name Surname"
         static let titleLabel = "Profile"
         static let veradanaBoldFont = "Verdana-Bold"
+        static let galary = "Выбрать из галереи"
+        static let selfPhoto = "Сделать фото"
     }
 
     // MARK: - Public Properties
@@ -84,8 +86,6 @@ final class ProfileView: UIViewController {
     }
 }
 
-//
-
 // MARK: - ProfileView + UITableViewDataSource
 
 extension ProfileView: UITableViewDataSource {
@@ -112,9 +112,12 @@ extension ProfileView: UITableViewDataSource {
             )
                 as? MainTableViewCell else { return UITableViewCell() }
             guard let profile = profilePresenter?.profileUser else { return UITableViewCell() }
-            cell.setupCell(profile: profile)
+            cell.setupCell(profile: profile, data: Caretaker.shared.loadImage() ?? Data())
             cell.editNameHandler = { [weak self] in
                 self?.profilePresenter?.setupAlert()
+            }
+            cell.editAvatarHandler = { [weak self] in
+                self?.profilePresenter?.setupGalary()
             }
 
             return cell
@@ -150,6 +153,32 @@ extension ProfileView: UITableViewDelegate {
 // MARK: - ProfileView + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
+    func showEditerImage() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let chooseFromGalleryAction = UIAlertAction(title: Constants.galary, style: .default) { action in
+            self.showImagePicker(sourceType: .photoLibrary)
+        }
+        actionSheet.addAction(chooseFromGalleryAction)
+
+        let takePhotoAction = UIAlertAction(title: Constants.selfPhoto, style: .default) { action in
+            self.showImagePicker(sourceType: .camera)
+        }
+        actionSheet.addAction(takePhotoAction)
+
+        let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+
+        present(actionSheet, animated: true, completion: nil)
+    }
+
+    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+
     func setupTermsView() {
         termsView = TermsView(frame: CGRect(
             x: 0,
@@ -226,5 +255,22 @@ extension ProfileView: ProfileViewProtocol {
 
     func reloadData() {
         tableView.reloadData()
+    }
+}
+
+extension ProfileView: UIImagePickerControllerDelegate {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+    ) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            guard let saveImage = selectedImage.pngData() else { return }
+            profilePresenter?.saveAvatar(image: saveImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
