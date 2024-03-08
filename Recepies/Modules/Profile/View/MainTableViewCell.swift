@@ -17,6 +17,9 @@ final class MainTableViewCell: UITableViewCell {
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 80
+        imageView.backgroundColor = .gray
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -40,6 +43,8 @@ final class MainTableViewCell: UITableViewCell {
     // MARK: - Public Properties
 
     var editNameHandler: VoidHandler?
+    var editAvatarHandler: VoidHandler?
+    private let tapImageGesture = UITapGestureRecognizer()
 
     // MARK: - Initializers
 
@@ -57,9 +62,12 @@ final class MainTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(profile: ProfileUserProtocol) {
-        avatarImageView.image = UIImage(named: profile.avatarImage)
-        fullNameLabel.text = profile.userName
+    func setupCell(profile: User, data: Data) {
+        avatarImageView.image = UIImage(data: data)
+        fullNameLabel.text = profile.nickName
+        avatarImageView.addGestureRecognizer(tapImageGesture)
+        avatarImageView.isUserInteractionEnabled = true
+        tapImageGesture.addTarget(self, action: #selector(editAvatar))
     }
 
     // MARK: - Private Methods
@@ -94,5 +102,9 @@ final class MainTableViewCell: UITableViewCell {
 
     @objc private func editLabel() {
         editNameHandler?()
+    }
+
+    @objc private func editAvatar() {
+        editAvatarHandler?()
     }
 }

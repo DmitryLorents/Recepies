@@ -16,6 +16,6 @@ struct ProfileUser: ProfileUserProtocol {
     var userName: String
     var avatarImage: String
     static func makeProfile() -> ProfileUser {
-        .init(userName: "Name Surname", avatarImage: "avatar")
+        .init(userName: "", avatarImage: "avatar")
     }
 }
