@@ -49,6 +49,6 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func shareRecipe() {
         // some code to share recipe into Telegram
-        LoggerInvoker.shared.addLogCommand(.shareRecipe(recipeName: recipe?.name ?? "No name"))
+        log(.shareRecipe(recipeName: recipe?.name ?? "No name"))
     }
 }

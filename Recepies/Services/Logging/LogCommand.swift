@@ -27,3 +27,8 @@ public enum LogCommand {
         }
     }
 }
+
+/// Start log writing activities
+public func log(_ command: LogCommand) {
+    LoggerInvoker.shared.addLogCommand(command)
+}
