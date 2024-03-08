@@ -15,12 +15,10 @@ final class Logger {
     // MARK: - Private properties
 
     private let fileManager = FileManager.default
-
     private var logFolderPath: URL? {
         let sandBoxPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         return sandBoxPath?.appendingPathComponent(Constants.folderName, conformingTo: .utf8PlainText)
     }
-
     private var logFilePath: URL? {
         logFolderPath?.appendingPathComponent(Constants.fileName, conformingTo: .utf8PlainText)
     }
@@ -28,13 +26,11 @@ final class Logger {
     // MARK: - Public Methods
 
     func writeMessageToLog(_ message: String) {
-        print(#function)
-        print(message)
         makeLogFolderIfNeeded()
         do {
             try makeLogFileText(with: message).write(
                 toFile: logFilePath?.path ?? "",
-                atomically: false,
+                atomically: true,
                 encoding: .utf8
             )
         } catch {
@@ -45,17 +41,11 @@ final class Logger {
     // MARK: - Private Methods
 
     private func makeLogFolderIfNeeded() {
-        print(#function)
         guard let logFolderPath else {
             print("Folder path is incorrect")
             return
         }
-        guard !fileManager.fileExists(atPath: logFolderPath.path) else {
-            print("Folder is existed")
-            print("Folder path: \(logFolderPath.path)")
-            return
-        }
-        print("Folder path: \(logFolderPath.path)")
+        guard !fileManager.fileExists(atPath: logFolderPath.path) else {return}
         do {
             try fileManager.createDirectory(atPath: logFolderPath.path, withIntermediateDirectories: true)
             print("Folder is created")
@@ -75,6 +65,4 @@ final class Logger {
             return message
         }
     }
-
-    private func makeLogFileIfNeeded() {}
 }
