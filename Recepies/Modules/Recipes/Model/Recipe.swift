@@ -109,3 +109,9 @@ struct Recipe {
         ]
     }
 }
+
+extension Recipe: Hashable {
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.name == rhs.name && lhs.description == rhs.description
+    }
+}

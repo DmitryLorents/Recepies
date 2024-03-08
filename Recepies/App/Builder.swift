@@ -53,7 +53,7 @@ final class Builder: BuilderProtocol {
 
     func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView {
         let view = FavoritesView()
-        let presenter = FavoritesPresenter(view: view, coordinator: coordinator)
+        let presenter = FavoritesPresenter(view: view, coordinator: coordinator, database: Database.shared)
         view.presenter = presenter
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
@@ -80,7 +80,7 @@ final class Builder: BuilderProtocol {
 
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: recipe)
+        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: recipe, database: Database.shared)
         view.presenter = presenter
         return view
     }

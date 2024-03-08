@@ -8,7 +8,7 @@ protocol FavoritesPresenterProtocol: AnyObject {
     /// Categories of product to show by view
     var recipes: [Recipe]? { get }
     /// Main initializer
-    init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator)
+    init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator, database: DataBaseProtocol)
     /// Removes recipe from recipes at index
     func removeRecipe(at indexPath: IndexPath)
 }
@@ -22,12 +22,14 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: FavoritesViewProtocol?
+    private var database: DataBaseProtocol
 
     // MARK: - Initialization
 
-    init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator) {
+    init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator, database: DataBaseProtocol) {
         self.view = view
         self.coordinator = coordinator
+        self.database = database
     }
 
     // MARK: - Public Methods

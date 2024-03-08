@@ -6,7 +6,7 @@ import Foundation
 /// Parts presenter protocol
 protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
     /// Recipe data
     var recipe: Recipe? { get }
     /// Return to previous controller
@@ -26,13 +26,15 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?
+    private var database: DataBaseProtocol
 
     // MARK: - Initializers
 
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe) {
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
+        self.database = database
     }
 
     // MARK: - Public Methods
