@@ -28,7 +28,7 @@ public enum LogCommand {
         }
         return message
     }
-
+/// Makes string with current date information
     private func makeDateStamp() -> String {
         let dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = Date()
