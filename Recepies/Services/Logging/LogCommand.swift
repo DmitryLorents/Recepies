@@ -15,6 +15,7 @@ public enum LogCommand {
     case shareRecipe(recipeName: String)
     /// Return message for writing to log
     var logMessage: String {
+        let message = makeDateStamp() + " "
         switch self {
         case let .openScreen(screenName):
             return "User open \(screenName) screen"
@@ -25,6 +26,16 @@ public enum LogCommand {
         case let .shareRecipe(recipeName):
             return "User share \(recipeName) recipe"
         }
+    }
+
+    private func makeDateStamp() -> String {
+        let dateFormat = "yyyy-MM-dd hh:mm:ssSSS"
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        formatter.locale = Locale.current
+        formatter.timeZone = TimeZone.current
+        return formatter.string(from: date)
     }
 }
 
