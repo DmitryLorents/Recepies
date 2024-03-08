@@ -28,7 +28,6 @@ final class Logger {
 
     func writeMessageToLog(_ message: String) {
         makeLogFolderIfNeeded()
-        print(logFilePath?.path)
         do {
             try makeLogFileText(with: message).write(
                 toFile: logFilePath?.path ?? "",
