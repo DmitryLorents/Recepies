@@ -15,16 +15,28 @@ public enum LogCommand {
     case shareRecipe(recipeName: String)
     /// Return message for writing to log
     var logMessage: String {
+        var message = makeDateStamp() + " "
         switch self {
         case let .openScreen(screenName):
-            return "User open \(screenName) screen"
+            message += "User open \(screenName) screen"
         case let .move(fromCategory, toScreen):
-            return "User moved from \(fromCategory) category to \(toScreen) screen"
+            message += "User moved from \(fromCategory) category to \(toScreen) screen"
         case let .openRecipe(recipeName):
-            return "User open \(recipeName) recipe"
+            message += "User open \(recipeName) recipe"
         case let .shareRecipe(recipeName):
-            return "User share \(recipeName) recipe"
+            message += "User share \(recipeName) recipe"
         }
+        return message
+    }
+
+    private func makeDateStamp() -> String {
+        let dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        formatter.locale = Locale.current
+        formatter.timeZone = TimeZone.current
+        return formatter.string(from: date)
     }
 }
 
