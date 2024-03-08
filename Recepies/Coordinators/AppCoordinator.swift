@@ -20,7 +20,6 @@ final class AppCoordinator: BaseCoodinator {
 
     private var mainTabBarViewController: MainTabBarViewController?
     private var builder = Builder()
-    private var loggerInvoker = LoggerInvoker.shared
 
     // MARK: - Public Methods
 
@@ -69,7 +68,7 @@ final class AppCoordinator: BaseCoodinator {
             animated: false
         )
         setAsRoot(mainTabBarViewController ?? UIViewController())
-        loggerInvoker.addLogCommand(.openScreen(screenName: Constants.categoriesScreenName))
+        log(.openScreen(screenName: Constants.categoriesScreenName))
     }
 
     private func showAuthScreen() {
@@ -82,6 +81,6 @@ final class AppCoordinator: BaseCoodinator {
         }
         add(coordinator: authCoordinator)
         authCoordinator.start()
-        loggerInvoker.addLogCommand(.openScreen(screenName: Constants.authScreenName))
+        log(.openScreen(screenName: Constants.authScreenName))
     }
 }

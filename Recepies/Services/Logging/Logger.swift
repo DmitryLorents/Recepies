@@ -19,6 +19,7 @@ final class Logger {
         let sandBoxPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         return sandBoxPath?.appendingPathComponent(Constants.folderName, conformingTo: .utf8PlainText)
     }
+
     private var logFilePath: URL? {
         logFolderPath?.appendingPathComponent(Constants.fileName, conformingTo: .utf8PlainText)
     }
@@ -27,6 +28,7 @@ final class Logger {
 
     func writeMessageToLog(_ message: String) {
         makeLogFolderIfNeeded()
+        print(logFilePath?.path)
         do {
             try makeLogFileText(with: message).write(
                 toFile: logFilePath?.path ?? "",
@@ -45,7 +47,7 @@ final class Logger {
             print("Folder path is incorrect")
             return
         }
-        guard !fileManager.fileExists(atPath: logFolderPath.path) else {return}
+        guard !fileManager.fileExists(atPath: logFolderPath.path) else { return }
         do {
             try fileManager.createDirectory(atPath: logFolderPath.path, withIntermediateDirectories: true)
             print("Folder is created")

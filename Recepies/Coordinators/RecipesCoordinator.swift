@@ -8,7 +8,6 @@ final class RecipesCoordinator: BaseModuleCoordinator {
     // MARK: - Private Properties
 
     private let builder = Builder()
-    private let loggerInvoker = LoggerInvoker.shared
 
     // MARK: - Public methods
 
@@ -16,7 +15,7 @@ final class RecipesCoordinator: BaseModuleCoordinator {
         let recipeScreenName = "Recipe"
         let categoryScreen = builder.makeCategoryModule(coordinator: self, category: category)
         publicRootController.pushViewController(categoryScreen, animated: true)
-        loggerInvoker.addLogCommand(.move(fromCategory: category.name, toScreen: recipeScreenName))
+        log(.move(fromCategory: category.name, toScreen: recipeScreenName))
     }
 
     func goBack() {
@@ -26,6 +25,6 @@ final class RecipesCoordinator: BaseModuleCoordinator {
     func goToDetailed(recipe: Recipe) {
         let detailedViewController = builder.makeDetailModule(coordinator: self, recipe: recipe)
         publicRootController.pushViewController(detailedViewController, animated: true)
-        loggerInvoker.addLogCommand(.openRecipe(recipeName: recipe.name))
+        log(.openRecipe(recipeName: recipe.name))
     }
 }
