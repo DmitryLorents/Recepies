@@ -6,7 +6,7 @@ import UIKit
 /// Protocol for Favorites screen presenter
 protocol FavoritesPresenterProtocol: AnyObject {
     /// Categories of product to show by view
-    var recipes: [Recipe]? { get }
+    var recipes: [Recipe] { get }
     /// Main initializer
     init(view: FavoritesViewProtocol, coordinator: BaseModuleCoordinator, database: DataBaseProtocol)
     /// Removes recipe from recipes at index
@@ -16,7 +16,10 @@ protocol FavoritesPresenterProtocol: AnyObject {
 final class FavoritesPresenter: FavoritesPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipes: [Recipe]? = Recipe.makeMockRecipes()
+    var recipes: [Recipe] {
+        print("Get recipe")
+        return database.getFavoriteRecipes()
+    }
 
     // MARK: - Private Properties
 
@@ -35,6 +38,9 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     // MARK: - Public Methods
 
     func removeRecipe(at indexPath: IndexPath) {
-        recipes?.remove(at: indexPath.row)
+        let recipe = recipes[indexPath.row]
+        if database.removeFromFavorites(recipe) {
+            view?.updateTableView()
+        }
     }
 }

@@ -8,7 +8,7 @@ protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
     /// Recipe data
-    var recipe: Recipe? { get }
+    var recipe: Recipe { get }
     /// Return to previous controller
     func goBack()
     /// Add recipe to favorites
@@ -20,7 +20,10 @@ protocol DetailPresenterProtocol: AnyObject {
 final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipe: Recipe?
+    var recipe: Recipe
+    var isFavorite: Bool {
+        database.isFavorite(recipe)
+    }
 
     // MARK: - Private Properties
 
@@ -41,6 +44,7 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func addRecipeToFavorites() {
         view?.setButtonColor()
+        database.addToFavorites(recipe)
     }
 
     func goBack() {
@@ -51,6 +55,6 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func shareRecipe() {
         // some code to share recipe into Telegram
-        log(.shareRecipe(recipeName: recipe?.name ?? "No name"))
+        log(.shareRecipe(recipeName: recipe.name))
     }
 }

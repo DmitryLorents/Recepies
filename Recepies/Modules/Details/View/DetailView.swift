@@ -26,7 +26,7 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
-    private let addFavoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
 
     // MARK: - Public Properties
 
@@ -64,21 +64,21 @@ final class DetailView: UIViewController {
     }
 
     private func setRightNavigationItem() {
-        addFavoritesButton.setImage(.favorites, for: .normal)
-        addFavoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
+        favoritesButton.setImage(.favorites, for: .normal)
+        favoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
 
         let shareButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         shareButton.setImage(.send, for: .normal)
         shareButton.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
 
         let rightBarView = UIView()
-        rightBarView.addSubviews(shareButton, addFavoritesButton)
+        rightBarView.addSubviews(shareButton, favoritesButton)
         rightBarView.disableTARMIC()
 
         NSLayoutConstraint.activate([
-            addFavoritesButton.trailingAnchor.constraint(equalTo: rightBarView.trailingAnchor),
-            addFavoritesButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
-            shareButton.trailingAnchor.constraint(equalTo: addFavoritesButton.leadingAnchor, constant: -8),
+            favoritesButton.trailingAnchor.constraint(equalTo: rightBarView.trailingAnchor),
+            favoritesButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
+            shareButton.trailingAnchor.constraint(equalTo: favoritesButton.leadingAnchor, constant: -8),
             shareButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
             rightBarView.heightAnchor.constraint(equalToConstant: 30),
             rightBarView.widthAnchor.constraint(equalToConstant: 70)
@@ -165,6 +165,6 @@ extension DetailView: UITableViewDataSource {
 
 extension DetailView: DetailViewProtocol {
     func setButtonColor() {
-        addFavoritesButton.setImage(.favoritesHig, for: .normal)
+        favoritesButton.setImage(.favoritesHig, for: .normal)
     }
 }
