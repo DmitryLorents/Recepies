@@ -43,8 +43,6 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
-    
-
     // MARK: - Public Properties
 
     var options: [OptionsProtocol] = Options.makeOption()
@@ -63,6 +61,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     // MARK: - Public Methods
+
     func saveAvatar(image: Data) {
         Caretaker.shared.saveImage(data: image)
         view?.reloadData()

@@ -321,9 +321,7 @@
 		0A086E8A2B8D1FC400ACCD6B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */,
 				1B9880BD2B9A5CB50020B796 /* User.swift */,
-				1B9880BF2B9A5D7A0020B796 /* Caretaker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,6 +339,15 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		0A413F072B9B018F00F975C5 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */,
+				1B9880BF2B9A5D7A0020B796 /* Caretaker.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
 		0A5703542B98481100996130 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +359,7 @@
 		0A5703572B99E7FD00996130 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0A413F072B9B018F00F975C5 /* Authorization */,
 				0A5703582B99E82800996130 /* Logging */,
 			);
 			path = Services;
