@@ -20,16 +20,21 @@ protocol DataBaseProtocol {
     /// Provide array of recipes from internal storage
     ///  - Returns array of favorite recipe
     func getFavoriteRecipes() -> [Recipe]
+    /// Download saved recipes from userDefaults
+    func setFromUserDefaults()
+    /// Save changes to userDefaults
+    func saveToUserDefaults()
 }
 
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
+    
     // MARK: - Singletone
 
     static let shared = Database()
 
     // MARK: - Private Properties
-
+    private let key = "Recipes"
     private var recipesSet: Set<Recipe> = []
 
     // MARK: - Initialization
@@ -53,4 +58,39 @@ final class Database: DataBaseProtocol {
     func getFavoriteRecipes() -> [Recipe] {
         Array(recipesSet)
     }
+    
+    func setFromUserDefaults() {
+        <#code#>
+    }
+    
+    func saveToUserDefaults() {
+        let recipes = recipesSet
+        let defaults = UserDefaults.standard
+        defaults.setValue(recipes, forKey: key)
+    }
 }
+// MARK: - UserDefaults saving/retrieving
+private extension Database {
+    
+    func toData(_ recipe: Recipe) -> Data? {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(recipe)
+            return data
+        } catch let error {
+            print("Error decoding data to Recipe: \(error)")
+        }
+        return nil
+    }
+    
+    func toRecipe(_ data: Data) -> Recipe? {
+        let decoder = JSONDecoder()
+        do {
+            let recipe = try decoder.decode(Recipe.self, from: data)
+            return recipe
+        } catch let error {
+            print("Error decoding data to Recipe: \(error)")
+        }
+        return nil
+    }
+ }
