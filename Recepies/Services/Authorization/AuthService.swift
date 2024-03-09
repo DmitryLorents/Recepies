@@ -31,11 +31,7 @@ final class AuthService: AuthServiceProtocol {
         if userLogin.isEmpty {
             Caretaker.shared.updateLogin(login: email)
         }
-        if Caretaker.shared.loadUser().login == email {
-            isValid = true
-        } else {
-            isValid = false
-        }
+        isValid = Caretaker.shared.loadUser().login == email
 
         return (isFormatOk, isValid)
     }
@@ -49,11 +45,7 @@ final class AuthService: AuthServiceProtocol {
         if userPassword.isEmpty {
             Caretaker.shared.updatePassword(password: password)
         }
-        if Caretaker.shared.loadUser().password == password {
-            isValid = true
-        } else {
-            isValid = false
-        }
+        isValid = Caretaker.shared.loadUser().password == password
 
         return (isFormatOk, isValid)
     }

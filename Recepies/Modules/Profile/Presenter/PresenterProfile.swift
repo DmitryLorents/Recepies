@@ -16,7 +16,7 @@ protocol ProfileViewProtocol: AnyObject {
     /// Open the Terms screen
     func setupTermsView()
     /// Show editer image
-    func showEditerImage()
+    func showImageChooser()
 }
 
 /// Profile presenter protocol
@@ -26,7 +26,7 @@ protocol ProfilePresenterProtocol: AnyObject {
     /// Array of options
     var options: [OptionsProtocol] { get set }
     /// User information
-    var profileUser: User { get set }
+    var user: User { get set }
     /// Loading an alert with a name change
     func setupAlert()
     /// Changing your profile name
@@ -35,18 +35,24 @@ protocol ProfilePresenterProtocol: AnyObject {
     func didSetectItem(index: Int)
     /// Exit profile
     func logOutProfile()
-    /// Loading galary
-    func setupGalary()
+    /// Loading galery
+    func setupGalery()
     /// Save avatar
     func saveAvatar(image: Data)
+    /// Avatar data
+    func avatarData() -> Data?
 }
 
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
+    func avatarData() -> Data? {
+        Caretaker.shared.loadImage()
+    }
+
     // MARK: - Public Properties
 
     var options: [OptionsProtocol] = Options.makeOption()
-    var profileUser: User = Caretaker.shared.loadUser()
+    var user: User = Caretaker.shared.loadUser()
 
     // MARK: - Private Properties
 
@@ -67,13 +73,13 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.reloadData()
     }
 
-    func setupGalary() {
-        view?.showEditerImage()
+    func setupGalery() {
+        view?.showImageChooser()
     }
 
     func setTitleNameUser(name: String) {
-        Caretaker.shared.updateNameUser(name: name)
-        profileUser = Caretaker.shared.loadUser()
+        Caretaker.shared.updateUserName(name: name)
+        user = Caretaker.shared.loadUser()
         view?.reloadData()
     }
 

@@ -28,7 +28,7 @@ final class ProfileView: UIViewController, UINavigationControllerDelegate {
         static let titleLabel = "Profile"
         static let veradanaBoldFont = "Verdana-Bold"
         static let galary = "Выбрать из галереи"
-        static let selfPhoto = "Сделать фото"
+        static let takePhoto = "Сделать фото"
     }
 
     // MARK: - Public Properties
@@ -111,13 +111,13 @@ extension ProfileView: UITableViewDataSource {
                 withIdentifier: Constants.mainTableViewCellIdentifier, for: indexPath
             )
                 as? MainTableViewCell else { return UITableViewCell() }
-            guard let profile = profilePresenter?.profileUser else { return UITableViewCell() }
-            cell.setupCell(profile: profile, data: Caretaker.shared.loadImage() ?? Data())
+            guard let profile = profilePresenter?.user else { return UITableViewCell() }
+            cell.setupCell(profile: profile, data: profilePresenter?.avatarData() ?? Data())
             cell.editNameHandler = { [weak self] in
                 self?.profilePresenter?.setupAlert()
             }
             cell.editAvatarHandler = { [weak self] in
-                self?.profilePresenter?.setupGalary()
+                self?.profilePresenter?.setupGalery()
             }
 
             return cell
@@ -153,7 +153,7 @@ extension ProfileView: UITableViewDelegate {
 // MARK: - ProfileView + ProfileViewProtocol
 
 extension ProfileView: ProfileViewProtocol {
-    func showEditerImage() {
+    func showImageChooser() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         let chooseFromGalleryAction = UIAlertAction(title: Constants.galary, style: .default) { action in
@@ -161,7 +161,7 @@ extension ProfileView: ProfileViewProtocol {
         }
         actionSheet.addAction(chooseFromGalleryAction)
 
-        let takePhotoAction = UIAlertAction(title: Constants.selfPhoto, style: .default) { action in
+        let takePhotoAction = UIAlertAction(title: Constants.takePhoto, style: .default) { action in
             self.showImagePicker(sourceType: .camera)
         }
         actionSheet.addAction(takePhotoAction)
@@ -172,7 +172,7 @@ extension ProfileView: ProfileViewProtocol {
         present(actionSheet, animated: true, completion: nil)
     }
 
-    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
+    private func showImagePicker(sourceType: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
@@ -257,7 +257,7 @@ extension ProfileView: ProfileViewProtocol {
         tableView.reloadData()
     }
 }
-
+// MARK: - ProfileView + UIImagePickerControllerDelegate
 extension ProfileView: UIImagePickerControllerDelegate {
     func imagePickerController(
         _ picker: UIImagePickerController,

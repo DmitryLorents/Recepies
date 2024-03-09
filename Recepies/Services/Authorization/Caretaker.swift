@@ -3,9 +3,9 @@
 
 import Foundation
 
-/// Класс хранения информации о пользователе
+/// Class conteiner
 final class Caretaker {
-    static var shared = Caretaker()
+    static let shared = Caretaker()
 
     // MARK: - Private Properties
 
@@ -29,7 +29,7 @@ final class Caretaker {
         user.password = password
     }
 
-    func updateNameUser(name: String) {
+    func updateUserName(name: String) {
         user.nickName = name
     }
 
