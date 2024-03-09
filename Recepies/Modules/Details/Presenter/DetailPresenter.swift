@@ -11,8 +11,8 @@ protocol DetailPresenterProtocol: AnyObject {
     var recipe: Recipe { get }
     /// Return to previous controller
     func goBack()
-    /// Add recipe to favorites
-    func addRecipeToFavorites()
+    /// Add/remove recipe to favorites
+    func updateRecipeFavoriteStatus()
     /// shares recipe into Telegram
     func shareRecipe()
 }
@@ -42,9 +42,11 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func addRecipeToFavorites() {
-        view?.setButtonColor()
-        database.addToFavorites(recipe)
+    func updateRecipeFavoriteStatus() {
+        if isFavorite {
+            database.removeFromFavorites(recipe)
+        } else { database.addToFavorites(recipe) }
+        view?.updateFavoriteButton()
     }
 
     func goBack() {

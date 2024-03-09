@@ -96,6 +96,7 @@ final class FavoritesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEmptyNoticeVisibility()
+        updateTableView()
     }
 
     // MARK: - Private Methods

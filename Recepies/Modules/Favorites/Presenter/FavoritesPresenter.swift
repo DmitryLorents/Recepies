@@ -17,8 +17,7 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     // MARK: - Public Properties
 
     var recipes: [Recipe] {
-        print("Get recipe")
-        return database.getFavoriteRecipes()
+        database.getFavoriteRecipes()
     }
 
     // MARK: - Private Properties
@@ -39,8 +38,6 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
 
     func removeRecipe(at indexPath: IndexPath) {
         let recipe = recipes[indexPath.row]
-        if database.removeFromFavorites(recipe) {
-            view?.updateTableView()
-        }
+        database.removeFromFavorites(recipe)
     }
 }

@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Protocol for storage service
 protocol DataBaseProtocol {
     /// Adds recipe to favorites
@@ -20,29 +21,35 @@ protocol DataBaseProtocol {
     ///  - Returns array of favorite recipe
     func getFavoriteRecipes() -> [Recipe]
 }
+
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
     // MARK: - Singletone
+
     static let shared = Database()
-    
+
     // MARK: - Private Properties
+
     private var recipesSet: Set<Recipe> = []
-    
+
     // MARK: - Initialization
+
     private init() {}
-    
+
     // MARK: - DataBaseProtocol
-    func addToFavorites(_ recipe: Recipe){
+
+    func addToFavorites(_ recipe: Recipe) {
         recipesSet.insert(recipe)
     }
-    
+
     func removeFromFavorites(_ recipe: Recipe) {
         recipesSet.remove(recipe)
     }
-    
+
     func isFavorite(_ recipe: Recipe) -> Bool {
         recipesSet.contains(recipe)
     }
+
     func getFavoriteRecipes() -> [Recipe] {
         Array(recipesSet)
     }

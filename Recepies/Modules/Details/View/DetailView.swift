@@ -6,7 +6,7 @@ import UIKit
 /// Protocol for detail screen
 protocol DetailViewProtocol: AnyObject {
     /// Change button color
-    func setButtonColor()
+    func updateFavoriteButton()
 }
 
 /// Screen with detailed information about the cell
@@ -46,6 +46,11 @@ final class DetailView: UIViewController {
         configureTableView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFavoriteButton()
+    }
+
     // MARK: - Private Methods
 
     private func configureView() {
@@ -64,7 +69,7 @@ final class DetailView: UIViewController {
     }
 
     private func setRightNavigationItem() {
-        favoritesButton.setImage(.favorites, for: .normal)
+        updateFavoriteButton()
         favoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
 
         let shareButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -110,7 +115,7 @@ final class DetailView: UIViewController {
     }
 
     @objc private func addFavoritesRecipe() {
-        presenter?.addRecipeToFavorites()
+        presenter?.updateRecipeFavoriteStatus()
     }
 
     @objc private func backButtonAction() {
@@ -164,7 +169,10 @@ extension DetailView: UITableViewDataSource {
 // MARK: - DetailView + DetailViewProtocol
 
 extension DetailView: DetailViewProtocol {
-    func setButtonColor() {
-        favoritesButton.setImage(.favoritesHig, for: .normal)
+    func updateFavoriteButton() {
+        if let presenter {
+            let image: UIImage = presenter.isFavorite ? .favoritesHig : .favorites
+            favoritesButton.setImage(image, for: .normal)
+        }
     }
 }
