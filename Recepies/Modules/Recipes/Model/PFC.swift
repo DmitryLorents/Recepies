@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Content of proteins, fats and carbohydrates
-struct PFC: Codable,Hashable {
+struct PFC: Codable, Hashable {
     /// Proteins
     let proteins: Double
     /// Fats

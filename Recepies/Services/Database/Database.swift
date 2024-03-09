@@ -28,13 +28,14 @@ protocol DataBaseProtocol {
 
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
-    
     // MARK: - Singletone
 
     static let shared = Database()
 
     // MARK: - Private Properties
+
     private let key = "Recipes"
+    private let defaults = UserDefaults.standard
     private var recipesSet: Set<Recipe> = []
 
     // MARK: - Initialization
@@ -58,39 +59,51 @@ final class Database: DataBaseProtocol {
     func getFavoriteRecipes() -> [Recipe] {
         Array(recipesSet)
     }
-    
+
     func setFromUserDefaults() {
-        <#code#>
+        print(#function)
+        guard let data = defaults.object(forKey: key) as? Data,
+              let recipes = dataToRecipe(data)
+        else {
+            recipesSet = []
+            return
+        }
+        recipesSet = Set(recipes)
     }
-    
+
     func saveToUserDefaults() {
-        let recipes = recipesSet
-        let defaults = UserDefaults.standard
-        defaults.setValue(recipes, forKey: key)
+        print(#function)
+        let recipes = Array(recipesSet)
+        let data = recipeToData(recipes)
+        defaults.setValue(data, forKey: key)
     }
 }
+
 // MARK: - UserDefaults saving/retrieving
+
 private extension Database {
-    
-    func toData(_ recipe: Recipe) -> Data? {
+    func recipeToData(_ recipes: [Recipe]) -> Data? {
+        print(#function)
         let encoder = JSONEncoder()
         do {
-            let data = try encoder.encode(recipe)
+            let data = try encoder.encode(recipes)
+            print("Converted to data")
             return data
-        } catch let error {
+        } catch {
             print("Error decoding data to Recipe: \(error)")
         }
         return nil
     }
-    
-    func toRecipe(_ data: Data) -> Recipe? {
+
+    func dataToRecipe(_ data: Data) -> [Recipe]? {
+        print(#function)
         let decoder = JSONDecoder()
         do {
-            let recipe = try decoder.decode(Recipe.self, from: data)
+            let recipe = try decoder.decode([Recipe].self, from: data)
             return recipe
-        } catch let error {
+        } catch {
             print("Error decoding data to Recipe: \(error)")
         }
         return nil
     }
- }
+}

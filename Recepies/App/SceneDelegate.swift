@@ -5,6 +5,7 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appCoordinator: AppCoordinator?
+    private let database = Database.shared
     var window: UIWindow?
 
     func scene(
@@ -13,6 +14,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         configureWindow(scene: scene)
+    }
+
+    func sceneWillResignActive(_ scene: UIScene) {
+        print(#function)
+        database.saveToUserDefaults()
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        print(#function)
+        database.setFromUserDefaults()
     }
 
     private func configureWindow(scene: UIScene) {
