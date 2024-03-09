@@ -24,6 +24,9 @@
 		0A086EA42B8DF00900ACCD6B /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */; };
 		0A57032D2B97461500996130 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A57032C2B97461500996130 /* UIColor+Extension.swift */; };
 		0A5703562B98484500996130 /* CategoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5703552B98484500996130 /* CategoryState.swift */; };
+		0A57035A2B99E84600996130 /* LoggerInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5703592B99E84600996130 /* LoggerInvoker.swift */; };
+		0A57035C2B99E91500996130 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A57035B2B99E91500996130 /* Logger.swift */; };
+		0A57035E2B99E97700996130 /* LogCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A57035D2B99E97700996130 /* LogCommand.swift */; };
 		0A80A4722B91C8E900539C0A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4712B91C8E900539C0A /* Category.swift */; };
 		0A80A4752B923BE400539C0A /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */; };
 		0A80A4782B92700800539C0A /* PFCViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4772B92700800539C0A /* PFCViewCell.swift */; };
@@ -49,6 +52,8 @@
 		1B9880AF2B9377530020B796 /* FullDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9880AE2B9377530020B796 /* FullDescriptionTableViewCell.swift */; };
 		1B9880B82B9674910020B796 /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9880B72B9674910020B796 /* TermsView.swift */; };
 		1B9880BA2B97883C0020B796 /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9880B92B97883C0020B796 /* Terms.swift */; };
+		1B9880BE2B9A5CB50020B796 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9880BD2B9A5CB50020B796 /* User.swift */; };
+		1B9880C02B9A5D7A0020B796 /* Caretaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9880BF2B9A5D7A0020B796 /* Caretaker.swift */; };
 		1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */; };
 		1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DE2B8E1DC200E774EB /* Options.swift */; };
 		1B9B36E12B8E1DC200E774EB /* ProfileUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */; };
@@ -99,6 +104,9 @@
 		0A086EA32B8DF00900ACCD6B /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		0A57032C2B97461500996130 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0A5703552B98484500996130 /* CategoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryState.swift; sourceTree = "<group>"; };
+		0A5703592B99E84600996130 /* LoggerInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerInvoker.swift; sourceTree = "<group>"; };
+		0A57035B2B99E91500996130 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		0A57035D2B99E97700996130 /* LogCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCommand.swift; sourceTree = "<group>"; };
 		0A80A4712B91C8E900539C0A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		0A80A4772B92700800539C0A /* PFCViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCViewCell.swift; sourceTree = "<group>"; };
@@ -124,6 +132,8 @@
 		1B9880AE2B9377530020B796 /* FullDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		1B9880B72B9674910020B796 /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		1B9880B92B97883C0020B796 /* Terms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terms.swift; sourceTree = "<group>"; };
+		1B9880BD2B9A5CB50020B796 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1B9880BF2B9A5D7A0020B796 /* Caretaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caretaker.swift; sourceTree = "<group>"; };
 		1B9B36DB2B8E1DB900E774EB /* PresenterProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenterProfile.swift; sourceTree = "<group>"; };
 		1B9B36DE2B8E1DC200E774EB /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		1B9B36DF2B8E1DC200E774EB /* ProfileUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUser.swift; sourceTree = "<group>"; };
@@ -186,8 +196,9 @@
 				0A086E7E2B8D0FD900ACCD6B /* App */,
 				0A086E932B8DCB5000ACCD6B /* Coordinators */,
 				0A086E812B8D180100ACCD6B /* Modules */,
-				0A086E7D2B8D0F3F00ACCD6B /* SupportingFiles */,
+				0A5703572B99E7FD00996130 /* Services */,
 				0ACD2EC62B8E6897000BA913 /* Extensions */,
+				0A086E7D2B8D0F3F00ACCD6B /* SupportingFiles */,
 			);
 			path = Recepies;
 			sourceTree = "<group>";
@@ -310,7 +321,7 @@
 		0A086E8A2B8D1FC400ACCD6B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */,
+				1B9880BD2B9A5CB50020B796 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -328,12 +339,40 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		0A413F072B9B018F00F975C5 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				0A086E8F2B8D20FB00ACCD6B /* AuthService.swift */,
+				1B9880BF2B9A5D7A0020B796 /* Caretaker.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
 		0A5703542B98481100996130 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				0A5703552B98484500996130 /* CategoryState.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0A5703572B99E7FD00996130 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0A413F072B9B018F00F975C5 /* Authorization */,
+				0A5703582B99E82800996130 /* Logging */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0A5703582B99E82800996130 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				0A5703592B99E84600996130 /* LoggerInvoker.swift */,
+				0A57035B2B99E91500996130 /* Logger.swift */,
+				0A57035D2B99E97700996130 /* LogCommand.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		0A80A4732B923BD200539C0A /* Presenter */ = {
@@ -718,15 +757,18 @@
 			files = (
 				0A086E9E2B8DEDF800ACCD6B /* RecipesCoordinator.swift in Sources */,
 				1B9880AB2B921E100020B796 /* DetailView.swift in Sources */,
+				1B9880BE2B9A5CB50020B796 /* User.swift in Sources */,
 				0A086E8E2B8D209C00ACCD6B /* AuthPresenter.swift in Sources */,
 				0A086E4E2B8D0DB700ACCD6B /* AppDelegate.swift in Sources */,
 				1B9880BA2B97883C0020B796 /* Terms.swift in Sources */,
 				0A086E902B8D20FB00ACCD6B /* AuthService.swift in Sources */,
 				0ACD2EE82B91037E000BA913 /* RecipesPresenter.swift in Sources */,
+				0A57035C2B99E91500996130 /* Logger.swift in Sources */,
 				0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */,
 				0ACD2EEC2B91037E000BA913 /* RecipesView.swift in Sources */,
 				0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */,
 				1B9880AF2B9377530020B796 /* FullDescriptionTableViewCell.swift in Sources */,
+				1B9880C02B9A5D7A0020B796 /* Caretaker.swift in Sources */,
 				0ACD2EEB2B91037E000BA913 /* RecipesCollectionViewCell.swift in Sources */,
 				0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */,
 				1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */,
@@ -741,6 +783,7 @@
 				1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */,
 				0A80A47A2B92716200539C0A /* PFCView.swift in Sources */,
 				0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */,
+				0A57035A2B99E84600996130 /* LoggerInvoker.swift in Sources */,
 				0A80A47C2B93049B00539C0A /* PFC.swift in Sources */,
 				1B9B36E62B8E1E2F00E774EB /* MainTableViewCell.swift in Sources */,
 				0ACD2EDA2B9102AE000BA913 /* SceneDelegate.swift in Sources */,
@@ -754,6 +797,7 @@
 				0ACD2EEE2B9106D9000BA913 /* Builder.swift in Sources */,
 				1B9B36E12B8E1DC200E774EB /* ProfileUser.swift in Sources */,
 				1B9880B82B9674910020B796 /* TermsView.swift in Sources */,
+				0A57035E2B99E97700996130 /* LogCommand.swift in Sources */,
 				0A086E8C2B8D207D00ACCD6B /* AuthView.swift in Sources */,
 				0ACD2ED82B906830000BA913 /* TypeAlias.swift in Sources */,
 				1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */,

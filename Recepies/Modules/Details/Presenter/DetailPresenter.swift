@@ -13,6 +13,8 @@ protocol DetailPresenterProtocol: AnyObject {
     func goBack()
     /// Add recipe to favorites
     func addRecipeToFavorites()
+    /// shares recipe into Telegram
+    func shareRecipe()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -43,5 +45,10 @@ final class DetailPresenter: DetailPresenterProtocol {
         if let recipesCoordinator = coordinator as? RecipesCoordinator {
             recipesCoordinator.goBack()
         }
+    }
+
+    func shareRecipe() {
+        // some code to share recipe into Telegram
+        log(.shareRecipe(recipeName: recipe?.name ?? "No name"))
     }
 }

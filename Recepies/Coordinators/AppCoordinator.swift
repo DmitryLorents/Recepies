@@ -5,6 +5,17 @@ import UIKit
 
 /// Root application coordinator
 final class AppCoordinator: BaseCoodinator {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let tabBarName = "MainTabBar"
+        static let categoriesScreenName = "Categories"
+        static let recipesScreenName = "Recipes"
+        static let detailedScreenName = "Recipe detailed"
+        static let profileScreenName = "Profile"
+        static let authScreenName = "Authorization"
+    }
+
     // MARK: - Private Properties
 
     private var mainTabBarViewController: MainTabBarViewController?
@@ -13,8 +24,9 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Public Methods
 
     override func start() {
-        if "login" == "login" {
+        if "login" == "logins" {
             showMainTabBar()
+
         } else {
             showAuthScreen()
         }
@@ -56,6 +68,7 @@ final class AppCoordinator: BaseCoodinator {
             animated: false
         )
         setAsRoot(mainTabBarViewController ?? UIViewController())
+        log(.openScreen(screenName: Constants.categoriesScreenName))
     }
 
     private func showAuthScreen() {
@@ -68,5 +81,6 @@ final class AppCoordinator: BaseCoodinator {
         }
         add(coordinator: authCoordinator)
         authCoordinator.start()
+        log(.openScreen(screenName: Constants.authScreenName))
     }
 }

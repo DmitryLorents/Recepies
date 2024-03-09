@@ -1,6 +1,8 @@
 // AuthService.swift
 // Copyright © RoadMap. All rights reserved.
 
+import UIKit
+
 /// Protocol for user authorisation service
 protocol AuthServiceProtocol {
     /// Email validation
@@ -22,13 +24,29 @@ final class AuthService: AuthServiceProtocol {
         let isFormatOk = email.contains { character in
             character == "@"
         }
-        let isValid = email == "1@2.com"
+
+        var isValid: Bool
+        let userLogin = Caretaker.shared.loadUser().login
+
+        if userLogin.isEmpty {
+            Caretaker.shared.updateLogin(login: email)
+        }
+        isValid = Caretaker.shared.loadUser().login == email
+
         return (isFormatOk, isValid)
     }
 
     func validatePassword(_ password: String) -> (isFormatOk: Bool, isValid: Bool) {
-        let isValid = password == "123456"
         let isFormatOk = password.count > 5
+
+        var isValid: Bool
+        let userPassword = Caretaker.shared.loadUser().password
+
+        if userPassword.isEmpty {
+            Caretaker.shared.updatePassword(password: password)
+        }
+        isValid = Caretaker.shared.loadUser().password == password
+
         return (isFormatOk, isValid)
     }
 }
