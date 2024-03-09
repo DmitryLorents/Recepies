@@ -397,8 +397,8 @@
 		0A80A4762B926FE900539C0A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				0A80A4772B92700800539C0A /* PFCViewCell.swift */,
 				1B9880AC2B93556D0020B796 /* TitleTableViewCell.swift */,
+				0A80A4772B92700800539C0A /* PFCViewCell.swift */,
 				1B9880AE2B9377530020B796 /* FullDescriptionTableViewCell.swift */,
 			);
 			path = Cells;

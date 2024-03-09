@@ -17,12 +17,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        print(#function)
         database.saveToUserDefaults()
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        print(#function)
         database.setFromUserDefaults()
     }
 

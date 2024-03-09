@@ -5,15 +5,15 @@ import UIKit
 
 /// Protocol for detail screen
 protocol DetailViewProtocol: AnyObject {
-    /// Change button color
+    /// Change button state
     func updateFavoriteButton()
 }
 
-/// Screen with detailed information about the cell
+/// Screen with detailed information for recipe
 final class DetailView: UIViewController {
     // MARK: - Types
 
-    /// Types of cells
+    /// Cell types
     enum CellTypesDetail {
         /// Cell with title and picture
         case title

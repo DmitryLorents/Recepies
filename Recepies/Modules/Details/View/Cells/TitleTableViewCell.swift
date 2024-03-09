@@ -7,20 +7,15 @@ import UIKit
 final class TitleTableViewCell: UITableViewCell {
     // MARK: - Constants
 
-    private enum Constants {
-        static let veradanaFontBold = "Verdana-Bold"
-        static let veradanaFont = "Verdana"
-    }
-
     static let reuseID = String(describing: TitleTableViewCell.self)
 
     // MARK: - Visual Components
 
-    private let recipeImage: UIImageView = {
+    private let recipeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = .fish1
+//        imageView.image = .fish1
         return imageView
     }()
 
@@ -28,7 +23,7 @@ final class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
-        label.font = UIFont(name: Constants.veradanaFontBold, size: 16)
+        label.font = .makeVerdanaBold(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,7 +48,7 @@ final class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: Constants.veradanaFont, size: 10)
+        label.font = .makeVerdanaRegular(size: 10)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -80,7 +75,7 @@ final class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: Constants.veradanaFont, size: 10)
+        label.font = .makeVerdanaRegular(size: 10)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
@@ -102,7 +97,7 @@ final class TitleTableViewCell: UITableViewCell {
 
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        recipeImage.layer.cornerRadius = recipeImage.bounds.height * 0.08
+        recipeImageView.layer.cornerRadius = recipeImageView.bounds.height * 0.08
     }
 
     // MARK: - Public Methods
@@ -111,6 +106,7 @@ final class TitleTableViewCell: UITableViewCell {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(recipe.weight) g"
         textCooKingTimeLabel.text = "Cooking time \(recipe.timeToCook) min"
+        recipeImageView.image = UIImage(named: recipe.recipeImage)
     }
 
     // MARK: - Private Methods
@@ -119,12 +115,12 @@ final class TitleTableViewCell: UITableViewCell {
         selectionStyle = .none
         weightView.addSubview(iconWeightImage)
         weightView.addSubview(textWeightLabel)
-        recipeImage.addSubview(weightView)
+        recipeImageView.addSubview(weightView)
         cooKingTimeView.addSubview(iconCooKingTimeImage)
         cooKingTimeView.addSubview(textCooKingTimeLabel)
-        recipeImage.addSubview(cooKingTimeView)
+        recipeImageView.addSubview(cooKingTimeView)
         contentView.addSubview(recipeNameLabel)
-        contentView.addSubview(recipeImage)
+        contentView.addSubview(recipeImageView)
         addConstraintCell()
     }
 
@@ -149,18 +145,18 @@ final class TitleTableViewCell: UITableViewCell {
 
     private func configureRecipeImage() {
         NSLayoutConstraint.activate([
-            recipeImage.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 20),
-            recipeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 45),
-            recipeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -45),
-            recipeImage.heightAnchor.constraint(equalTo: recipeImage.widthAnchor),
-            recipeImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            recipeImageView.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 20),
+            recipeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 45),
+            recipeImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -45),
+            recipeImageView.heightAnchor.constraint(equalTo: recipeImageView.widthAnchor),
+            recipeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 
     private func setWeightViewConstraint() {
         NSLayoutConstraint.activate([
-            weightView.topAnchor.constraint(equalTo: recipeImage.topAnchor, constant: 8),
-            weightView.trailingAnchor.constraint(equalTo: recipeImage.trailingAnchor, constant: -8),
+            weightView.topAnchor.constraint(equalTo: recipeImageView.topAnchor, constant: 8),
+            weightView.trailingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: -8),
             weightView.widthAnchor.constraint(equalToConstant: 50),
             weightView.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -186,8 +182,8 @@ final class TitleTableViewCell: UITableViewCell {
 
     private func setCooKingTimeViewConstraint() {
         NSLayoutConstraint.activate([
-            cooKingTimeView.bottomAnchor.constraint(equalTo: recipeImage.bottomAnchor),
-            cooKingTimeView.trailingAnchor.constraint(equalTo: recipeImage.trailingAnchor),
+            cooKingTimeView.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor),
+            cooKingTimeView.trailingAnchor.constraint(equalTo: recipeImageView.trailingAnchor),
             cooKingTimeView.widthAnchor.constraint(equalToConstant: 125),
             cooKingTimeView.heightAnchor.constraint(equalToConstant: 50)
         ])
