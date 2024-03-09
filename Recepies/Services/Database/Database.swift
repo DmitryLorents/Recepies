@@ -40,7 +40,9 @@ final class Database: DataBaseProtocol {
 
     // MARK: - Initialization
 
-    private init() {}
+    private init() {
+        setFromUserDefaults()
+    }
 
     // MARK: - DataBaseProtocol
 
@@ -61,6 +63,7 @@ final class Database: DataBaseProtocol {
     }
 
     func setFromUserDefaults() {
+        print(#function)
         guard let data = defaults.object(forKey: key) as? Data,
               let recipes = dataToRecipe(data)
         else {
@@ -71,6 +74,7 @@ final class Database: DataBaseProtocol {
     }
 
     func saveToUserDefaults() {
+        print(#function)
         let recipes = Array(recipesSet)
         let data = recipeToData(recipes)
         defaults.setValue(data, forKey: key)
@@ -84,7 +88,6 @@ private extension Database {
         let encoder = JSONEncoder()
         do {
             let data = try encoder.encode(recipes)
-            print("Converted to data")
             return data
         } catch {
             print("Error decoding data to Recipe: \(error)")

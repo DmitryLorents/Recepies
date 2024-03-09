@@ -5,7 +5,7 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appCoordinator: AppCoordinator?
-    private let database = Database.shared
+    private lazy var database = Database.shared
     var window: UIWindow?
 
     func scene(
@@ -18,10 +18,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillResignActive(_ scene: UIScene) {
         database.saveToUserDefaults()
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        database.setFromUserDefaults()
     }
 
     private func configureWindow(scene: UIScene) {
