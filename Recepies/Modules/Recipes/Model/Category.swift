@@ -3,60 +3,23 @@
 
 /// Main ingredient of the recipe
 struct Category {
-    /// Ingredient name
-    let name: String
+    /// Type of category
+    let type: CategoryType
+    /// Category name
+    var name: String {
+        type.rawValue.capitalized
+    }
     /// Ingredient image
-    let categoryImage: String
-    /// Array of recipes
-    var recipes: [Recipe]
+    var categoryImage: String {
+        type.rawValue
+    }
     /// Filling in category data
-    static func makeMockCategory() -> [Category] {
-        [
-            .init(
-                name: "Salad",
-                categoryImage: "salad",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Soup",
-                categoryImage: "soup",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Chicken",
-                categoryImage: "chicken",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Meat",
-                categoryImage: "meat",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Side dish",
-                categoryImage: "side dish",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Drinks",
-                categoryImage: "drinks",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Pancakes",
-                categoryImage: "pancakes",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Desserts",
-                categoryImage: "desserts",
-                recipes: Recipe.makeMockRecipes()
-            ),
-            .init(
-                name: "Desserts",
-                categoryImage: "desserts",
-                recipes: Recipe.makeMockRecipes()
-            ),
-        ]
+    static func makeCategories() -> [Category] {
+        var categories: [Category] = []
+        for categoryType in CategoryType.allCases {
+            let category = Category(type: categoryType)
+            categories.append(category)
+        }
+        return categories
     }
 }

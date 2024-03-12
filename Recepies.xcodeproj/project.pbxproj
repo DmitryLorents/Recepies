@@ -34,6 +34,7 @@
 		0A80A47A2B92716200539C0A /* PFCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4792B92716200539C0A /* PFCView.swift */; };
 		0A80A47C2B93049B00539C0A /* PFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A47B2B93049B00539C0A /* PFC.swift */; };
 		0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CE2DA2B91B41200D55802 /* SortingButton.swift */; };
+		0AC310D32BA09E0500EF7DE7 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */; };
 		0AC9D9C92BA07F9A00371A0F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */; };
 		0AC9D9CB2BA08D1400371A0F /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */; };
 		0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */; };
@@ -117,6 +118,7 @@
 		0A80A4792B92716200539C0A /* PFCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCView.swift; sourceTree = "<group>"; };
 		0A80A47B2B93049B00539C0A /* PFC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFC.swift; sourceTree = "<group>"; };
 		0A9CE2DA2B91B41200D55802 /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
+		0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
 		0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
@@ -409,10 +411,19 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		0AC310D42BA0A1CF00EF7DE7 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		0AC9D9C72BA07F8000371A0F /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */,
+				0AC310D42BA0A1CF00EF7DE7 /* DTO */,
+				0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -487,7 +498,7 @@
 				0ACD2EE42B91037E000BA913 /* Recipe.swift */,
 				0A80A4712B91C8E900539C0A /* Category.swift */,
 				0A80A47B2B93049B00539C0A /* PFC.swift */,
-				0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */,
+				0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -798,6 +809,7 @@
 				0A086E9C2B8DD7D000ACCD6B /* MainTabBarViewController.swift in Sources */,
 				1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */,
 				1B9880AD2B93556D0020B796 /* TitleTableViewCell.swift in Sources */,
+				0AC310D32BA09E0500EF7DE7 /* CategoryType.swift in Sources */,
 				0A80A4722B91C8E900539C0A /* Category.swift in Sources */,
 				1B9B36EA2B8E8F8D00E774EB /* BonusViewController.swift in Sources */,
 				0A57032D2B97461500996130 /* UIColor+Extension.swift in Sources */,
