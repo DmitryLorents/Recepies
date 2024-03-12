@@ -5,12 +5,15 @@ import Foundation
 
 /// Protocol for network service in app
 protocol NetworkServiceProtocol {
+    /// Init with service to create url requests
+    init(requestCreator: RequestCreatorProtocol)
+    
     /// Try to download requested recipes
     /// - Parameters:
     /// type: type of category
     /// completion: closure to handle results
     /// - Returns: Array of recipes if success, or error in case of failure
-    func getRecipes(type: CategoryType, completion: @escaping (Result<[Recipe], Error>) -> ())
+    func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ())
 
     /// Try to download requested recipe
     /// - Parameters:
@@ -22,9 +25,17 @@ protocol NetworkServiceProtocol {
 
 /// Download data from server
 final class NetworkService {
+    
     // MARK: - Private Properties
 
     private let decoder = JSONDecoder()
+    private var requestCreator: RequestCreatorProtocol
+    
+    // MARK: - Initialization
+    
+    init(requestCreator: RequestCreatorProtocol) {
+        self.requestCreator = requestCreator
+    }
 
     // MARK: - Private Methods
 
@@ -33,12 +44,12 @@ final class NetworkService {
     }
 
     private func getData<T: Codable>(
-        urlString: String,
+        request: URLRequest?,
         parseProtocol: T.Type,
         completion: @escaping (Result<T, Error>) -> ()
     ) {
-        guard let url = URL(string: urlString) else { return }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+        guard let request else { return }
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let self else { return }
             // Try to download data
             guard let downloadedData = data else {
@@ -60,10 +71,10 @@ final class NetworkService {
 // MARK: - NetworkService - NetworkServiceProtocol
 
 extension NetworkService: NetworkServiceProtocol {
-    func getRecipes(type: CategoryType, completion: @escaping (Result<[Recipe], Error>) -> ()) {
-        let urlString =
-            "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken&imageSize=THUMBNAIL&random=true&dishType=Main course&q=Chicken&field=uri&field=label&field=image&field=totalTime&field=calories"
-        getData(urlString: urlString, parseProtocol: CategoryDTO.self) { result in
+    
+    func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ()) {
+        let request = requestCreator.createCategoryURLRequest(type: type, text: text)
+        getData(request: request, parseProtocol: CategoryDTO.self) { result in
             switch result {
             case let .success(categoryDTO):
                 let recipes = self.convertToRecipes(categoryDTO)
