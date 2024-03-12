@@ -96,6 +96,7 @@ final class FavoritesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEmptyNoticeVisibility()
+        updateTableView()
     }
 
     // MARK: - Private Methods
@@ -110,7 +111,7 @@ final class FavoritesView: UIViewController {
     }
 
     private func setEmptyNoticeVisibility() {
-        stackView.isHidden = (presenter?.recipes?.count ?? 0) > 0
+        stackView.isHidden = (presenter?.recipes.count ?? 0) > 0
     }
 }
 
@@ -198,14 +199,14 @@ extension FavoritesView: UITableViewDelegate {
 
 extension FavoritesView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.recipes?.count ?? 0
+        presenter?.recipes.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.recipes?[indexPath.row]
+        let recipe = presenter?.recipes[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

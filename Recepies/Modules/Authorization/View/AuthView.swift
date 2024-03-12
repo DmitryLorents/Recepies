@@ -241,7 +241,7 @@ final class AuthView: UIViewController {
     private func imitateNetworkRequest() {
         loginButton.setTitle("", for: .normal)
         activityIndicatorView.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.activityIndicatorView.stopAnimating()
             self.loginButton.setTitle(Constants.loginButtonTitle, for: .normal)
             self.startUserDataValidation()

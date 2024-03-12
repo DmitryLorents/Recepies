@@ -6,13 +6,13 @@ import Foundation
 /// Parts presenter protocol
 protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe)
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
     /// Recipe data
-    var recipe: Recipe? { get }
+    var recipe: Recipe { get }
     /// Return to previous controller
     func goBack()
-    /// Add recipe to favorites
-    func addRecipeToFavorites()
+    /// Add/remove recipe to favorites
+    func updateRecipeFavoriteStatus()
     /// shares recipe into Telegram
     func shareRecipe()
 }
@@ -20,25 +20,33 @@ protocol DetailPresenterProtocol: AnyObject {
 final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipe: Recipe?
+    var recipe: Recipe
+    var isFavorite: Bool {
+        database.isFavorite(recipe)
+    }
 
     // MARK: - Private Properties
 
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?
+    private var database: DataBaseProtocol
 
     // MARK: - Initializers
 
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe) {
+    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
+        self.database = database
     }
 
     // MARK: - Public Methods
 
-    func addRecipeToFavorites() {
-        view?.setButtonColor()
+    func updateRecipeFavoriteStatus() {
+        if isFavorite {
+            database.removeFromFavorites(recipe)
+        } else { database.addToFavorites(recipe) }
+        view?.updateFavoriteButton()
     }
 
     func goBack() {
@@ -49,6 +57,6 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func shareRecipe() {
         // some code to share recipe into Telegram
-        log(.shareRecipe(recipeName: recipe?.name ?? "No name"))
+        log(.shareRecipe(recipeName: recipe.name))
     }
 }

@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Name and description of the recipe
-struct Recipe {
+struct Recipe: Codable {
     /// Recipe name
     let name: String
     /// Recipe image
@@ -107,5 +107,11 @@ struct Recipe {
                 pfc: PFC.makeMockPFC()
             ),
         ]
+    }
+}
+
+extension Recipe: Hashable {
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.name == rhs.name && lhs.description == rhs.description
     }
 }

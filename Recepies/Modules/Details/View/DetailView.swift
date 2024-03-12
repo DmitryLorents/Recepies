@@ -5,15 +5,15 @@ import UIKit
 
 /// Protocol for detail screen
 protocol DetailViewProtocol: AnyObject {
-    /// Change button color
-    func setButtonColor()
+    /// Change button state
+    func updateFavoriteButton()
 }
 
-/// Screen with detailed information about the cell
+/// Screen with detailed information for recipe
 final class DetailView: UIViewController {
     // MARK: - Types
 
-    /// Types of cells
+    /// Cell types
     enum CellTypesDetail {
         /// Cell with title and picture
         case title
@@ -26,7 +26,7 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
-    private let addFavoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
 
     // MARK: - Public Properties
 
@@ -44,6 +44,11 @@ final class DetailView: UIViewController {
         setLeftNavigationItem()
         setRightNavigationItem()
         configureTableView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFavoriteButton()
     }
 
     // MARK: - Private Methods
@@ -64,21 +69,21 @@ final class DetailView: UIViewController {
     }
 
     private func setRightNavigationItem() {
-        addFavoritesButton.setImage(.favorites, for: .normal)
-        addFavoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
+        updateFavoriteButton()
+        favoritesButton.addTarget(self, action: #selector(addFavoritesRecipe), for: .touchUpInside)
 
         let shareButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         shareButton.setImage(.send, for: .normal)
         shareButton.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
 
         let rightBarView = UIView()
-        rightBarView.addSubviews(shareButton, addFavoritesButton)
+        rightBarView.addSubviews(shareButton, favoritesButton)
         rightBarView.disableTARMIC()
 
         NSLayoutConstraint.activate([
-            addFavoritesButton.trailingAnchor.constraint(equalTo: rightBarView.trailingAnchor),
-            addFavoritesButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
-            shareButton.trailingAnchor.constraint(equalTo: addFavoritesButton.leadingAnchor, constant: -8),
+            favoritesButton.trailingAnchor.constraint(equalTo: rightBarView.trailingAnchor),
+            favoritesButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
+            shareButton.trailingAnchor.constraint(equalTo: favoritesButton.leadingAnchor, constant: -8),
             shareButton.centerYAnchor.constraint(equalTo: rightBarView.centerYAnchor),
             rightBarView.heightAnchor.constraint(equalToConstant: 30),
             rightBarView.widthAnchor.constraint(equalToConstant: 70)
@@ -110,7 +115,7 @@ final class DetailView: UIViewController {
     }
 
     @objc private func addFavoritesRecipe() {
-        presenter?.addRecipeToFavorites()
+        presenter?.updateRecipeFavoriteStatus()
     }
 
     @objc private func backButtonAction() {
@@ -164,7 +169,10 @@ extension DetailView: UITableViewDataSource {
 // MARK: - DetailView + DetailViewProtocol
 
 extension DetailView: DetailViewProtocol {
-    func setButtonColor() {
-        addFavoritesButton.setImage(.favoritesHig, for: .normal)
+    func updateFavoriteButton() {
+        if let presenter {
+            let image: UIImage = presenter.isFavorite ? .favoritesHig : .favorites
+            favoritesButton.setImage(image, for: .normal)
+        }
     }
 }
