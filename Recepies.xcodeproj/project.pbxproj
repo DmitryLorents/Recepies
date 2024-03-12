@@ -35,6 +35,7 @@
 		0A80A47C2B93049B00539C0A /* PFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A47B2B93049B00539C0A /* PFC.swift */; };
 		0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CE2DA2B91B41200D55802 /* SortingButton.swift */; };
 		0AC310D32BA09E0500EF7DE7 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */; };
+		0AC310D62BA0CA7E00EF7DE7 /* RequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */; };
 		0AC9D9C92BA07F9A00371A0F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */; };
 		0AC9D9CB2BA08D1400371A0F /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */; };
 		0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */; };
@@ -121,6 +122,7 @@
 		0A80A47B2B93049B00539C0A /* PFC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFC.swift; sourceTree = "<group>"; };
 		0A9CE2DA2B91B41200D55802 /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
+		0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCreator.swift; sourceTree = "<group>"; };
 		0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
 		0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */,
 				0AC310D42BA0A1CF00EF7DE7 /* DTO */,
 				0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */,
+				0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				0A086E902B8D20FB00ACCD6B /* AuthService.swift in Sources */,
 				0ACD2EE82B91037E000BA913 /* RecipesPresenter.swift in Sources */,
 				1BC98B572BA0C1CB00E9D78D /* RecipeDetail.swift in Sources */,
+				0AC310D62BA0CA7E00EF7DE7 /* RequestCreator.swift in Sources */,
 				0A57035C2B99E91500996130 /* Logger.swift in Sources */,
 				0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */,
 				0ACD2EEC2B91037E000BA913 /* RecipesView.swift in Sources */,
