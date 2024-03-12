@@ -11,6 +11,11 @@ protocol RequestCreatorProtocol {
     /// text: text from search bar entered by user
     /// - Returns: URL request with necessary parameters
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest?
+    /// Provide URL request for getting recipes by category and search text
+    /// - Parameters:
+    /// uri: Recipe ID
+    /// - Returns: URL request with necessary parameters
+    func createRecipeURLRequest(uri: String) -> URLRequest?
 }
 
 /// Creates URLRequests for NetworkServiceProtocol
@@ -47,10 +52,30 @@ final class RequestCreator {
         }
         return queries
     }
+    private func makeQueryItemRecipe(uri: String) -> [URLQueryItem] {
+        let typeQuery = URLQueryItem(name: "type", value: "public")
+        let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
+        let appIdQuery = URLQueryItem(name: "app_id", value: "cb462440")
+        let imageSizeQuery = URLQueryItem(name: "imageSize", value: "THUMBNAIL")
+        let uriQuery = URLQueryItem(name: "uri", value: uri)
+        let queries: [URLQueryItem] = [typeQuery, appIdQuery, appKeyQuery, imageSizeQuery, uriQuery]
+        return queries
+    }
 }
 
 // MARK: - RequestCreator - RequestCreatorProtocol
 extension RequestCreator: RequestCreatorProtocol {
+    
+    func createRecipeURLRequest(uri: String) -> URLRequest? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.edamam.com"
+        components.path = "/api/recipes/v2/by-uri"
+        components.queryItems = makeQueryItemRecipe(uri: uri)
+        guard let url = components.url else { return nil }
+        return URLRequest(url: url)
+    }
+    
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"

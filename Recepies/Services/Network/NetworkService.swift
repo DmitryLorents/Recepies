@@ -92,8 +92,8 @@ extension NetworkService: NetworkServiceProtocol {
     }
 
     func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
-        guard let url = URL(string: url) else { return }
-        let request = URLRequest(url: url)
+        
+        let request = requestCreator.createRecipeURLRequest(uri: url)
         getData(request: request, parseProtocol: Welcome.self) { result in
             switch result {
             case let .success(recipe):
