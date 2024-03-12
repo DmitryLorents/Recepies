@@ -27,23 +27,22 @@ final class NetworkService {
         completion: @escaping (Result<T, Error>) -> ()
     ) {
         guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self else { return }
-            guard let downloadedData = data, error == nil else {
+            // Try to download data
+            guard let downloadedData = data else {
                 if let error {
                     completion(.failure(error))
                 }
                 return
             }
-
-            guard let parsedData = try? self.decoder.decode(parseProtocol, from: downloadedData) else {
-                completion(.failure(error!))
-                return
-            }
-            completion(.success(parsedData))
-        }.resume()
+            // Try to decode downloaded data
+            do {
+                let parsedData = try self.decoder.decode(parseProtocol, from: downloadedData)
+                completion(.success(parsedData))
+            } catch { completion(.failure(error)) }
+        }
+        task.resume()
     }
 }
 
@@ -51,7 +50,8 @@ final class NetworkService {
 
 extension NetworkService: NetworkServiceProtocol {
     func getCategory() -> Result<Category, Error> {
-        <#code#>
+        let urlString =
+            "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken"
     }
 
     func getRecipe(url: String) -> Result<Recipe, Error> {
