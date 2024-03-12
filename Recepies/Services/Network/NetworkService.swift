@@ -84,7 +84,6 @@ extension NetworkService: NetworkServiceProtocol {
                     let recipe = Recipe(recipeDTO)
                     recipes.append(recipe)
                 }
-                let recipes = self.convertToRecipes(categoryDTO)
                 completion(.success(recipes))
             case let .failure(error):
                 completion(.failure(error))
@@ -93,9 +92,9 @@ extension NetworkService: NetworkServiceProtocol {
     }
 
     func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
-        let urlString =
-            "https://api.edamam.com/api/recipes/v2/54be5f54eb282ddc577c3e90c6c0c33e?app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&type=public"
-        getData(urlString: urlString, parseProtocol: Welcome.self) { result in
+        guard let url = URL(string: url) else { return }
+        let request = URLRequest(url: url)
+        getData(request: request, parseProtocol: Welcome.self) { result in
             switch result {
             case let .success(recipe):
                 completion(.success(RecipeDetail(dto: recipe.recipe)))
