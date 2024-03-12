@@ -71,8 +71,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showDetailedScreen(for indexPath: IndexPath) {
-        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = category?.recipes[indexPath.row] {
-            recipesCoordinator.goToDetailed(recipe: recipe)
+//        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = category?.recipes[indexPath.row] {
+//            recipesCoordinator.goToDetailed(recipe: recipe)
         }
     }
 
