@@ -1,7 +1,6 @@
 // RecipeDetailDTO.swift
 // Copyright © RoadMap. All rights reserved.
 
-
 /// Welcome
 struct Welcome: Codable {
     let recipe: RecipeDetailDTO

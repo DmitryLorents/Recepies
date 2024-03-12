@@ -84,10 +84,8 @@ extension NetworkService: NetworkServiceProtocol {
             switch result {
             case let .success(recipe):
                 completion(.success(RecipeDetail(dto: recipe.recipe)))
-                print(recipe.recipe)
             case let .failure(error):
                 completion(.failure(error))
-                print(error)
             }
         }
     }
