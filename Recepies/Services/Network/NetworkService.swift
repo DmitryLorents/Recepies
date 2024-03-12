@@ -59,7 +59,23 @@ extension NetworkService: NetworkServiceProtocol {
     func getRecipes(type: CategoryType, completion: @escaping (Result<[Recipe], Error>) -> ()) {
         let urlString =
             "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken&imageSize=THUMBNAIL&random=true&dishType=Main course&q=Chicken&field=uri&field=label&field=image&field=totalTime&field=calories"
-        getData(urlString: urlString, parseProtocol: [Recipe].self, completion: completion)
+//        getData(urlString: urlString, parseProtocol: CategoryDTO.self, completion: completion)
+        getData(urlString: urlString, parseProtocol: CategoryDTO.self) { result in
+            switch result {
+            case .success(let categoryDTO):
+                var recipes: [Recipe] = []
+                let hits = categoryDTO.hits
+                for hit in hits {
+                    let recipeDTO = hit.recipe
+                    let recipe = Recipe(recipeDTO)
+                    recipes.append(recipe)
+                }
+                completion(.success(recipes))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+ 
+        }
     }
 
     func getRecipe(url: String, completion: @escaping (Result<Recipe, Error>) -> ()) {}
