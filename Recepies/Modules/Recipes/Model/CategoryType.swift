@@ -3,6 +3,7 @@
 
 import Foundation
 
+/// aa
 enum CategoryType: String, CaseIterable {
     case salad
     case soup

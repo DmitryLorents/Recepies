@@ -17,7 +17,7 @@ protocol NetworkServiceProtocol {
     /// url: recipe url for detailed search
     /// completion: closure to handle results
     /// - Returns: Recipe if success, or error in case of failure
-    func getRecipe(url: String, completion: @escaping (Result<Recipe, Error>) -> ())
+    func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ())
 }
 
 /// Download data from server
@@ -62,7 +62,7 @@ extension NetworkService: NetworkServiceProtocol {
 //        getData(urlString: urlString, parseProtocol: CategoryDTO.self, completion: completion)
         getData(urlString: urlString, parseProtocol: CategoryDTO.self) { result in
             switch result {
-            case .success(let categoryDTO):
+            case let .success(categoryDTO):
                 var recipes: [Recipe] = []
                 let hits = categoryDTO.hits
                 for hit in hits {
@@ -71,12 +71,24 @@ extension NetworkService: NetworkServiceProtocol {
                     recipes.append(recipe)
                 }
                 completion(.success(recipes))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
- 
         }
     }
 
-    func getRecipe(url: String, completion: @escaping (Result<Recipe, Error>) -> ()) {}
+    func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
+        let urlString =
+            "https://api.edamam.com/api/recipes/v2/54be5f54eb282ddc577c3e90c6c0c33e?app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&type=public"
+        getData(urlString: urlString, parseProtocol: Welcome.self) { result in
+            switch result {
+            case let .success(recipe):
+                completion(.success(RecipeDetail(dto: recipe.recipe)))
+                print(recipe.recipe)
+            case let .failure(error):
+                completion(.failure(error))
+                print(error)
+            }
+        }
+    }
 }
