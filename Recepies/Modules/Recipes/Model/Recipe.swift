@@ -11,15 +11,13 @@ struct Recipe: Codable {
     let timeToCook: Int
     /// Number of calories
     let calories: Int
-    
+
     init(_ recipeDTO: RecipeDTO) {
-        self.name = recipeDTO.label
-        self.recipeImage = recipeDTO.image
-        self.timeToCook = recipeDTO.totalTime
+        name = recipeDTO.label
+        recipeImage = recipeDTO.image
+        timeToCook = recipeDTO.totalTime
         calories = Int(recipeDTO.calories)
     }
-
-    
 }
 
 extension Recipe: Hashable {

@@ -27,9 +27,9 @@ final class NetworkService {
     private let decoder = JSONDecoder()
 
     // MARK: - Private Methods
-    
+
     private func convertToRecipes(_ categoryDTO: CategoryDTO) -> [Recipe] {
-        categoryDTO.hits.map({Recipe($0.recipe)})
+        categoryDTO.hits.map { Recipe($0.recipe) }
     }
 
     private func getData<T: Codable>(
@@ -65,13 +65,12 @@ extension NetworkService: NetworkServiceProtocol {
             "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken&imageSize=THUMBNAIL&random=true&dishType=Main course&q=Chicken&field=uri&field=label&field=image&field=totalTime&field=calories"
         getData(urlString: urlString, parseProtocol: CategoryDTO.self) { result in
             switch result {
-            case .success(let categoryDTO):
+            case let .success(categoryDTO):
                 let recipes = self.convertToRecipes(categoryDTO)
                 completion(.success(recipes))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
- 
         }
     }
 

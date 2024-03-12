@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Describe types of dishes
 enum CategoryType: String, CaseIterable {
     case salad
