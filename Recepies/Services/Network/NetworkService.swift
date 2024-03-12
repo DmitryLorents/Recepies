@@ -5,12 +5,13 @@ import Foundation
 
 /// Protocol for network service in app
 protocol NetworkServiceProtocol {
-    /// Try to download requested category
+    /// Try to download requested recipes
     /// - Parameters:
     /// type: type of category
     /// completion: closure to handle results
-    /// - Returns: Category if success, or error in case of failure
-    func getCategory(type: CategoryType, completion: @escaping (Result<Category, Error>) -> ())
+    /// - Returns: Array of recipes if success, or error in case of failure
+    func getRecipes(type: CategoryType, completion: @escaping (Result<[Recipe], Error>) -> ())
+
     /// Try to download requested recipe
     /// - Parameters:
     /// url: recipe url for detailed search
@@ -55,9 +56,10 @@ final class NetworkService {
 // MARK: - NetworkService - NetworkServiceProtocol
 
 extension NetworkService: NetworkServiceProtocol {
-    func getCategory(completion: @escaping (Result<Category, Error>) -> ()) {
+    func getRecipes(type: CategoryType, completion: @escaping (Result<[Recipe], Error>) -> ()) {
         let urlString =
-            "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken"
+            "https://api.edamam.com/api/recipes/v2?type=public&app_id=cb462440&app_key=7e02a24790f9c127571b1a3bad7028d5&q=chicken&imageSize=THUMBNAIL&random=true&dishType=Main course&q=Chicken&field=uri&field=label&field=image&field=totalTime&field=calories"
+        getData(urlString: urlString, parseProtocol: [Recipe].self, completion: completion)
     }
 
     func getRecipe(url: String, completion: @escaping (Result<Recipe, Error>) -> ()) {}

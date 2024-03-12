@@ -9,10 +9,12 @@ struct Category {
     var name: String {
         type.rawValue.capitalized
     }
+
     /// Ingredient image
     var categoryImage: String {
         type.rawValue
     }
+
     /// Filling in category data
     static func makeCategories() -> [Category] {
         var categories: [Category] = []

@@ -13,13 +13,13 @@ enum CategoryType: String, CaseIterable {
     case pancake
     case drinks
     case desserts
-    
+
     var description: String {
         switch self {
         case .chicken, .meat, .sideDish:
             return "Main course"
         default:
-            return self.rawValue.capitalized
+            return rawValue.capitalized
         }
     }
 }
