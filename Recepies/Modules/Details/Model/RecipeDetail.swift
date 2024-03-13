@@ -21,7 +21,7 @@ struct RecipeDetail {
     let fats: Double
     /// Carbohydrates
     let carbohydrates: Double
-
+    ///Convert from DTO model
     init(dto: RecipeDetailDTO) {
         name = dto.label
         timeToCook = dto.totalTime
