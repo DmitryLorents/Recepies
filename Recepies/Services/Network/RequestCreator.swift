@@ -20,6 +20,11 @@ protocol RequestCreatorProtocol {
 
 /// Creates URLRequests for NetworkServiceProtocol
 final class RequestCreator {
+    // MARK: - Constants
+    private enum Constants {
+        static let sheme = "https"
+        static let host = "api.edamam.com"
+    }
     
     // MARK: - Private Methods
     private func makeSearchQuery(_ type: CategoryType, text: String) -> URLQueryItem {
@@ -33,10 +38,15 @@ final class RequestCreator {
         return URLQueryItem(name: "q", value: searchText)
     }
     
-    private func makeQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
+    private func makeGeneralQueryItems() -> [URLQueryItem] {
         let typeQuery = URLQueryItem(name: "type", value: "public")
         let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
+        let appIdQuery = URLQueryItem(name: "app_id", value: "cb462440")
         let imageSizeQuery = URLQueryItem(name: "imageSize", value: "THUMBNAIL")
+        return [typeQuery, appKeyQuery, appIdQuery, imageSizeQuery]
+    }
+    
+    private func makeCategoryQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
         let isRandomQuery = URLQueryItem(name: "random", value: "true")
         let dishTypeQuery = URLQueryItem(name: "dishType", value: type.description)
         let searchQuery = makeSearchQuery(type, text: text)
@@ -45,7 +55,7 @@ final class RequestCreator {
         let imageQuery = URLQueryItem(name: "field", value: "image")
         let totalTimeQuery = URLQueryItem(name: "field", value: "totalTime")
         let caloriesQuery = URLQueryItem(name: "field", value: "calories")
-        var queries: [URLQueryItem] = [typeQuery, appKeyQuery, imageSizeQuery, isRandomQuery, dishTypeQuery, searchQuery, uriQuery, labelQuery, imageQuery, totalTimeQuery, caloriesQuery]
+        var queries: [URLQueryItem] = makeGeneralQueryItems() + [isRandomQuery, dishTypeQuery, searchQuery, uriQuery, labelQuery, imageQuery, totalTimeQuery, caloriesQuery]
         if type == .sideDish {
             let healthQuery = URLQueryItem(name: "health", value: "vegetarian")
             queries.append(healthQuery)
@@ -53,13 +63,8 @@ final class RequestCreator {
         return queries
     }
     private func makeQueryItemRecipe(uri: String) -> [URLQueryItem] {
-        let typeQuery = URLQueryItem(name: "type", value: "public")
-        let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
-        let appIdQuery = URLQueryItem(name: "app_id", value: "cb462440")
-        let imageSizeQuery = URLQueryItem(name: "imageSize", value: "THUMBNAIL")
         let uriQuery = URLQueryItem(name: "uri", value: uri)
-        let queries: [URLQueryItem] = [typeQuery, appIdQuery, appKeyQuery, imageSizeQuery, uriQuery]
-        return queries
+        return makeGeneralQueryItems() + [uriQuery]
     }
 }
 
@@ -68,8 +73,8 @@ extension RequestCreator: RequestCreatorProtocol {
     
     func createRecipeURLRequest(uri: String) -> URLRequest? {
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.edamam.com"
+        components.scheme = Constants.sheme
+        components.host = Constants.host
         components.path = "/api/recipes/v2/by-uri"
         components.queryItems = makeQueryItemRecipe(uri: uri)
         guard let url = components.url else { return nil }
@@ -78,9 +83,10 @@ extension RequestCreator: RequestCreatorProtocol {
     
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.edamam.com/api/recipes/v2"
-        components.queryItems = makeQueryItems(type: type, text: text)
+        components.scheme = Constants.sheme
+        components.host = Constants.host
+        components.path = "api/recipes/v2"
+        components.queryItems = makeCategoryQueryItems(type: type, text: text)
         guard let url = components.url else {return nil}
         print("URL:", url)
         return URLRequest(url: url)
