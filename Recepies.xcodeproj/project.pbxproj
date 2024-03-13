@@ -302,7 +302,6 @@
 		0A086E852B8D1A1700ACCD6B /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
-				1B9B36F02B8EB5CF00E774EB /* View */,
 				0A80A4732B923BD200539C0A /* Presenter */,
 			);
 			path = Favorites;
@@ -601,6 +600,7 @@
 		1B9B36E22B8E1DCC00E774EB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1B9B36F02B8EB5CF00E774EB /* View */,
 				1B9B36E72B8E1E3400E774EB /* OtherTableViewCell.swift */,
 				1B9B36E52B8E1E2F00E774EB /* MainTableViewCell.swift */,
 				1B9B36E32B8E1DCC00E774EB /* ProfileView.swift */,

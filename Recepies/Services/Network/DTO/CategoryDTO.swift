@@ -4,6 +4,7 @@
 import Foundation
 
 // MARK: - CategoryDTO
+
 /// DTO for search by category
 struct CategoryDTO: Codable {
     /// Array of recipesDTO containers
@@ -11,6 +12,7 @@ struct CategoryDTO: Codable {
 }
 
 // MARK: - Hit
+
 /// RecipeDTO container
 struct Hit: Codable {
     /// Recipe
@@ -18,6 +20,7 @@ struct Hit: Codable {
 }
 
 // MARK: - Recipe
+
 /// DTO for recipe
 struct RecipeDTO: Codable {
     /// Base link for detailed search

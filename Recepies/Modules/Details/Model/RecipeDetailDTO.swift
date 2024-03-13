@@ -2,11 +2,13 @@
 // Copyright © RoadMap. All rights reserved.
 
 // MARK: - RecipeDTOContainer
+
 struct RecipeDTOContainer: Codable {
     let recipe: RecipeDetailDTO
 }
 
 // MARK: - RecipeDetailDTO
+
 struct RecipeDetailDTO: Codable {
     /// Recipe name
     let label: String
@@ -23,6 +25,7 @@ struct RecipeDetailDTO: Codable {
 }
 
 // MARK: - NutrientsDTO
+
 struct NutrientsDTO: Codable {
     /// Number of calories
     let calories: Total
@@ -39,7 +42,9 @@ struct NutrientsDTO: Codable {
         case chocdf = "CHOCDF"
     }
 }
+
 // MARK: - Total
+
 struct Total: Codable {
     /// Amount of PFC components in gramms
     let quantity: Double

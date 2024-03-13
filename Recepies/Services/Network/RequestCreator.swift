@@ -20,8 +20,8 @@ protocol RequestCreatorProtocol {
 
 /// Creates URLRequests for NetworkServiceProtocol
 final class RequestCreator {
-    
     // MARK: - Private Methods
+
     private func makeSearchQuery(_ type: CategoryType, text: String) -> URLQueryItem {
         var searchText: String
         switch type {
@@ -32,7 +32,7 @@ final class RequestCreator {
         }
         return URLQueryItem(name: "q", value: searchText)
     }
-    
+
     private func makeQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
         let typeQuery = URLQueryItem(name: "type", value: "public")
         let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
@@ -45,13 +45,26 @@ final class RequestCreator {
         let imageQuery = URLQueryItem(name: "field", value: "image")
         let totalTimeQuery = URLQueryItem(name: "field", value: "totalTime")
         let caloriesQuery = URLQueryItem(name: "field", value: "calories")
-        var queries: [URLQueryItem] = [typeQuery, appKeyQuery, imageSizeQuery, isRandomQuery, dishTypeQuery, searchQuery, uriQuery, labelQuery, imageQuery, totalTimeQuery, caloriesQuery]
+        var queries: [URLQueryItem] = [
+            typeQuery,
+            appKeyQuery,
+            imageSizeQuery,
+            isRandomQuery,
+            dishTypeQuery,
+            searchQuery,
+            uriQuery,
+            labelQuery,
+            imageQuery,
+            totalTimeQuery,
+            caloriesQuery
+        ]
         if type == .sideDish {
             let healthQuery = URLQueryItem(name: "health", value: "vegetarian")
             queries.append(healthQuery)
         }
         return queries
     }
+
     private func makeQueryItemRecipe(uri: String) -> [URLQueryItem] {
         let typeQuery = URLQueryItem(name: "type", value: "public")
         let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
@@ -64,8 +77,8 @@ final class RequestCreator {
 }
 
 // MARK: - RequestCreator - RequestCreatorProtocol
+
 extension RequestCreator: RequestCreatorProtocol {
-    
     func createRecipeURLRequest(uri: String) -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"
@@ -75,13 +88,13 @@ extension RequestCreator: RequestCreatorProtocol {
         guard let url = components.url else { return nil }
         return URLRequest(url: url)
     }
-    
+
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.edamam.com/api/recipes/v2"
         components.queryItems = makeQueryItems(type: type, text: text)
-        guard let url = components.url else {return nil}
+        guard let url = components.url else { return nil }
         print("URL:", url)
         return URLRequest(url: url)
     }
