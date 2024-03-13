@@ -100,7 +100,7 @@ final class CategoryView: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = presenter?.dataSource?.name
+        titleLabel.text = presenter?.category.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -252,7 +252,7 @@ extension CategoryView: UITableViewDataSource {
         case .loading:
             return 10
         default:
-            return presenter?.dataSource?.recipes.count ?? 0
+            return presenter?.dataSource?.count ?? 0
         }
     }
 
@@ -260,7 +260,7 @@ extension CategoryView: UITableViewDataSource {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.dataSource?.recipes[indexPath.row]
+        let recipe = presenter?.dataSource?[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

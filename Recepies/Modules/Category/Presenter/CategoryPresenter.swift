@@ -9,6 +9,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
     /// Recipes to show by view
     var dataSource: [Recipe]? { get }
+    /// Category received from initialization phase
+    var category: Category {get}
     /// Main initializer
     init(
         category: Category,
@@ -31,6 +33,7 @@ protocol CategoryPresenterProtocol: AnyObject {
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
+    
     // MARK: - Constants
 
     private enum Constants {
@@ -38,7 +41,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     // MARK: - Public Properties
-
+    var category: Category
     var dataSource: [Recipe]? {
         didSet {
             view?.updateTableView()
@@ -50,7 +53,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     private let networkService: NetworkServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
-    private var category: Category?
     private var recipes: [Recipe]? {
         didSet {
             dataSource = recipes
@@ -113,7 +115,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         }
     }
 
-    func filterCategory(text: String) {
+    func filterRecipes(text: String) {
         if text.count < Constants.minTextLenght {
             dataSource = recipes
             view?.clearSortingButtonState()
