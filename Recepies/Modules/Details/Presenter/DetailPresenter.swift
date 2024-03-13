@@ -6,15 +6,22 @@ import Foundation
 /// Parts presenter protocol
 protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
+    init(
+        view: DetailViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        recipe: Recipe,
+        database: DataBaseProtocol,
+        networkService: NetworkServiceProtocol
+    )
     /// Recipe data
-    var recipeDetail: RecipeDetail? { get }
+    var recipeDetail: RecipeDetail? { get set }
     /// Return to previous controller
     func goBack()
     /// Add/remove recipe to favorites
     func updateRecipeFavoriteStatus()
     /// shares recipe into Telegram
     func shareRecipe()
+    var recipe: Recipe { get set }
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -22,7 +29,7 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     var recipeDetail: RecipeDetail? {
         didSet {
-            // Add view's function to set view from recipe
+            view?.reloadData()
         }
     }
 
@@ -32,23 +39,44 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     // MARK: - Private Properties
 
-    private var recipe: Recipe {
+    var recipe: Recipe {
         didSet {
-            // start network request
+            DispatchQueue.main.async {
+                self.networkService
+                    .getRecipe(url: "http://www.edamam.com/ontologies/edamam.owl#recipe_47dc96d52dc2ca66df1e008389617d97") { [weak self] result in
+                        switch result {
+                        case let .success(recipe):
+                            print(recipe)
+                            self?.recipeDetail = recipe
+                            
+                        case let .failure(error):
+                            print(error)
+                        }
+                    }
+            }
+            
         }
     }
 
+    private let networkService: NetworkServiceProtocol
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?
     private var database: DataBaseProtocol
 
     // MARK: - Initializers
 
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol) {
+    init(
+        view: DetailViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        recipe: Recipe,
+        database: DataBaseProtocol,
+        networkService: NetworkServiceProtocol
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
         self.database = database
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -67,7 +95,20 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
 
     func shareRecipe() {
-        // some code to share recipe into Telegram
-        log(.shareRecipe(recipeName: recipe.name))
+        
+        DispatchQueue.main.async {
+            self.networkService
+                .getRecipe(url: "http://www.edamam.com/ontologies/edamam.owl#recipe_47dc96d52dc2ca66df1e008389617d97") { [weak self] result in
+                    switch result {
+                    case let .success(recipe):
+                        print(recipe)
+                        self?.recipeDetail = recipe
+                        
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+        }
+//        log(.shareRecipe(recipeName: recipe.name))
     }
 }

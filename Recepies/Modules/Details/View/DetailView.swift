@@ -7,6 +7,7 @@ import UIKit
 protocol DetailViewProtocol: AnyObject {
     /// Change button state
     func updateFavoriteButton()
+    func reloadData()
 }
 
 /// Screen with detailed information for recipe
@@ -169,6 +170,10 @@ extension DetailView: UITableViewDataSource {
 // MARK: - DetailView + DetailViewProtocol
 
 extension DetailView: DetailViewProtocol {
+    func reloadData() {
+        tableView.reloadData()
+    }
+
     func updateFavoriteButton() {
         if let presenter {
             let image: UIImage = presenter.isFavorite ? .favoritesHig : .favorites
