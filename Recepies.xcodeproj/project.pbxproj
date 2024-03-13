@@ -425,6 +425,24 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		0AC310D72BA189F200EF7DE7 /* Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				0A80A47B2B93049B00539C0A /* PFC.swift */,
+				0ACD2EE42B91037E000BA913 /* Recipe.swift */,
+			);
+			path = Recipe;
+			sourceTree = "<group>";
+		};
+		0AC310D82BA18A0300EF7DE7 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */,
+				0A80A4712B91C8E900539C0A /* Category.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		0AC9D9C72BA07F8000371A0F /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,10 +521,8 @@
 		0ACD2EE32B91037E000BA913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0ACD2EE42B91037E000BA913 /* Recipe.swift */,
-				0A80A4712B91C8E900539C0A /* Category.swift */,
-				0A80A47B2B93049B00539C0A /* PFC.swift */,
-				0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */,
+				0AC310D82BA18A0300EF7DE7 /* Category */,
+				0AC310D72BA189F200EF7DE7 /* Recipe */,
 			);
 			path = Model;
 			sourceTree = "<group>";

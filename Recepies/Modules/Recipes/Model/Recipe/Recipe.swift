@@ -1,17 +1,17 @@
 // Recipe.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Name and description of the recipe
+/// Data related to recipe
 struct Recipe: Codable {
     /// Recipe name
     let name: String
-    /// Recipe image
+    /// Recipe image url
     let recipeImage: String
-    /// Time to prepare the dish
+    /// Time to cook the dish
     let timeToCook: Int
-    /// Number of calories
+    /// Calories amount
     let calories: Int
-
+    /// Converting from DTO model
     init(_ recipeDTO: RecipeDTO) {
         name = recipeDTO.label
         recipeImage = recipeDTO.image
