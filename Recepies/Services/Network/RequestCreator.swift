@@ -21,12 +21,14 @@ protocol RequestCreatorProtocol {
 /// Creates URLRequests for NetworkServiceProtocol
 final class RequestCreator {
     // MARK: - Constants
+
     private enum Constants {
         static let sheme = "https"
         static let host = "api.edamam.com"
     }
-    
+
     // MARK: - Private Methods
+
     private func makeSearchQuery(_ type: CategoryType, text: String) -> URLQueryItem {
         var searchText: String
         switch type {
@@ -37,7 +39,7 @@ final class RequestCreator {
         }
         return URLQueryItem(name: "q", value: searchText)
     }
-    
+
     private func makeGeneralQueryItems() -> [URLQueryItem] {
         let typeQuery = URLQueryItem(name: "type", value: "public")
         let appKeyQuery = URLQueryItem(name: "app_key", value: "7e02a24790f9c127571b1a3bad7028d5")
@@ -45,7 +47,7 @@ final class RequestCreator {
         let imageSizeQuery = URLQueryItem(name: "imageSize", value: "THUMBNAIL")
         return [typeQuery, appKeyQuery, appIdQuery, imageSizeQuery]
     }
-    
+
     private func makeCategoryQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
         let isRandomQuery = URLQueryItem(name: "random", value: "true")
         let dishTypeQuery = URLQueryItem(name: "dishType", value: type.description)
@@ -55,13 +57,23 @@ final class RequestCreator {
         let imageQuery = URLQueryItem(name: "field", value: "image")
         let totalTimeQuery = URLQueryItem(name: "field", value: "totalTime")
         let caloriesQuery = URLQueryItem(name: "field", value: "calories")
-        var queries: [URLQueryItem] = makeGeneralQueryItems() + [isRandomQuery, dishTypeQuery, searchQuery, uriQuery, labelQuery, imageQuery, totalTimeQuery, caloriesQuery]
+        var queries: [URLQueryItem] = makeGeneralQueryItems() + [
+            isRandomQuery,
+            dishTypeQuery,
+            searchQuery,
+            uriQuery,
+            labelQuery,
+            imageQuery,
+            totalTimeQuery,
+            caloriesQuery
+        ]
         if type == .sideDish {
             let healthQuery = URLQueryItem(name: "health", value: "vegetarian")
             queries.append(healthQuery)
         }
         return queries
     }
+
     private func makeQueryItemRecipe(uri: String) -> [URLQueryItem] {
         let uriQuery = URLQueryItem(name: "uri", value: uri)
         return makeGeneralQueryItems() + [uriQuery]
@@ -69,8 +81,8 @@ final class RequestCreator {
 }
 
 // MARK: - RequestCreator - RequestCreatorProtocol
+
 extension RequestCreator: RequestCreatorProtocol {
-    
     func createRecipeURLRequest(uri: String) -> URLRequest? {
         var components = URLComponents()
         components.scheme = Constants.sheme
@@ -80,14 +92,14 @@ extension RequestCreator: RequestCreatorProtocol {
         guard let url = components.url else { return nil }
         return URLRequest(url: url)
     }
-    
+
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
         var components = URLComponents()
         components.scheme = Constants.sheme
         components.host = Constants.host
         components.path = "api/recipes/v2"
         components.queryItems = makeCategoryQueryItems(type: type, text: text)
-        guard let url = components.url else {return nil}
+        guard let url = components.url else { return nil }
         print("URL:", url)
         return URLRequest(url: url)
     }

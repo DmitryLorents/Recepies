@@ -9,12 +9,14 @@ struct Category {
     var name: String {
         type.rawValue.capitalized
     }
+
     /// Category image
     var categoryImage: String {
         type.rawValue
     }
+
     /// Filling in category data
     static func makeCategories() -> [Category] {
-        CategoryType.allCases.map({Category(type: $0)})
+        CategoryType.allCases.map { Category(type: $0) }
     }
 }
