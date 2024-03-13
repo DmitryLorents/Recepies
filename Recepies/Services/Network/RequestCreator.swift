@@ -74,7 +74,7 @@ final class RequestCreator {
         return queries
     }
 
-    private func makeQueryItemRecipe(uri: String) -> [URLQueryItem] {
+    private func makeRecipeQueryItems(uri: String) -> [URLQueryItem] {
         let uriQuery = URLQueryItem(name: "uri", value: uri)
         return makeGeneralQueryItems() + [uriQuery]
     }
@@ -88,19 +88,24 @@ extension RequestCreator: RequestCreatorProtocol {
         components.scheme = Constants.sheme
         components.host = Constants.host
         components.path = "/api/recipes/v2/by-uri"
-        components.queryItems = makeQueryItemRecipe(uri: uri)
+        components.queryItems = makeRecipeQueryItems(uri: uri)
         guard let url = components.url else { return nil }
         return URLRequest(url: url)
     }
 
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
+        print(#function)
         var components = URLComponents()
         components.scheme = Constants.sheme
         components.host = Constants.host
-        components.path = "api/recipes/v2"
+        components.path = "/api/recipes/v2"
         components.queryItems = makeCategoryQueryItems(type: type, text: text)
-        guard let url = components.url else { return nil }
-        print("URL:", url)
+//        print("URL:", url)
+        guard let url = components.url else {
+            print("Incorrect url")
+            return nil
+        }
+        print("Category URL:", url)
         return URLRequest(url: url)
     }
 }

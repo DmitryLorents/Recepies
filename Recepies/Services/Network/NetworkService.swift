@@ -20,7 +20,7 @@ protocol NetworkServiceProtocol {
     /// url: recipe url for detailed search
     /// completion: closure to handle results
     /// - Returns: Recipe if success, or error in case of failure
-    func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ())
+    func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ())
 }
 
 /// Download data from server
@@ -71,6 +71,7 @@ final class NetworkService {
 
 extension NetworkService: NetworkServiceProtocol {
     func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ()) {
+        print(#function)
         let request = requestCreator.createCategoryURLRequest(type: type, text: text)
         getData(request: request, parseProtocol: CategoryDTO.self) { result in
             switch result {
@@ -83,7 +84,7 @@ extension NetworkService: NetworkServiceProtocol {
         }
     }
 
-    func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
+    func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
         let request = requestCreator.createRecipeURLRequest(uri: url)
         getData(request: request, parseProtocol: RecipeDTOContainer.self) { result in
             switch result {
