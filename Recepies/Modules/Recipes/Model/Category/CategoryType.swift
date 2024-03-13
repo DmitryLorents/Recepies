@@ -26,7 +26,7 @@ enum CategoryType: String, CaseIterable {
     /// Describe category name, used in Category model and search through RestAPI
     var description: String {
         switch self {
-        case .chicken, .meat, .sideDish:
+        case .chicken, .meat, .sideDish, .fish:
             return "Main course"
         default:
             return rawValue.capitalized

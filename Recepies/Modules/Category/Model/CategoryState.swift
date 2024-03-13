@@ -8,7 +8,9 @@ enum CategoryState {
     /// data fetching in progress
     case loading
     /// category data loaded succesfully
-    case loaded
-    /// category data not loaded, error of loading
+    case data
+    /// no data is loaded, error = nil
+    case noData
+    /// category data not loaded, error received
     case error(Error)
 }

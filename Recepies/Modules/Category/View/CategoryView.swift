@@ -79,6 +79,11 @@ final class CategoryView: UIViewController {
         setupVIew()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.fetchData(searchText: "")
+    }
+
     // MARK: - Private Methods
 
     private func setupVIew() {
@@ -133,7 +138,7 @@ final class CategoryView: UIViewController {
         switch state {
         case .loading:
             cells?.forEach { $0.startCellShimmerAnimation() }
-        case .loaded, .error:
+        case .data, .error:
             cells?.forEach { $0.stopCellShimmerAnimation() }
             recipesTableView.reloadData()
         default:

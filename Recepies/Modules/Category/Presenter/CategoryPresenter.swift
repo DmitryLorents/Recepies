@@ -30,13 +30,15 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Search necessary element
     /// - Parameter text: text value from searchBar
     func filterRecipes(text: String)
+    /// Start downloading data from network
+    func fetchData(searchText: String)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let minTextLenght = 3
+        static let minSearchTextLenght = 3
     }
 
     // MARK: - Public Properties
@@ -105,18 +107,28 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         dataSource = sortedRecipes
     }
 
-    private func imitateNetworkRequest(completionHandler: @escaping VoidHandler) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.view?.updateState(with: .loading)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.view?.updateState(with: .loaded)
-            completionHandler()
+    func fetchData(searchText: String) {
+        print(#function)
+        view?.updateState(with: .loading)
+        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case let .failure(error):
+                    print("Error:", error)
+                    self.view?.updateState(with: .error(error))
+                case let .success(recipes):
+                    print("Recipes", recipes)
+                    self.recipes = recipes
+                    let state: CategoryState = recipes.count > 0 ? .data : .noData
+                    self.view?.updateState(with: state)
+                }
+            }
         }
     }
 
     func filterRecipes(text: String) {
-        if text.count < Constants.minTextLenght {
+        if text.count < Constants.minSearchTextLenght {
             dataSource = recipes
             view?.clearSortingButtonState()
             view?.updateTableView()
