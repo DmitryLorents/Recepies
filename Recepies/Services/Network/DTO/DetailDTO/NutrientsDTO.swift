@@ -1,16 +1,16 @@
 // NutrientsDTO.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// NutrientsDTO
+/// Common Meal Nutrients
 struct NutrientsDTO: Codable {
     /// Number of calories
-    let calories: TotalDTO
+    let calories: InfoDTO
     /// Number of fat
-    let fat: TotalDTO
+    let fat: InfoDTO
     /// Number of proteins
-    let protein: TotalDTO
+    let protein: InfoDTO
     /// Number of calories
-    let chocdf: TotalDTO
+    let chocdf: InfoDTO
     enum CodingKeys: String, CodingKey {
         case calories = "ENERC_KCAL"
         case fat = "FAT"

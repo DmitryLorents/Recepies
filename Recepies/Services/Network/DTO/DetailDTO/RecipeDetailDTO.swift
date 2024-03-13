@@ -1,7 +1,7 @@
 // RecipeDetailDTO.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// RecipeDetailDTO
+/// Structure representing information about a dish
 struct RecipeDetailDTO: Codable {
     /// Recipe name
     let label: String

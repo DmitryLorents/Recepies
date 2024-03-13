@@ -74,7 +74,7 @@
 		1BC98B5E2BA1CE8B00E9D78D /* RecipeDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B5D2BA1CE8B00E9D78D /* RecipeDTO.swift */; };
 		1BC98B612BA1CF4100E9D78D /* RecipeDTOContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B602BA1CF4100E9D78D /* RecipeDTOContainer.swift */; };
 		1BC98B632BA1CF7200E9D78D /* NutrientsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B622BA1CF7200E9D78D /* NutrientsDTO.swift */; };
-		1BC98B652BA1CFB300E9D78D /* TotalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B642BA1CFB300E9D78D /* TotalDTO.swift */; };
+		1BC98B652BA1CFB300E9D78D /* InfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B642BA1CFB300E9D78D /* InfoDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,7 +166,7 @@
 		1BC98B5D2BA1CE8B00E9D78D /* RecipeDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDTO.swift; sourceTree = "<group>"; };
 		1BC98B602BA1CF4100E9D78D /* RecipeDTOContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDTOContainer.swift; sourceTree = "<group>"; };
 		1BC98B622BA1CF7200E9D78D /* NutrientsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsDTO.swift; sourceTree = "<group>"; };
-		1BC98B642BA1CFB300E9D78D /* TotalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDTO.swift; sourceTree = "<group>"; };
+		1BC98B642BA1CFB300E9D78D /* InfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -675,7 +675,7 @@
 				1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */,
 				1BC98B602BA1CF4100E9D78D /* RecipeDTOContainer.swift */,
 				1BC98B622BA1CF7200E9D78D /* NutrientsDTO.swift */,
-				1BC98B642BA1CFB300E9D78D /* TotalDTO.swift */,
+				1BC98B642BA1CFB300E9D78D /* InfoDTO.swift */,
 			);
 			path = DetailDTO;
 			sourceTree = "<group>";
@@ -886,7 +886,7 @@
 				1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */,
 				0A80A47A2B92716200539C0A /* PFCView.swift in Sources */,
 				1BC98B592BA0C23600E9D78D /* RecipeDetailDTO.swift in Sources */,
-				1BC98B652BA1CFB300E9D78D /* TotalDTO.swift in Sources */,
+				1BC98B652BA1CFB300E9D78D /* InfoDTO.swift in Sources */,
 				0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */,
 				0A57035A2B99E84600996130 /* LoggerInvoker.swift in Sources */,
 				1BC98B5E2BA1CE8B00E9D78D /* RecipeDTO.swift in Sources */,
