@@ -10,7 +10,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Recipes to show by view
     var dataSource: [Recipe]? { get }
     /// Category received from initialization phase
-    var category: Category {get}
+    var category: Category { get }
     /// Main initializer
     init(
         category: Category,
@@ -33,7 +33,6 @@ protocol CategoryPresenterProtocol: AnyObject {
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
-    
     // MARK: - Constants
 
     private enum Constants {
@@ -41,6 +40,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     // MARK: - Public Properties
+
     var category: Category
     var dataSource: [Recipe]? {
         didSet {
@@ -102,7 +102,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             return false
         })
         // Set new dataSource
-            dataSource = sortedRecipes
+        dataSource = sortedRecipes
     }
 
     private func imitateNetworkRequest(completionHandler: @escaping VoidHandler) {
@@ -124,7 +124,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 //            imitateNetworkRequest { [weak self] in
 //                guard let self else { return }
 //                guard let categorySearch = dataSource else { return }
-//                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+//                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased())
+//                }
 //                dataSource?.recipes = searchingRecipe
 //            }
         }

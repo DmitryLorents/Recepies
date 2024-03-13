@@ -142,14 +142,14 @@ extension DetailView: UITableViewDataSource {
                 withIdentifier: TitleTableViewCell.reuseID,
                 for: indexPath
             ) as? TitleTableViewCell else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
+            guard let recipe = presenter?.recipeDetail else { return cell }
             cell.setupView(recipe: recipe)
             return cell
         case .characteristics:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
             else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
+            guard let recipe = presenter?.recipeDetail else { return cell }
             cell.setupCell(with: recipe)
             return cell
         case .fullDescription:
@@ -159,7 +159,7 @@ extension DetailView: UITableViewDataSource {
                     for: indexPath
                 ) as? FullDescriptionTableViewCell
             else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
+            guard let recipe = presenter?.recipeDetail else { return cell }
             cell.setupCell(recipe: recipe)
             return cell
         }

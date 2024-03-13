@@ -102,7 +102,7 @@ final class TitleTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupView(recipe: Recipe) {
+    func setupView(recipe: RecipeDetail) {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(recipe.weight) g"
         textCooKingTimeLabel.text = "Cooking time \(recipe.timeToCook) min"

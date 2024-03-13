@@ -8,7 +8,7 @@ protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
     init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
     /// Recipe data
-    var recipe: Recipe { get }
+    var recipeDetail: RecipeDetail? { get }
     /// Return to previous controller
     func goBack()
     /// Add/remove recipe to favorites
@@ -20,12 +20,23 @@ protocol DetailPresenterProtocol: AnyObject {
 final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipe: Recipe
+    var recipeDetail: RecipeDetail? {
+        didSet {
+            // Add view's function to set view from recipe
+        }
+    }
+
     var isFavorite: Bool {
         database.isFavorite(recipe)
     }
 
     // MARK: - Private Properties
+
+    private var recipe: Recipe {
+        didSet {
+            // start network request
+        }
+    }
 
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?

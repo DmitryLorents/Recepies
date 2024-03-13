@@ -3,12 +3,14 @@
 
 // MARK: - RecipeDTOContainer
 
+/// Container for RecipeDetailDTO
 struct RecipeDTOContainer: Codable {
     let recipe: RecipeDetailDTO
 }
 
 // MARK: - RecipeDetailDTO
 
+/// DTO model for recipe received from nerwork
 struct RecipeDetailDTO: Codable {
     /// Recipe name
     let label: String
@@ -26,6 +28,7 @@ struct RecipeDetailDTO: Codable {
 
 // MARK: - NutrientsDTO
 
+/// PFC data container
 struct NutrientsDTO: Codable {
     /// Number of calories
     let calories: Total
@@ -45,6 +48,7 @@ struct NutrientsDTO: Codable {
 
 // MARK: - Total
 
+/// Container for PFC amount
 struct Total: Codable {
     /// Amount of PFC components in gramms
     let quantity: Double
