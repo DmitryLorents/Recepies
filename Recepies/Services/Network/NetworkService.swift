@@ -77,13 +77,7 @@ extension NetworkService: NetworkServiceProtocol {
         getData(request: request, parseProtocol: CategoryDTO.self) { result in
             switch result {
             case let .success(categoryDTO):
-                var recipes: [Recipe] = []
-                let hits = categoryDTO.hits
-                for hit in hits {
-                    let recipeDTO = hit.recipe
-                    let recipe = Recipe(recipeDTO)
-                    recipes.append(recipe)
-                }
+                let recipes = self.convertToRecipes(categoryDTO)
                 completion(.success(recipes))
             case let .failure(error):
                 completion(.failure(error))
