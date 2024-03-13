@@ -11,6 +11,7 @@ struct NutrientsDTO: Codable {
     let protein: InfoDTO
     /// Number of calories
     let chocdf: InfoDTO
+    
     enum CodingKeys: String, CodingKey {
         case calories = "ENERC_KCAL"
         case fat = "FAT"
