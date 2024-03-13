@@ -1,12 +1,12 @@
 // RecipeDetailDTO.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Welcome
-struct Welcome: Codable {
+// MARK: - RecipeDTOContainer
+struct RecipeDTOContainer: Codable {
     let recipe: RecipeDetailDTO
 }
 
-/// Recipe details
+// MARK: - RecipeDetailDTO
 struct RecipeDetailDTO: Codable {
     /// Recipe name
     let label: String
@@ -18,17 +18,17 @@ struct RecipeDetailDTO: Codable {
     let ingredientLines: [String]
     /// Weight of the dish
     let totalWeight: Double
-    /// Total Nutrients
+    /// All Nutrients
     let totalNutrients: NutrientsDTO
 }
 
-/// Information about kbzhu
+// MARK: - NutrientsDTO
 struct NutrientsDTO: Codable {
     /// Number of calories
     let calories: Total
     /// Number of fat
     let fat: Total
-    /// Number of calories
+    /// Number of proteins
     let protein: Total
     /// Number of calories
     let chocdf: Total
@@ -39,9 +39,8 @@ struct NutrientsDTO: Codable {
         case chocdf = "CHOCDF"
     }
 }
-
-/// Number of grams in a dish
+// MARK: - Total
 struct Total: Codable {
-    /// Value
+    /// Amount of PFC components in gramms
     let quantity: Double
 }

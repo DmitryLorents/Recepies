@@ -420,6 +420,7 @@
 		0AC310D42BA0A1CF00EF7DE7 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */,
 				1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */,
 			);
 			path = DTO;
@@ -447,9 +448,8 @@
 			isa = PBXGroup;
 			children = (
 				0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */,
-				0AC310D42BA0A1CF00EF7DE7 /* DTO */,
-				0AC9D9CA2BA08D1400371A0F /* CategoryDTO.swift */,
 				0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */,
+				0AC310D42BA0A1CF00EF7DE7 /* DTO */,
 			);
 			path = Network;
 			sourceTree = "<group>";
