@@ -7,10 +7,15 @@ import UIKit
 protocol CategoryPresenterProtocol: AnyObject {
     /// Type of handler from sorting button
     typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
-    /// Categories of product to show by view
-    var dataSource: Category? { get }
+    /// Recipes to show by view
+    var dataSource: [Recipe]? { get }
     /// Main initializer
-    init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category)
+    init(
+        category: Category,
+        view: CategoryViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        networkService: NetworkServiceProtocol
+    )
     /// Asking presenter to set delegate and dataSource for TableView
     func goBack()
     /// Shows detailed recipe screen
@@ -22,7 +27,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
     /// Search necessary element
     /// - Parameter text: text value from searchBar
-    func filterCategory(text: String)
+    func filterRecipes(text: String)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -34,7 +39,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     // MARK: - Public Properties
 
-    var dataSource: Category? {
+    var dataSource: [Recipe]? {
         didSet {
             view?.updateTableView()
         }
@@ -42,24 +47,28 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     // MARK: - Private Properties
 
-    private var conteinerCategory: Category?
-
+    private let networkService: NetworkServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
-    private var category: Category? {
+    private var category: Category?
+    private var recipes: [Recipe]? {
         didSet {
-            dataSource = category
+            dataSource = recipes
         }
     }
 
     // MARK: - Initialization
 
-    init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category) {
+    init(
+        category: Category,
+        view: CategoryViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        networkService: NetworkServiceProtocol
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
-        dataSource = category
-        imitateNetworkRequest {}
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -71,8 +80,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showDetailedScreen(for indexPath: IndexPath) {
-//        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = category?.recipes[indexPath.row] {
-//            recipesCoordinator.goToDetailed(recipe: recipe)
+        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = dataSource?[indexPath.row] {
+            recipesCoordinator.goToDetailed(recipe: recipe)
         }
     }
 
@@ -80,7 +89,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         // Remova all nil predicates and put predicates in correct order in array
         let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
         // Sorting recipes in category
-        let sortedRecipes = dataSource?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
+        let sortedRecipes = dataSource?.sorted(by: { lhsRecipe, rhsRecipe in
             for predicate in predicates {
                 // Case lhs == rhs
                 if !predicate(lhsRecipe, rhsRecipe), !predicate(rhsRecipe, lhsRecipe) {
@@ -91,11 +100,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             return false
         })
         // Set new dataSource
-        if let sortedRecipes {
-            var sortedCategory = category
-            sortedCategory?.recipes = sortedRecipes
-            dataSource = sortedCategory
-        }
+            dataSource = sortedRecipes
     }
 
     private func imitateNetworkRequest(completionHandler: @escaping VoidHandler) {
@@ -110,16 +115,16 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     func filterCategory(text: String) {
         if text.count < Constants.minTextLenght {
-            dataSource = category
+            dataSource = recipes
             view?.clearSortingButtonState()
             view?.updateTableView()
         } else {
-            imitateNetworkRequest { [weak self] in
-                guard let self else { return }
-                guard let categorySearch = dataSource else { return }
-                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
-                dataSource?.recipes = searchingRecipe
-            }
+//            imitateNetworkRequest { [weak self] in
+//                guard let self else { return }
+//                guard let categorySearch = dataSource else { return }
+//                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+//                dataSource?.recipes = searchingRecipe
+//            }
         }
     }
 }

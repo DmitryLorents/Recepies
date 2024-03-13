@@ -7,7 +7,7 @@ import Foundation
 protocol NetworkServiceProtocol {
     /// Init with service to create url requests
     init(requestCreator: RequestCreatorProtocol)
-    
+
     /// Try to download requested recipes
     /// - Parameters:
     /// type: type of category
@@ -25,14 +25,13 @@ protocol NetworkServiceProtocol {
 
 /// Download data from server
 final class NetworkService {
-    
     // MARK: - Private Properties
 
     private let decoder = JSONDecoder()
     private var requestCreator: RequestCreatorProtocol
-    
+
     // MARK: - Initialization
-    
+
     init(requestCreator: RequestCreatorProtocol) {
         self.requestCreator = requestCreator
     }
@@ -71,7 +70,6 @@ final class NetworkService {
 // MARK: - NetworkService - NetworkServiceProtocol
 
 extension NetworkService: NetworkServiceProtocol {
-    
     func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ()) {
         let request = requestCreator.createCategoryURLRequest(type: type, text: text)
         getData(request: request, parseProtocol: CategoryDTO.self) { result in
@@ -86,7 +84,6 @@ extension NetworkService: NetworkServiceProtocol {
     }
 
     func getRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
-        
         let request = requestCreator.createRecipeURLRequest(uri: url)
         getData(request: request, parseProtocol: RecipeDTOContainer.self) { result in
             switch result {

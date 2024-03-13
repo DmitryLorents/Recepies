@@ -169,7 +169,7 @@ final class CategoryView: UIViewController {
 
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.filterCategory(text: searchText)
+        presenter?.filterRecipes(text: searchText)
     }
 }
 
