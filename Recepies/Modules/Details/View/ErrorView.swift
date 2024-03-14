@@ -5,9 +5,13 @@ import Foundation
 import UIKit
 
 final class ErrorView: UIView {
+    // MARK: - Constants
+
     private enum Constants {
         static let refreshText = "ref"
     }
+
+    // MARK: - Vizual components
 
     private lazy var stackView: UIStackView = {
         let stack = UIStackView()
@@ -32,7 +36,6 @@ final class ErrorView: UIView {
 
     private let nothingLabel: UILabel = {
         let label = UILabel()
-//        label.text = Constants.nothingText
         label.font = .makeVerdanaRegular(size: 14)
         label.textAlignment = .center
         return label
@@ -50,15 +53,29 @@ final class ErrorView: UIView {
         return button
     }()
 
-    // MARK: - Public Properties
+    // MARK: - Initialization
 
-    convenience init(state: CategoryState) {
+    convenience init(state: CategoryState, action: Selector) {
         self.init()
-        configureView(state: state)
-        setupView()
+        setupView(action: action)
+        updateState(state)
     }
 
-    private func configureView(state: CategoryState) {
+//    private func configureView(state: CategoryState) {
+//        switch state {
+//        case .noData:
+//            refreshButton.isHidden = true
+//            iconImageView.image = .search
+//            nothingLabel.text = "Start typing text"
+//        default:
+//            iconImageView.image = .lightning
+//            nothingLabel.text = "Failed to load data"
+//        }
+//    }
+
+    // MARK: - Public Methods
+
+    func updateState(_ state: CategoryState) {
         switch state {
         case .noData:
             refreshButton.isHidden = true
@@ -72,8 +89,9 @@ final class ErrorView: UIView {
 
     // MARK: - Private Methods
 
-    private func setupView() {
+    private func setupView(action: Selector) {
         backgroundColor = .systemBackground
+        refreshButton.addTarget(self, action: action, for: .touchUpInside)
         addSubview(stackView)
         disableTARMIC()
         grayView.addSubview(iconImageView)
