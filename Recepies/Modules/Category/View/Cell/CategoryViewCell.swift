@@ -17,7 +17,7 @@ final class CategoryViewCell: UITableViewCell {
     // MARK: - Visual Components
 
     private let dishImageView: UIImageView = {
-        let imageView = UIImageView(image: .dish1)
+        let imageView = UIImageView()
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         return imageView

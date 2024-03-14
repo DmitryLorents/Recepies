@@ -108,7 +108,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func fetchData(searchText: String) {
-        print(#function)
         view?.updateState(with: .loading)
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
@@ -118,7 +117,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     print("Error:", error)
                     self.view?.updateState(with: .error(error))
                 case let .success(recipes):
-                    print("Recipes", recipes)
                     self.recipes = recipes
                     let state: CategoryState = recipes.count > 0 ? .data : .noData
                     self.view?.updateState(with: state)

@@ -105,10 +105,10 @@ final class TitleTableViewCell: UITableViewCell {
 
     func setupView(recipe: RecipeDetail) {
         recipeNameLabel.text = recipe.name
-        textWeightLabel.text = "\(Int(recipe.weight)) g"
-        textCooKingTimeLabel.text = "Cooking time \(Int(recipe.timeToCook)) min"
 
-        recipeImageView.load(urlString: recipe.recipeImage)
+        textWeightLabel.text = "\(recipe.calories) g"
+        textCooKingTimeLabel.text = "Cooking time \(recipe.timeToCook) min"
+        recipeImageView.image = UIImage(named: recipe.recipeImage)
     }
 
     // MARK: - Private Methods
