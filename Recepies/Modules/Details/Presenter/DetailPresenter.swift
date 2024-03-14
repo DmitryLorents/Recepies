@@ -26,38 +26,11 @@ protocol DetailPresenterProtocol: AnyObject {
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
-    func fetchData() {
-        view?.state = .loading
-        networkService
-            .getDetailedRecipe(
-                url: recipe.uri
-            ) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case let .success(recipe):
-                        print("sucsese")
-//                        print(recipe)
-                        self?.recipeDetail = recipe
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            self?.view?.state = .data
-                            self?.view?.reloadData()
-                        }
-//                        self?.view?.state = .data
-//                        self?.view?.reloadData()
-
-                    case let .failure(error):
-                        print("error")
-                        self?.view?.state = .error(error)
-                    }
-                }
-            }
-    }
-
     // MARK: - Public Properties
 
     var recipeDetail: RecipeDetail? {
         didSet {
-//            view?.reloadData()
+            //            view?.reloadData()
         }
     }
 
@@ -67,9 +40,7 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     // MARK: - Private Properties
 
-    var recipe: Recipe {
-        didSet {}
-    }
+    var recipe: Recipe
 
     private let networkService: NetworkServiceProtocol
     private weak var view: DetailViewProtocol?
@@ -109,5 +80,27 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func shareRecipe() {
         log(.shareRecipe(recipeName: recipe.name))
+    }
+
+    func fetchData() {
+        view?.state = .loading
+        networkService.getDetailedRecipe(url: recipe.uri) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(recipeData):
+                    print("sucsess")
+                    self?.recipeDetail = recipeData
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                            self?.view?.state = .data
+//                        }
+                    self?.view?.state = .data
+                        //                        self?.view?.reloadData()
+
+                case let .failure(error):
+                    print("error")
+                    self?.view?.state = .error(error)
+                }
+            }
+        }
     }
 }

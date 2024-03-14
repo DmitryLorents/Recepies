@@ -126,7 +126,7 @@ final class CategoryViewCell: UITableViewCell {
     }
 
     private func configureSubview(with recipe: Recipe) {
-//        dishImageView.load(url: recipe.recipeImage)
+        dishImageView.load(urlString: recipe.recipeImage)
 //        dishImageView.image = UIImage(named: recipe.recipeImage)
         titleLabel.text = recipe.name
         timerLabel.text = "\(recipe.timeToCook)\(Constants.timerLabelText)"
