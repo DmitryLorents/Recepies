@@ -29,7 +29,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
     /// Search necessary element
     /// - Parameter text: text value from searchBar
-    func filterRecipes(text: String)
+    func searchRecipes(text: String)
     /// Start downloading data from network
     func fetchData(searchText: String)
 }
@@ -44,11 +44,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Public Properties
 
     var category: Category
-    var dataSource: [Recipe]? {
-        didSet {
-            view?.updateTableView()
-        }
-    }
+    var dataSource: [Recipe]?
 
     // MARK: - Private Properties
 
@@ -105,41 +101,34 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         })
         // Set new dataSource
         dataSource = sortedRecipes
+        view?.updateState(with: .data)
     }
 
     func fetchData(searchText: String) {
-        if dataSource == nil {
-            view?.updateState(with: .loading)
-            networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
-                guard let self else { return }
-                DispatchQueue.main.async {
-                    switch result {
-                    case let .failure(error):
-                        print("Error:", error)
-                        self.view?.updateState(with: .error(error))
-                    case let .success(recipes):
-                        self.recipes = recipes
-                        let state: CategoryState = recipes.count > 0 ? .data : .noData
-                        self.view?.updateState(with: state)
-                    }
+        print(#function)
+        view?.updateState(with: .loading)
+        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case let .failure(error):
+                    print("Error:", error)
+                    self.view?.updateState(with: .error(error))
+                case let .success(recipes):
+                    self.recipes = recipes
+                    let state: CategoryState = recipes.count > 0 ? .data : .noData
+                    self.view?.updateState(with: state)
                 }
             }
         }
     }
 
-    func filterRecipes(text: String) {
-        if text.count < Constants.minSearchTextLenght {
-            dataSource = recipes
-            view?.clearSortingButtonState()
-            view?.updateTableView()
-        } else {
-//            imitateNetworkRequest { [weak self] in
-//                guard let self else { return }
-//                guard let categorySearch = dataSource else { return }
-//                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased())
-//                }
-//                dataSource?.recipes = searchingRecipe
-//            }
+    func searchRecipes(text: String) {
+        view?.clearSortingButtonState()
+        if text.count >= Constants.minSearchTextLenght {
+            fetchData(searchText: text)
+        } else if dataSource?.count == 0 {
+            fetchData(searchText: "")
         }
     }
 }

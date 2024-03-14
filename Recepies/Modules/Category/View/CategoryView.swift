@@ -68,6 +68,7 @@ final class CategoryView: UIViewController {
     var presenter: CategoryPresenterProtocol?
     var state: CategoryState = .initial {
         didSet {
+            print("Set state", state)
             updateViewAppearance(for: state)
         }
     }
@@ -81,7 +82,9 @@ final class CategoryView: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        presenter?.fetchData(searchText: "")
+        if presenter?.dataSource == nil {
+            presenter?.fetchData(searchText: "")
+        }
     }
 
     // MARK: - Private Methods
@@ -133,12 +136,13 @@ final class CategoryView: UIViewController {
     }
 
     private func updateViewAppearance(for state: CategoryState) {
-        recipesTableView.reloadData()
+        print(#function)
+//        recipesTableView.reloadData()
         let cells = recipesTableView.visibleCells as? [CategoryViewCell]
         switch state {
         case .loading:
             cells?.forEach { $0.startCellShimmerAnimation() }
-        case .data, .error:
+        case .data, .error, .noData:
             cells?.forEach { $0.stopCellShimmerAnimation() }
             recipesTableView.reloadData()
         default:
@@ -174,7 +178,7 @@ final class CategoryView: UIViewController {
 
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.filterRecipes(text: searchText)
+        presenter?.searchRecipes(text: searchText)
     }
 }
 
@@ -187,10 +191,12 @@ extension CategoryView: CategoryViewProtocol {
     }
 
     func updateTableView() {
+        print(#function)
         recipesTableView.reloadData()
     }
 
     func updateState(with state: CategoryState) {
+        print(#function)
         self.state = state
     }
 }
