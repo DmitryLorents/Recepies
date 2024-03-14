@@ -103,21 +103,6 @@ final class TitleTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-//    private let grayBackgroundView: UIView = {
-//        let view = UIView()
-//        view.layer.cornerRadius = 12
-//        view.backgroundColor = .cellBackground
-//        return view
-//    }()
-
-    func startCellShimmerAnimation() {
-        contentView.subviews.forEach { $0.startShimmeringAnimation() }
-    }
-
-    func stopCellShimmerAnimation() {
-        contentView.subviews.forEach { $0.stopShimmeringAnimation() }
-    }
-
     func setupView(recipe: RecipeDetail) {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(Int(recipe.weight)) g"
@@ -136,16 +121,12 @@ final class TitleTableViewCell: UITableViewCell {
         cooKingTimeView.addSubview(iconCooKingTimeImage)
         cooKingTimeView.addSubview(textCooKingTimeLabel)
         recipeImageView.addSubview(cooKingTimeView)
-//        grayBackgroundView.addSubviews(recipeImageView, recipeNameLabel)
-//        grayBackgroundView.disableTARMIC()
-//        contentView.addSubview(grayBackgroundView)
         contentView.addSubview(recipeNameLabel)
         contentView.addSubview(recipeImageView)
         addConstraintCell()
     }
 
     private func addConstraintCell() {
-//        setupGrayBackgroundViewConstraints()
         setNameRecipeLabelConstraint()
         configureRecipeImage()
         setWeightViewConstraint()
@@ -155,16 +136,6 @@ final class TitleTableViewCell: UITableViewCell {
         setIconCooKingTimeImageConstraint()
         setTextCooKingTimeLabelConstraint()
     }
-
-//    func setupGrayBackgroundViewConstraints() {
-//        NSLayoutConstraint.activate([
-//            grayBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            grayBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            grayBackgroundView.heightAnchor.constraint(equalToConstant: 200),
-//            grayBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 1),
-//            grayBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1),
-//        ])
-//    }
 
     private func setNameRecipeLabelConstraint() {
         NSLayoutConstraint.activate([
@@ -206,8 +177,6 @@ final class TitleTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             textWeightLabel.topAnchor.constraint(equalTo: iconWeightImage.bottomAnchor, constant: 4),
             textWeightLabel.centerXAnchor.constraint(equalTo: weightView.centerXAnchor),
-//            iconWeightImage.widthAnchor.constraint(equalToConstant: 20),
-//            iconWeightImage.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 

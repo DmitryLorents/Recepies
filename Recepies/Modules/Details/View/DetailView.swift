@@ -61,40 +61,11 @@ final class DetailView: UIViewController {
 
     var state: CategoryState = .initial {
         didSet {
-            updateViewAppearance(for: state)
+            tableView.reloadData()
         }
     }
 
     // MARK: - Private Methods
-
-    private func updateViewAppearance(for state: CategoryState) {
-        tableView.reloadData()
-        let cells = tableView.visibleCells
-        switch state {
-        case .loading:
-            print("loading")
-            for cell in cells {
-                if let titleCell = cell as? TitleTableViewCell {
-                    titleCell.startCellShimmerAnimation()
-                }
-            }
-        case .data:
-            print("data")
-            for cell in cells {
-                if let titleCell = cell as? TitleTableViewCell {
-                    titleCell.stopCellShimmerAnimation()
-                }
-            }
-        case .error:
-            for cell in cells {
-                if let titleCell = cell as? TitleTableViewCell {
-                    titleCell.startCellShimmerAnimation()
-                }
-            }
-        default:
-            break
-        }
-    }
 
     private func configureView() {
         view.backgroundColor = .white
@@ -174,13 +145,12 @@ final class DetailView: UIViewController {
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
-//        switch state {
-//        case .data, .loading:
-//            return cellTypes.count
-//        default:
-//            return 0
-//        }
+        switch state {
+        case .data, .loading, .initial:
+            return cellTypes.count
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

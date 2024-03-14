@@ -28,11 +28,7 @@ protocol DetailPresenterProtocol: AnyObject {
 final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipeDetail: RecipeDetail? {
-        didSet {
-            //            view?.reloadData()
-        }
-    }
+    var recipeDetail: RecipeDetail?
 
     var isFavorite: Bool {
         database.isFavorite(recipe)
@@ -90,12 +86,7 @@ final class DetailPresenter: DetailPresenterProtocol {
                 case let .success(recipeData):
                     print("sucsess")
                     self?.recipeDetail = recipeData
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                            self?.view?.state = .data
-//                        }
                     self?.view?.state = .data
-                        //                        self?.view?.reloadData()
-
                 case let .failure(error):
                     print("error")
                     self?.view?.state = .error(error)
