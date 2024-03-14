@@ -78,7 +78,8 @@ final class DetailView: UIViewController {
     // MARK: - Private Methods
 
     private func setupErrorView(state: CategoryState) {
-        views = ErrorView(state: state)
+//        views = ErrorView(state: .noData)
+        views.configureView(state: state)
         views.isHidden = false
     }
 

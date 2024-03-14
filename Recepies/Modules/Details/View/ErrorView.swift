@@ -6,7 +6,7 @@ import UIKit
 
 final class ErrorView: UIView {
     private enum Constants {
-        static let refreshText = "ref"
+        static let refreshText = "Reload"
     }
 
     private lazy var stackView: UIStackView = {
@@ -32,7 +32,6 @@ final class ErrorView: UIView {
 
     private let nothingLabel: UILabel = {
         let label = UILabel()
-//        label.text = Constants.nothingText
         label.font = .makeVerdanaRegular(size: 14)
         label.textAlignment = .center
         return label
@@ -41,12 +40,13 @@ final class ErrorView: UIView {
     private lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constants.refreshText, for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .searchBackground
         button.semanticContentAttribute = .forceLeftToRight
         button.titleLabel?.font = .makeVerdanaRegular(size: 14)
         button.setTitleColor(.gray, for: .normal)
         button.setImage(.refresh, for: .normal)
         button.layer.cornerRadius = 12
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -55,16 +55,18 @@ final class ErrorView: UIView {
     convenience init(state: CategoryState) {
         self.init()
         configureView(state: state)
+        refreshButton.addTarget(self, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
         setupView()
     }
 
-    private func configureView(state: CategoryState) {
+    func configureView(state: CategoryState) {
         switch state {
         case .noData:
             refreshButton.isHidden = true
             iconImageView.image = .search
             nothingLabel.text = "Start typing text"
         default:
+            refreshButton.isHidden = false
             iconImageView.image = .lightning
             nothingLabel.text = "Failed to load data"
         }
@@ -94,6 +96,8 @@ final class ErrorView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            refreshButton.heightAnchor.constraint(equalToConstant: 32),
+            refreshButton.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
 
