@@ -87,7 +87,15 @@ final class Builder: BuilderProtocol {
 
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view, coordinator: coordinator, recipe: recipe, database: Database.shared)
+        let requestCreator = RequestCreator()
+        let networkService = NetworkService(requestCreator: requestCreator)
+        let presenter = DetailPresenter(
+            view: view,
+            coordinator: coordinator,
+            recipe: recipe,
+            database: Database.shared,
+            networkService: networkService
+        )
         view.presenter = presenter
         return view
     }

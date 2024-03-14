@@ -85,10 +85,12 @@ extension NetworkService: NetworkServiceProtocol {
 
     func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
         let request = requestCreator.createRecipeURLRequest(uri: url)
-        getData(request: request, parseProtocol: RecipeDTOContainer.self) { result in
+        getData(request: request, parseProtocol: RecipeDetailResponseDTO.self) { result in
             switch result {
             case let .success(recipe):
-                completion(.success(RecipeDetail(dto: recipe.recipe)))
+                guard let detailDto = recipe.hits.first else { return }
+
+                completion(.success(RecipeDetail(dto: detailDto.recipe)))
             case let .failure(error):
                 completion(.failure(error))
             }

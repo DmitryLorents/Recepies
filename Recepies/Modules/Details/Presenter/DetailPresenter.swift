@@ -6,25 +6,29 @@ import Foundation
 /// Parts presenter protocol
 protocol DetailPresenterProtocol: AnyObject {
     /// Protocol initialization
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol)
+    init(
+        view: DetailViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        recipe: Recipe,
+        database: DataBaseProtocol,
+        networkService: NetworkServiceProtocol
+    )
     /// Recipe data
-    var recipeDetail: RecipeDetail? { get }
+    var recipeDetail: RecipeDetail? { get set }
     /// Return to previous controller
     func goBack()
     /// Add/remove recipe to favorites
     func updateRecipeFavoriteStatus()
     /// shares recipe into Telegram
     func shareRecipe()
+    var recipe: Recipe { get set }
+    func fetchData()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
-    var recipeDetail: RecipeDetail? {
-        didSet {
-            // Add view's function to set view from recipe
-        }
-    }
+    var recipeDetail: RecipeDetail?
 
     var isFavorite: Bool {
         database.isFavorite(recipe)
@@ -32,23 +36,27 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     // MARK: - Private Properties
 
-    private var recipe: Recipe {
-        didSet {
-            // start network request
-        }
-    }
+    var recipe: Recipe
 
+    private let networkService: NetworkServiceProtocol
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?
     private var database: DataBaseProtocol
 
     // MARK: - Initializers
 
-    init(view: DetailViewProtocol, coordinator: BaseModuleCoordinator, recipe: Recipe, database: DataBaseProtocol) {
+    init(
+        view: DetailViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        recipe: Recipe,
+        database: DataBaseProtocol,
+        networkService: NetworkServiceProtocol
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
         self.database = database
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -67,7 +75,26 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
 
     func shareRecipe() {
-        // some code to share recipe into Telegram
         log(.shareRecipe(recipeName: recipe.name))
+    }
+
+    func fetchData() {
+        view?.state = .loading
+        networkService.getDetailedRecipe(url: /* recipe.uri */ "1") { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(recipeData):
+                    print("sucsess")
+                    self?.recipeDetail = recipeData
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self?.view?.state = .data
+                    }
+
+                case let .failure(error):
+                    print("error")
+                    self?.view?.state = .error(error)
+                }
+            }
+        }
     }
 }

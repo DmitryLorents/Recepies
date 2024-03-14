@@ -23,6 +23,7 @@ final class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
+        label.text = "1"
         label.font = .makeVerdanaBold(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -81,6 +82,10 @@ final class TitleTableViewCell: UITableViewCell {
         return label
     }()
 
+    var viewsForShimmerEffect: [UIView] {
+        contentView.subviews
+    }
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -104,9 +109,9 @@ final class TitleTableViewCell: UITableViewCell {
 
     func setupView(recipe: RecipeDetail) {
         recipeNameLabel.text = recipe.name
-        textWeightLabel.text = "\(recipe.calories) g"
-        textCooKingTimeLabel.text = "Cooking time \(recipe.timeToCook) min"
-        recipeImageView.image = UIImage(named: recipe.recipeImage)
+        textWeightLabel.text = "\(Int(recipe.calories)) g"
+        textCooKingTimeLabel.text = "Cooking time \(Int(recipe.timeToCook)) min"
+        recipeImageView.load(urlString: recipe.recipeImage)
     }
 
     // MARK: - Private Methods
@@ -175,8 +180,6 @@ final class TitleTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             textWeightLabel.topAnchor.constraint(equalTo: iconWeightImage.bottomAnchor, constant: 4),
             textWeightLabel.centerXAnchor.constraint(equalTo: weightView.centerXAnchor),
-//            iconWeightImage.widthAnchor.constraint(equalToConstant: 20),
-//            iconWeightImage.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 
