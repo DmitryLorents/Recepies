@@ -52,7 +52,6 @@ final class DetailView: UIViewController {
         super.viewWillAppear(animated)
 
         updateFavoriteButton()
-//        updateViewAppearance(for: .initial)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -62,39 +61,36 @@ final class DetailView: UIViewController {
 
     var state: CategoryState = .initial {
         didSet {
-            tableView.reloadData()
-//            updateViewAppearance(for: state)
+            updateViewAppearance(for: state)
         }
     }
 
     // MARK: - Private Methods
 
     private func updateViewAppearance(for state: CategoryState) {
-//        tableView.reloadData()
-        let cell = tableView.visibleCells[0] as? TitleTableViewCell
+        tableView.reloadData()
+        let cells = tableView.visibleCells
         switch state {
-//            tableView.startShimmeringAnimation()
-
         case .loading:
             print("loading")
-            cell?.startCellShimmerAnimation()
-            tableView.reloadData()
-//            cells?.forEach { $0.startCellShimmerAnimation() }
+            for cell in cells {
+                if let titleCell = cell as? TitleTableViewCell {
+                    titleCell.startCellShimmerAnimation()
+                }
+            }
         case .data:
             print("data")
-            cell?.stopCellShimmerAnimation()
-
-//            guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TitleTableViewCell
-//            else { return }
-//            cell.subviews.forEach { $0.stopShimmeringAnimation() }
-
-//            cells.forEach { $0.subviews.forEach { $0.stopShimmeringAnimation() } }
-            print("name", presenter?.recipe.name)
-            tableView.reloadData()
+            for cell in cells {
+                if let titleCell = cell as? TitleTableViewCell {
+                    titleCell.stopCellShimmerAnimation()
+                }
+            }
         case .error:
-//            cells.forEach { $0.subviews.forEach { $0.stopShimmeringAnimation() } }
-            tableView.reloadData()
-//            cells?.forEach { $0.stopCellShimmerAnimation() }
+            for cell in cells {
+                if let titleCell = cell as? TitleTableViewCell {
+                    titleCell.startCellShimmerAnimation()
+                }
+            }
         default:
             break
         }
@@ -197,16 +193,11 @@ extension DetailView: UITableViewDataSource {
             ) as? TitleTableViewCell else { print("no Cell")
                 return UITableViewCell()
             }
-            if case .loading = state {
-                cell.startCellShimmerAnimation()
-            } else {
-                guard let recipe = presenter?.recipeDetail else { print("noRecipe")
-                    return cell
-                }
-                print("Recipe")
-                cell.setupView(recipe: recipe)
-                cell.stopCellShimmerAnimation()
+            guard let recipe = presenter?.recipeDetail else { print("noRecipe")
+                return cell
             }
+            print("Recipe")
+            cell.setupView(recipe: recipe)
             return cell
         case .characteristics:
             guard let cell = tableView
