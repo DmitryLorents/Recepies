@@ -11,8 +11,11 @@ struct Recipe: Codable {
     let timeToCook: Int
     /// Calories amount
     let calories: Int
+    /// Url recipe
+    let uri: String
     /// Converting from DTO model
     init(_ recipeDTO: RecipeDTO) {
+        uri = recipeDTO.uri
         name = recipeDTO.label
         recipeImage = recipeDTO.image
         timeToCook = recipeDTO.totalTime
