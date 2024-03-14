@@ -8,7 +8,7 @@ final class ErrorView: UIView {
     // MARK: - Constants
 
     private enum Constants {
-        static let refreshText = "Reload"
+        static let refreshText = "  Reload"
     }
 
     // MARK: - Vizual components
@@ -41,7 +41,7 @@ final class ErrorView: UIView {
         return label
     }()
 
-    private lazy var refreshButton: UIButton = {
+    private let refreshButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constants.refreshText, for: .normal)
         button.backgroundColor = .searchBackground
@@ -56,23 +56,12 @@ final class ErrorView: UIView {
 
     // MARK: - Initialization
 
-    convenience init(state: CategoryState, action: Selector) {
+    convenience init(state: CategoryState, action: Selector, view: DetailView) {
         self.init()
-        setupView(action: action)
+
+        setupView(action: action, view: view)
         updateState(state)
     }
-
-//    private func configureView(state: CategoryState) {
-//        switch state {
-//        case .noData:
-//            refreshButton.isHidden = true
-//            iconImageView.image = .search
-//            nothingLabel.text = "Start typing text"
-//        default:
-//            iconImageView.image = .lightning
-//            nothingLabel.text = "Failed to load data"
-//        }
-//    }
 
     // MARK: - Public Methods
 
@@ -84,6 +73,7 @@ final class ErrorView: UIView {
             nothingLabel.text = "Start typing text"
         default:
             refreshButton.isHidden = false
+            refreshButton.isUserInteractionEnabled = true
             iconImageView.image = .lightning
             nothingLabel.text = "Failed to load data"
         }
@@ -91,9 +81,9 @@ final class ErrorView: UIView {
 
     // MARK: - Private Methods
 
-    private func setupView(action: Selector) {
+    private func setupView(action: Selector, view: DetailView) {
         backgroundColor = .systemBackground
-        refreshButton.addTarget(self, action: action, for: .touchUpInside)
+        refreshButton.addTarget(view, action: action, for: .touchUpInside)
         addSubview(stackView)
         disableTARMIC()
         grayView.addSubview(iconImageView)
@@ -114,6 +104,7 @@ final class ErrorView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.heightAnchor.constraint(equalTo: heightAnchor),
             refreshButton.heightAnchor.constraint(equalToConstant: 32),
             refreshButton.widthAnchor.constraint(equalToConstant: 150)
         ])

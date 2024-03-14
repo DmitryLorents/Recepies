@@ -28,7 +28,14 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
+
     private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refreshControlPulled(sender:)), for: .valueChanged)
+        return control
+    }()
 
     // MARK: - Public Properties
 
@@ -59,7 +66,7 @@ final class DetailView: UIViewController {
         presenter?.fetchData()
     }
 
-    private let errorView = ErrorView(state: .noData, action: #selector(refreshButtonAction))
+    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
 
     var state: CategoryState = .loading {
         didSet {
@@ -132,6 +139,7 @@ final class DetailView: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
         tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.reuseID)
         tableView.register(
@@ -163,8 +171,15 @@ final class DetailView: UIViewController {
         presenter?.shareRecipe()
     }
 
+    @objc private func refreshControlPulled(sender: UIRefreshControl) {
+        state = .loading
+        presenter?.fetchData()
+        sender.endRefreshing()
+    }
+
     @objc private func refreshButtonAction() {
-        print(#function)
+        state = .loading
+        presenter?.fetchData()
     }
 }
 
