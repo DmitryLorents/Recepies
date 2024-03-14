@@ -61,7 +61,7 @@ final class FullDescriptionTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func setupCell(recipe: RecipeDetail) {
-        recipeNameLabel.text = recipe.description.first
+        recipeNameLabel.text = recipe.description.joined(separator: ", ")
     }
 
     // MARK: - Private Methods

@@ -3,6 +3,11 @@
 
 // MARK: - RecipeDTOContainer
 
+//// esf
+struct RecipeDetailResponseDTO: Codable {
+    let hits: [RecipeDTOContainer]
+}
+
 /// Container for RecipeDetailDTO
 struct RecipeDTOContainer: Codable {
     let recipe: RecipeDetailDTO
