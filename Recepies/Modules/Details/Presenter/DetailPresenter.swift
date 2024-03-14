@@ -22,14 +22,42 @@ protocol DetailPresenterProtocol: AnyObject {
     /// shares recipe into Telegram
     func shareRecipe()
     var recipe: Recipe { get set }
+    func fetchData()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
+    func fetchData() {
+        view?.state = .loading
+        networkService
+            .getDetailedRecipe(
+                url: recipe.uri
+            ) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .success(recipe):
+                        print("sucsese")
+//                        print(recipe)
+                        self?.recipeDetail = recipe
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            self?.view?.state = .data
+                            self?.view?.reloadData()
+                        }
+//                        self?.view?.state = .data
+//                        self?.view?.reloadData()
+
+                    case let .failure(error):
+                        print("error")
+                        self?.view?.state = .error(error)
+                    }
+                }
+            }
+    }
+
     // MARK: - Public Properties
 
     var recipeDetail: RecipeDetail? {
         didSet {
-            view?.reloadData()
+//            view?.reloadData()
         }
     }
 
@@ -40,22 +68,7 @@ final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Private Properties
 
     var recipe: Recipe {
-        didSet {
-            DispatchQueue.main.async {
-                self.networkService
-                    .getRecipe(url: "http://www.edamam.com/ontologies/edamam.owl#recipe_47dc96d52dc2ca66df1e008389617d97") { [weak self] result in
-                        switch result {
-                        case let .success(recipe):
-                            print(recipe)
-                            self?.recipeDetail = recipe
-                            
-                        case let .failure(error):
-                            print(error)
-                        }
-                    }
-            }
-            
-        }
+        didSet {}
     }
 
     private let networkService: NetworkServiceProtocol
@@ -95,20 +108,6 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
 
     func shareRecipe() {
-        
-        DispatchQueue.main.async {
-            self.networkService
-                .getRecipe(url: "http://www.edamam.com/ontologies/edamam.owl#recipe_47dc96d52dc2ca66df1e008389617d97") { [weak self] result in
-                    switch result {
-                    case let .success(recipe):
-                        print(recipe)
-                        self?.recipeDetail = recipe
-                        
-                    case let .failure(error):
-                        print(error)
-                    }
-                }
-        }
-//        log(.shareRecipe(recipeName: recipe.name))
+        log(.shareRecipe(recipeName: recipe.name))
     }
 }

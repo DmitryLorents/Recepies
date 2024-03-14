@@ -8,6 +8,7 @@ protocol DetailViewProtocol: AnyObject {
     /// Change button state
     func updateFavoriteButton()
     func reloadData()
+    var state: CategoryState { get set }
 }
 
 /// Screen with detailed information for recipe
@@ -49,10 +50,55 @@ final class DetailView: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         updateFavoriteButton()
+//        updateViewAppearance(for: .initial)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.fetchData()
+    }
+
+    var state: CategoryState = .initial {
+        didSet {
+            tableView.reloadData()
+//            updateViewAppearance(for: state)
+        }
     }
 
     // MARK: - Private Methods
+
+    private func updateViewAppearance(for state: CategoryState) {
+//        tableView.reloadData()
+        let cell = tableView.visibleCells[0] as? TitleTableViewCell
+        switch state {
+//            tableView.startShimmeringAnimation()
+
+        case .loading:
+            print("loading")
+            cell?.startCellShimmerAnimation()
+            tableView.reloadData()
+//            cells?.forEach { $0.startCellShimmerAnimation() }
+        case .data:
+            print("data")
+            cell?.stopCellShimmerAnimation()
+
+//            guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TitleTableViewCell
+//            else { return }
+//            cell.subviews.forEach { $0.stopShimmeringAnimation() }
+
+//            cells.forEach { $0.subviews.forEach { $0.stopShimmeringAnimation() } }
+            print("name", presenter?.recipe.name)
+            tableView.reloadData()
+        case .error:
+//            cells.forEach { $0.subviews.forEach { $0.stopShimmeringAnimation() } }
+            tableView.reloadData()
+//            cells?.forEach { $0.stopCellShimmerAnimation() }
+        default:
+            break
+        }
+    }
 
     private func configureView() {
         view.backgroundColor = .white
@@ -132,7 +178,13 @@ final class DetailView: UIViewController {
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellTypes.count
+        3
+//        switch state {
+//        case .data, .loading:
+//            return cellTypes.count
+//        default:
+//            return 0
+//        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -142,15 +194,26 @@ extension DetailView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: TitleTableViewCell.reuseID,
                 for: indexPath
-            ) as? TitleTableViewCell else { return UITableViewCell() }
-            guard let recipe = presenter?.recipeDetail else { return cell }
-            cell.setupView(recipe: recipe)
+            ) as? TitleTableViewCell else { print("no Cell")
+                return UITableViewCell()
+            }
+            if case .loading = state {
+                cell.startCellShimmerAnimation()
+            } else {
+                guard let recipe = presenter?.recipeDetail else { print("noRecipe")
+                    return cell
+                }
+                print("Recipe")
+                cell.setupView(recipe: recipe)
+                cell.stopCellShimmerAnimation()
+            }
             return cell
         case .characteristics:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
             else { return UITableViewCell() }
             guard let recipe = presenter?.recipeDetail else { return cell }
+
             cell.setupCell(with: recipe)
             return cell
         case .fullDescription:

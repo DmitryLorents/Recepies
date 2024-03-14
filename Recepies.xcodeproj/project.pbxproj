@@ -69,6 +69,7 @@
 		1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */; };
 		1BC98B572BA0C1CB00E9D78D /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B562BA0C1CB00E9D78D /* RecipeDetail.swift */; };
 		1BC98B592BA0C23600E9D78D /* RecipeDetailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */; };
+		1BC98B672BA236E100E9D78D /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B662BA236E100E9D78D /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,7 @@
 		1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		1BC98B562BA0C1CB00E9D78D /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 		1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecipeDetailDTO.swift; path = Recepies/Modules/Details/Model/RecipeDetailDTO.swift; sourceTree = SOURCE_ROOT; };
+		1BC98B662BA236E100E9D78D /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +459,7 @@
 				0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */,
 				0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */,
 				0A57032C2B97461500996130 /* UIColor+Extension.swift */,
+				1BC98B662BA236E100E9D78D /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */,
 				0ACD2EEC2B91037E000BA913 /* RecipesView.swift in Sources */,
 				0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */,
+				1BC98B672BA236E100E9D78D /* UIImageView+Extension.swift in Sources */,
 				1B9880AF2B9377530020B796 /* FullDescriptionTableViewCell.swift in Sources */,
 				1B9880C02B9A5D7A0020B796 /* Caretaker.swift in Sources */,
 				0ACD2EEB2B91037E000BA913 /* RecipesCollectionViewCell.swift in Sources */,
@@ -1051,6 +1055,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 783JJUV38L;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Recepies/SupportingFiles/Info.plist;
@@ -1082,6 +1087,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 783JJUV38L;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Recepies/SupportingFiles/Info.plist;

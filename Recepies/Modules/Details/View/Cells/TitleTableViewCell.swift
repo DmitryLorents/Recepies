@@ -23,6 +23,7 @@ final class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
+        label.text = "1"
         label.font = .makeVerdanaBold(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -102,11 +103,27 @@ final class TitleTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
+//    private let grayBackgroundView: UIView = {
+//        let view = UIView()
+//        view.layer.cornerRadius = 12
+//        view.backgroundColor = .cellBackground
+//        return view
+//    }()
+
+    func startCellShimmerAnimation() {
+        contentView.subviews.forEach { $0.startShimmeringAnimation() }
+    }
+
+    func stopCellShimmerAnimation() {
+        contentView.subviews.forEach { $0.stopShimmeringAnimation() }
+    }
+
     func setupView(recipe: RecipeDetail) {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(Int(recipe.weight)) g"
         textCooKingTimeLabel.text = "Cooking time \(Int(recipe.timeToCook)) min"
-        recipeImageView.image = UIImage(named: recipe.recipeImage)
+        recipeImageView.load(url: recipe.recipeImage)
+//        contentView.subviews.forEach { $0.stopShimmeringAnimation() }
     }
 
     // MARK: - Private Methods
@@ -119,12 +136,16 @@ final class TitleTableViewCell: UITableViewCell {
         cooKingTimeView.addSubview(iconCooKingTimeImage)
         cooKingTimeView.addSubview(textCooKingTimeLabel)
         recipeImageView.addSubview(cooKingTimeView)
+//        grayBackgroundView.addSubviews(recipeImageView, recipeNameLabel)
+//        grayBackgroundView.disableTARMIC()
+//        contentView.addSubview(grayBackgroundView)
         contentView.addSubview(recipeNameLabel)
         contentView.addSubview(recipeImageView)
         addConstraintCell()
     }
 
     private func addConstraintCell() {
+//        setupGrayBackgroundViewConstraints()
         setNameRecipeLabelConstraint()
         configureRecipeImage()
         setWeightViewConstraint()
@@ -134,6 +155,16 @@ final class TitleTableViewCell: UITableViewCell {
         setIconCooKingTimeImageConstraint()
         setTextCooKingTimeLabelConstraint()
     }
+
+//    func setupGrayBackgroundViewConstraints() {
+//        NSLayoutConstraint.activate([
+//            grayBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            grayBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            grayBackgroundView.heightAnchor.constraint(equalToConstant: 200),
+//            grayBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 1),
+//            grayBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1),
+//        ])
+//    }
 
     private func setNameRecipeLabelConstraint() {
         NSLayoutConstraint.activate([

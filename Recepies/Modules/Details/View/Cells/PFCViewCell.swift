@@ -71,7 +71,7 @@ final class PFCViewCell: UITableViewCell {
     }
 
     private func configureSubview(with recipe: RecipeDetail) {
-        caloriesView.set(subtitle: "\(recipe.calories)" + Constants.kCal)
+        caloriesView.set(subtitle: "\(Int(recipe.calories))" + Constants.kCal)
 
         let carbohydratesAmount = makeFormattedString(from: recipe.carbohydrates)
         carbohydratesView.set(subtitle: carbohydratesAmount + Constants.gram)
