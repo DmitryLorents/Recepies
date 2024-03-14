@@ -80,13 +80,16 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func fetchData() {
         view?.state = .loading
-        networkService.getDetailedRecipe(url: recipe.uri) { [weak self] result in
+        networkService.getDetailedRecipe(url: /* recipe.uri */ "1") { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(recipeData):
                     print("sucsess")
                     self?.recipeDetail = recipeData
-                    self?.view?.state = .data
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self?.view?.state = .data
+                    }
+
                 case let .failure(error):
                     print("error")
                     self?.view?.state = .error(error)

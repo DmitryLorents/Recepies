@@ -70,7 +70,8 @@
 		1B9B36F22B8EB5E700E774EB /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */; };
 		1BC98B572BA0C1CB00E9D78D /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B562BA0C1CB00E9D78D /* RecipeDetail.swift */; };
 		1BC98B592BA0C23600E9D78D /* RecipeDetailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */; };
-		1BC98B672BA236E100E9D78D /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B662BA236E100E9D78D /* UIImageView+Extension.swift */; };
+		1BC98B692BA3562F00E9D78D /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B682BA3562F00E9D78D /* ShimmerCell.swift */; };
+		1BC98B6B2BA3651B00E9D78D /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98B6A2BA3651B00E9D78D /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,7 +159,8 @@
 		1B9B36F12B8EB5E700E774EB /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		1BC98B562BA0C1CB00E9D78D /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 		1BC98B582BA0C23600E9D78D /* RecipeDetailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecipeDetailDTO.swift; path = Recepies/Modules/Details/Model/RecipeDetailDTO.swift; sourceTree = SOURCE_ROOT; };
-		1BC98B662BA236E100E9D78D /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		1BC98B682BA3562F00E9D78D /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
+		1BC98B6A2BA3651B00E9D78D /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +416,7 @@
 				1B9880AC2B93556D0020B796 /* TitleTableViewCell.swift */,
 				0A80A4772B92700800539C0A /* PFCViewCell.swift */,
 				1B9880AE2B9377530020B796 /* FullDescriptionTableViewCell.swift */,
+				1BC98B682BA3562F00E9D78D /* ShimmerCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -460,9 +463,7 @@
 				0ACD2EC72B8E68B2000BA913 /* UIFont+Extension.swift */,
 				0ACD2EC92B8E76A0000BA913 /* UIView+Extension.swift */,
 				0A57032C2B97461500996130 /* UIColor+Extension.swift */,
-
 				0AAE69572BA2DBC700DCC1B3 /* UIImageView+Extension.swift */,
-
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -552,6 +553,7 @@
 		1B9880A62B921D8C0020B796 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1BC98B6A2BA3651B00E9D78D /* ErrorView.swift */,
 				1B9880AA2B921E100020B796 /* DetailView.swift */,
 				0A80A4792B92716200539C0A /* PFCView.swift */,
 				0A80A4762B926FE900539C0A /* Cells */,
@@ -842,9 +844,7 @@
 				0ACD2ED42B8FC355000BA913 /* CategoryViewCell.swift in Sources */,
 				0ACD2EEC2B91037E000BA913 /* RecipesView.swift in Sources */,
 				0A086EA22B8DEFDC00ACCD6B /* FavoritesCoordinator.swift in Sources */,
-
 				0AAE69582BA2DBC700DCC1B3 /* UIImageView+Extension.swift in Sources */,
-
 				1B9880AF2B9377530020B796 /* FullDescriptionTableViewCell.swift in Sources */,
 				1B9880C02B9A5D7A0020B796 /* Caretaker.swift in Sources */,
 				0ACD2EEB2B91037E000BA913 /* RecipesCollectionViewCell.swift in Sources */,
@@ -862,6 +862,7 @@
 				1B9B36DC2B8E1DB900E774EB /* PresenterProfile.swift in Sources */,
 				0A80A47A2B92716200539C0A /* PFCView.swift in Sources */,
 				1BC98B592BA0C23600E9D78D /* RecipeDetailDTO.swift in Sources */,
+				1BC98B692BA3562F00E9D78D /* ShimmerCell.swift in Sources */,
 				0ACD2ED12B8FAF2B000BA913 /* CategoryPresenter.swift in Sources */,
 				0A57035A2B99E84600996130 /* LoggerInvoker.swift in Sources */,
 				1B9B36E62B8E1E2F00E774EB /* MainTableViewCell.swift in Sources */,
@@ -884,6 +885,7 @@
 				1B9B36E02B8E1DC200E774EB /* Options.swift in Sources */,
 				0ACD2EC82B8E68B2000BA913 /* UIFont+Extension.swift in Sources */,
 				1B9B36EF2B8EA6BD00E774EB /* PresenterBonus.swift in Sources */,
+				1BC98B6B2BA3651B00E9D78D /* ErrorView.swift in Sources */,
 				0A5703562B98484500996130 /* CategoryState.swift in Sources */,
 				1B9880A92B921DE90020B796 /* DetailPresenter.swift in Sources */,
 				0A413F0A2B9B3CA500F975C5 /* Database.swift in Sources */,

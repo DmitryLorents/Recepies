@@ -42,10 +42,10 @@ final class DetailView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
         setLeftNavigationItem()
         setRightNavigationItem()
         configureTableView()
+        configureView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,16 +59,38 @@ final class DetailView: UIViewController {
         presenter?.fetchData()
     }
 
-    var state: CategoryState = .initial {
+    var views = ErrorView(state: .noData)
+
+    var state: CategoryState = .loading {
         didSet {
+            switch state {
+            case .noData:
+                setupErrorView(state: .noData)
+            case let .error(error):
+                setupErrorView(state: .error(error))
+            default:
+                views.isHidden = true
+            }
             tableView.reloadData()
         }
     }
 
     // MARK: - Private Methods
 
+    private func setupErrorView(state: CategoryState) {
+        views = ErrorView(state: state)
+        views.isHidden = false
+    }
+
     private func configureView() {
+        view.addSubview(views)
+        views.translatesAutoresizingMaskIntoConstraints = false
+        views.isHidden = true
         view.backgroundColor = .white
+        NSLayoutConstraint.activate([
+            views.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            views.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func setLeftNavigationItem() {
@@ -116,6 +138,7 @@ final class DetailView: UIViewController {
             FullDescriptionTableViewCell.self,
             forCellReuseIdentifier: FullDescriptionTableViewCell.reuseID
         )
+        tableView.register(ShimmerCell.self, forCellReuseIdentifier: ShimmerCell.reuseID)
         tableView.register(PFCViewCell.self, forCellReuseIdentifier: PFCViewCell.reuseID)
         setConstraint()
     }
@@ -146,47 +169,61 @@ final class DetailView: UIViewController {
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch state {
-        case .data, .loading, .initial:
+        case .data, .initial:
             return cellTypes.count
+        case .loading:
+            return 1
         default:
             return 0
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = cellTypes[indexPath.row]
-        switch item {
-        case .title:
+        if case .loading = state {
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: TitleTableViewCell.reuseID,
+                withIdentifier: ShimmerCell.reuseID,
                 for: indexPath
-            ) as? TitleTableViewCell else { print("no Cell")
+            ) as? ShimmerCell else { print("no Cell")
                 return UITableViewCell()
             }
-            guard let recipe = presenter?.recipeDetail else { print("noRecipe")
+            cell.startShimer()
+            return cell
+        } else {
+            let item = cellTypes[indexPath.row]
+            switch item {
+            case .title:
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: TitleTableViewCell.reuseID,
+                    for: indexPath
+                ) as? TitleTableViewCell else { print("no Cell")
+                    return UITableViewCell()
+                }
+                guard let recipe = presenter?.recipeDetail else { print("noRecipe")
+                    return cell
+                }
+
+                cell.setupView(recipe: recipe)
+                return cell
+            case .characteristics:
+                guard let cell = tableView
+                    .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
+                else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
+                cell.setupCell(with: recipe)
+                print("Recipe")
+
+                return cell
+            case .fullDescription:
+                guard let cell = tableView
+                    .dequeueReusableCell(
+                        withIdentifier: FullDescriptionTableViewCell.reuseID,
+                        for: indexPath
+                    ) as? FullDescriptionTableViewCell
+                else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
+                cell.setupCell(recipe: recipe)
                 return cell
             }
-            print("Recipe")
-            cell.setupView(recipe: recipe)
-            return cell
-        case .characteristics:
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
-            else { return UITableViewCell() }
-            guard let recipe = presenter?.recipeDetail else { return cell }
-
-            cell.setupCell(with: recipe)
-            return cell
-        case .fullDescription:
-            guard let cell = tableView
-                .dequeueReusableCell(
-                    withIdentifier: FullDescriptionTableViewCell.reuseID,
-                    for: indexPath
-                ) as? FullDescriptionTableViewCell
-            else { return UITableViewCell() }
-            guard let recipe = presenter?.recipeDetail else { return cell }
-            cell.setupCell(recipe: recipe)
-            return cell
         }
     }
 }
