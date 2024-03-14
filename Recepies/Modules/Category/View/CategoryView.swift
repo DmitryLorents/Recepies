@@ -60,7 +60,14 @@ final class CategoryView: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.refreshControl = refreshControl
         return tableView
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refrechControlAction), for: .valueChanged)
+        return refreshControl
     }()
 
     // MARK: - Public Properties
@@ -72,6 +79,10 @@ final class CategoryView: UIViewController {
             updateViewAppearance(for: state)
         }
     }
+
+    // MARK: - Private properties
+
+    var shimmeringCells: [CategoryViewCell]?
 
     // MARK: - Life Cycle
 
@@ -137,13 +148,14 @@ final class CategoryView: UIViewController {
 
     private func updateViewAppearance(for state: CategoryState) {
         print(#function)
-//        recipesTableView.reloadData()
-        let cells = recipesTableView.visibleCells as? [CategoryViewCell]
+        refreshControl.endRefreshing()
         switch state {
         case .loading:
-            cells?.forEach { $0.startCellShimmerAnimation() }
+            shimmeringCells = recipesTableView.visibleCells as? [CategoryViewCell]
+            shimmeringCells?.forEach { $0.startCellShimmerAnimation() }
         case .data, .error, .noData:
-            cells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = nil
             recipesTableView.reloadData()
         default:
             break
@@ -171,6 +183,12 @@ final class CategoryView: UIViewController {
         } else { timeSortingHandler = nil }
 
         presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
+    }
+
+    @objc private func refrechControlAction() {
+        clearSortingButtonState()
+        recipeSearchBar.text = ""
+        presenter?.fetchData(searchText: "")
     }
 }
 

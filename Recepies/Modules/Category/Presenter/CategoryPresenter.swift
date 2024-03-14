@@ -127,7 +127,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         view?.clearSortingButtonState()
         if text.count >= Constants.minSearchTextLenght {
             fetchData(searchText: text)
-        } else if dataSource?.count == 0 {
+        } else if dataSource?.count == 0 || text.isEmpty {
             fetchData(searchText: "")
         }
     }
