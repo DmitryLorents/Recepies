@@ -122,7 +122,10 @@ final class TitleTableViewCell: UITableViewCell {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(Int(recipe.weight)) g"
         textCooKingTimeLabel.text = "Cooking time \(Int(recipe.timeToCook)) min"
+//        guard let url = URL(string: recipe.recipeImage) else { return }
+
         recipeImageView.load(url: recipe.recipeImage)
+
 //        contentView.subviews.forEach { $0.stopShimmeringAnimation() }
     }
 
