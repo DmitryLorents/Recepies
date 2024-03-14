@@ -7,7 +7,9 @@ import UIKit
 protocol DetailViewProtocol: AnyObject {
     /// Change button state
     func updateFavoriteButton()
+    /// Reload table view
     func reloadData()
+    /// Current state
     var state: CategoryState { get set }
 }
 
@@ -37,9 +39,25 @@ final class DetailView: UIViewController {
         return control
     }()
 
+    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
+
     // MARK: - Public Properties
 
     var presenter: DetailPresenter?
+
+    var state: CategoryState = .loading {
+        didSet {
+            switch state {
+            case .noData:
+                setupErrorView(state: .noData)
+            case let .error(error):
+                setupErrorView(state: .error(error))
+            default:
+                errorView.isHidden = true
+            }
+            tableView.reloadData()
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -64,22 +82,6 @@ final class DetailView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter?.fetchData()
-    }
-
-    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
-
-    var state: CategoryState = .loading {
-        didSet {
-            switch state {
-            case .noData:
-                setupErrorView(state: .noData)
-            case let .error(error):
-                setupErrorView(state: .error(error))
-            default:
-                errorView.isHidden = true
-            }
-            tableView.reloadData()
-        }
     }
 
     // MARK: - Private Methods
@@ -202,9 +204,7 @@ extension DetailView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: ShimmerCell.reuseID,
                 for: indexPath
-            ) as? ShimmerCell else { print("no Cell")
-                return UITableViewCell()
-            }
+            ) as? ShimmerCell else { return UITableViewCell() }
             cell.startShimer()
             return cell
         } else {
@@ -214,12 +214,8 @@ extension DetailView: UITableViewDataSource {
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: TitleTableViewCell.reuseID,
                     for: indexPath
-                ) as? TitleTableViewCell else { print("no Cell")
-                    return UITableViewCell()
-                }
-                guard let recipe = presenter?.recipeDetail else { print("noRecipe")
-                    return cell
-                }
+                ) as? TitleTableViewCell else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
 
                 cell.setupView(recipe: recipe)
                 return cell
@@ -229,8 +225,6 @@ extension DetailView: UITableViewDataSource {
                 else { return UITableViewCell() }
                 guard let recipe = presenter?.recipeDetail else { return cell }
                 cell.setupCell(with: recipe)
-                print("Recipe")
-
                 return cell
             case .fullDescription:
                 guard let cell = tableView

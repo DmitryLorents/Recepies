@@ -3,7 +3,7 @@
 
 import UIKit
 
-///
+/// Cell Shimmer
 final class ShimmerCell: UITableViewCell {
     // MARK: - Constants
 
@@ -68,7 +68,7 @@ final class ShimmerCell: UITableViewCell {
         recipeImageView.layer.cornerRadius = recipeImageView.bounds.height * 0.08
     }
 
-    // MARK: - Private Methods
+    // MARK: - Public Methods
 
     func startShimer() {
         [
@@ -78,6 +78,8 @@ final class ShimmerCell: UITableViewCell {
         ].forEach { $0.startShimmeringAnimation() }
         stackView.subviews.forEach { $0.startShimmeringAnimation() }
     }
+
+    // MARK: - Private Methods
 
     private func configureView() {
         selectionStyle = .none

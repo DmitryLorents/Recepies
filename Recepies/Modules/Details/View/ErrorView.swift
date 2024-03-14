@@ -1,9 +1,9 @@
 // ErrorView.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
 import UIKit
 
+/// Error view
 final class ErrorView: UIView {
     // MARK: - Constants
 
@@ -93,13 +93,13 @@ final class ErrorView: UIView {
 
     // MARK: - Constraints
 
-    func setupConstraints() {
+    private func setupConstraints() {
         setupStackViewConstraints()
         setupGrayViewConstraints()
         setupFavoriteImageViewConstraints()
     }
 
-    func setupStackViewConstraints() {
+    private func setupStackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -110,14 +110,14 @@ final class ErrorView: UIView {
         ])
     }
 
-    func setupGrayViewConstraints() {
+    private func setupGrayViewConstraints() {
         NSLayoutConstraint.activate([
             grayView.heightAnchor.constraint(equalToConstant: 50),
             grayView.widthAnchor.constraint(equalTo: grayView.heightAnchor),
         ])
     }
 
-    func setupFavoriteImageViewConstraints() {
+    private func setupFavoriteImageViewConstraints() {
         NSLayoutConstraint.activate([
             iconImageView.heightAnchor.constraint(equalToConstant: 24),
             iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),

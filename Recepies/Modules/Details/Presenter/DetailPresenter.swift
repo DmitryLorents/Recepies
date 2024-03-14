@@ -19,9 +19,11 @@ protocol DetailPresenterProtocol: AnyObject {
     func goBack()
     /// Add/remove recipe to favorites
     func updateRecipeFavoriteStatus()
-    /// shares recipe into Telegram
+    /// Shares recipe into Telegram
     func shareRecipe()
+    /// Recipe data
     var recipe: Recipe { get set }
+    /// Obtaining prescription data
     func fetchData()
 }
 
@@ -34,9 +36,9 @@ final class DetailPresenter: DetailPresenterProtocol {
         database.isFavorite(recipe)
     }
 
-    // MARK: - Private Properties
-
     var recipe: Recipe
+
+    // MARK: - Private Properties
 
     private let networkService: NetworkServiceProtocol
     private weak var view: DetailViewProtocol?
@@ -84,11 +86,8 @@ final class DetailPresenter: DetailPresenterProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case let .success(recipeData):
-                    print("sucsess")
                     self?.recipeDetail = recipeData
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        self?.view?.state = .data
-                    }
+                    self?.view?.state = .data
 
                 case let .failure(error):
                     print("error")
