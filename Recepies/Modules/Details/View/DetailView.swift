@@ -59,7 +59,7 @@ final class DetailView: UIViewController {
         presenter?.fetchData()
     }
 
-    var views = ErrorView(state: .noData)
+    private let errorView = ErrorView(state: .noData, action: #selector(refreshButtonAction))
 
     var state: CategoryState = .loading {
         didSet {
@@ -69,7 +69,7 @@ final class DetailView: UIViewController {
             case let .error(error):
                 setupErrorView(state: .error(error))
             default:
-                views.isHidden = true
+                errorView.isHidden = true
             }
             tableView.reloadData()
         }
@@ -78,19 +78,18 @@ final class DetailView: UIViewController {
     // MARK: - Private Methods
 
     private func setupErrorView(state: CategoryState) {
-//        views = ErrorView(state: .noData)
-        views.configureView(state: state)
-        views.isHidden = false
+        errorView.updateState(state)
+        errorView.isHidden = false
     }
 
     private func configureView() {
-        view.addSubview(views)
-        views.translatesAutoresizingMaskIntoConstraints = false
-        views.isHidden = true
+        view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.isHidden = true
         view.backgroundColor = .white
         NSLayoutConstraint.activate([
-            views.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            views.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 
@@ -162,6 +161,10 @@ final class DetailView: UIViewController {
 
     @objc private func shareButtonAction() {
         presenter?.shareRecipe()
+    }
+
+    @objc private func refreshButtonAction() {
+        print(#function)
     }
 }
 

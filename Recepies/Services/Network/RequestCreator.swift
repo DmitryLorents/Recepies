@@ -94,18 +94,15 @@ extension RequestCreator: RequestCreatorProtocol {
     }
 
     func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest? {
-        print(#function)
         var components = URLComponents()
         components.scheme = Constants.sheme
         components.host = Constants.host
         components.path = "/api/recipes/v2"
         components.queryItems = makeCategoryQueryItems(type: type, text: text)
-//        print("URL:", url)
         guard let url = components.url else {
             print("Incorrect url")
             return nil
         }
-        print("Category URL:", url)
         return URLRequest(url: url)
     }
 }

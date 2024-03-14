@@ -60,7 +60,14 @@ final class CategoryView: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.refreshControl = refreshControl
         return tableView
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refrechControlAction), for: .valueChanged)
+        return refreshControl
     }()
 
     // MARK: - Public Properties
@@ -68,9 +75,14 @@ final class CategoryView: UIViewController {
     var presenter: CategoryPresenterProtocol?
     var state: CategoryState = .initial {
         didSet {
+            print("Set state", state)
             updateViewAppearance(for: state)
         }
     }
+
+    // MARK: - Private properties
+
+    var shimmeringCells: [CategoryViewCell]?
 
     // MARK: - Life Cycle
 
@@ -81,7 +93,9 @@ final class CategoryView: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        presenter?.fetchData(searchText: "")
+        if presenter?.dataSource == nil {
+            presenter?.fetchData(searchText: "")
+        }
     }
 
     // MARK: - Private Methods
@@ -133,13 +147,15 @@ final class CategoryView: UIViewController {
     }
 
     private func updateViewAppearance(for state: CategoryState) {
-        recipesTableView.reloadData()
-        let cells = recipesTableView.visibleCells as? [CategoryViewCell]
+        print(#function)
+        refreshControl.endRefreshing()
         switch state {
         case .loading:
-            cells?.forEach { $0.startCellShimmerAnimation() }
-        case .data, .error:
-            cells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = recipesTableView.visibleCells as? [CategoryViewCell]
+            shimmeringCells?.forEach { $0.startCellShimmerAnimation() }
+        case .data, .error, .noData:
+            shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = nil
             recipesTableView.reloadData()
         default:
             break
@@ -168,13 +184,19 @@ final class CategoryView: UIViewController {
 
         presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
+
+    @objc private func refrechControlAction() {
+        clearSortingButtonState()
+        recipeSearchBar.text = ""
+        presenter?.fetchData(searchText: "")
+    }
 }
 
 // MARK: - CategoryView + UISearchBarDelegate
 
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.filterRecipes(text: searchText)
+        presenter?.searchRecipes(text: searchText)
     }
 }
 
@@ -187,10 +209,12 @@ extension CategoryView: CategoryViewProtocol {
     }
 
     func updateTableView() {
+        print(#function)
         recipesTableView.reloadData()
     }
 
     func updateState(with state: CategoryState) {
+        print(#function)
         self.state = state
     }
 }
