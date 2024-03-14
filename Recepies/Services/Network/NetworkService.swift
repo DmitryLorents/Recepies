@@ -71,7 +71,6 @@ final class NetworkService {
 
 extension NetworkService: NetworkServiceProtocol {
     func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ()) {
-        print(#function)
         let request = requestCreator.createCategoryURLRequest(type: type, text: text)
         getData(request: request, parseProtocol: CategoryDTO.self) { result in
             switch result {

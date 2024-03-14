@@ -108,18 +108,20 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func fetchData(searchText: String) {
-        view?.updateState(with: .loading)
-        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case let .failure(error):
-                    print("Error:", error)
-                    self.view?.updateState(with: .error(error))
-                case let .success(recipes):
-                    self.recipes = recipes
-                    let state: CategoryState = recipes.count > 0 ? .data : .noData
-                    self.view?.updateState(with: state)
+        if dataSource == nil {
+            view?.updateState(with: .loading)
+            networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .failure(error):
+                        print("Error:", error)
+                        self.view?.updateState(with: .error(error))
+                    case let .success(recipes):
+                        self.recipes = recipes
+                        let state: CategoryState = recipes.count > 0 ? .data : .noData
+                        self.view?.updateState(with: state)
+                    }
                 }
             }
         }
