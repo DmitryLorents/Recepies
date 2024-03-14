@@ -14,6 +14,7 @@ extension UIImageView {
 
                 if error != nil {
                     DispatchQueue.main.async {
+                        print("Set default photo")
                         let image = UIImage(systemName: "photo")?.withRenderingMode(.alwaysOriginal)
                             .withTintColor(.gray)
                         self.image = image
@@ -22,6 +23,7 @@ extension UIImageView {
                 }
                 DispatchQueue.main.async {
                     if let data = data {
+                        print("Set downloaded photo")
                         if let downloadedImage = UIImage(data: data) {
                             self.image = downloadedImage
                         }
