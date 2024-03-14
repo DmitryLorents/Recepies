@@ -29,7 +29,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
     /// Search necessary element
     /// - Parameter text: text value from searchBar
-    func filterRecipes(text: String)
+    func searchRecipes(text: String)
     /// Start downloading data from network
     func fetchData(searchText: String)
 }
@@ -44,11 +44,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Public Properties
 
     var category: Category
-    var dataSource: [Recipe]? {
-        didSet {
-            view?.updateTableView()
-        }
-    }
+    var dataSource: [Recipe]?
 
     // MARK: - Private Properties
 
@@ -105,9 +101,11 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         })
         // Set new dataSource
         dataSource = sortedRecipes
+        view?.updateState(with: .data)
     }
 
     func fetchData(searchText: String) {
+        print(#function)
         view?.updateState(with: .loading)
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
@@ -125,19 +123,12 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         }
     }
 
-    func filterRecipes(text: String) {
-        if text.count < Constants.minSearchTextLenght {
-            dataSource = recipes
-            view?.clearSortingButtonState()
-            view?.updateTableView()
-        } else {
-//            imitateNetworkRequest { [weak self] in
-//                guard let self else { return }
-//                guard let categorySearch = dataSource else { return }
-//                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased())
-//                }
-//                dataSource?.recipes = searchingRecipe
-//            }
+    func searchRecipes(text: String) {
+        view?.clearSortingButtonState()
+        if text.count >= Constants.minSearchTextLenght {
+            fetchData(searchText: text)
+        } else if dataSource?.count == 0 || text.isEmpty {
+            fetchData(searchText: "")
         }
     }
 }
