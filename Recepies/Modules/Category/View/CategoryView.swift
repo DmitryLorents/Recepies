@@ -71,7 +71,7 @@ final class CategoryView: UIViewController {
     }()
 
     private lazy var errorView: ErrorView = {
-        let view = ErrorView(state: .data, action: #selector(refreshButtonAction), view: nil)
+        let view = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
         return view
     }()
 
@@ -165,7 +165,6 @@ final class CategoryView: UIViewController {
             errorView.updateState(state)
             errorView.isHidden = false
             recipesTableView.reloadData()
-
         case .data:
             shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
             shimmeringCells = nil
@@ -306,7 +305,6 @@ extension CategoryView: UITableViewDataSource {
         case .loading:
             return 10
         default:
-            print("Current cells:", presenter?.dataSource?.count)
             return presenter?.dataSource?.count ?? 0
         }
     }
