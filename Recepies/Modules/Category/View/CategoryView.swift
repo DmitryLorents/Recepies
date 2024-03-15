@@ -78,8 +78,9 @@ final class CategoryView: UIViewController {
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
-    var state: CategoryState = .loading {
+    var state: CategoryState = .initial {
         didSet {
+            print("State:", state)
             updateViewAppearance(for: state)
         }
     }
@@ -156,9 +157,11 @@ final class CategoryView: UIViewController {
         refreshControl.endRefreshing()
         switch state {
         case .loading:
+            recipesTableView.reloadData()
             shimmeringCells = recipesTableView.visibleCells as? [CategoryViewCell]
             shimmeringCells?.forEach { $0.startCellShimmerAnimation() }
             errorView.isHidden = true
+
         case .error, .noData:
             shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
             shimmeringCells = nil
@@ -310,9 +313,13 @@ extension CategoryView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if case .loading = state {}
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
+        if case .loading = state {
+            return cell
+        }
         let recipe = presenter?.dataSource?[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
