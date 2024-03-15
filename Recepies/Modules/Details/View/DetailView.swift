@@ -7,6 +7,10 @@ import UIKit
 protocol DetailViewProtocol: AnyObject {
     /// Change button state
     func updateFavoriteButton()
+    /// Reload table view
+    func reloadData()
+    /// Current state
+    var state: CategoryState { get set }
 }
 
 /// Screen with detailed information for recipe
@@ -26,11 +30,26 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
+
     private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refreshControlPulled(sender:)), for: .valueChanged)
+        return control
+    }()
+
+    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
 
     // MARK: - Public Properties
 
     var presenter: DetailPresenter?
+
+    var state: CategoryState = .loading {
+        didSet {
+            updateView(state: state)
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -40,10 +59,10 @@ final class DetailView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
         setLeftNavigationItem()
         setRightNavigationItem()
         configureTableView()
+        configureView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,10 +70,36 @@ final class DetailView: UIViewController {
         updateFavoriteButton()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.fetchData()
+    }
+
     // MARK: - Private Methods
 
+    private func updateView(state: CategoryState) {
+        switch state {
+        case .noData:
+            errorView.updateState(state)
+            errorView.isHidden = false
+        case let .error(error):
+            errorView.updateState(state)
+            errorView.isHidden = false
+        default:
+            errorView.isHidden = true
+        }
+        tableView.reloadData()
+    }
+
     private func configureView() {
+        view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.isHidden = true
         view.backgroundColor = .white
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func setLeftNavigationItem() {
@@ -96,12 +141,14 @@ final class DetailView: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
         tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.reuseID)
         tableView.register(
             FullDescriptionTableViewCell.self,
             forCellReuseIdentifier: FullDescriptionTableViewCell.reuseID
         )
+        tableView.register(ShimmerCell.self, forCellReuseIdentifier: ShimmerCell.reuseID)
         tableView.register(PFCViewCell.self, forCellReuseIdentifier: PFCViewCell.reuseID)
         setConstraint()
     }
@@ -112,6 +159,17 @@ final class DetailView: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func returnCountCell() -> Int {
+        switch state {
+        case .data, .initial:
+            return cellTypes.count
+        case .loading:
+            return 1
+        default:
+            return 0
+        }
     }
 
     @objc private func addFavoritesRecipe() {
@@ -125,43 +183,64 @@ final class DetailView: UIViewController {
     @objc private func shareButtonAction() {
         presenter?.shareRecipe()
     }
+
+    @objc private func refreshControlPulled(sender: UIRefreshControl) {
+        state = .loading
+        presenter?.fetchData()
+        sender.endRefreshing()
+    }
+
+    @objc private func refreshButtonAction() {
+        state = .loading
+        presenter?.fetchData()
+    }
 }
 
 // MARK: - DetailView + UITableViewDataSource
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellTypes.count
+        returnCountCell()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = cellTypes[indexPath.row]
-        switch item {
-        case .title:
+        if case .loading = state {
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: TitleTableViewCell.reuseID,
+                withIdentifier: ShimmerCell.reuseID,
                 for: indexPath
-            ) as? TitleTableViewCell else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
-            cell.setupView(recipe: recipe)
+            ) as? ShimmerCell else { return UITableViewCell() }
+            cell.startShimer()
             return cell
-        case .characteristics:
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
-            else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
-            cell.setupCell(with: recipe)
-            return cell
-        case .fullDescription:
-            guard let cell = tableView
-                .dequeueReusableCell(
-                    withIdentifier: FullDescriptionTableViewCell.reuseID,
+        } else {
+            let item = cellTypes[indexPath.row]
+            switch item {
+            case .title:
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: TitleTableViewCell.reuseID,
                     for: indexPath
-                ) as? FullDescriptionTableViewCell
-            else { return UITableViewCell() }
-            guard let recipe = presenter?.recipe else { return cell }
-            cell.setupCell(recipe: recipe)
-            return cell
+                ) as? TitleTableViewCell else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
+
+                cell.setupView(recipe: recipe)
+                return cell
+            case .characteristics:
+                guard let cell = tableView
+                    .dequeueReusableCell(withIdentifier: PFCViewCell.reuseID, for: indexPath) as? PFCViewCell
+                else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
+                cell.setupCell(with: recipe)
+                return cell
+            case .fullDescription:
+                guard let cell = tableView
+                    .dequeueReusableCell(
+                        withIdentifier: FullDescriptionTableViewCell.reuseID,
+                        for: indexPath
+                    ) as? FullDescriptionTableViewCell
+                else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
+                cell.setupCell(recipe: recipe)
+                return cell
+            }
         }
     }
 }
@@ -169,6 +248,10 @@ extension DetailView: UITableViewDataSource {
 // MARK: - DetailView + DetailViewProtocol
 
 extension DetailView: DetailViewProtocol {
+    func reloadData() {
+        tableView.reloadData()
+    }
+
     func updateFavoriteButton() {
         if let presenter {
             let image: UIImage = presenter.isFavorite ? .favoritesHig : .favorites

@@ -35,7 +35,7 @@ final class PFCViewCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private var recipe: Recipe? {
+    private var recipe: RecipeDetail? {
         didSet {
             if let recipe {
                 configureSubview(with: recipe)
@@ -57,7 +57,7 @@ final class PFCViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(with recipe: Recipe?) {
+    func setupCell(with recipe: RecipeDetail?) {
         self.recipe = recipe
     }
 
@@ -70,16 +70,16 @@ final class PFCViewCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    private func configureSubview(with recipe: Recipe) {
-        caloriesView.set(subtitle: "\(recipe.calories)" + Constants.kCal)
+    private func configureSubview(with recipe: RecipeDetail) {
+        caloriesView.set(subtitle: "\(Int(recipe.calories))" + Constants.kCal)
 
-        let carbohydratesAmount = makeFormattedString(from: recipe.pfc.carbohydrates)
+        let carbohydratesAmount = makeFormattedString(from: recipe.carbohydrates)
         carbohydratesView.set(subtitle: carbohydratesAmount + Constants.gram)
 
-        let fatsAmount = makeFormattedString(from: recipe.pfc.fats)
+        let fatsAmount = makeFormattedString(from: recipe.fats)
         fatsView.set(subtitle: fatsAmount + Constants.gram)
 
-        let proteinsAmount = makeFormattedString(from: recipe.pfc.proteins)
+        let proteinsAmount = makeFormattedString(from: recipe.proteins)
         proteinsView.set(subtitle: proteinsAmount + Constants.gram)
     }
 

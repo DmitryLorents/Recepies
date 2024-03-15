@@ -60,7 +60,19 @@ final class CategoryView: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.refreshControl = refreshControl
         return tableView
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refrechControlAction), for: .valueChanged)
+        return refreshControl
+    }()
+
+    private lazy var errorView: ErrorView = {
+        let view = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
+        return view
     }()
 
     // MARK: - Public Properties
@@ -68,15 +80,27 @@ final class CategoryView: UIViewController {
     var presenter: CategoryPresenterProtocol?
     var state: CategoryState = .initial {
         didSet {
+            print("State:", state)
             updateViewAppearance(for: state)
         }
     }
+
+    // MARK: - Private properties
+
+    private var shimmeringCells: [CategoryViewCell]?
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVIew()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if presenter?.dataSource == nil {
+            presenter?.fetchData(searchText: "")
+        }
     }
 
     // MARK: - Private Methods
@@ -87,8 +111,10 @@ final class CategoryView: UIViewController {
             recipesTableView,
             timeButton,
             caloriesButton,
-            recipeSearchBar
+            recipeSearchBar,
+            errorView
         )
+        errorView.isHidden = true
         view.disableTARMIC()
         setNavigationItem()
         setupConstraints()
@@ -100,7 +126,7 @@ final class CategoryView: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
 
         let titleLabel = UILabel()
-        titleLabel.text = presenter?.dataSource?.name
+        titleLabel.text = presenter?.category.name
         titleLabel.font = .makeVerdanaBold(size: 28)
         titleLabel.textAlignment = .left
 
@@ -128,17 +154,33 @@ final class CategoryView: UIViewController {
     }
 
     private func updateViewAppearance(for state: CategoryState) {
-        recipesTableView.reloadData()
-        let cells = recipesTableView.visibleCells as? [CategoryViewCell]
+        refreshControl.endRefreshing()
         switch state {
         case .loading:
-            cells?.forEach { $0.startCellShimmerAnimation() }
-        case .loaded, .error:
-            cells?.forEach { $0.stopCellShimmerAnimation() }
+            recipesTableView.reloadData()
+            shimmeringCells = recipesTableView.visibleCells as? [CategoryViewCell]
+            shimmeringCells?.forEach { $0.startCellShimmerAnimation() }
+            errorView.isHidden = true
+
+        case .error, .noData:
+            shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = nil
+            errorView.updateState(state)
+            errorView.isHidden = false
+            recipesTableView.reloadData()
+        case .data:
+            shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = nil
+            errorView.isHidden = true
             recipesTableView.reloadData()
         default:
             break
         }
+    }
+
+    @objc private func refreshButtonAction() {
+        state = .loading
+        presenter?.fetchData(searchText: "")
     }
 
     @objc private func backButtonAction() {
@@ -163,13 +205,19 @@ final class CategoryView: UIViewController {
 
         presenter?.sortRecipesBy(caloriesSortingHandler, timeSortingHandler)
     }
+
+    @objc private func refrechControlAction() {
+        clearSortingButtonState()
+        recipeSearchBar.text = ""
+        presenter?.fetchData(searchText: "")
+    }
 }
 
 // MARK: - CategoryView + UISearchBarDelegate
 
 extension CategoryView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.filterCategory(text: searchText)
+        presenter?.searchRecipes(text: searchText)
     }
 }
 
@@ -198,6 +246,7 @@ private extension CategoryView {
         setupRecipesTableViewConstraints()
         setupCaloriesButtonConstraints()
         setupTimeButtonConstraints()
+        setupErrorViewConstraints()
     }
 
     func recipeSearchBarConstraints() {
@@ -232,6 +281,13 @@ private extension CategoryView {
             recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
+
+    func setupErrorViewConstraints() {
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 
 // MARK: - CategoryView - UITableViewDelegate
@@ -252,15 +308,19 @@ extension CategoryView: UITableViewDataSource {
         case .loading:
             return 10
         default:
-            return presenter?.dataSource?.recipes.count ?? 0
+            return presenter?.dataSource?.count ?? 0
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if case .loading = state {}
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: CategoryViewCell.reuseID, for: indexPath) as? CategoryViewCell
         else { return .init() }
-        let recipe = presenter?.dataSource?.recipes[indexPath.row]
+        if case .loading = state {
+            return cell
+        }
+        let recipe = presenter?.dataSource?[indexPath.row]
         cell.setupCell(with: recipe)
         return cell
     }

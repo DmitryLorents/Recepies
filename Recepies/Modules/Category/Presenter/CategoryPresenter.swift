@@ -7,11 +7,18 @@ import UIKit
 protocol CategoryPresenterProtocol: AnyObject {
     /// Type of handler from sorting button
     typealias SortingRecipeHandler = (Recipe, Recipe) -> Bool
-    /// Categories of product to show by view
-    var dataSource: Category? { get }
+    /// Recipes to show by view
+    var dataSource: [Recipe]? { get }
+    /// Category received from initialization phase
+    var category: Category { get }
     /// Main initializer
-    init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category)
-    /// Asking presenter to set delegate and dataSource for TableView
+    init(
+        category: Category,
+        view: CategoryViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        networkService: NetworkServiceProtocol
+    )
+    /// Move back to parent screen
     func goBack()
     /// Shows detailed recipe screen
     func showDetailedScreen(for indexPath: IndexPath)
@@ -22,44 +29,46 @@ protocol CategoryPresenterProtocol: AnyObject {
     func sortRecipesBy(_ caloriesPredicate: SortingRecipeHandler?, _ timePredicate: SortingRecipeHandler?)
     /// Search necessary element
     /// - Parameter text: text value from searchBar
-    func filterCategory(text: String)
+    func searchRecipes(text: String)
+    /// Start downloading data from network
+    func fetchData(searchText: String)
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let minTextLenght = 3
+        static let minSearchTextLenght = 3
     }
 
     // MARK: - Public Properties
 
-    var dataSource: Category? {
-        didSet {
-            view?.updateTableView()
-        }
-    }
+    var category: Category
+    var dataSource: [Recipe]?
 
     // MARK: - Private Properties
 
-    private var conteinerCategory: Category?
-
+    private let networkService: NetworkServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
-    private var category: Category? {
+    private var recipes: [Recipe]? {
         didSet {
-            dataSource = category
+            dataSource = recipes
         }
     }
 
     // MARK: - Initialization
 
-    init(view: CategoryViewProtocol, coordinator: BaseModuleCoordinator, category: Category) {
+    init(
+        category: Category,
+        view: CategoryViewProtocol,
+        coordinator: BaseModuleCoordinator,
+        networkService: NetworkServiceProtocol
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
-        dataSource = category
-        imitateNetworkRequest {}
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -71,7 +80,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showDetailedScreen(for indexPath: IndexPath) {
-        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = category?.recipes[indexPath.row] {
+        if let recipesCoordinator = coordinator as? RecipesCoordinator, let recipe = dataSource?[indexPath.row] {
             recipesCoordinator.goToDetailed(recipe: recipe)
         }
     }
@@ -80,7 +89,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         // Remova all nil predicates and put predicates in correct order in array
         let predicates = [caloriesPredicate, timePredicate].compactMap { $0 }
         // Sorting recipes in category
-        let sortedRecipes = dataSource?.recipes.sorted(by: { lhsRecipe, rhsRecipe in
+        let sortedRecipes = dataSource?.sorted(by: { lhsRecipe, rhsRecipe in
             for predicate in predicates {
                 // Case lhs == rhs
                 if !predicate(lhsRecipe, rhsRecipe), !predicate(rhsRecipe, lhsRecipe) {
@@ -91,35 +100,34 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             return false
         })
         // Set new dataSource
-        if let sortedRecipes {
-            var sortedCategory = category
-            sortedCategory?.recipes = sortedRecipes
-            dataSource = sortedCategory
-        }
+        dataSource = sortedRecipes
+        view?.updateState(with: .data)
     }
 
-    private func imitateNetworkRequest(completionHandler: @escaping VoidHandler) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.view?.updateState(with: .loading)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.view?.updateState(with: .loaded)
-            completionHandler()
-        }
-    }
-
-    func filterCategory(text: String) {
-        if text.count < Constants.minTextLenght {
-            dataSource = category
-            view?.clearSortingButtonState()
-            view?.updateTableView()
-        } else {
-            imitateNetworkRequest { [weak self] in
-                guard let self else { return }
-                guard let categorySearch = dataSource else { return }
-                let searchingRecipe = categorySearch.recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
-                dataSource?.recipes = searchingRecipe
+    func fetchData(searchText: String) {
+        view?.updateState(with: .loading)
+        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case let .failure(error):
+                    print("Error:", error)
+                    self.view?.updateState(with: .error(error))
+                case let .success(recipes):
+                    self.recipes = recipes
+                    let state: CategoryState = recipes.count > 0 ? .data : .noData
+                    self.view?.updateState(with: state)
+                }
             }
+        }
+    }
+
+    func searchRecipes(text: String) {
+        view?.clearSortingButtonState()
+        if text.count >= Constants.minSearchTextLenght {
+            fetchData(searchText: text)
+        } else if dataSource?.count == 0 || text.isEmpty {
+            fetchData(searchText: "")
         }
     }
 }

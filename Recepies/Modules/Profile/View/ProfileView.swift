@@ -257,7 +257,9 @@ extension ProfileView: ProfileViewProtocol {
         tableView.reloadData()
     }
 }
+
 // MARK: - ProfileView + UIImagePickerControllerDelegate
+
 extension ProfileView: UIImagePickerControllerDelegate {
     func imagePickerController(
         _ picker: UIImagePickerController,

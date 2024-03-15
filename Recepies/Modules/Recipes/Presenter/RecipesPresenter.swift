@@ -19,7 +19,7 @@ protocol RecipesPresenterProtocol: AnyObject {
 final class RecipesPresenter: RecipesPresenterProtocol {
     // MARK: - Public Properties
 
-    var category: [Category] = Category.makeMockCategory()
+    var category: [Category] = Category.makeCategories()
 
     // MARK: - Private Properties
 
