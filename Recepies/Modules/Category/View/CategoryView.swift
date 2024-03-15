@@ -70,6 +70,8 @@ final class CategoryView: UIViewController {
         return refreshControl
     }()
 
+    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: nil)
+
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
@@ -111,6 +113,18 @@ final class CategoryView: UIViewController {
         view.disableTARMIC()
         setNavigationItem()
         setupConstraints()
+        setupErrorView()
+    }
+
+    private func setupErrorView() {
+        view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.isHidden = true
+        view.backgroundColor = .white
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func setNavigationItem() {
@@ -147,19 +161,31 @@ final class CategoryView: UIViewController {
     }
 
     private func updateViewAppearance(for state: CategoryState) {
-        print(#function)
         refreshControl.endRefreshing()
         switch state {
         case .loading:
             shimmeringCells = recipesTableView.visibleCells as? [CategoryViewCell]
             shimmeringCells?.forEach { $0.startCellShimmerAnimation() }
-        case .data, .error, .noData:
+            errorView.isHidden = true
+        case .error, .noData:
+            shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
+            shimmeringCells = nil
+            errorView.updateState(state)
+            errorView.isHidden = false
+            recipesTableView.reloadData()
+        case .data:
             shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
             shimmeringCells = nil
             recipesTableView.reloadData()
+            errorView.isHidden = true
         default:
             break
         }
+    }
+
+    @objc private func refreshButtonAction() {
+        state = .loading
+        presenter?.fetchData(searchText: "")
     }
 
     @objc private func backButtonAction() {
