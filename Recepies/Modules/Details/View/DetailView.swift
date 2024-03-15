@@ -75,7 +75,6 @@ final class DetailView: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         updateFavoriteButton()
     }
 

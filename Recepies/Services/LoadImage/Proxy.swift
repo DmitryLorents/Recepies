@@ -35,7 +35,6 @@ final class Proxy {
     private func makeFilePath(for urlString: String) -> URL? {
         if let url = URL(string: urlString) {
             let fileName = url.lastPathComponent
-            print("Last path component:", fileName)
             return cacheFolderPath?.appendingPathComponent(fileName, conformingTo: .jpeg)
         } else {
             print("Failed to create file URL")
@@ -58,7 +57,6 @@ final class Proxy {
         if let data = image.jpegData(compressionQuality: 1),
            let fileName = makeFilePath(for: urlString)
         {
-            print("File url:", fileName)
             try? data.write(to: fileName)
             print("Data saved to file", fileName)
         } else {

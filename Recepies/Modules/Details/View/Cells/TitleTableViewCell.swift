@@ -82,10 +82,6 @@ final class TitleTableViewCell: UITableViewCell {
         return label
     }()
 
-    var viewsForShimmerEffect: [UIView] {
-        contentView.subviews
-    }
-
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -63,7 +63,6 @@ final class Database: DataBaseProtocol {
     }
 
     func setFromUserDefaults() {
-        print(#function)
         guard let data = defaults.object(forKey: key) as? Data,
               let recipes = dataToRecipe(data)
         else {
@@ -74,7 +73,6 @@ final class Database: DataBaseProtocol {
     }
 
     func saveToUserDefaults() {
-        print(#function)
         let recipes = Array(recipesSet)
         let data = recipeToData(recipes)
         defaults.setValue(data, forKey: key)
@@ -90,7 +88,7 @@ private extension Database {
             let data = try encoder.encode(recipes)
             return data
         } catch {
-            print("Error decoding data to Recipe: \(error)")
+            print("Error decoding Recipe to data: \(error)")
         }
         return nil
     }

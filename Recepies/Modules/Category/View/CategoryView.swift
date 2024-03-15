@@ -70,14 +70,16 @@ final class CategoryView: UIViewController {
         return refreshControl
     }()
 
-    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: nil)
+    private lazy var errorView: ErrorView = {
+        let view = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
+        return view
+    }()
 
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
-    var state: CategoryState = .initial {
+    var state: CategoryState = .loading {
         didSet {
-            print("Set state", state)
             updateViewAppearance(for: state)
         }
     }
@@ -108,23 +110,13 @@ final class CategoryView: UIViewController {
             recipesTableView,
             timeButton,
             caloriesButton,
-            recipeSearchBar
+            recipeSearchBar,
+            errorView
         )
+        errorView.isHidden = true
         view.disableTARMIC()
         setNavigationItem()
         setupConstraints()
-        setupErrorView()
-    }
-
-    private func setupErrorView() {
-        view.addSubview(errorView)
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.isHidden = true
-        view.backgroundColor = .white
-        NSLayoutConstraint.activate([
-            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
     }
 
     private func setNavigationItem() {
@@ -176,8 +168,8 @@ final class CategoryView: UIViewController {
         case .data:
             shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
             shimmeringCells = nil
-            recipesTableView.reloadData()
             errorView.isHidden = true
+            recipesTableView.reloadData()
         default:
             break
         }
@@ -235,12 +227,10 @@ extension CategoryView: CategoryViewProtocol {
     }
 
     func updateTableView() {
-        print(#function)
         recipesTableView.reloadData()
     }
 
     func updateState(with state: CategoryState) {
-        print(#function)
         self.state = state
     }
 }
@@ -253,6 +243,7 @@ private extension CategoryView {
         setupRecipesTableViewConstraints()
         setupCaloriesButtonConstraints()
         setupTimeButtonConstraints()
+        setupErrorViewConstraints()
     }
 
     func recipeSearchBarConstraints() {
@@ -285,6 +276,13 @@ private extension CategoryView {
             recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             recipesTableView.topAnchor.constraint(equalTo: caloriesButton.bottomAnchor, constant: 13),
             recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+
+    func setupErrorViewConstraints() {
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
