@@ -49,7 +49,7 @@ final class RequestCreator {
     }
 
     private func makeCategoryQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
-        let isRandomQuery = URLQueryItem(name: "random", value: "true")
+//        let isRandomQuery = URLQueryItem(name: "random", value: "true")
         let dishTypeQuery = URLQueryItem(name: "dishType", value: type.description)
         let searchQuery = makeSearchQuery(type, text: text)
         let uriQuery = URLQueryItem(name: "field", value: "uri")
@@ -58,7 +58,7 @@ final class RequestCreator {
         let totalTimeQuery = URLQueryItem(name: "field", value: "totalTime")
         let caloriesQuery = URLQueryItem(name: "field", value: "calories")
         var queries: [URLQueryItem] = makeGeneralQueryItems() + [
-            isRandomQuery,
+            //            isRandomQuery,
             dishTypeQuery,
             searchQuery,
             uriQuery,
