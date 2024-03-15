@@ -47,15 +47,7 @@ final class DetailView: UIViewController {
 
     var state: CategoryState = .loading {
         didSet {
-            switch state {
-            case .noData:
-                setupErrorView(state: .noData)
-            case let .error(error):
-                setupErrorView(state: .error(error))
-            default:
-                errorView.isHidden = true
-            }
-            tableView.reloadData()
+            updateView(state: state)
         }
     }
 
@@ -85,9 +77,18 @@ final class DetailView: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setupErrorView(state: CategoryState) {
-        errorView.updateState(state)
-        errorView.isHidden = false
+    private func updateView(state: CategoryState) {
+        switch state {
+        case .noData:
+            errorView.updateState(state)
+            errorView.isHidden = false
+        case let .error(error):
+            errorView.updateState(state)
+            errorView.isHidden = false
+        default:
+            errorView.isHidden = true
+        }
+        tableView.reloadData()
     }
 
     private func configureView() {
@@ -160,6 +161,17 @@ final class DetailView: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    private func returnCountCell() -> Int {
+        switch state {
+        case .data, .initial:
+            return cellTypes.count
+        case .loading:
+            return 1
+        default:
+            return 0
+        }
+    }
+
     @objc private func addFavoritesRecipe() {
         presenter?.updateRecipeFavoriteStatus()
     }
@@ -188,14 +200,7 @@ final class DetailView: UIViewController {
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch state {
-        case .data, .initial:
-            return cellTypes.count
-        case .loading:
-            return 1
-        default:
-            return 0
-        }
+        returnCountCell()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
