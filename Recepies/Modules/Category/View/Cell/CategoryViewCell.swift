@@ -126,7 +126,9 @@ final class CategoryViewCell: UITableViewCell {
     }
 
     private func configureSubview(with recipe: Recipe) {
-        NetworkService(requestCreator: RequestCreator()).loadImage(by: recipe.recipeImage) { result in
+        let networkService = NetworkService(requestCreator: RequestCreator())
+        let proxyService = Proxy(service: networkService)
+        proxyService.loadImage(by: recipe.recipeImage) { result in
             switch result {
             case let .success(image):
                 DispatchQueue.main.async {
