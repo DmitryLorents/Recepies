@@ -7,7 +7,9 @@ import UIKit
 protocol DetailViewProtocol: AnyObject {
     /// Change button state
     func updateFavoriteButton()
+    /// Reload table view
     func reloadData()
+    /// Current state
     var state: CategoryState { get set }
 }
 
@@ -28,11 +30,34 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
+
     private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refreshControlPulled(sender:)), for: .valueChanged)
+        return control
+    }()
+
+    private lazy var errorView = ErrorView(state: .data, action: #selector(refreshButtonAction), view: self)
 
     // MARK: - Public Properties
 
     var presenter: DetailPresenter?
+
+    var state: CategoryState = .loading {
+        didSet {
+            switch state {
+            case .noData:
+                setupErrorView(state: .noData)
+            case let .error(error):
+                setupErrorView(state: .error(error))
+            default:
+                errorView.isHidden = true
+            }
+            tableView.reloadData()
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -57,22 +82,6 @@ final class DetailView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter?.fetchData()
-    }
-
-    private let errorView = ErrorView(state: .noData, action: #selector(refreshButtonAction))
-
-    var state: CategoryState = .loading {
-        didSet {
-            switch state {
-            case .noData:
-                setupErrorView(state: .noData)
-            case let .error(error):
-                setupErrorView(state: .error(error))
-            default:
-                errorView.isHidden = true
-            }
-            tableView.reloadData()
-        }
     }
 
     // MARK: - Private Methods
@@ -132,6 +141,7 @@ final class DetailView: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
         tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.reuseID)
         tableView.register(
@@ -163,8 +173,15 @@ final class DetailView: UIViewController {
         presenter?.shareRecipe()
     }
 
+    @objc private func refreshControlPulled(sender: UIRefreshControl) {
+        state = .loading
+        presenter?.fetchData()
+        sender.endRefreshing()
+    }
+
     @objc private func refreshButtonAction() {
-        print(#function)
+        state = .loading
+        presenter?.fetchData()
     }
 }
 
@@ -187,9 +204,7 @@ extension DetailView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: ShimmerCell.reuseID,
                 for: indexPath
-            ) as? ShimmerCell else { print("no Cell")
-                return UITableViewCell()
-            }
+            ) as? ShimmerCell else { return UITableViewCell() }
             cell.startShimer()
             return cell
         } else {
@@ -199,12 +214,8 @@ extension DetailView: UITableViewDataSource {
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: TitleTableViewCell.reuseID,
                     for: indexPath
-                ) as? TitleTableViewCell else { print("no Cell")
-                    return UITableViewCell()
-                }
-                guard let recipe = presenter?.recipeDetail else { print("noRecipe")
-                    return cell
-                }
+                ) as? TitleTableViewCell else { return UITableViewCell() }
+                guard let recipe = presenter?.recipeDetail else { return cell }
 
                 cell.setupView(recipe: recipe)
                 return cell
@@ -214,8 +225,6 @@ extension DetailView: UITableViewDataSource {
                 else { return UITableViewCell() }
                 guard let recipe = presenter?.recipeDetail else { return cell }
                 cell.setupCell(with: recipe)
-                print("Recipe")
-
                 return cell
             case .fullDescription:
                 guard let cell = tableView

@@ -100,7 +100,6 @@ extension RequestCreator: RequestCreatorProtocol {
         components.path = "/api/recipes/v2"
         components.queryItems = makeCategoryQueryItems(type: type, text: text)
         guard let url = components.url else {
-            print("Incorrect url")
             return nil
         }
         return URLRequest(url: url)
