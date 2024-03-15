@@ -8,11 +8,11 @@ protocol LoadImageServiceProtocol {
     /// Provide UIImage by url
     /// - Parameter stringURL: url adress of image in string format
     /// - Returns requested image
-    func loadImage(by urlString: String) -> UIImage?
+    func loadImage(by urlString: String, completion: @escaping (Result<UIImage, Error>) -> ())
 }
 
 final class Proxy: LoadImageServiceProtocol {
-    func loadImage(by urlString: String) -> UIImage? {
-        <#code#>
+    func loadImage(by urlString: String, completion: @escaping (Result<UIImage, Error>) -> ()) {
+        // Add some code
     }
 }
