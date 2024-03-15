@@ -18,7 +18,7 @@ protocol CategoryPresenterProtocol: AnyObject {
         coordinator: BaseModuleCoordinator,
         networkService: NetworkServiceProtocol
     )
-    /// Asking presenter to set delegate and dataSource for TableView
+    /// Move back to parent screen
     func goBack()
     /// Shows detailed recipe screen
     func showDetailedScreen(for indexPath: IndexPath)
@@ -105,7 +105,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func fetchData(searchText: String) {
-        print(#function)
         view?.updateState(with: .loading)
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }

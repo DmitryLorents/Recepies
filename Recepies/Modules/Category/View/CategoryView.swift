@@ -75,9 +75,8 @@ final class CategoryView: UIViewController {
     // MARK: - Public Properties
 
     var presenter: CategoryPresenterProtocol?
-    var state: CategoryState = .initial {
+    var state: CategoryState = .loading {
         didSet {
-            print("Set state", state)
             updateViewAppearance(for: state)
         }
     }
@@ -173,11 +172,12 @@ final class CategoryView: UIViewController {
             errorView.updateState(state)
             errorView.isHidden = false
             recipesTableView.reloadData()
+
         case .data:
             shimmeringCells?.forEach { $0.stopCellShimmerAnimation() }
             shimmeringCells = nil
-            recipesTableView.reloadData()
             errorView.isHidden = true
+            recipesTableView.reloadData()
         default:
             break
         }
@@ -235,12 +235,10 @@ extension CategoryView: CategoryViewProtocol {
     }
 
     func updateTableView() {
-        print(#function)
         recipesTableView.reloadData()
     }
 
     func updateState(with state: CategoryState) {
-        print(#function)
         self.state = state
     }
 }
@@ -307,6 +305,7 @@ extension CategoryView: UITableViewDataSource {
         case .loading:
             return 10
         default:
+            print("Current cells:", presenter?.dataSource?.count)
             return presenter?.dataSource?.count ?? 0
         }
     }
