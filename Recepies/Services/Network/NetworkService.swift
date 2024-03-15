@@ -118,21 +118,5 @@ extension NetworkService: LoadImageServiceProtocol {
             }
         }
         task.resume()
-//        var outputImage: UIImage = .init()
-//        DispatchQueue.global().async {
-//            if let url = URL(string: urlString),
-//               let data = try? Data(contentsOf: url),
-//               let image = UIImage(data: data)
-//            {
-//                DispatchQueue.main.async {
-//                    outputImage = image
-//                }
-//            } else {
-//                DispatchQueue.main.async {
-//                    outputImage = UIImage(systemName: "photo") ?? .init()
-//                }
-//            }
-//        }
-//        return outputImage
     }
 }
