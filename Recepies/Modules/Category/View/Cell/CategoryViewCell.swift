@@ -126,7 +126,18 @@ final class CategoryViewCell: UITableViewCell {
     }
 
     private func configureSubview(with recipe: Recipe) {
-        dishImageView.load(urlString: recipe.recipeImage)
+        let networkService = NetworkService(requestCreator: RequestCreator())
+        let proxyService = Proxy(service: networkService)
+        proxyService.loadImage(by: recipe.recipeImage) { result in
+            switch result {
+            case let .success(image):
+                DispatchQueue.main.async {
+                    self.dishImageView.image = image
+                }
+            case let .failure(error):
+                print(error)
+            }
+        }
         titleLabel.text = recipe.name
         timerLabel.text = "\(recipe.timeToCook)\(Constants.timerLabelText)"
         caloriesLabel.text = "\(recipe.calories)\(Constants.caloriesLabelText)"
