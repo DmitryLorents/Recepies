@@ -56,7 +56,7 @@ final class ErrorView: UIView {
 
     // MARK: - Initialization
 
-    convenience init(state: CategoryState, action: Selector, view: DetailView) {
+    convenience init(state: CategoryState, action: Selector, view: DetailView?) {
         self.init()
 
         setupView(action: action, view: view)
@@ -81,7 +81,7 @@ final class ErrorView: UIView {
 
     // MARK: - Private Methods
 
-    private func setupView(action: Selector, view: DetailView) {
+    private func setupView(action: Selector, view: DetailView?) {
         backgroundColor = .systemBackground
         refreshButton.addTarget(view, action: action, for: .touchUpInside)
         addSubview(stackView)
