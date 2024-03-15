@@ -111,7 +111,19 @@ final class TitleTableViewCell: UITableViewCell {
         recipeNameLabel.text = recipe.name
         textWeightLabel.text = "\(Int(recipe.calories)) g"
         textCooKingTimeLabel.text = "Cooking time \(Int(recipe.timeToCook)) min"
-        recipeImageView.load(urlString: recipe.recipeImage)
+
+        let networkService = NetworkService(requestCreator: RequestCreator())
+        let proxyService = Proxy(service: networkService)
+        proxyService.loadImage(by: recipe.recipeImage) { result in
+            switch result {
+            case let .success(image):
+                DispatchQueue.main.async {
+                    self.recipeImageView.image = image
+                }
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
 
     // MARK: - Private Methods
