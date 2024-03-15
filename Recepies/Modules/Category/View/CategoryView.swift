@@ -82,7 +82,7 @@ final class CategoryView: UIViewController {
 
     // MARK: - Private properties
 
-    var shimmeringCells: [CategoryViewCell]?
+    private var shimmeringCells: [CategoryViewCell]?
 
     // MARK: - Life Cycle
 

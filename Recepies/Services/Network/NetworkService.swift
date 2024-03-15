@@ -1,20 +1,20 @@
 // NetworkService.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
+import UIKit
 
 /// Protocol for network service in app
 protocol NetworkServiceProtocol {
     /// Init with service to create url requests
     init(requestCreator: RequestCreatorProtocol)
-
+    
     /// Try to download requested recipes
     /// - Parameters:
     /// type: type of category
     /// completion: closure to handle results
     /// - Returns: Array of recipes if success, or error in case of failure
     func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ())
-
+    
     /// Try to download requested recipe
     /// - Parameters:
     /// url: recipe url for detailed search
@@ -26,22 +26,22 @@ protocol NetworkServiceProtocol {
 /// Download data from server
 final class NetworkService {
     // MARK: - Private Properties
-
+    
     private let decoder = JSONDecoder()
     private var requestCreator: RequestCreatorProtocol
-
+    
     // MARK: - Initialization
-
+    
     init(requestCreator: RequestCreatorProtocol) {
         self.requestCreator = requestCreator
     }
-
+    
     // MARK: - Private Methods
-
+    
     private func convertToRecipes(_ categoryDTO: CategoryDTO) -> [Recipe] {
         categoryDTO.hits.map { Recipe($0.recipe) }
     }
-
+    
     private func getData<T: Codable>(
         request: URLRequest?,
         parseProtocol: T.Type,
@@ -82,18 +82,30 @@ extension NetworkService: NetworkServiceProtocol {
             }
         }
     }
-
+    
     func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
         let request = requestCreator.createRecipeURLRequest(uri: url)
         getData(request: request, parseProtocol: RecipeDetailResponseDTO.self) { result in
             switch result {
             case let .success(recipe):
                 guard let detailDto = recipe.hits.first else { return }
-
+                
                 completion(.success(RecipeDetail(dto: detailDto.recipe)))
             case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
+}
+// MARK: - NetworkService - LoadImageServiceProtocol
+extension NetworkService: LoadImageServiceProtocol {
+    func loadImage(by urlString: String) -> UIImage? {
+        if let url = URL(string: urlString),
+           let data = try? Data(contentsOf: url),
+           let image = UIImage(data: data) {
+            return image
+        }
+        return UIImage(systemName: "photo")
+    }
+    
 }
