@@ -11,7 +11,7 @@ public final class CategoryCD: NSManagedObject {
     }
 
     @NSManaged var name: String?
-    @NSManaged var recipes: NSSet?
+    @NSManaged var recipesSet: Set<RecipeCD>?
 
     // MARK: Generated accessors for recipes
 
@@ -22,10 +22,10 @@ public final class CategoryCD: NSManagedObject {
     @NSManaged func removeFromRecipes(_ value: RecipeCD)
 
     @objc(addRecipes:)
-    @NSManaged func addToRecipes(_ values: NSSet)
+    @NSManaged func addToRecipes(_ valuesSet: Set<RecipeCD>)
 
     @objc(removeRecipes:)
-    @NSManaged func removeFromRecipes(_ values: NSSet)
+    @NSManaged func removeFromRecipes(_ valuesSet: Set<RecipeCD>)
 }
 
 extension CategoryCD: Identifiable {}
