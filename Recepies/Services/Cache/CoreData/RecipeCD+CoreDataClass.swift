@@ -14,8 +14,8 @@ public final class RecipeCD: NSManagedObject {
     @NSManaged var recipeImage: String?
     @NSManaged var timeToCook: Int64
     @NSManaged var calories: Int64
-    @NSManaged var category: CategoryCD?
-    @NSManaged var recipeDetailed: RecipeDetailedCD?
+    @NSManaged var category: String
+//    @NSManaged var recipeDetailed: RecipeDetailedCD?
 }
 
 extension RecipeCD: Identifiable {}

@@ -21,6 +21,14 @@ struct Recipe: Codable {
         timeToCook = recipeDTO.totalTime
         calories = Int(recipeDTO.calories)
     }
+
+    init(recipeCD: RecipeCD) {
+        name = recipeCD.name ?? ""
+        uri = ""
+        recipeImage = recipeCD.recipeImage ?? ""
+        timeToCook = Int(recipeCD.timeToCook)
+        calories = Int(recipeCD.calories)
+    }
 }
 
 extension Recipe: Hashable {
