@@ -104,6 +104,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         view?.updateState(with: .data)
     }
 
+    let cash = CacheService(coreDataManager: CoreDataManager.shared)
+
     func fetchData(searchText: String) {
         view?.updateState(with: .loading)
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
@@ -113,6 +115,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                 case let .failure(error):
                     print("Error:", error)
                     self.view?.updateState(with: .error(error))
+
                 case let .success(recipes):
                     self.recipes = recipes
                     let state: CategoryState = recipes.count > 0 ? .data : .noData
