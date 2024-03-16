@@ -16,14 +16,14 @@ protocol DetailPresenterProtocol: AnyObject {
     )
     /// Recipe data
     var recipeDetail: RecipeDetail? { get set }
+    /// Recipe is stored in favorites or not
+    var isFavorite: Bool { get }
     /// Return to previous controller
     func goBack()
     /// Add/remove recipe to favorites
     func updateRecipeFavoriteStatus()
     /// Shares recipe into Telegram
     func shareRecipe()
-    /// Recipe data
-    var recipe: Recipe { get set }
     /// Obtaining prescription data
     func fetchData()
 }
@@ -32,15 +32,13 @@ final class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Public Properties
 
     var recipeDetail: RecipeDetail?
-
     var isFavorite: Bool {
         database.isFavorite(recipe)
     }
 
-    var recipe: Recipe
-
     // MARK: - Private Properties
 
+    private let recipe: Recipe
     private let cacheService: CacheServiceProtocol
     private let networkService: NetworkServiceProtocol
     private weak var view: DetailViewProtocol?
@@ -86,9 +84,8 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func fetchData() {
         view?.state = .loading
-        let currentRecipe = cacheService.fetchDetailedRecipe(for: recipe)
-        if currentRecipe != nil {
-            recipeDetail = currentRecipe
+        if let recipeFromCache = cacheService.getDetailedRecipe(for: recipe) {
+            recipeDetail = recipeFromCache
             view?.state = .data
         } else {
             networkService.getDetailedRecipe(url: recipe.uri) { [weak self] result in

@@ -477,9 +477,9 @@
 		0AC9D9C72BA07F8000371A0F /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				0AE7497D2BA4AEA9005F923F /* DTO */,
 				0AC9D9C82BA07F9A00371A0F /* NetworkService.swift */,
 				0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */,
+				0AE7497D2BA4AEA9005F923F /* DTO */,
 			);
 			path = Network;
 			sourceTree = "<group>";

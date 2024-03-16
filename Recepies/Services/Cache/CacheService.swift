@@ -9,11 +9,11 @@ protocol CacheServiceProtocol {
     /// Get recipes from cache
     /// - Parameter category: category of recipes
     /// - Returns optional array of recipes if available in cache
-    func fetchRecipes(for category: Category) -> [Recipe]?
+    func getRecipes(for category: Category) -> [Recipe]?
     /// Get detailed recipe from cache
     ///  - Parameter recipe: recipe model
     ///  - Returns optional detailed recipe if available in cache
-    func fetchDetailedRecipe(for recipe: Recipe) -> RecipeDetail?
+    func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail?
     /// Save array of recipes to cache for dsired category of recipes
     /// - Parameters
     /// recipes: array of recipes
@@ -82,7 +82,7 @@ extension CacheService: CacheServiceProtocol {
         coreDataManager.saveContext()
     }
 
-    func fetchDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
+    func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
         do {
             let recipes = try? coreDataManager.context.fetch(RecipeDetailedCD.fetchRequest())
             guard let recipes = recipes else { return nil }
@@ -92,9 +92,8 @@ extension CacheService: CacheServiceProtocol {
             return nil
         }
     }
-
-    // TODO: Add category to search
-    func fetchRecipes(for category: Category) -> [Recipe]? {
+// TODO: Add category to search
+    func getRecipes(for category: Category) -> [Recipe]? {
         do {
             let recipes = try? coreDataManager.context.fetch(RecipeCD.fetchRequest())
 //            guard let categoryRecipes = recipes?.filter({ $0.category == category.name }) else { return nil }
