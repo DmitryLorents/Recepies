@@ -95,7 +95,6 @@ final class DetailView: UIViewController {
         view.addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
         errorView.isHidden = true
-        view.backgroundColor = .white
         NSLayoutConstraint.activate([
             errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -160,7 +159,6 @@ final class DetailView: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-
     private func returnCountCell() -> Int {
         switch state {
         case .data, .initial:
@@ -171,6 +169,7 @@ final class DetailView: UIViewController {
             return 0
         }
     }
+
 
     @objc private func addFavoritesRecipe() {
         presenter?.updateRecipeFavoriteStatus()
