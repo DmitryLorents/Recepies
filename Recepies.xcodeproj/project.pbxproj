@@ -484,6 +484,17 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		0AC9EA0F2BA61A0A00D1E3AE /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				0AE749992BA55C6A005F923F /* Recepies.xcdatamodeld */,
+				0AE7499F2BA56CBA005F923F /* RecipeDetailedCD+CoreDataClass.swift */,
+				0AE749A12BA56CBA005F923F /* CategoryCD+CoreDataClass.swift */,
+				0AE749A32BA56CBA005F923F /* RecipeCD+CoreDataClass.swift */,
+			);
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
 		0ACD2EC62B8E6897000BA913 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,11 +621,8 @@
 		0AE7499C2BA55C76005F923F /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				0AE7499F2BA56CBA005F923F /* RecipeDetailedCD+CoreDataClass.swift */,
-				0AE749A12BA56CBA005F923F /* CategoryCD+CoreDataClass.swift */,
-				0AE749A32BA56CBA005F923F /* RecipeCD+CoreDataClass.swift */,
-				0AE749992BA55C6A005F923F /* Recepies.xcdatamodeld */,
 				0AE7499D2BA55CC6005F923F /* CoreDataManager.swift */,
+				0AC9EA0F2BA61A0A00D1E3AE /* CoreDataModel */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";

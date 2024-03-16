@@ -6,15 +6,37 @@ import Foundation
 
 /// Protocol for cashe recipes service
 protocol CacheServiceProtocol {
-    func fetchRecipes(for category: Category) -> [Recipe]
+    /// Get recipes from cache
+    /// - Parameter category: category of recipes
+    /// - Returns optional array of recipes if available in cache
+    func fetchRecipes(for category: Category) -> [Recipe]?
+    /// Get detailed recipe from cache
+    ///  - Parameter recipe: recipe model
+    ///  - Returns optional detailed recipe if available in cache
     func fetchDetailedRecipe(for recipe: Recipe) -> RecipeDetail?
-    func save(recipes: [Recipe], to category: Category)
-    func save(recipeDetailed: RecipeDetail /* , to recipe: Recipe */ )
+    /// Save array of recipes to cache for dsired category of recipes
+    /// - Parameters
+    /// recipes: array of recipes
+    /// category: category of recipes
+    func save(recipes: [Recipe], for category: Category)
+    /// Save detailed recipe to cache
+    /// - Parameter recipeDetailed: detailed recipe
+    func save(recipeDetailed: RecipeDetail)
+    /// Remove all recipes from cache
     func removeAllRecipes()
 }
 
+/// Service to cache recipes
 final class CacheService {
-    let coreDataManager: CoreDataManager
+    // MARK: - Singletone
+
+    static let shared = CacheService(coreDataManager: CoreDataManager.shared)
+
+    // MARK: - Private Parameters
+
+    private let coreDataManager: CoreDataManager
+
+    // MARK: - Initialization
 
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
@@ -24,7 +46,8 @@ final class CacheService {
 // MARK: - CacheService - CacheServiceProtocol
 
 extension CacheService: CacheServiceProtocol {
-    func save(recipes: [Recipe], to category: Category) {
+    // TODO: Add category
+    func save(recipes: [Recipe], for category: Category) {
         guard let recipeEntityDescription = NSEntityDescription.entity(
             forEntityName: "RecipeCD",
             in: coreDataManager.context
@@ -32,15 +55,15 @@ extension CacheService: CacheServiceProtocol {
         for recipe in recipes {
             let recipeCD = RecipeCD(entity: recipeEntityDescription, insertInto: coreDataManager.context)
             recipeCD.name = recipe.name
-            recipeCD.calories = Int64(recipe.calories)
-            recipeCD.timeToCook = Int64(recipe.timeToCook)
+            recipeCD.calories = Int16(recipe.calories)
+            recipeCD.timeToCook = Int16(recipe.timeToCook)
             recipeCD.recipeImage = recipe.recipeImage
-            recipeCD.category = category.name
+//            recipeCD.category = category.name
             coreDataManager.saveContext()
         }
     }
 
-    func save(recipeDetailed: RecipeDetail /* , to recipe: Recipe? */ ) {
+    func save(recipeDetailed: RecipeDetail) {
         guard let recipeEntityDescription = NSEntityDescription.entity(
             forEntityName: "RecipeDetailedCD",
             in: coreDataManager.context
@@ -63,21 +86,21 @@ extension CacheService: CacheServiceProtocol {
         do {
             let recipes = try? coreDataManager.context.fetch(RecipeDetailedCD.fetchRequest())
             guard let recipes = recipes else { return nil }
-            for item in recipes {
-                if item.name == recipe.name {
-                    return RecipeDetail(CD: item)
-                }
+            for item in recipes where item.name == recipe.name {
+                return RecipeDetail(CD: item)
             }
             return nil
         }
     }
 
-    func fetchRecipes(for category: Category) -> [Recipe] {
+    // TODO: Add category to search
+    func fetchRecipes(for category: Category) -> [Recipe]? {
         do {
             let recipes = try? coreDataManager.context.fetch(RecipeCD.fetchRequest())
-            guard let categoryRecipes = recipes?.filter({ $0.category == category.name }) else { return [] }
-            return categoryRecipes.map { Recipe(recipeCD: $0) }
+//            guard let categoryRecipes = recipes?.filter({ $0.category == category.name }) else { return nil }
+//            return categoryRecipes.map { Recipe(recipeCD: $0) }
         }
+        return nil
     }
 
     func removeAllRecipes() {}

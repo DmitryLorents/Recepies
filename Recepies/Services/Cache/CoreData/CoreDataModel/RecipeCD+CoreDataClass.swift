@@ -10,12 +10,10 @@ public final class RecipeCD: NSManagedObject {
         NSFetchRequest<RecipeCD>(entityName: "RecipeCD")
     }
 
-    @NSManaged var name: String?
-    @NSManaged var recipeImage: String?
-    @NSManaged var timeToCook: Int64
-    @NSManaged var calories: Int64
-    @NSManaged var category: String
-//    @NSManaged var recipeDetailed: RecipeDetailedCD?
+    @NSManaged var name: String
+    @NSManaged var recipeImage: String
+    @NSManaged var timeToCook: Int16
+    @NSManaged var calories: Int16
 }
 
 extension RecipeCD: Identifiable {}

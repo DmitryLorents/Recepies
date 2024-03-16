@@ -19,7 +19,6 @@ public final class RecipeDetailedCD: NSManagedObject {
     @NSManaged var proteins: Double
     @NSManaged var fats: Double
     @NSManaged var carbohydrates: Double
-    @NSManaged var recipe: RecipeCD?
 }
 
 extension RecipeDetailedCD: Identifiable {}
