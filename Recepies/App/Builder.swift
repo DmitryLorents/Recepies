@@ -75,11 +75,13 @@ final class Builder: BuilderProtocol {
         let view = CategoryView()
         let requestCreator = RequestCreator()
         let networkService = NetworkService(requestCreator: requestCreator)
+        let cachService = CacheService.shared
         let presenter = CategoryPresenter(
             category: category,
             view: view,
             coordinator: coordinator,
-            networkService: networkService
+            networkService: networkService,
+            cacheService: cachService
         )
         view.presenter = presenter
         return view
@@ -89,7 +91,7 @@ final class Builder: BuilderProtocol {
         let view = DetailView()
         let requestCreator = RequestCreator()
         let networkService = NetworkService(requestCreator: requestCreator)
-        let cacheService = CacheService(coreDataManager: CoreDataManager.shared)
+        let cacheService = CacheService.shared
         let presenter = DetailPresenter(
             view: view,
             coordinator: coordinator,

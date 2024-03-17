@@ -59,7 +59,6 @@ final class CoreDataManager {
             forEntityName: CategoryCD.entityName,
             in: context
         ) else {
-            print("Failed to create CategoryCD entity")
             return nil
         }
         let categoryCD = CategoryCD(entity: categoryCDEntityDescruption, insertInto: context)

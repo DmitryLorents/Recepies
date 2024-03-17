@@ -59,7 +59,7 @@ extension CacheService: CacheServiceProtocol {
             print("Failed to save recipes for category to core data")
             return
         }
-        categoryCD.name = category.name
+//        categoryCD.name = category.name
         let recipesSet = Set(recipes.compactMap { coreDataManager.makeRecipeCD(for: $0) })
         categoryCD.recipesSet = recipesSet
         coreDataManager.saveContext()
@@ -72,7 +72,9 @@ extension CacheService: CacheServiceProtocol {
     }
 
     func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
-        guard let recipeCD = coreDataManager.fetchRecipeDetailedCD(for: recipe) else { return nil }
+        guard let recipeCD = coreDataManager.fetchRecipeDetailedCD(for: recipe) else {
+            return nil
+        }
         return RecipeDetail(recipeCD)
     }
 
@@ -80,8 +82,7 @@ extension CacheService: CacheServiceProtocol {
         if let categoryCD = coreDataManager.fetchCategoryCD(for: category),
            let recipesSet = categoryCD.recipesSet
         {
-            return Array(recipesSet).map { Recipe(recipeCD: $0)
-            }
+            return Array(recipesSet.map { Recipe(recipeCD: $0) })
         }
         return nil
     }
