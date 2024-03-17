@@ -23,9 +23,9 @@ struct Recipe: Codable {
     }
 
     init(recipeCD: RecipeCD) {
-        name = recipeCD.name ?? ""
-        uri = ""
-        recipeImage = recipeCD.recipeImage ?? ""
+        name = recipeCD.name
+        uri = recipeCD.uri
+        recipeImage = recipeCD.recipeImage
         timeToCook = Int(recipeCD.timeToCook)
         calories = Int(recipeCD.calories)
     }

@@ -58,7 +58,6 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     private weak var view: CategoryViewProtocol?
     private var recipes: [Recipe]? {
         didSet {
-            print("Recipes count: \(recipes?.count)")
             dataSource = recipes
         }
     }
@@ -116,21 +115,15 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         view?.updateState(with: .loading)
         if let cachedRecipes = cacheService.getRecipes(for: category) {
             recipes = cachedRecipes
-            print("Got recipes from cache \(recipes?.first?.name)")
             view?.updateState(with: .data)
-        } else {
-            print("Failed to load from cache. Recipes = \(recipes)")
         }
         fetchData(searchText: "")
     }
 
     func fetchData(searchText: String) {
-        print("Is initial run: \(isInitialRun)")
         if isInitialRun || recipes == nil {
-            print("First run with screen state: \(view?.state)")
             isInitialRun = false
         } else {
-            print("Not first run with screen state \(view?.state)")
             view?.updateState(with: .loading)
         }
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
@@ -145,12 +138,11 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     let currentRecipesSorted = self.recipes?.sorted(by: { $0.name < $1.name })
                     let downloadedRecipeSorted = downloadedRecipes.sorted(by: { $0.name < $1.name })
                     if currentRecipesSorted != downloadedRecipeSorted {
-                        print("Sets are different")
                         self.recipes = downloadedRecipes
                         self.cacheService.save(recipes: downloadedRecipes, for: self.category)
                         let state: CategoryState = downloadedRecipes.count > 0 ? .data : .noData
                         self.view?.updateState(with: state)
-                    } else { print("Sets are equal") }
+                    } else { self.view?.updateState(with: .data) }
                 }
             }
         }

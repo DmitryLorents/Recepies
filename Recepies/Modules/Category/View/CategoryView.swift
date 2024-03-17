@@ -80,7 +80,6 @@ final class CategoryView: UIViewController {
     var presenter: CategoryPresenterProtocol?
     var state: CategoryState = .initial {
         didSet {
-            print("State:", state)
             updateViewAppearance(for: state)
         }
     }
