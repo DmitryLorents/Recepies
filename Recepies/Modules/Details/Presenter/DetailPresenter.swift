@@ -98,7 +98,6 @@ final class DetailPresenter: DetailPresenterProtocol {
                         self?.cacheService.save(recipeDetailed: recipeData)
                         self?.recipeDetail = recipeData
                         self?.view?.state = .data
-
                     case let .failure(error):
                         print("error")
                         self?.view?.state = .error(error)
