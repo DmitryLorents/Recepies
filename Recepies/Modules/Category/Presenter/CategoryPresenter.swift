@@ -33,6 +33,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func searchRecipes(text: String)
     /// Start downloading data from network
     func fetchData(searchText: String)
+    /// Fetch data from cache or network during first open of screen
+    func fetchInitialData()
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -49,6 +51,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     // MARK: - Private Properties
 
+    private var isInitialRun: Bool = true
     private let networkService: NetworkServiceProtocol
     private let cacheService: CacheServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
@@ -108,10 +111,20 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         view?.updateState(with: .data)
     }
 
-    func fetchData(searchText: String) {
+    func fetchInitialData() {
         view?.updateState(with: .loading)
         if let cachedRecipes = cacheService.getRecipes(for: category) {
-            
+            recipes = cachedRecipes
+            view?.updateState(with: .data)
+        }
+        fetchData(searchText: "")
+    }
+
+    func fetchData(searchText: String) {
+        if isInitialRun || recipes == nil {
+            isInitialRun = false
+        } else {
+            view?.updateState(with: .loading)
         }
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
@@ -121,10 +134,15 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     print("Error:", error)
                     self.view?.updateState(with: .error(error))
 
-                case let .success(recipes):
-                    self.recipes = recipes
-                    let state: CategoryState = recipes.count > 0 ? .data : .noData
-                    self.view?.updateState(with: state)
+                case let .success(downloadedRecipes):
+                    let currentRecipesSorted = self.recipes?.sorted(by: { $0.name < $1.name })
+                    let downloadedRecipeSorted = downloadedRecipes.sorted(by: { $0.name < $1.name })
+                    if currentRecipesSorted != downloadedRecipeSorted {
+                        self.recipes = downloadedRecipes
+                        self.cacheService.save(recipes: downloadedRecipes, for: self.category)
+                        let state: CategoryState = downloadedRecipes.count > 0 ? .data : .noData
+                        self.view?.updateState(with: state)
+                    } else { self.view?.updateState(with: .data) }
                 }
             }
         }

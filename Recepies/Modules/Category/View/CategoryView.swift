@@ -80,7 +80,6 @@ final class CategoryView: UIViewController {
     var presenter: CategoryPresenterProtocol?
     var state: CategoryState = .initial {
         didSet {
-            print("State:", state)
             updateViewAppearance(for: state)
         }
     }
@@ -99,7 +98,7 @@ final class CategoryView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if presenter?.dataSource == nil {
-            presenter?.fetchData(searchText: "")
+            presenter?.fetchInitialData()
         }
     }
 

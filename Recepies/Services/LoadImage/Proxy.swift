@@ -58,7 +58,6 @@ final class Proxy {
            let fileName = makeFilePath(for: urlString)
         {
             try? data.write(to: fileName)
-            print("Data saved to file", fileName)
         } else {
             print("Error writing to file:")
         }

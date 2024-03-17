@@ -11,7 +11,7 @@ public final class CategoryCD: NSManagedObject {
         NSFetchRequest<CategoryCD>(entityName: CategoryCD.entityName)
     }
 
-    @NSManaged var name: String?
+    @NSManaged var name: String
     @NSManaged var recipesSet: Set<RecipeCD>?
 
     // MARK: Generated accessors for recipes
