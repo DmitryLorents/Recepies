@@ -9,6 +9,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="recipeImage" attributeType="String"/>
         <attribute name="timeToCook" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uri" attributeType="String"/>
         <relationship name="categor" maxCount="1" deletionRule="Nullify" destinationEntity="CategoryCD" inverseName="recipesSet" inverseEntity="CategoryCD"/>
     </entity>
     <entity name="RecipeDetailedCD" representedClassName=".RecipeDetailedCD" syncable="YES">

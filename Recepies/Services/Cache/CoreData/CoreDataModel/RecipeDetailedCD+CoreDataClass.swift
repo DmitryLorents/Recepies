@@ -6,15 +6,16 @@ import Foundation
 
 /// Core data model for detailed recipe
 public final class RecipeDetailedCD: NSManagedObject {
+    @nonobjc static let entityName = "RecipeDetailedCD"
     @nonobjc class func fetchRequest() -> NSFetchRequest<RecipeDetailedCD> {
-        NSFetchRequest<RecipeDetailedCD>(entityName: "RecipeDetailedCD")
+        NSFetchRequest<RecipeDetailedCD>(entityName: RecipeDetailedCD.entityName)
     }
 
     @NSManaged var name: String?
-    @NSManaged var recipeImage: String?
+    @NSManaged var recipeImage: String
     @NSManaged var timeToCook: Double
     @NSManaged var calories: Double
-    @NSManaged var recipeDescription: String?
+    @NSManaged var recipeDescription: String
     @NSManaged var weight: Double
     @NSManaged var proteins: Double
     @NSManaged var fats: Double

@@ -6,8 +6,9 @@ import Foundation
 
 /// Core data model for recipe
 public final class CategoryCD: NSManagedObject {
+    @nonobjc static let entityName = "CategoryCD"
     @nonobjc class func fetchRequest() -> NSFetchRequest<CategoryCD> {
-        NSFetchRequest<CategoryCD>(entityName: "CategoryCD")
+        NSFetchRequest<CategoryCD>(entityName: CategoryCD.entityName)
     }
 
     @NSManaged var name: String?

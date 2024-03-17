@@ -488,9 +488,9 @@
 			isa = PBXGroup;
 			children = (
 				0AE749992BA55C6A005F923F /* Recepies.xcdatamodeld */,
-				0AE7499F2BA56CBA005F923F /* RecipeDetailedCD+CoreDataClass.swift */,
 				0AE749A12BA56CBA005F923F /* CategoryCD+CoreDataClass.swift */,
 				0AE749A32BA56CBA005F923F /* RecipeCD+CoreDataClass.swift */,
+				0AE7499F2BA56CBA005F923F /* RecipeDetailedCD+CoreDataClass.swift */,
 			);
 			path = CoreDataModel;
 			sourceTree = "<group>";
