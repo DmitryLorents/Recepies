@@ -35,10 +35,10 @@ struct RecipeDetail {
     }
 
     init(_ coreDataModel: RecipeDetailedCD) {
-        name = coreDataModel.name ?? ""
+        name = coreDataModel.name
         timeToCook = coreDataModel.timeToCook
-        recipeImage = coreDataModel.recipeImage ?? ""
-        description = coreDataModel.description
+        recipeImage = coreDataModel.recipeImage
+        description = coreDataModel.recipeDescription
         weight = coreDataModel.weight
         calories = coreDataModel.calories
         proteins = coreDataModel.proteins

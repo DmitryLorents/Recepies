@@ -65,8 +65,9 @@ extension CacheService: CacheServiceProtocol {
     }
 
     func save(recipeDetailed: RecipeDetail) {
-        guard let recipeDetailCD = coreDataManager.makeRecipeDetailedCD(for: recipeDetailed) else { return }
-        coreDataManager.saveContext()
+        if coreDataManager.makeRecipeDetailedCD(for: recipeDetailed) != nil {
+            coreDataManager.saveContext()
+        }
     }
 
     func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
@@ -77,7 +78,8 @@ extension CacheService: CacheServiceProtocol {
     func getRecipes(for category: Category) -> [Recipe]? {
         if let categoryCD = coreDataManager.fetchCategoryCD(for: category),
            let recipesSet = categoryCD.recipesSet {
-            return Array(recipesSet).map { Recipe(recipeCD: $0) }
+            return Array(recipesSet).map { Recipe(recipeCD: $0)
+            }
         }
         return nil
     }

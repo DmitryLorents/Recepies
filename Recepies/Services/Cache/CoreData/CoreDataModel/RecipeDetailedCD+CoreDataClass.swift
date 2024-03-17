@@ -11,7 +11,7 @@ public final class RecipeDetailedCD: NSManagedObject {
         NSFetchRequest<RecipeDetailedCD>(entityName: RecipeDetailedCD.entityName)
     }
 
-    @NSManaged var name: String?
+    @NSManaged var name: String
     @NSManaged var recipeImage: String
     @NSManaged var timeToCook: Double
     @NSManaged var calories: Double
