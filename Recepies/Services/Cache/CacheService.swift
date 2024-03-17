@@ -4,6 +4,7 @@
 import CoreData
 import Foundation
 
+
 /// Protocol for cashe recipes service
 protocol CacheServiceProtocol {
     /// Get recipes from cache
@@ -77,7 +78,8 @@ extension CacheService: CacheServiceProtocol {
 
     func getRecipes(for category: Category) -> [Recipe]? {
         if let categoryCD = coreDataManager.fetchCategoryCD(for: category),
-           let recipesSet = categoryCD.recipesSet {
+           let recipesSet = categoryCD.recipesSet
+        {
             return Array(recipesSet).map { Recipe(recipeCD: $0)
             }
         }
