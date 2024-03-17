@@ -33,6 +33,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func searchRecipes(text: String)
     /// Start downloading data from network
     func fetchData(searchText: String)
+    /// Fetch data from cache or network during first open of screen
+    func fetchInitialData()
 }
 
 final class CategoryPresenter: CategoryPresenterProtocol {
@@ -107,13 +109,25 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         dataSource = sortedRecipes
         view?.updateState(with: .data)
     }
-
-    func fetchData(searchText: String) {
+    
+    func fetchInitialData() {
         view?.updateState(with: .loading)
         if let cachedRecipes = cacheService.getRecipes(for: category) {
-            
+            recipes = cachedRecipes
+            view?.updateState(with: .data)
         }
-        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+        fetchData(searchText: "")
+        
+    }
+
+    func fetchData(searchText: String) {
+        switch view?.state {
+        case .data:
+            return
+        default:
+            view?.updateState(with: .loading)
+        }
+         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
@@ -122,9 +136,12 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     self.view?.updateState(with: .error(error))
 
                 case let .success(recipes):
-                    self.recipes = recipes
-                    let state: CategoryState = recipes.count > 0 ? .data : .noData
-                    self.view?.updateState(with: state)
+                    if self.recipes != recipes {
+                        self.recipes = recipes
+                        self.cacheService.save(recipes: recipes, for: self.category)
+                        let state: CategoryState = recipes.count > 0 ? .data : .noData
+                        self.view?.updateState(with: state)
+                    }
                 }
             }
         }

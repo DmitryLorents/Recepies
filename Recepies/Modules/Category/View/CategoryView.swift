@@ -99,7 +99,7 @@ final class CategoryView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if presenter?.dataSource == nil {
-            presenter?.fetchData(searchText: "")
+            presenter?.fetchInitialData()
         }
     }
 
