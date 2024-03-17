@@ -96,7 +96,7 @@ extension CacheService: CacheServiceProtocol {
             let recipes = Array(recipesSet.map { Recipe(recipeCD: $0) })
             print("Returned recipes from cache count: \(recipes.count)")
             print("First recipe name: \(recipes.first?.name)")
-            return recipes
+            return Array(recipesSet.map { Recipe(recipeCD: $0) })
         }
         return nil
     }

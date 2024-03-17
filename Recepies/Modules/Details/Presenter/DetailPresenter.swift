@@ -83,6 +83,9 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
 
     func fetchData() {
+        print(#function)
+        print("Recipe name: ", recipe.name)
+        print("Recipe uri: ", recipe.uri)
         view?.state = .loading
         if let recipeFromCache = cacheService.getDetailedRecipe(for: recipe) {
             recipeDetail = recipeFromCache

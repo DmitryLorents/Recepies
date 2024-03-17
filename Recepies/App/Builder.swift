@@ -91,7 +91,7 @@ final class Builder: BuilderProtocol {
         let view = DetailView()
         let requestCreator = RequestCreator()
         let networkService = NetworkService(requestCreator: requestCreator)
-        let cacheService = CacheService(coreDataManager: CoreDataManager.shared)
+        let cacheService = CacheService.shared
         let presenter = DetailPresenter(
             view: view,
             coordinator: coordinator,

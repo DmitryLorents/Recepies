@@ -49,6 +49,7 @@ final class CoreDataManager {
     }
 
     func fetchRecipeDetailedCD(for recipe: Recipe) -> RecipeDetailedCD? {
+        print(#function)
         let fetchRequest = RecipeDetailedCD.fetchRequest()
         let recipes = try? context.fetch(fetchRequest)
         return recipes?.first(where: { $0.name == recipe.name })
@@ -68,6 +69,7 @@ final class CoreDataManager {
     }
 
     func makeRecipeCD(for recipe: Recipe) -> RecipeCD? {
+        print(#function)
         guard let recipeCDEntityDescription = NSEntityDescription
             .entity(forEntityName: RecipeCD.entityName, in: context)
         else {
@@ -84,6 +86,7 @@ final class CoreDataManager {
     }
 
     func makeRecipeDetailedCD(for recipeDetailed: RecipeDetail) -> RecipeDetailedCD? {
+        print(#function)
         guard let recipeDetailCDEntityDescription = NSEntityDescription.entity(
             forEntityName: RecipeDetailedCD.entityName,
             in: context
