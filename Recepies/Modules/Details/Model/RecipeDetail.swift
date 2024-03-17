@@ -34,15 +34,15 @@ struct RecipeDetail {
         carbohydrates = dto.totalNutrients.chocdf.quantity
     }
 
-    init(CD: RecipeDetailedCD) {
-        name = CD.name ?? ""
-        timeToCook = CD.timeToCook
-        recipeImage = CD.recipeImage ?? ""
-        description = CD.description
-        weight = CD.weight
-        calories = CD.calories
-        proteins = CD.proteins
-        fats = CD.fats
-        carbohydrates = CD.carbohydrates
+    init(_ coreDataModel: RecipeDetailedCD) {
+        name = coreDataModel.name
+        timeToCook = coreDataModel.timeToCook
+        recipeImage = coreDataModel.recipeImage
+        description = coreDataModel.recipeDescription
+        weight = coreDataModel.weight
+        calories = coreDataModel.calories
+        proteins = coreDataModel.proteins
+        fats = coreDataModel.fats
+        carbohydrates = coreDataModel.carbohydrates
     }
 }

@@ -11,7 +11,7 @@ struct Recipe: Codable {
     let timeToCook: Int
     /// Calories amount
     let calories: Int
-    /// Url recipe
+    /// Recipe's uri
     let uri: String
     /// Converting from DTO model
     init(_ recipeDTO: RecipeDTO) {

@@ -48,56 +48,38 @@ final class CacheService {
 extension CacheService: CacheServiceProtocol {
     // TODO: Add category
     func save(recipes: [Recipe], for category: Category) {
-        guard let recipeEntityDescription = NSEntityDescription.entity(
-            forEntityName: "RecipeCD",
-            in: coreDataManager.context
-        ) else { return }
-        for recipe in recipes {
-            let recipeCD = RecipeCD(entity: recipeEntityDescription, insertInto: coreDataManager.context)
-            recipeCD.name = recipe.name
-            recipeCD.calories = Int16(recipe.calories)
-            recipeCD.timeToCook = Int16(recipe.timeToCook)
-            recipeCD.recipeImage = recipe.recipeImage
-//            recipeCD.category = category.name
+        var categoryCD: CategoryCD
+        if let existingCategoryCD = coreDataManager.fetchCategoryCD(for: category) {
+            categoryCD = existingCategoryCD
+            categoryCD.recipesSet?.forEach { coreDataManager.remove(recipeCD: $0) }
+        } else if let newCategoryCD = coreDataManager.makeCategoryCD(for: category) {
+            categoryCD = newCategoryCD
+        } else {
+            print("Failed to save recipes for category to core data")
+            return
+        }
+        categoryCD.name = category.name
+        let recipesSet = Set(recipes.compactMap { coreDataManager.makeRecipeCD(for: $0) })
+        categoryCD.recipesSet = recipesSet
+        coreDataManager.saveContext()
+    }
+
+    func save(recipeDetailed: RecipeDetail) {
+        if coreDataManager.makeRecipeDetailedCD(for: recipeDetailed) != nil {
             coreDataManager.saveContext()
         }
     }
 
-    func save(recipeDetailed: RecipeDetail) {
-        guard let recipeEntityDescription = NSEntityDescription.entity(
-            forEntityName: "RecipeDetailedCD",
-            in: coreDataManager.context
-        )
-        else { return }
-        let recipeDetaiCD = RecipeDetailedCD(entity: recipeEntityDescription, insertInto: coreDataManager.context)
-        recipeDetaiCD.name = recipeDetailed.name
-        recipeDetaiCD.calories = recipeDetailed.calories
-        recipeDetaiCD.carbohydrates = recipeDetailed.carbohydrates
-        recipeDetaiCD.recipeImage = recipeDetailed.recipeImage
-        recipeDetaiCD.fats = recipeDetailed.fats
-        recipeDetaiCD.timeToCook = recipeDetailed.timeToCook
-        recipeDetaiCD.recipeDescription = recipeDetailed.description
-        recipeDetaiCD.weight = recipeDetailed.weight
-        recipeDetaiCD.proteins = recipeDetailed.proteins
-        coreDataManager.saveContext()
+    func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
+        guard let recipeCD = coreDataManager.fetchRecipeDetailedCD(for: recipe) else { return nil }
+        return RecipeDetail(recipeCD)
     }
 
-    func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
-        do {
-            let recipes = try? coreDataManager.context.fetch(RecipeDetailedCD.fetchRequest())
-            guard let recipes = recipes else { return nil }
-            for item in recipes where item.name == recipe.name {
-                return RecipeDetail(CD: item)
-            }
-            return nil
-        }
-    }
-// TODO: Add category to search
     func getRecipes(for category: Category) -> [Recipe]? {
-        do {
-            let recipes = try? coreDataManager.context.fetch(RecipeCD.fetchRequest())
-//            guard let categoryRecipes = recipes?.filter({ $0.category == category.name }) else { return nil }
-//            return categoryRecipes.map { Recipe(recipeCD: $0) }
+        if let categoryCD = coreDataManager.fetchCategoryCD(for: category),
+           let recipesSet = categoryCD.recipesSet {
+            return Array(recipesSet).map { Recipe(recipeCD: $0)
+            }
         }
         return nil
     }

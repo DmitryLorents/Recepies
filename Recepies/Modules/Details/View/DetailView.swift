@@ -80,7 +80,7 @@ final class DetailView: UIViewController {
         case .noData:
             errorView.updateState(state)
             errorView.isHidden = false
-        case .error(_):
+        case .error:
             errorView.updateState(state)
             errorView.isHidden = false
         default:
