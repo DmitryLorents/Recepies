@@ -4,7 +4,6 @@
 import CoreData
 import Foundation
 
-
 /// Protocol for cashe recipes service
 protocol CacheServiceProtocol {
     /// Get recipes from cache
