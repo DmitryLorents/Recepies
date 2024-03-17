@@ -51,12 +51,14 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     // MARK: - Private Properties
 
+    private var isInitialRun: Bool = true
     private let networkService: NetworkServiceProtocol
     private let cacheService: CacheServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
     private var recipes: [Recipe]? {
         didSet {
+            print("Recipes count: \(recipes?.count)")
             dataSource = recipes
         }
     }
@@ -109,25 +111,29 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         dataSource = sortedRecipes
         view?.updateState(with: .data)
     }
-    
+
     func fetchInitialData() {
         view?.updateState(with: .loading)
         if let cachedRecipes = cacheService.getRecipes(for: category) {
             recipes = cachedRecipes
+            print("Got recipes from cache \(recipes?.first?.name)")
             view?.updateState(with: .data)
+        } else {
+            print("Failed to load from cache. Recipes = \(recipes)")
         }
         fetchData(searchText: "")
-        
     }
 
     func fetchData(searchText: String) {
-        switch view?.state {
-        case .data:
-            return
-        default:
+        print("Is initial run: \(isInitialRun)")
+        if isInitialRun || recipes == nil {
+            print("First run with screen state: \(view?.state)")
+            isInitialRun = false
+        } else {
+            print("Not first run with screen state \(view?.state)")
             view?.updateState(with: .loading)
         }
-         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
@@ -135,13 +141,16 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     print("Error:", error)
                     self.view?.updateState(with: .error(error))
 
-                case let .success(recipes):
-                    if self.recipes != recipes {
-                        self.recipes = recipes
-                        self.cacheService.save(recipes: recipes, for: self.category)
-                        let state: CategoryState = recipes.count > 0 ? .data : .noData
+                case let .success(downloadedRecipes):
+                    let currentRecipesSorted = self.recipes?.sorted(by: { $0.name < $1.name })
+                    let downloadedRecipeSorted = downloadedRecipes.sorted(by: { $0.name < $1.name })
+                    if currentRecipesSorted != downloadedRecipeSorted {
+                        print("Sets are different")
+                        self.recipes = downloadedRecipes
+                        self.cacheService.save(recipes: downloadedRecipes, for: self.category)
+                        let state: CategoryState = downloadedRecipes.count > 0 ? .data : .noData
                         self.view?.updateState(with: state)
-                    }
+                    } else { print("Sets are equal") }
                 }
             }
         }

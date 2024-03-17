@@ -105,6 +105,7 @@ final class CoreDataManager {
     }
 
     func remove(recipeCD: RecipeCD) {
+        print("Remove recipeCd with name: \(recipeCD.name)")
         context.delete(recipeCD)
     }
 }
