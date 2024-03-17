@@ -16,7 +16,8 @@ protocol CategoryPresenterProtocol: AnyObject {
         category: Category,
         view: CategoryViewProtocol,
         coordinator: BaseModuleCoordinator,
-        networkService: NetworkServiceProtocol
+        networkService: NetworkServiceProtocol,
+        cacheService: CacheServiceProtocol
     )
     /// Move back to parent screen
     func goBack()
@@ -49,6 +50,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Private Properties
 
     private let networkService: NetworkServiceProtocol
+    private let cacheService: CacheServiceProtocol
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
     private var recipes: [Recipe]? {
@@ -63,12 +65,14 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         category: Category,
         view: CategoryViewProtocol,
         coordinator: BaseModuleCoordinator,
-        networkService: NetworkServiceProtocol
+        networkService: NetworkServiceProtocol,
+        cacheService: CacheServiceProtocol
     ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
         self.networkService = networkService
+        self.cacheService = cacheService
     }
 
     // MARK: - Public Methods
@@ -104,10 +108,11 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         view?.updateState(with: .data)
     }
 
-    let cash = CacheService(coreDataManager: CoreDataManager.shared)
-
     func fetchData(searchText: String) {
         view?.updateState(with: .loading)
+        if let cachedRecipes = cacheService.getRecipes(for: category) {
+            
+        }
         networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
