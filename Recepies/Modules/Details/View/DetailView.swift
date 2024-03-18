@@ -5,12 +5,12 @@ import UIKit
 
 /// Protocol for detail screen
 protocol DetailViewProtocol: AnyObject {
+    /// Current state
+    var state: CategoryState { get set }
     /// Change button state
     func updateFavoriteButton()
     /// Reload table view
     func reloadData()
-    /// Current state
-    var state: CategoryState { get set }
 }
 
 /// Screen with detailed information for recipe
@@ -30,9 +30,7 @@ final class DetailView: UIViewController {
     // MARK: - Visual Components
 
     private let tableView = UITableView()
-
     private let favoritesButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(self, action: #selector(refreshControlPulled(sender:)), for: .valueChanged)
@@ -82,7 +80,7 @@ final class DetailView: UIViewController {
         case .noData:
             errorView.updateState(state)
             errorView.isHidden = false
-        case let .error(error):
+        case .error:
             errorView.updateState(state)
             errorView.isHidden = false
         default:
@@ -161,7 +159,7 @@ final class DetailView: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    private func returnCountCell() -> Int {
+    private func countCells() -> Int {
         switch state {
         case .data, .initial:
             return cellTypes.count
@@ -200,7 +198,7 @@ final class DetailView: UIViewController {
 
 extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        returnCountCell()
+        countCells()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

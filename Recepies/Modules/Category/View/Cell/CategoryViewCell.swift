@@ -77,6 +77,13 @@ final class CategoryViewCell: UITableViewCell {
         setupView()
     }
 
+    // MARK: - Life cycle
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dishImageView.image = nil
+    }
+
     // MARK: - Public Methods
 
     func setupCell(with recipe: Recipe?) {
