@@ -131,9 +131,10 @@ final class CategoryPresenter: CategoryPresenterProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case let .failure(error):
-                    print("Error:", error)
-                    self.view?.updateState(with: .error(error))
-
+                    if self.recipes == nil {
+                        print("Error:", error)
+                        self.view?.updateState(with: .error(error))
+                    }
                 case let .success(downloadedRecipes):
                     let currentRecipesSorted = self.recipes?.sorted(by: { $0.name < $1.name })
                     let downloadedRecipeSorted = downloadedRecipes.sorted(by: { $0.name < $1.name })
