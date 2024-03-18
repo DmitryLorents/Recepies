@@ -58,7 +58,6 @@ extension CacheService: CacheServiceProtocol {
             print("Failed to save recipes for category to core data")
             return
         }
-//        categoryCD.name = category.name
         let recipesSet = Set(recipes.compactMap { coreDataManager.makeRecipeCD(for: $0) })
         categoryCD.recipesSet = recipesSet
         coreDataManager.saveContext()
