@@ -49,6 +49,7 @@
 		0ACD2EEC2B91037E000BA913 /* RecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EE72B91037E000BA913 /* RecipesView.swift */; };
 		0ACD2EEE2B9106D9000BA913 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EED2B9106D9000BA913 /* Builder.swift */; };
 		0ACD2EF02B9106ED000BA913 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EEF2B9106ED000BA913 /* AppCoordinator.swift */; };
+		0AD8065C2BB4ADA0000CE00E /* SortingButtonPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 0AD8065B2BB4ADA0000CE00E /* SortingButtonPackage */; };
 		0AE749882BA4AEA9005F923F /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE7497F2BA4AEA9005F923F /* CategoryDTO.swift */; };
 		0AE749892BA4AEA9005F923F /* RecipeDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE749802BA4AEA9005F923F /* RecipeDTO.swift */; };
 		0AE7498A2BA4AEA9005F923F /* HitDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE749812BA4AEA9005F923F /* HitDTO.swift */; };
@@ -196,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AD8065C2BB4ADA0000CE00E /* SortingButtonPackage in Frameworks */,
 				916E754CC66FE1F605AA5F1A /* Pods_Recepies.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -784,6 +786,7 @@
 			);
 			name = Recepies;
 			packageProductDependencies = (
+				0AD8065B2BB4ADA0000CE00E /* SortingButtonPackage */,
 			);
 			productName = Recepies;
 			productReference = 0A086E4A2B8D0DB700ACCD6B /* Recepies.app */;
@@ -858,6 +861,7 @@
 			);
 			mainGroup = 0A086E412B8D0DB700ACCD6B;
 			packageReferences = (
+				0AD8065A2BB4ADA0000CE00E /* XCRemoteSwiftPackageReference "SortingButtonPackage" */,
 			);
 			productRefGroup = 0A086E4B2B8D0DB700ACCD6B /* Products */;
 			projectDirPath = "";
@@ -1399,6 +1403,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0AD8065A2BB4ADA0000CE00E /* XCRemoteSwiftPackageReference "SortingButtonPackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:DmitryLorents/SortingButtonPackage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0AD8065B2BB4ADA0000CE00E /* SortingButtonPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AD8065A2BB4ADA0000CE00E /* XCRemoteSwiftPackageReference "SortingButtonPackage" */;
+			productName = SortingButtonPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		0AE749992BA55C6A005F923F /* Recepies.xcdatamodeld */ = {

@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "sortingbuttonpackage",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:DmitryLorents/SortingButtonPackage.git",
+      "state" : {
+        "revision" : "703a7d1116e5535ce80387645a407ca7b30b2309",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
