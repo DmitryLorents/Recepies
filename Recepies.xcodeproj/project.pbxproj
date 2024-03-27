@@ -32,7 +32,6 @@
 		0A80A4752B923BE400539C0A /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */; };
 		0A80A4782B92700800539C0A /* PFCViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4772B92700800539C0A /* PFCViewCell.swift */; };
 		0A80A47A2B92716200539C0A /* PFCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A80A4792B92716200539C0A /* PFCView.swift */; };
-		0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CE2DA2B91B41200D55802 /* SortingButton.swift */; };
 		0AAE695B2BA41D0300DCC1B3 /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE695A2BA41D0300DCC1B3 /* Proxy.swift */; };
 		0AC310D32BA09E0500EF7DE7 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */; };
 		0AC310D62BA0CA7E00EF7DE7 /* RequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */; };
@@ -135,7 +134,6 @@
 		0A80A4742B923BE400539C0A /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		0A80A4772B92700800539C0A /* PFCViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCViewCell.swift; sourceTree = "<group>"; };
 		0A80A4792B92716200539C0A /* PFCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFCView.swift; sourceTree = "<group>"; };
-		0A9CE2DA2B91B41200D55802 /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		0AAE695A2BA41D0300DCC1B3 /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		0AC310D22BA09E0500EF7DE7 /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		0AC310D52BA0CA7E00EF7DE7 /* RequestCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCreator.swift; sourceTree = "<group>"; };
@@ -526,7 +524,6 @@
 			isa = PBXGroup;
 			children = (
 				0ACD2ECE2B8FAF1A000BA913 /* CategoryView.swift */,
-				0A9CE2DA2B91B41200D55802 /* SortingButton.swift */,
 				0ACD2ED22B8FC32C000BA913 /* Cell */,
 			);
 			path = View;
@@ -755,7 +752,6 @@
 				F99EDB9834452C56D17D9E81 /* Pods-Recepies.debug.xcconfig */,
 				BEAA42B0AD83047C26FAC482 /* Pods-Recepies.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -787,6 +783,8 @@
 			dependencies = (
 			);
 			name = Recepies;
+			packageProductDependencies = (
+			);
 			productName = Recepies;
 			productReference = 0A086E4A2B8D0DB700ACCD6B /* Recepies.app */;
 			productType = "com.apple.product-type.application";
@@ -859,6 +857,8 @@
 				Base,
 			);
 			mainGroup = 0A086E412B8D0DB700ACCD6B;
+			packageReferences = (
+			);
 			productRefGroup = 0A086E4B2B8D0DB700ACCD6B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1055,7 +1055,6 @@
 				1B9880A92B921DE90020B796 /* DetailPresenter.swift in Sources */,
 				0A413F0A2B9B3CA500F975C5 /* Database.swift in Sources */,
 				0AE7499E2BA55CC6005F923F /* CoreDataManager.swift in Sources */,
-				0A9CE2DB2B91B41200D55802 /* SortingButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

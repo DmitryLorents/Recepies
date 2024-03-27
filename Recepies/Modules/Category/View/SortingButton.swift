@@ -4,11 +4,11 @@
 import UIKit
 
 /// Button for search sorting criterias with 3 states
-final class SortingButton: UIButton {
+public class SortingButton: UIButton {
     // MARK: - Types
 
     /// Enum to determinate button appearance depending of state
-    enum SortingType {
+    public enum SortingType {
         /// Initial state, no sorting
         case none
         /// Sorting from less to more
@@ -17,7 +17,7 @@ final class SortingButton: UIButton {
         case moreToLess
     }
 
-    var sortingState: SortingType = .none {
+    public var sortingState: SortingType = .none {
         didSet {
             updateAppearance(with: sortingState)
         }
@@ -30,7 +30,7 @@ final class SortingButton: UIButton {
 
     // MARK: - Initializers
 
-    init(title: String, height: CGFloat) {
+    public init(title: String, height: CGFloat) {
         self.title = title
         self.height = height
         super.init(frame: .zero)
@@ -46,7 +46,7 @@ final class SortingButton: UIButton {
 
     // MARK: - Public Methods
 
-    func getSortingPredicate() -> SortingHandler? {
+    public func getSortingPredicate() -> SortingHandler? {
         let sortingHandler: SortingHandler?
         switch sortingState {
         case .none:

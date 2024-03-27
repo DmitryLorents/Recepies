@@ -1,6 +1,7 @@
 // CategoryView.swift
 // Copyright © RoadMap. All rights reserved.
 
+import SortingButtonPackage
 import UIKit
 
 /// Protocol for Category view
@@ -147,7 +148,7 @@ final class CategoryView: UIViewController {
     }
 
     private func makeSortingButton(title: String, action: Selector) -> SortingButton {
-        let button = SortingButton(title: title, height: 36)
+        let button = SortingButton(title: title, height: 36, font: .makeVerdanaRegular(size: 16), noActiveColor: .cellBackground, activeColor: .currentBlue, upImage: .upWhite, upImageFill: .upBlack, downImage: .down)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
