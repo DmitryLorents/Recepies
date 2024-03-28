@@ -49,7 +49,7 @@ final class AuthView: UIViewController {
 
     private let loginLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.loginLabelTitle
+        label.text = Local.AuthScreen.LoginLabel.title // Constants.loginLabelTitle
         label.font = .makeVerdanaBold(size: 28)
         label.textColor = .darkGrayApp
         return label

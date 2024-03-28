@@ -50,6 +50,10 @@
 		0ACD2EEE2B9106D9000BA913 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EED2B9106D9000BA913 /* Builder.swift */; };
 		0ACD2EF02B9106ED000BA913 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD2EEF2B9106ED000BA913 /* AppCoordinator.swift */; };
 		0AD8065C2BB4ADA0000CE00E /* SortingButtonPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 0AD8065B2BB4ADA0000CE00E /* SortingButtonPackage */; };
+		0AD806892BB5A7F4000CE00E /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0AD806882BB5A7F4000CE00E /* swiftgen.yml */; };
+		0AD8068B2BB5E7E3000CE00E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0AD8068A2BB5E7E3000CE00E /* Localizable.strings */; };
+		0AD806972BB5FB76000CE00E /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD806952BB5FB76000CE00E /* Strings+Generated.swift */; };
+		0AD806982BB5FB76000CE00E /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD806962BB5FB76000CE00E /* XCAssets+Generated.swift */; };
 		0AE749882BA4AEA9005F923F /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE7497F2BA4AEA9005F923F /* CategoryDTO.swift */; };
 		0AE749892BA4AEA9005F923F /* RecipeDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE749802BA4AEA9005F923F /* RecipeDTO.swift */; };
 		0AE7498A2BA4AEA9005F923F /* HitDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE749812BA4AEA9005F923F /* HitDTO.swift */; };
@@ -152,6 +156,10 @@
 		0ACD2EE72B91037E000BA913 /* RecipesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesView.swift; sourceTree = "<group>"; };
 		0ACD2EED2B9106D9000BA913 /* Builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		0ACD2EEF2B9106ED000BA913 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		0AD806882BB5A7F4000CE00E /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		0AD8068A2BB5E7E3000CE00E /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		0AD806952BB5FB76000CE00E /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
+		0AD806962BB5FB76000CE00E /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		0AE7497F2BA4AEA9005F923F /* CategoryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
 		0AE749802BA4AEA9005F923F /* RecipeDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeDTO.swift; sourceTree = "<group>"; };
 		0AE749812BA4AEA9005F923F /* HitDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
@@ -222,6 +230,7 @@
 		0A086E412B8D0DB700ACCD6B = {
 			isa = PBXGroup;
 			children = (
+				0AD806882BB5A7F4000CE00E /* swiftgen.yml */,
 				0A086E4C2B8D0DB700ACCD6B /* Recepies */,
 				0A086E632B8D0DB900ACCD6B /* RecepiesTests */,
 				0A086E6D2B8D0DB900ACCD6B /* RecepiesUITests */,
@@ -244,6 +253,7 @@
 		0A086E4C2B8D0DB700ACCD6B /* Recepies */ = {
 			isa = PBXGroup;
 			children = (
+				0AD806942BB5FAE9000CE00E /* Generated */,
 				0A086E7E2B8D0FD900ACCD6B /* App */,
 				0A086E932B8DCB5000ACCD6B /* Coordinators */,
 				0A086E812B8D180100ACCD6B /* Modules */,
@@ -277,6 +287,7 @@
 				0A086E562B8D0DB900ACCD6B /* Assets.xcassets */,
 				0A086E582B8D0DB900ACCD6B /* LaunchScreen.storyboard */,
 				0A086E5B2B8D0DB900ACCD6B /* Info.plist */,
+				0AD8068A2BB5E7E3000CE00E /* Localizable.strings */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -583,6 +594,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		0AD806942BB5FAE9000CE00E /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				0AD806952BB5FB76000CE00E /* Strings+Generated.swift */,
+				0AD806962BB5FB76000CE00E /* XCAssets+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		0AE7497D2BA4AEA9005F923F /* DTO */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,6 +793,7 @@
 			buildConfigurationList = 0A086E742B8D0DB900ACCD6B /* Build configuration list for PBXNativeTarget "Recepies" */;
 			buildPhases = (
 				3704909464D344A2B94489B5 /* [CP] Check Pods Manifest.lock */,
+				0AD8068C2BB5F00C000CE00E /* SwiftGen */,
 				0A086E7F2B8D121700ACCD6B /* SwiftFormat */,
 				0A086E802B8D12B300ACCD6B /* SwiftlintScript */,
 				0A086E462B8D0DB700ACCD6B /* Sources */,
@@ -880,7 +901,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A086E5A2B8D0DB900ACCD6B /* LaunchScreen.storyboard in Resources */,
+				0AD8068B2BB5E7E3000CE00E /* Localizable.strings in Resources */,
 				0A086E572B8D0DB900ACCD6B /* Assets.xcassets in Resources */,
+				0AD806892BB5A7F4000CE00E /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,6 +964,26 @@
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n Type a script or drag a script file from your workspace to insert its path.\n";
 			showEnvVarsInLog = 0;
 		};
+		0AD8068C2BB5F00C000CE00E /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftgen >/dev/null; then\n  swiftgen\nelse\n  echo \"warning: Swiftgen not installed, download from\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3704909464D344A2B94489B5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -987,6 +1030,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AD806972BB5FB76000CE00E /* Strings+Generated.swift in Sources */,
+				0AD806982BB5FB76000CE00E /* XCAssets+Generated.swift in Sources */,
 				0A086E9E2B8DEDF800ACCD6B /* RecipesCoordinator.swift in Sources */,
 				1B9880AB2B921E100020B796 /* DetailView.swift in Sources */,
 				1B9880BE2B9A5CB50020B796 /* User.swift in Sources */,
