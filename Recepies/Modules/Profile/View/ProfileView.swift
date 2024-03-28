@@ -156,12 +156,12 @@ extension ProfileView: ProfileViewProtocol {
     func showImageChooser() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let chooseFromGalleryAction = UIAlertAction(title: Constants.galary, style: .default) { action in
+        let chooseFromGalleryAction = UIAlertAction(title: Constants.galary, style: .default) { _ in
             self.showImagePicker(sourceType: .photoLibrary)
         }
         actionSheet.addAction(chooseFromGalleryAction)
 
-        let takePhotoAction = UIAlertAction(title: Constants.takePhoto, style: .default) { action in
+        let takePhotoAction = UIAlertAction(title: Constants.takePhoto, style: .default) { _ in
             self.showImagePicker(sourceType: .camera)
         }
         actionSheet.addAction(takePhotoAction)
