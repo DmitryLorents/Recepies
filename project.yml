@@ -1,6 +1,9 @@
 name: Recepies
 settings:
   CODE_SIGNING_ALLOWED: NO
+  ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: true
+  ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
+
 options:
  bundleIdPrefix: com.zmey666
  deploymentTarget:
@@ -12,8 +15,16 @@ packages:
     majorVersion: 1.0.0
 targets:
   Recepies:
-    attributes:
-      
+    
+
+    type: application
+    platform: iOS
+    sources:
+      - Recepies
+    dependencies:
+      - package: SortingButtonPackage
+
+    attributes: 
     postCompileScripts:
       - script: |
           if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
@@ -26,13 +37,13 @@ targets:
         name: Swiftformat
 
       - script: |
-          if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
-          fi
+          #if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
+          #fi
 
-          if which swiftlint > /dev/null; then swiftlint
-          else
-          echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-          fi
+          #if which swiftlint > /dev/null; then swiftlint
+          #else
+          #echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+          #fi
 
         name: Swiftlint
 
@@ -46,11 +57,3 @@ targets:
           fi
 
         name: Swifgen
-      
-    type: application
-    platform: iOS
-
-    sources:
-      - Recepies
-    dependencies:
-      - package: SortingButtonPackage
