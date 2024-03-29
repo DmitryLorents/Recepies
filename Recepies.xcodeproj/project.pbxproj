@@ -793,9 +793,9 @@
 			buildConfigurationList = 0A086E742B8D0DB900ACCD6B /* Build configuration list for PBXNativeTarget "Recepies" */;
 			buildPhases = (
 				3704909464D344A2B94489B5 /* [CP] Check Pods Manifest.lock */,
-				0AD8068C2BB5F00C000CE00E /* SwiftGen */,
 				0A086E7F2B8D121700ACCD6B /* SwiftFormat */,
 				0A086E802B8D12B300ACCD6B /* SwiftlintScript */,
+				0AD8068C2BB5F00C000CE00E /* SwiftGen */,
 				0A086E462B8D0DB700ACCD6B /* Sources */,
 				0A086E472B8D0DB700ACCD6B /* Frameworks */,
 				0A086E482B8D0DB700ACCD6B /* Resources */,
