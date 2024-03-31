@@ -1,22 +1,43 @@
 name: Recepies
 settings:
+  # prevent code signing 
   CODE_SIGNING_ALLOWED: NO
+  # use assets resources entered by ".recourceName"
   ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: true
   ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
+  CURRENT_PROJECT_VERSION: 1.0.0
+  MARKETING_VERSION: 1
+  ENABLE_USER_SCRIPT_SANDBOXING: false
+  GENERATE_INFOPLIST_FILE: true
+  INFOPLIST_KEY_UILaunchScreen_Generation: true
 
+#options
 options:
  bundleIdPrefix: com.zmey666
  deploymentTarget:
   iOS: "15.0"
   postGenCommand: pod install
+
+#packages
 packages:
   SortingButtonPackage:
     url: https://github.com/DmitryLorents/SortingButtonPackage
     majorVersion: 1.0.0
+
+#targets
 targets:
   Recepies:
     
+    type: application
+    platform: iOS
+    sources:
+      - Recepies
+    dependencies:
+      - package: SortingButtonPackage
 
+  RecipesMock:
+    settings:
+      OTHER_SWIFT_FLAGS: "-D Mock"
     type: application
     platform: iOS
     sources:
@@ -35,6 +56,9 @@ targets:
           echo "warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat"
           fi
         name: Swiftformat
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
 
       - script: |
           #if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
@@ -46,6 +70,9 @@ targets:
           #fi
 
         name: Swiftlint
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
 
       - script: |
           if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
@@ -57,3 +84,6 @@ targets:
           fi
 
         name: Swifgen
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
