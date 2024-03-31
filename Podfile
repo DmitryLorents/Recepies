@@ -9,10 +9,10 @@ target 'Recepies' do
 
   # Pods for Recepies
 
-  target 'RecipesMock' do
-    inherit! :search_paths
-     Pods for testing
-  end
+  #target 'RecipesMock' do
+   # inherit! :search_paths
+   #  Pods for testing
+ # end
 
   #target 'RecepiesUITests' do
     # Pods for testing
