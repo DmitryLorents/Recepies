@@ -6,10 +6,13 @@ target 'Recepies' do
   use_frameworks!
 
   pod 'Keychain'
+end
 
-  # Pods for Recepies
+target 'RecipesMock' do
+	use_frameworks!
 
-  #target 'RecipesMock' do
+  	pod 'Keychain'
+end
    # inherit! :search_paths
    #  Pods for testing
  # end
@@ -18,7 +21,7 @@ target 'Recepies' do
     # Pods for testing
 #  end
 
-end
+
 
 post_install do |installer|
     installer.generated_projects.each do |project|

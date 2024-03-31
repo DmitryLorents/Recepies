@@ -49,7 +49,7 @@ final class RequestCreator {
     }
 
     private func makeCategoryQueryItems(type: CategoryType, text: String) -> [URLQueryItem] {
-//        let isRandomQuery = URLQueryItem(name: "random", value: "true")
+        //        let isRandomQuery = URLQueryItem(name: "random", value: "true")
         let dishTypeQuery = URLQueryItem(name: "dishType", value: type.description)
         let searchQuery = makeSearchQuery(type, text: text)
         let uriQuery = URLQueryItem(name: "field", value: "uri")
@@ -78,18 +78,36 @@ final class RequestCreator {
         let uriQuery = URLQueryItem(name: "uri", value: uri)
         return makeGeneralQueryItems() + [uriQuery]
     }
+
+    private func makeMockURL() -> URL? {
+        var fileName = "detailRecipeMock"
+        let bundleURL = Bundle.main.url(forResource: fileName, withExtension: "json")
+        guard let bundleURL else {
+            let errorText = "Absence of mock file: \(fileName).json"
+            debugPrint(errorText)
+            return nil
+        }
+        return bundleURL
+    }
 }
 
 // MARK: - RequestCreator - RequestCreatorProtocol
 
 extension RequestCreator: RequestCreatorProtocol {
     func createRecipeURLRequest(uri: String) -> URLRequest? {
+        // Check if mock target and replace URL
+        #if Mock
+        guard let mockURL = makeMockURL() else { return nil }
+        return URLRequest(url: mockURL)
+        #endif
+        // Case not mock target. Return usual url
         var components = URLComponents()
         components.scheme = Constants.sheme
         components.host = Constants.host
         components.path = "/api/recipes/v2/by-uri"
         components.queryItems = makeRecipeQueryItems(uri: uri)
         guard let url = components.url else { return nil }
+        print(url)
         return URLRequest(url: url)
     }
 
