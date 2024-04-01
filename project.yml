@@ -40,6 +40,49 @@ targets:
       - package: SortingButtonPackage
       - package: Swinject
 
+    attributes: 
+    postCompileScripts:
+      - script: |
+          if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
+          fi
+
+          if which swiftformat >/dev/null; then swiftformat .
+          else
+          echo "warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat"
+          fi
+        name: Swiftformat
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
+
+      - script: |
+          #if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
+          #fi
+
+          #if which swiftlint > /dev/null; then swiftlint
+          #else
+          #echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+          #fi
+
+        name: Swiftlint
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
+
+      - script: |
+          if [[ "$(uname -m)" == arm64 ]]; then export PATH="/opt/homebrew/bin:$PATH"
+          fi
+
+          if which swiftgen >/dev/null; then swiftgen
+          else
+          echo "warning: Swiftgen not installed, download from"
+          fi
+
+        name: Swifgen
+        #adjust script settings
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
+
   RecipesMock:
     settings:
       OTHER_SWIFT_FLAGS: "-D Mock"

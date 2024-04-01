@@ -7,7 +7,7 @@ import UIKit
 final class RecipesCoordinator: BaseModuleCoordinator {
     // MARK: - Private Properties
 
-    private let builder = Builder()
+    private let builder = Builder(serviceContainer: <#Container?#>)
 
     // MARK: - Public methods
 

@@ -32,9 +32,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
         }.inObjectScope(.container)
         container?.register(DataBaseProtocol.self) { _ in Database() }.inObjectScope(.container)
-        container.register(BuilderProtocol.self) { _ in Builder() }.inObjectScope(.container)
         container.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
-
         container.register(NetworkServiceProtocol.self) { resolver in
             NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self)!)
         }.inObjectScope(.container)
@@ -46,6 +44,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
             Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService")!)
         }.inObjectScope(.container)
+        
+        container.register(BuilderProtocol.self) { [weak container] _ in
+            Builder(serviceContainer: container) }.inObjectScope(.container)
+        container.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
     }
 
     private func configureWindow(scene: UIScene) {
@@ -54,7 +56,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
         if let builder = container.resolve(BuilderProtocol.self) {
-            appCoordinator = AppCoordinator(builder: builder)
+            appCoordinator = AppCoordinator(mainTabBarViewController: container.resolve(MainTabBarViewController.self), builder: builder)
             appCoordinator?.start()
         }
     }

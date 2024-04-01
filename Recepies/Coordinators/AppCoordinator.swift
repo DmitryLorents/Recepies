@@ -23,7 +23,7 @@ final class AppCoordinator: BaseCoodinator {
 
     // MARK: - Initialization
 
-    init(mainTabBarViewController: MainTabBarViewController? = nil, builder: BuilderProtocol) {
+    init(mainTabBarViewController: MainTabBarViewController?, builder: BuilderProtocol) {
         self.mainTabBarViewController = mainTabBarViewController
         self.builder = builder
     }
@@ -33,7 +33,6 @@ final class AppCoordinator: BaseCoodinator {
     override func start() {
         if "login" == "login" {
             showMainTabBar()
-
         } else {
             showAuthScreen()
         }
@@ -65,7 +64,6 @@ final class AppCoordinator: BaseCoodinator {
         add(coordinator: profileCoordinator)
 
         // Set TabBarViewController
-        mainTabBarViewController = MainTabBarViewController()
         mainTabBarViewController?.setViewControllers(
             [
                 recipeCoordinator.publicRootController,

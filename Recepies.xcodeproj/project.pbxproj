@@ -174,7 +174,6 @@
 /* Begin PBXFileReference section */
 		0250B5DC981F04FB46015121 /* Strings+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		054827067F861E49F18447C3 /* RecipesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesView.swift; sourceTree = "<group>"; };
-		0C2398B5D93A93790A687E67 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		0CE319A95DBEA6CA2FBF31E9 /* Recepies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Recepies.xcdatamodel; sourceTree = "<group>"; };
 		11256FDE9F78F74EC81DE0CA /* HitDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
 		127156F4FE9EB6D08A1ED558 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -188,7 +187,6 @@
 		28EFF805688FE913BC256AC9 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
 		2AEF666FDF36F0F79C3520AD /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		2CE5598D065FEDBA1C568C5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		2FEC10B9EFEAA1E9DDE2CE41 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		319A8ADFFC5178C5457EF054 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		31C5AEBBCEE9B1F95AC5E34C /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
 		32B5CF8F415B64099AE76BA7 /* Pods-RecipesMock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipesMock.debug.xcconfig"; path = "Target Support Files/Pods-RecipesMock/Pods-RecipesMock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -674,7 +672,6 @@
 		BAAA0400715D3F5B86F84923 /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
-				2FEC10B9EFEAA1E9DDE2CE41 /* .gitkeep */,
 				C63853A0D988AAA1EA78E575 /* Model */,
 				5C7EDC11C06F782AB176D64C /* Presenter */,
 				0DB3048D811728A52972D623 /* View */,
@@ -822,7 +819,6 @@
 		FB056F251B28383AC2A0BFF3 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				0C2398B5D93A93790A687E67 /* .gitkeep */,
 				8E1388FAEF2A68B21C978530 /* MainTabBarViewController.swift */,
 			);
 			path = TabBar;

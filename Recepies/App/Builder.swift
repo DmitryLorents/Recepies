@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+import Swinject
 
 /// General protocol for all builders in app
 protocol BuilderProtocol {
@@ -28,11 +29,20 @@ final class Builder: BuilderProtocol {
         static let recipesViewTitle = "Recipes"
         static let favoritesViewTitle = "Favorites"
     }
+    
+    // MARK: - Privare Properties
+    let serviceContainer: Container?
+    
+    // MARK: - Initialization
+    
+    init(serviceContainer: Container?) {
+        self.serviceContainer = serviceContainer
+    }
 
     // MARK: - Public Methods
 
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView {
-        let authService = AuthService()
+        let authService = serviceContainer?.resolve(AuthServiceProtocol.self)
         let view = AuthView()
         let presenter = AuthPresenter(view: view, authService: authService, coordinator: coordinator)
         view.presenter = presenter
@@ -53,7 +63,8 @@ final class Builder: BuilderProtocol {
 
     func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView {
         let view = FavoritesView()
-        let presenter = FavoritesPresenter(view: view, coordinator: coordinator, database: Database.shared)
+        let database = serviceContainer?.resolve(DataBaseProtocol.self)
+        let presenter = FavoritesPresenter(view: view, coordinator: coordinator, database: database)
         view.presenter = presenter
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
