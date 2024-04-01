@@ -93,6 +93,11 @@ final class CategoryView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if Mock
+        print("Mock detected")
+        #else
+        print("No mock")
+        #endif
         setupVIew()
     }
 

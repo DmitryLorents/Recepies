@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Recepies
+
+  Created by Dmitry on 28.03.2024.
+  
+*/
+"authScreen.loginLabel.title" = "Login";
+"authScreen.loginButton.title" = "Login";
+"authScreen.emailLabel.title" = "Email Adress";
+"authScreen.passwordLabel.title" = "Password";
+"authScreen.emailPlaceholder" = "Enter Email Address";
+"authScreen.passwordPlaceholder" = "Enter Password";
+"authScreen.warningLabel.text" = "Please check the accuracy of the entered credentials.";
+"authScreen.emailWarningText" = "Incorrect format";
+"authScreen.passwordWarningText" = "You entered the wrong password";
