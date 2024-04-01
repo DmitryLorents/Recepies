@@ -86,9 +86,8 @@ final class Builder: BuilderProtocol {
 
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView {
         let view = CategoryView()
-        let requestCreator = RequestCreator()
-        let networkService = NetworkService(requestCreator: requestCreator)
-        let cachService = CacheService.shared
+        let networkService = serviceContainer?.resolve(NetworkServiceProtocol.self)
+        let cachService = serviceContainer?.resolve(CacheServiceProtocol.self)
         let presenter = CategoryPresenter(
             category: category,
             view: view,
@@ -102,14 +101,14 @@ final class Builder: BuilderProtocol {
 
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let requestCreator = RequestCreator()
-        let networkService = NetworkService(requestCreator: requestCreator)
-        let cacheService = CacheService.shared
+        let networkService = serviceContainer?.resolve(NetworkServiceProtocol.self)
+        let cacheService = serviceContainer?.resolve(CacheServiceProtocol.self)
+        let dataBase = serviceContainer?.resolve(DataBaseProtocol.self)
         let presenter = DetailPresenter(
             view: view,
             coordinator: coordinator,
             recipe: recipe,
-            database: Database.shared,
+            database: dataBase,
             networkService: networkService,
             cacheService: cacheService
         )

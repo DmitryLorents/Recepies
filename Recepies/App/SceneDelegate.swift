@@ -6,8 +6,8 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appCoordinator: AppCoordinator?
-    private lazy var database = Database.shared
-    private var container: Container!
+    private lazy var database = serviceContainer.resolve(DataBaseProtocol.self)
+    private var serviceContainer: Container!
     var window: UIWindow?
 
     func scene(
@@ -20,34 +20,34 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        database.saveToUserDefaults()
+        database?.saveToUserDefaults()
     }
 
     private func registerDependencies() {
-        container = Container()
-        container?.register(Caretaker.self) { _ in Caretaker() }.inObjectScope(.container)
-        container?.register(AuthServiceProtocol.self) { resolver in AuthService() }.inObjectScope(.container)
-        container?.register(CoreDataManager.self) { _ in CoreDataManager.shared }.inObjectScope(.container)
-        container?.register(CacheServiceProtocol.self) { resolver in
+        serviceContainer = Container()
+        serviceContainer?.register(Caretaker.self) { _ in Caretaker() }.inObjectScope(.container)
+        serviceContainer?.register(AuthServiceProtocol.self) { resolver in AuthService() }.inObjectScope(.container)
+        serviceContainer?.register(CoreDataManager.self) { _ in CoreDataManager.shared }.inObjectScope(.container)
+        serviceContainer?.register(CacheServiceProtocol.self) { resolver in
             CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
         }.inObjectScope(.container)
-        container?.register(DataBaseProtocol.self) { _ in Database() }.inObjectScope(.container)
-        container.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
-        container.register(NetworkServiceProtocol.self) { resolver in
+        serviceContainer?.register(DataBaseProtocol.self) { _ in Database() }.inObjectScope(.container)
+        serviceContainer.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
+        serviceContainer.register(NetworkServiceProtocol.self) { resolver in
             NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self)!)
         }.inObjectScope(.container)
 
-        container.register(LoadImageServiceProtocol.self, name: "newtworkService") { resolver in
+        serviceContainer.register(LoadImageServiceProtocol.self, name: "newtworkService") { resolver in
             NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self)!)
         }.inObjectScope(.container)
 
-        container.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
+        serviceContainer.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
             Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService")!)
         }.inObjectScope(.container)
         
-        container.register(BuilderProtocol.self) { [weak container] _ in
-            Builder(serviceContainer: container) }.inObjectScope(.container)
-        container.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
+        serviceContainer.register(BuilderProtocol.self) { [weak serviceContainer] _ in
+            Builder(serviceContainer: serviceContainer) }.inObjectScope(.container)
+        serviceContainer.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
     }
 
     private func configureWindow(scene: UIScene) {
@@ -55,8 +55,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        if let builder = container.resolve(BuilderProtocol.self) {
-            appCoordinator = AppCoordinator(mainTabBarViewController: container.resolve(MainTabBarViewController.self), builder: builder)
+        if let builder = serviceContainer.resolve(BuilderProtocol.self) {
+            appCoordinator = AppCoordinator(mainTabBarViewController: serviceContainer.resolve(MainTabBarViewController.self), builder: builder)
             appCoordinator?.start()
         }
     }

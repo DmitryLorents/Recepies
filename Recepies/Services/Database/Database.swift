@@ -28,9 +28,6 @@ protocol DataBaseProtocol {
 
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
-    // MARK: - Singletone
-    
-    static let shared = Database()
     
     // MARK: - Private Properties
     
