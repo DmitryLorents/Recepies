@@ -6,6 +6,8 @@ import Swinject
 
 /// General protocol for all builders in app
 protocol BuilderProtocol {
+    /// Container for all services in app
+    var serviceContainer: Container? {get}
     /// Function to Authorization module
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView
     /// Function to  Recipies module
@@ -30,8 +32,8 @@ final class Builder: BuilderProtocol {
         static let favoritesViewTitle = "Favorites"
     }
     
-    // MARK: - Privare Properties
-    let serviceContainer: Container?
+    // MARK: - Public Properties
+    var serviceContainer: Container?
     
     // MARK: - Initialization
     

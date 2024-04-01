@@ -42,7 +42,7 @@ final class AppCoordinator: BaseCoodinator {
 
     private func showMainTabBar() {
         // Set Recipes
-        let recipeCoordinator = RecipesCoordinator()
+        let recipeCoordinator = RecipesCoordinator(builder: builder)
         let recipeModuleView = builder.makeRecipesModule(coordinator: recipeCoordinator)
         recipeCoordinator.setRootController(recipeModuleView)
         add(coordinator: recipeCoordinator)
