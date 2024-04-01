@@ -34,11 +34,11 @@ final class CacheService {
 
     // MARK: - Private Parameters
 
-    private let coreDataManager: CoreDataManager
+    private let coreDataManager: CoreDataManager?
 
     // MARK: - Initialization
 
-    init(coreDataManager: CoreDataManager) {
+    init(coreDataManager: CoreDataManager?) {
         self.coreDataManager = coreDataManager
     }
 }
@@ -49,35 +49,35 @@ extension CacheService: CacheServiceProtocol {
     // TODO: Add category
     func save(recipes: [Recipe], for category: Category) {
         var categoryCD: CategoryCD
-        if let existingCategoryCD = coreDataManager.fetchCategoryCD(for: category) {
+        if let existingCategoryCD = coreDataManager?.fetchCategoryCD(for: category) {
             categoryCD = existingCategoryCD
-            categoryCD.recipesSet?.forEach { coreDataManager.remove(recipeCD: $0) }
-        } else if let newCategoryCD = coreDataManager.makeCategoryCD(for: category) {
+            categoryCD.recipesSet?.forEach { coreDataManager?.remove(recipeCD: $0) }
+        } else if let newCategoryCD = coreDataManager?.makeCategoryCD(for: category) {
             categoryCD = newCategoryCD
         } else {
             print("Failed to save recipes for category to core data")
             return
         }
-        let recipesSet = Set(recipes.compactMap { coreDataManager.makeRecipeCD(for: $0) })
+        let recipesSet = Set(recipes.compactMap { coreDataManager?.makeRecipeCD(for: $0) })
         categoryCD.recipesSet = recipesSet
-        coreDataManager.saveContext()
+        coreDataManager?.saveContext()
     }
 
     func save(recipeDetailed: RecipeDetail) {
-        if coreDataManager.makeRecipeDetailedCD(for: recipeDetailed) != nil {
-            coreDataManager.saveContext()
+        if coreDataManager?.makeRecipeDetailedCD(for: recipeDetailed) != nil {
+            coreDataManager?.saveContext()
         }
     }
 
     func getDetailedRecipe(for recipe: Recipe) -> RecipeDetail? {
-        guard let recipeCD = coreDataManager.fetchRecipeDetailedCD(for: recipe) else {
+        guard let recipeCD = coreDataManager?.fetchRecipeDetailedCD(for: recipe) else {
             return nil
         }
         return RecipeDetail(recipeCD)
     }
 
     func getRecipes(for category: Category) -> [Recipe]? {
-        if let categoryCD = coreDataManager.fetchCategoryCD(for: category),
+        if let categoryCD = coreDataManager?.fetchCategoryCD(for: category),
            let recipesSet = categoryCD.recipesSet
         {
             return Array(recipesSet.map { Recipe(recipeCD: $0) })

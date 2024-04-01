@@ -24,6 +24,10 @@ packages:
     url: https://github.com/DmitryLorents/SortingButtonPackage
     majorVersion: 1.0.0
 
+  Swinject:
+    url: https://github.com/Swinject/Swinject
+    majorVersion: 2.8.4
+
 #targets
 targets:
   Recepies:
@@ -34,6 +38,7 @@ targets:
       - Recepies
     dependencies:
       - package: SortingButtonPackage
+      - package: Swinject
 
   RecipesMock:
     settings:
@@ -44,6 +49,7 @@ targets:
       - Recepies
     dependencies:
       - package: SortingButtonPackage
+      - package: Swinject
 
     attributes: 
     postCompileScripts:

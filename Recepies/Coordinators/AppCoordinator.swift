@@ -19,7 +19,14 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Private Properties
 
     private var mainTabBarViewController: MainTabBarViewController?
-    private var builder = Builder()
+    private let builder: BuilderProtocol
+
+    // MARK: - Initialization
+
+    init(mainTabBarViewController: MainTabBarViewController? = nil, builder: BuilderProtocol) {
+        self.mainTabBarViewController = mainTabBarViewController
+        self.builder = builder
+    }
 
     // MARK: - Public Methods
 

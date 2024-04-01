@@ -40,7 +40,7 @@ final class Database: DataBaseProtocol {
 
     // MARK: - Initialization
 
-    private init() {
+    init() {
         setFromUserDefaults()
     }
 
