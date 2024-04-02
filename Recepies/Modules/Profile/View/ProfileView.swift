@@ -3,6 +3,22 @@
 
 import UIKit
 
+/// Profile screen protocol
+protocol ProfileViewProtocol: AnyObject {
+    /// Calling an alert with a name change
+    func showEditNameAlert()
+    /// Calling a profile exit alert
+    func showLogOutAlert()
+    /// Updating data in a table
+    func reloadData()
+    /// Opening the curtain with bonuses
+    func openBunusView()
+    /// Open the Terms screen
+    func setupTermsView()
+    /// Show editer image
+    func showImageChooser()
+}
+
 /// Profile screen
 final class ProfileView: UIViewController, UINavigationControllerDelegate {
     // MARK: - Types

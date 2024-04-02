@@ -74,7 +74,7 @@ final class Builder: BuilderProtocol {
 
     func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView {
         let profileView = ProfileView()
-        let profilePresenter = ProfilePresenter(view: profileView, coordinator: coordinator)
+        let profilePresenter = ProfilePresenter(view: profileView, coordinator: coordinator, careTaker: serviceContainer?.resolve(CareTakerProtocol.self))
         profileView.profilePresenter = profilePresenter
         profileView.tabBarItem = UITabBarItem(
             title: Constants.profileViewTitle,

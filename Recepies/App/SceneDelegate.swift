@@ -25,8 +25,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private func registerDependencies() {
         serviceContainer = Container()
-        serviceContainer?.register(Caretaker.self) { _ in Caretaker() }.inObjectScope(.container)
-        serviceContainer?.register(AuthServiceProtocol.self) { resolver in AuthService() }.inObjectScope(.container)
+        serviceContainer?.register(CareTakerProtocol.self) { _ in Caretaker() }.inObjectScope(.container)
+        serviceContainer?.register(AuthServiceProtocol.self) { resolver in
+            AuthService(careTaker: resolver.resolve(CareTakerProtocol.self)) }.inObjectScope(.container)
         serviceContainer?.register(CoreDataManager.self) { _ in CoreDataManager.shared }.inObjectScope(.container)
         serviceContainer?.register(CacheServiceProtocol.self) { resolver in
             CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
