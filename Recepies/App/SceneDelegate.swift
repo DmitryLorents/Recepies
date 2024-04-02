@@ -6,8 +6,8 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appCoordinator: AppCoordinator?
-    private lazy var database = serviceContainer.resolve(DataBaseProtocol.self)
-    private var serviceContainer: Container!
+    private lazy var database = serviceContainer?.resolve(DataBaseProtocol.self)
+    private var serviceContainer: Container?
     var window: UIWindow?
 
     func scene(
@@ -32,22 +32,22 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
         }.inObjectScope(.container)
         serviceContainer?.register(DataBaseProtocol.self) { _ in Database() }.inObjectScope(.container)
-        serviceContainer.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
-        serviceContainer.register(NetworkServiceProtocol.self) { resolver in
-            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self)!)
+        serviceContainer?.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
+        serviceContainer?.register(NetworkServiceProtocol.self) { resolver in
+            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self))
         }.inObjectScope(.container)
 
-        serviceContainer.register(LoadImageServiceProtocol.self, name: "newtworkService") { resolver in
-            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self)!)
+        serviceContainer?.register(LoadImageServiceProtocol.self, name: "newtworkService") { resolver in
+            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self))
         }.inObjectScope(.container)
 
-        serviceContainer.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
-            Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService")!)
+        serviceContainer?.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
+            Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService"))
         }.inObjectScope(.container)
         
-        serviceContainer.register(BuilderProtocol.self) { [weak serviceContainer] _ in
+        serviceContainer?.register(BuilderProtocol.self) { [weak serviceContainer] _ in
             Builder(serviceContainer: serviceContainer) }.inObjectScope(.container)
-        serviceContainer.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
+        serviceContainer?.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
     }
 
     private func configureWindow(scene: UIScene) {
@@ -55,8 +55,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        if let builder = serviceContainer.resolve(BuilderProtocol.self) {
-            appCoordinator = AppCoordinator(mainTabBarViewController: serviceContainer.resolve(MainTabBarViewController.self), builder: builder)
+        if let builder = serviceContainer?.resolve(BuilderProtocol.self) {
+            appCoordinator = AppCoordinator(mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self), builder: builder)
             appCoordinator?.start()
         }
     }
