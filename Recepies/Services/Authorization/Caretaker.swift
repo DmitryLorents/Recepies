@@ -28,7 +28,6 @@ protocol CareTakerProtocol {
 
 /// Load and save user data into UserDefaults
 final class Caretaker: CareTakerProtocol {
-
     // MARK: - Constants
 
     enum Constants {
@@ -90,7 +89,7 @@ final class Caretaker: CareTakerProtocol {
     // MARK: - Private Methods
 
     private func savePassword(for user: User) {
-        Keychain.save(user.password, forKey: Constants.userPassword)
+        let _ = Keychain.save(user.password, forKey: Constants.userPassword)
     }
 
     private func getUserPassword() -> String {

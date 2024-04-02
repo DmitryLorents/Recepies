@@ -80,7 +80,7 @@ final class RequestCreator {
     }
 
     private func makeMockURL() -> URL? {
-        var fileName = "detailRecipeMock"
+        let fileName = "detailRecipeMock"
         let bundleURL = Bundle.main.url(forResource: fileName, withExtension: "json")
         guard let bundleURL else {
             let errorText = "Absence of mock file: \(fileName).json"

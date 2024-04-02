@@ -1,13 +1,13 @@
 // Builder.swift
 // Copyright © RoadMap. All rights reserved.
 
-import UIKit
 import Swinject
+import UIKit
 
 /// General protocol for all builders in app
 protocol BuilderProtocol {
     /// Container for all services in app
-    var serviceContainer: Container? {get}
+    var serviceContainer: Container? { get }
     /// Function to Authorization module
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView
     /// Function to  Recipies module
@@ -31,12 +31,13 @@ final class Builder: BuilderProtocol {
         static let recipesViewTitle = "Recipes"
         static let favoritesViewTitle = "Favorites"
     }
-    
+
     // MARK: - Public Properties
+
     var serviceContainer: Container?
-    
+
     // MARK: - Initialization
-    
+
     init(serviceContainer: Container?) {
         self.serviceContainer = serviceContainer
     }
@@ -74,7 +75,11 @@ final class Builder: BuilderProtocol {
 
     func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView {
         let profileView = ProfileView()
-        let profilePresenter = ProfilePresenter(view: profileView, coordinator: coordinator, careTaker: serviceContainer?.resolve(CareTakerProtocol.self))
+        let profilePresenter = ProfilePresenter(
+            view: profileView,
+            coordinator: coordinator,
+            careTaker: serviceContainer?.resolve(CareTakerProtocol.self)
+        )
         profileView.profilePresenter = profilePresenter
         profileView.tabBarItem = UITabBarItem(
             title: Constants.profileViewTitle,

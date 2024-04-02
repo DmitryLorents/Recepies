@@ -29,12 +29,11 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
-    
-
     // MARK: - Public Properties
 
     var options: [OptionsProtocol] = Options.makeOption()
     var user: User?
+
     // MARK: - Private Properties
 
     private weak var view: ProfileViewProtocol?
@@ -51,7 +50,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     // MARK: - Public Methods
-    
+
     func avatarData() -> Data? {
         careTaker?.loadImage()
     }

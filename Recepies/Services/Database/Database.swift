@@ -28,39 +28,38 @@ protocol DataBaseProtocol {
 
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
-    
     // MARK: - Private Properties
-    
+
     private let key = "Recipes"
     private let defaults = UserDefaults.standard
     private var recipesSet: Set<Recipe> = []
-    
+
     // MARK: - Initialization
-    
+
     init() {
         setFromUserDefaults()
     }
-    
+
     // MARK: - DataBaseProtocol
-    
+
     func addToFavorites(_ recipe: Recipe) {
         recipesSet.insert(recipe)
     }
-    
+
     func removeFromFavorites(_ recipe: Recipe?) {
         if let recipe {
             recipesSet.remove(recipe)
         }
     }
-    
+
     func isFavorite(_ recipe: Recipe) -> Bool {
         recipesSet.contains(recipe)
     }
-    
+
     func getFavoriteRecipes() -> [Recipe] {
         Array(recipesSet)
     }
-    
+
     func setFromUserDefaults() {
         guard let data = defaults.object(forKey: key) as? Data,
               let recipes = dataToRecipe(data)
@@ -70,7 +69,7 @@ final class Database: DataBaseProtocol {
         }
         recipesSet = Set(recipes)
     }
-    
+
     func saveToUserDefaults() {
         let recipes = Array(recipesSet)
         let data = recipeToData(recipes)
@@ -91,7 +90,7 @@ private extension Database {
         }
         return nil
     }
-    
+
     func dataToRecipe(_ data: Data) -> [Recipe]? {
         let decoder = JSONDecoder()
         do {

@@ -20,13 +20,12 @@ protocol AuthServiceProtocol {
 
 /// Service for user authorization
 final class AuthService: AuthServiceProtocol {
-    
     private let careTaker: CareTakerProtocol?
-    
+
     init(careTaker: CareTakerProtocol?) {
         self.careTaker = careTaker
     }
-    
+
     func validateEmail(_ email: String) -> (isFormatOk: Bool, isValid: Bool) {
         let isFormatOk = email.contains { character in
             character == "@"

@@ -27,7 +27,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         serviceContainer = Container()
         serviceContainer?.register(CareTakerProtocol.self) { _ in Caretaker() }.inObjectScope(.container)
         serviceContainer?.register(AuthServiceProtocol.self) { resolver in
-            AuthService(careTaker: resolver.resolve(CareTakerProtocol.self)) }.inObjectScope(.container)
+            AuthService(careTaker: resolver.resolve(CareTakerProtocol.self))
+        }.inObjectScope(.container)
         serviceContainer?.register(CoreDataManager.self) { _ in CoreDataManager.shared }.inObjectScope(.container)
         serviceContainer?.register(CacheServiceProtocol.self) { resolver in
             CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
@@ -45,10 +46,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         serviceContainer?.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
             Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService"))
         }.inObjectScope(.container)
-        
+
         serviceContainer?.register(BuilderProtocol.self) { [weak serviceContainer] _ in
-            Builder(serviceContainer: serviceContainer) }.inObjectScope(.container)
-        serviceContainer?.register(MainTabBarViewController.self) { _ in MainTabBarViewController()  }
+            Builder(serviceContainer: serviceContainer)
+        }.inObjectScope(.container)
+        serviceContainer?.register(MainTabBarViewController.self) { _ in MainTabBarViewController() }
     }
 
     private func configureWindow(scene: UIScene) {
@@ -57,7 +59,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
         if let builder = serviceContainer?.resolve(BuilderProtocol.self) {
-            appCoordinator = AppCoordinator(mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self), builder: builder)
+            appCoordinator = AppCoordinator(
+                mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self),
+                builder: builder
+            )
             appCoordinator?.start()
         }
     }

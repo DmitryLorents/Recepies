@@ -33,7 +33,7 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     var recipeDetail: RecipeDetail?
     var isFavorite: Bool {
-        database?.isFavorite(recipe) ?? false
+        database?.isFavorite(recipe) == true
     }
 
     // MARK: - Private Properties
