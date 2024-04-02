@@ -107,6 +107,7 @@ extension RequestCreator: RequestCreatorProtocol {
         components.path = "/api/recipes/v2/by-uri"
         components.queryItems = makeRecipeQueryItems(uri: uri)
         guard let url = components.url else { return nil }
+        print(url)
         return URLRequest(url: url)
     }
 

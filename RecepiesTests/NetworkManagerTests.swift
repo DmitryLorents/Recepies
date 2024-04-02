@@ -43,7 +43,7 @@ final class NetworkManagerTests: XCTestCase {
         networkService = nil
     }
 
-    func testInvalidURL() throws {
+    func testGetRecipesInvalidURL() throws {
         // Given
         let invalidURL = URL(string: "https://www.google.com/")
         guard let invalidURL else { return }
@@ -64,11 +64,29 @@ final class NetworkManagerTests: XCTestCase {
         XCTAssertNil(recipes)
     }
 
+    func testпetDetailedRecipeInvalidURL() throws {
+        // Given
+        let invalidURL = URL(string: "https://www.google.com/")
+        guard let invalidURL else { return }
+        requestCreator?.mockRecipeURLRequest = URLRequest(url: invalidURL)
+        // When
+        var recipe: RecipeDetail?
+        networkService?.getDetailedRecipe(url: "") { result in
+            switch result {
+            case let .success(success):
+                recipe = success
+            case .failure:
+                break
+            }
+            self.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+        // Then
+        XCTAssertNil(recipe)
+    }
+
     func testPerformanceExample() throws {
-        //        // This is an example of a performance test case.
-        //        measure {
-        //            // Put the code you want to measure the time of here.
-        //        }
+        //        measure {}
     }
 }
 
