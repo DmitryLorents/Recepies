@@ -6,7 +6,7 @@ import UIKit
 /// Protocol for network service in app
 protocol NetworkServiceProtocol {
     /// Init with service to create url requests
-    init(requestCreator: RequestCreatorProtocol)
+    init(requestCreator: RequestCreatorProtocol?)
 
     /// Try to download requested recipes
     /// - Parameters:
@@ -28,11 +28,11 @@ final class NetworkService {
     // MARK: - Private Properties
 
     private let decoder = JSONDecoder()
-    private var requestCreator: RequestCreatorProtocol
+    private var requestCreator: RequestCreatorProtocol?
 
     // MARK: - Initialization
 
-    init(requestCreator: RequestCreatorProtocol) {
+    init(requestCreator: RequestCreatorProtocol?) {
         self.requestCreator = requestCreator
     }
 
@@ -71,7 +71,7 @@ final class NetworkService {
 
 extension NetworkService: NetworkServiceProtocol {
     func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ()) {
-        let request = requestCreator.createCategoryURLRequest(type: type, text: text)
+        let request = requestCreator?.createCategoryURLRequest(type: type, text: text)
         getData(request: request, parseProtocol: CategoryDTO.self) { result in
             switch result {
             case let .success(categoryDTO):
@@ -84,7 +84,7 @@ extension NetworkService: NetworkServiceProtocol {
     }
 
     func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ()) {
-        let request = requestCreator.createRecipeURLRequest(uri: url)
+        let request = requestCreator?.createRecipeURLRequest(uri: url)
         getData(request: request, parseProtocol: RecipeDetailResponseDTO.self) { result in
             switch result {
             case let .success(recipe):

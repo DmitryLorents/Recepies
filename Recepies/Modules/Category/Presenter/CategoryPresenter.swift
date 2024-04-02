@@ -15,9 +15,9 @@ protocol CategoryPresenterProtocol: AnyObject {
     init(
         category: Category,
         view: CategoryViewProtocol,
-        coordinator: BaseModuleCoordinator,
-        networkService: NetworkServiceProtocol,
-        cacheService: CacheServiceProtocol
+        coordinator: BaseModuleCoordinator?,
+        networkService: NetworkServiceProtocol?,
+        cacheService: CacheServiceProtocol?
     )
     /// Move back to parent screen
     func goBack()
@@ -52,8 +52,8 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     // MARK: - Private Properties
 
     private var isInitialRun: Bool = true
-    private let networkService: NetworkServiceProtocol
-    private let cacheService: CacheServiceProtocol
+    private let networkService: NetworkServiceProtocol?
+    private let cacheService: CacheServiceProtocol?
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: CategoryViewProtocol?
     private var recipes: [Recipe]? {
@@ -67,9 +67,9 @@ final class CategoryPresenter: CategoryPresenterProtocol {
     init(
         category: Category,
         view: CategoryViewProtocol,
-        coordinator: BaseModuleCoordinator,
-        networkService: NetworkServiceProtocol,
-        cacheService: CacheServiceProtocol
+        coordinator: BaseModuleCoordinator?,
+        networkService: NetworkServiceProtocol?,
+        cacheService: CacheServiceProtocol?
     ) {
         self.view = view
         self.coordinator = coordinator
@@ -113,7 +113,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
 
     func fetchInitialData() {
         view?.updateState(with: .loading)
-        if let cachedRecipes = cacheService.getRecipes(for: category) {
+        if let cachedRecipes = cacheService?.getRecipes(for: category) {
             recipes = cachedRecipes
             view?.updateState(with: .data)
         }
@@ -126,7 +126,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
         } else {
             view?.updateState(with: .loading)
         }
-        networkService.getRecipes(type: category.type, text: searchText) { [weak self] result in
+        networkService?.getRecipes(type: category.type, text: searchText) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
@@ -140,7 +140,7 @@ final class CategoryPresenter: CategoryPresenterProtocol {
                     let downloadedRecipeSorted = downloadedRecipes.sorted(by: { $0.name < $1.name })
                     if currentRecipesSorted != downloadedRecipeSorted {
                         self.recipes = downloadedRecipes
-                        self.cacheService.save(recipes: downloadedRecipes, for: self.category)
+                        self.cacheService?.save(recipes: downloadedRecipes, for: self.category)
                         let state: CategoryState = downloadedRecipes.count > 0 ? .data : .noData
                         self.view?.updateState(with: state)
                     } else { self.view?.updateState(with: .data) }

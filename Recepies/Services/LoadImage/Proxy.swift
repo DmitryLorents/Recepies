@@ -22,11 +22,11 @@ final class Proxy {
 
     // MARK: - Private Properties
 
-    private let service: LoadImageServiceProtocol
+    private let service: LoadImageServiceProtocol?
 
     // MARK: - Initialization
 
-    init(service: LoadImageServiceProtocol) {
+    init(service: LoadImageServiceProtocol?) {
         self.service = service
     }
 
@@ -74,7 +74,7 @@ extension Proxy: LoadImageServiceProtocol {
         {
             completion(.success(image))
         } else {
-            service.loadImage(by: urlString) { result in
+            service?.loadImage(by: urlString) { result in
                 switch result {
                 case let .failure(error):
                     completion(.failure(error))

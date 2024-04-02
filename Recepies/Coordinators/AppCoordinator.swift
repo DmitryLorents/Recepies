@@ -19,14 +19,20 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Private Properties
 
     private var mainTabBarViewController: MainTabBarViewController?
-    private var builder = Builder()
+    private let builder: BuilderProtocol
+
+    // MARK: - Initialization
+
+    init(mainTabBarViewController: MainTabBarViewController?, builder: BuilderProtocol) {
+        self.mainTabBarViewController = mainTabBarViewController
+        self.builder = builder
+    }
 
     // MARK: - Public Methods
 
     override func start() {
         if "login" == "login" {
             showMainTabBar()
-
         } else {
             showAuthScreen()
         }
@@ -36,7 +42,7 @@ final class AppCoordinator: BaseCoodinator {
 
     private func showMainTabBar() {
         // Set Recipes
-        let recipeCoordinator = RecipesCoordinator()
+        let recipeCoordinator = RecipesCoordinator(builder: builder)
         let recipeModuleView = builder.makeRecipesModule(coordinator: recipeCoordinator)
         recipeCoordinator.setRootController(recipeModuleView)
         add(coordinator: recipeCoordinator)
@@ -58,7 +64,6 @@ final class AppCoordinator: BaseCoodinator {
         add(coordinator: profileCoordinator)
 
         // Set TabBarViewController
-        mainTabBarViewController = MainTabBarViewController()
         mainTabBarViewController?.setViewControllers(
             [
                 recipeCoordinator.publicRootController,

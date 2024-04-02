@@ -1,11 +1,13 @@
 // SceneDelegate.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Swinject
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var appCoordinator: AppCoordinator?
-    private lazy var database = Database.shared
+    private lazy var database = serviceContainer?.resolve(DataBaseProtocol.self)
+    private var serviceContainer: Container?
     var window: UIWindow?
 
     func scene(
@@ -13,11 +15,42 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
+        registerDependencies()
         configureWindow(scene: scene)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        database.saveToUserDefaults()
+        database?.saveToUserDefaults()
+    }
+
+    private func registerDependencies() {
+        serviceContainer = Container()
+        serviceContainer?.register(CareTakerProtocol.self) { _ in Caretaker() }.inObjectScope(.container)
+        serviceContainer?.register(AuthServiceProtocol.self) { resolver in
+            AuthService(careTaker: resolver.resolve(CareTakerProtocol.self))
+        }.inObjectScope(.container)
+        serviceContainer?.register(CoreDataManager.self) { _ in CoreDataManager.shared }.inObjectScope(.container)
+        serviceContainer?.register(CacheServiceProtocol.self) { resolver in
+            CacheService(coreDataManager: resolver.resolve(CoreDataManager.self))
+        }.inObjectScope(.container)
+        serviceContainer?.register(DataBaseProtocol.self) { _ in Database() }.inObjectScope(.container)
+        serviceContainer?.register(RequestCreatorProtocol.self) { _ in RequestCreator() }.inObjectScope(.container)
+        serviceContainer?.register(NetworkServiceProtocol.self) { resolver in
+            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self))
+        }.inObjectScope(.container)
+
+        serviceContainer?.register(LoadImageServiceProtocol.self, name: "newtworkService") { resolver in
+            NetworkService(requestCreator: resolver.resolve(RequestCreatorProtocol.self))
+        }.inObjectScope(.container)
+
+        serviceContainer?.register(LoadImageServiceProtocol.self, name: "proxy") { resolver in
+            Proxy(service: resolver.resolve(LoadImageServiceProtocol.self, name: "newtworkService"))
+        }.inObjectScope(.container)
+
+        serviceContainer?.register(BuilderProtocol.self) { [weak serviceContainer] _ in
+            Builder(serviceContainer: serviceContainer)
+        }.inObjectScope(.container)
+        serviceContainer?.register(MainTabBarViewController.self) { _ in MainTabBarViewController() }
     }
 
     private func configureWindow(scene: UIScene) {
@@ -25,7 +58,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        appCoordinator = AppCoordinator()
-        appCoordinator?.start()
+        if let builder = serviceContainer?.resolve(BuilderProtocol.self) {
+            appCoordinator = AppCoordinator(
+                mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self),
+                builder: builder
+            )
+            appCoordinator?.start()
+        }
     }
 }

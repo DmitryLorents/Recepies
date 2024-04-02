@@ -20,18 +20,24 @@ protocol AuthServiceProtocol {
 
 /// Service for user authorization
 final class AuthService: AuthServiceProtocol {
+    private let careTaker: CareTakerProtocol?
+
+    init(careTaker: CareTakerProtocol?) {
+        self.careTaker = careTaker
+    }
+
     func validateEmail(_ email: String) -> (isFormatOk: Bool, isValid: Bool) {
         let isFormatOk = email.contains { character in
             character == "@"
         }
 
         var isValid: Bool
-        let userLogin = Caretaker.shared.loadUser().login
+        let userLogin = careTaker?.loadUser().login ?? ""
 
         if userLogin.isEmpty {
-            Caretaker.shared.updateLogin(login: email)
+            careTaker?.updateLogin(login: email)
         }
-        isValid = Caretaker.shared.loadUser().login == email
+        isValid = careTaker?.loadUser().login == email
 
         return (isFormatOk, isValid)
     }
@@ -40,12 +46,12 @@ final class AuthService: AuthServiceProtocol {
         let isFormatOk = password.count > 5
 
         var isValid: Bool
-        let userPassword = Caretaker.shared.loadUser().password
+        let userPassword = careTaker?.loadUser().password ?? ""
 
         if userPassword.isEmpty {
-            Caretaker.shared.updatePassword(password: password)
+            careTaker?.updatePassword(password: password)
         }
-        isValid = Caretaker.shared.loadUser().password == password
+        isValid = careTaker?.loadUser().password == password
 
         return (isFormatOk, isValid)
     }

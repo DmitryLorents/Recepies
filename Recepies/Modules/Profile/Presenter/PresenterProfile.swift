@@ -3,30 +3,14 @@
 
 import Foundation
 
-/// Profile screen protocol
-protocol ProfileViewProtocol: AnyObject {
-    /// Calling an alert with a name change
-    func showEditNameAlert()
-    /// Calling a profile exit alert
-    func showLogOutAlert()
-    /// Updating data in a table
-    func reloadData()
-    /// Opening the curtain with bonuses
-    func openBunusView()
-    /// Open the Terms screen
-    func setupTermsView()
-    /// Show editer image
-    func showImageChooser()
-}
-
 /// Profile presenter protocol
 protocol ProfilePresenterProtocol: AnyObject {
     /// Profile initialization
-    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator)
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator, careTaker: CareTakerProtocol?)
     /// Array of options
     var options: [OptionsProtocol] { get set }
     /// User information
-    var user: User { get set }
+    var user: User? { get set }
     /// Loading an alert with a name change
     func setupAlert()
     /// Changing your profile name
@@ -45,31 +29,34 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 /// Презентер профиля
 final class ProfilePresenter: ProfilePresenterProtocol {
-    func avatarData() -> Data? {
-        Caretaker.shared.loadImage()
-    }
-
     // MARK: - Public Properties
 
     var options: [OptionsProtocol] = Options.makeOption()
-    var user: User = Caretaker.shared.loadUser()
+    var user: User?
 
     // MARK: - Private Properties
 
     private weak var view: ProfileViewProtocol?
     private var coordinator: BaseModuleCoordinator?
+    private var careTaker: CareTakerProtocol?
 
     // MARK: - Initializers
 
-    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator) {
+    init(view: ProfileViewProtocol, coordinator: BaseModuleCoordinator, careTaker: CareTakerProtocol?) {
         self.view = view
         self.coordinator = coordinator
+        self.careTaker = careTaker
+        user = careTaker?.loadUser()
     }
 
     // MARK: - Public Methods
 
+    func avatarData() -> Data? {
+        careTaker?.loadImage()
+    }
+
     func saveAvatar(image: Data) {
-        Caretaker.shared.saveImage(data: image)
+        careTaker?.saveImage(data: image)
         view?.reloadData()
     }
 
@@ -78,8 +65,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func setTitleNameUser(name: String) {
-        Caretaker.shared.updateUserName(name: name)
-        user = Caretaker.shared.loadUser()
+        careTaker?.updateUserName(name: name)
+        user = careTaker?.loadUser()
         view?.reloadData()
     }
 

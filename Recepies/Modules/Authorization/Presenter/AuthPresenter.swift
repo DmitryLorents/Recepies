@@ -4,7 +4,7 @@
 /// Protocol for Authorization screen presenter
 protocol AuthPresenterProtocol: AnyObject {
     /// Main initializer
-    init(view: AuthViewProtocol, authService: AuthServiceProtocol, coordinator: BaseModuleCoordinator)
+    init(view: AuthViewProtocol, authService: AuthServiceProtocol?, coordinator: BaseModuleCoordinator)
     /// Validates user email adress and ask view to notify user if email is wrong
     /// - Parameter email: string value of user's email
     func validateEmail(_ email: String)
@@ -21,12 +21,12 @@ final class AuthPresenter: AuthPresenterProtocol {
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: AuthViewProtocol?
-    private var authService: AuthServiceProtocol
+    private var authService: AuthServiceProtocol?
     private var isPasswordSecured = true
 
     // MARK: - Initialization
 
-    init(view: AuthViewProtocol, authService: AuthServiceProtocol, coordinator: BaseModuleCoordinator) {
+    init(view: AuthViewProtocol, authService: AuthServiceProtocol?, coordinator: BaseModuleCoordinator) {
         self.view = view
         self.authService = authService
         self.coordinator = coordinator
@@ -35,13 +35,14 @@ final class AuthPresenter: AuthPresenterProtocol {
     // MARK: - Public Methods
 
     func validateEmail(_ email: String) {
-        let (format, _) = authService.validateEmail(email)
-        view?.showIncorrectEmailFormat(!format)
+        if let (format, _) = authService?.validateEmail(email) {
+            view?.showIncorrectEmailFormat(!format)
+        }
     }
 
     func validateUserData(email: String, password: String) {
-        let (isEmailFormatOk, isEmailValid) = authService.validateEmail(email)
-        let (isPasswordFormatOk, isPasswordValid) = authService.validatePassword(password)
+        guard let (isEmailFormatOk, isEmailValid) = authService?.validateEmail(email),
+              let (isPasswordFormatOk, isPasswordValid) = authService?.validatePassword(password) else { return }
         view?.showIncorrectUserData(!isEmailValid || !isPasswordValid)
         view?.showIncorrectPasswordFormat(!isPasswordFormatOk)
         view?.showIncorrectEmailFormat(!isEmailFormatOk)

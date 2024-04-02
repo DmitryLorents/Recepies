@@ -12,7 +12,7 @@ protocol DataBaseProtocol {
     /// Remove recipe from favorites
     ///  - Parameter recipe: recipe model
     ///  - Returns true is success, false if not removed from favorites
-    func removeFromFavorites(_ recipe: Recipe)
+    func removeFromFavorites(_ recipe: Recipe?)
     /// Check if favorites contain recipe
     ///  - Parameter recipe: recipe model
     ///  - Returns true is contain, false if not
@@ -28,10 +28,6 @@ protocol DataBaseProtocol {
 
 /// Storage for recipes and categories
 final class Database: DataBaseProtocol {
-    // MARK: - Singletone
-
-    static let shared = Database()
-
     // MARK: - Private Properties
 
     private let key = "Recipes"
@@ -40,7 +36,7 @@ final class Database: DataBaseProtocol {
 
     // MARK: - Initialization
 
-    private init() {
+    init() {
         setFromUserDefaults()
     }
 
@@ -50,8 +46,10 @@ final class Database: DataBaseProtocol {
         recipesSet.insert(recipe)
     }
 
-    func removeFromFavorites(_ recipe: Recipe) {
-        recipesSet.remove(recipe)
+    func removeFromFavorites(_ recipe: Recipe?) {
+        if let recipe {
+            recipesSet.remove(recipe)
+        }
     }
 
     func isFavorite(_ recipe: Recipe) -> Bool {

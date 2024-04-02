@@ -10,9 +10,9 @@ protocol DetailPresenterProtocol: AnyObject {
         view: DetailViewProtocol,
         coordinator: BaseModuleCoordinator,
         recipe: Recipe,
-        database: DataBaseProtocol,
-        networkService: NetworkServiceProtocol,
-        cacheService: CacheServiceProtocol
+        database: DataBaseProtocol?,
+        networkService: NetworkServiceProtocol?,
+        cacheService: CacheServiceProtocol?
     )
     /// Recipe data
     var recipeDetail: RecipeDetail? { get set }
@@ -33,17 +33,17 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     var recipeDetail: RecipeDetail?
     var isFavorite: Bool {
-        database.isFavorite(recipe)
+        database?.isFavorite(recipe) == true
     }
 
     // MARK: - Private Properties
 
     private let recipe: Recipe
-    private let cacheService: CacheServiceProtocol
-    private let networkService: NetworkServiceProtocol
+    private let cacheService: CacheServiceProtocol?
+    private let networkService: NetworkServiceProtocol?
     private weak var view: DetailViewProtocol?
     private weak var coordinator: BaseModuleCoordinator?
-    private var database: DataBaseProtocol
+    private var database: DataBaseProtocol?
 
     // MARK: - Initializers
 
@@ -51,9 +51,9 @@ final class DetailPresenter: DetailPresenterProtocol {
         view: DetailViewProtocol,
         coordinator: BaseModuleCoordinator,
         recipe: Recipe,
-        database: DataBaseProtocol,
-        networkService: NetworkServiceProtocol,
-        cacheService: CacheServiceProtocol
+        database: DataBaseProtocol?,
+        networkService: NetworkServiceProtocol?,
+        cacheService: CacheServiceProtocol?
     ) {
         self.view = view
         self.coordinator = coordinator
@@ -67,8 +67,8 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func updateRecipeFavoriteStatus() {
         if isFavorite {
-            database.removeFromFavorites(recipe)
-        } else { database.addToFavorites(recipe) }
+            database?.removeFromFavorites(recipe)
+        } else { database?.addToFavorites(recipe) }
         view?.updateFavoriteButton()
     }
 
@@ -84,15 +84,15 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     func fetchData() {
         view?.state = .loading
-        if let recipeFromCache = cacheService.getDetailedRecipe(for: recipe) {
+        if let recipeFromCache = cacheService?.getDetailedRecipe(for: recipe) {
             recipeDetail = recipeFromCache
             view?.state = .data
         } else {
-            networkService.getDetailedRecipe(url: recipe.uri) { [weak self] result in
+            networkService?.getDetailedRecipe(url: recipe.uri) { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(recipeData):
-                        self?.cacheService.save(recipeDetailed: recipeData)
+                        self?.cacheService?.save(recipeDetailed: recipeData)
                         self?.recipeDetail = recipeData
                         self?.view?.state = .data
 

@@ -4,12 +4,30 @@
 import Foundation
 import Keychain
 
-/// Class container
-final class Caretaker {
-    // MARK: - Singletone
+/// Saves and load user date into UserDefaults
+protocol CareTakerProtocol {
+    /// Update user login
+    /// - Parameter login: user login
+    func updateLogin(login: String)
+    /// Update user password
+    /// - Parameter password: user password
+    func updatePassword(password: String)
+    /// Load user instance if existed from UserDefaults
+    /// - Returns: user instance in case of existed, otherwise returns nil
+    func loadUser() -> User
+    /// Update user name in UserDefaults
+    /// - Parameter name: user name
+    func updateUserName(name: String)
+    /// Save user image to UserDefaults
+    /// - Parameter data: user image converted to Data format
+    func saveImage(data: Data)
+    /// Load user image from UserDefaults
+    /// - Returns user image in Data format
+    func loadImage() -> Data?
+}
 
-    static let shared = Caretaker()
-
+/// Load and save user data into UserDefaults
+final class Caretaker: CareTakerProtocol {
     // MARK: - Constants
 
     enum Constants {
@@ -71,7 +89,7 @@ final class Caretaker {
     // MARK: - Private Methods
 
     private func savePassword(for user: User) {
-        Keychain.save(user.password, forKey: Constants.userPassword)
+        let _ = Keychain.save(user.password, forKey: Constants.userPassword)
     }
 
     private func getUserPassword() -> String {

@@ -1,10 +1,13 @@
 // Builder.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Swinject
 import UIKit
 
 /// General protocol for all builders in app
 protocol BuilderProtocol {
+    /// Container for all services in app
+    var serviceContainer: Container? { get }
     /// Function to Authorization module
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView
     /// Function to  Recipies module
@@ -29,10 +32,20 @@ final class Builder: BuilderProtocol {
         static let favoritesViewTitle = "Favorites"
     }
 
+    // MARK: - Public Properties
+
+    var serviceContainer: Container?
+
+    // MARK: - Initialization
+
+    init(serviceContainer: Container?) {
+        self.serviceContainer = serviceContainer
+    }
+
     // MARK: - Public Methods
 
     func makeAuthModule(coordinator: BaseModuleCoordinator) -> AuthView {
-        let authService = AuthService()
+        let authService = serviceContainer?.resolve(AuthServiceProtocol.self)
         let view = AuthView()
         let presenter = AuthPresenter(view: view, authService: authService, coordinator: coordinator)
         view.presenter = presenter
@@ -53,7 +66,8 @@ final class Builder: BuilderProtocol {
 
     func makeFavoritesModule(coordinator: BaseModuleCoordinator) -> FavoritesView {
         let view = FavoritesView()
-        let presenter = FavoritesPresenter(view: view, coordinator: coordinator, database: Database.shared)
+        let database = serviceContainer?.resolve(DataBaseProtocol.self)
+        let presenter = FavoritesPresenter(view: view, coordinator: coordinator, database: database)
         view.presenter = presenter
         view.tabBarItem = UITabBarItem(title: Constants.favoritesViewTitle, image: .favorites, selectedImage: .favorSet)
         return view
@@ -61,7 +75,11 @@ final class Builder: BuilderProtocol {
 
     func makeProfileModule(coordinator: BaseModuleCoordinator) -> ProfileView {
         let profileView = ProfileView()
-        let profilePresenter = ProfilePresenter(view: profileView, coordinator: coordinator)
+        let profilePresenter = ProfilePresenter(
+            view: profileView,
+            coordinator: coordinator,
+            careTaker: serviceContainer?.resolve(CareTakerProtocol.self)
+        )
         profileView.profilePresenter = profilePresenter
         profileView.tabBarItem = UITabBarItem(
             title: Constants.profileViewTitle,
@@ -73,9 +91,8 @@ final class Builder: BuilderProtocol {
 
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView {
         let view = CategoryView()
-        let requestCreator = RequestCreator()
-        let networkService = NetworkService(requestCreator: requestCreator)
-        let cachService = CacheService.shared
+        let networkService = serviceContainer?.resolve(NetworkServiceProtocol.self)
+        let cachService = serviceContainer?.resolve(CacheServiceProtocol.self)
         let presenter = CategoryPresenter(
             category: category,
             view: view,
@@ -89,14 +106,14 @@ final class Builder: BuilderProtocol {
 
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView {
         let view = DetailView()
-        let requestCreator = RequestCreator()
-        let networkService = NetworkService(requestCreator: requestCreator)
-        let cacheService = CacheService.shared
+        let networkService = serviceContainer?.resolve(NetworkServiceProtocol.self)
+        let cacheService = serviceContainer?.resolve(CacheServiceProtocol.self)
+        let dataBase = serviceContainer?.resolve(DataBaseProtocol.self)
         let presenter = DetailPresenter(
             view: view,
             coordinator: coordinator,
             recipe: recipe,
-            database: Database.shared,
+            database: dataBase,
             networkService: networkService,
             cacheService: cacheService
         )
