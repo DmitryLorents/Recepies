@@ -1,8 +1,8 @@
 // RecepiesTests.swift
 // Copyright © RoadMap. All rights reserved.
 
-@testable import Recepies
 import XCTest
+@testable import Recepies
 
 final class RecepiesTests: XCTestCase {
     override func setUpWithError() throws {
