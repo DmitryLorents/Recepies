@@ -27,6 +27,7 @@ private class MockRequestCreator: MockRequestCreatorProtocol {
 final class NetworkManagerTests: XCTestCase {
     // MARK: - Private Properties
 
+    private let expectation = XCTestExpectation()
     fileprivate var requestCreator: MockRequestCreatorProtocol?
     fileprivate var networkService: NetworkService?
 
@@ -45,11 +46,8 @@ final class NetworkManagerTests: XCTestCase {
     func testInvalidURL() throws {
         // Given
         let invalidURL = URL(string: "https://www.google.com/")
-        if let invalidURL {
-            print("URL created")
-            requestCreator?.mockCategoryURLRequest = URLRequest(url: invalidURL)
-        }
-
+        guard let invalidURL else { return }
+        requestCreator?.mockCategoryURLRequest = URLRequest(url: invalidURL)
         // When
         var recipes: [Recipe]?
         networkService?.getRecipes(type: .chicken, text: "", completion: { result in
@@ -59,16 +57,18 @@ final class NetworkManagerTests: XCTestCase {
             case .failure:
                 break
             }
+            self.expectation.fulfill()
         })
+        wait(for: [expectation], timeout: 10.0)
         // Then
         XCTAssertNil(recipes)
     }
 
     func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+        //        // This is an example of a performance test case.
+        //        measure {
+        //            // Put the code you want to measure the time of here.
+        //        }
     }
 }
 

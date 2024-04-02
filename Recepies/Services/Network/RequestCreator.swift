@@ -119,6 +119,7 @@ extension RequestCreator: RequestCreatorProtocol {
         guard let url = components.url else {
             return nil
         }
+        print(url)
         return URLRequest(url: url)
     }
 }
