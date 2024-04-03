@@ -31,6 +31,8 @@ packages:
 #targets
 targets:
   Recepies:
+    settings:
+      OTHER_SWIFT_FLAGS: "$(inherited)"
     
     type: application
     platform: iOS
@@ -85,7 +87,7 @@ targets:
 
   RecipesMock:
     settings:
-      OTHER_SWIFT_FLAGS: "-D Mock"
+      OTHER_SWIFT_FLAGS: "$(inherited)"
     type: application
     platform: iOS
     sources:
@@ -136,3 +138,19 @@ targets:
         #adjust script settings
         basedOnDependencyAnalysis: false
         showEnvVars: false
+
+  RecepiesTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - RecepiesTests
+    dependencies:
+      - target: Recepies
+
+  RecepiesUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - RecepiesUITests
+    dependencies:
+      - target: Recepies

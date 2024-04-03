@@ -80,7 +80,7 @@ final class RequestCreator {
     }
 
     private func makeMockURL() -> URL? {
-        let fileName = "detailRecipeMock"
+        let fileName = "detailRecipeStub"
         let bundleURL = Bundle.main.url(forResource: fileName, withExtension: "json")
         guard let bundleURL else {
             let errorText = "Absence of mock file: \(fileName).json"
@@ -107,6 +107,7 @@ extension RequestCreator: RequestCreatorProtocol {
         components.path = "/api/recipes/v2/by-uri"
         components.queryItems = makeRecipeQueryItems(uri: uri)
         guard let url = components.url else { return nil }
+        print(url)
         return URLRequest(url: url)
     }
 
@@ -119,6 +120,7 @@ extension RequestCreator: RequestCreatorProtocol {
         guard let url = components.url else {
             return nil
         }
+        print(url)
         return URLRequest(url: url)
     }
 }
