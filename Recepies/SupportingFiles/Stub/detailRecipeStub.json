@@ -11,63 +11,6 @@
             "uri":"http://www.edamam.com/ontologies/edamam.owl#recipe_3d45f44e2e398b038c1113b0fd9a484c",
             "label":"Stub",
             "image":"Stub",
-            "images":{
-               "THUMBNAIL":{
-                  "url":"https://edamam-product-images.s3.amazonaws.com/web-img/470/470026e882df183a9634545759d4a8ba-s.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEgaCXVzLWVhc3QtMSJIMEYCIQDxTKxMwSm0mTxyL%2F3%2FimQz%2BQJlpPfpV6LnARatYNOgWgIhANe0TiLaGVK1y2FpZcMnnXvKN6teRTSVnE6rLLQTJ9E3KrgFCHAQABoMMTg3MDE3MTUwOTg2IgwCzXQ3YdsBO%2BbZAgoqlQX2AKbDZ6tlVEXcIpICfmpEICp4n7vDxS3rYp8WEuTO%2FLiEjdlgILokTioFU0sLQfAJdGXgNoc5vjScPOMT32MHVpzBrLar4s2BP40L5TKhOwKn1aqABw%2BFo7%2FxSezC7VRo5X%2BdYT85wj4HdBcC%2FTDXxcgkxJxs7B%2BC3n3NmoFUtjBu8V7fAP9dCy5zh9GXdMBJ%2BLzhm%2BrkVjP1h94gpAAehAZubpXMBf2jttbTx4hH7MtBeVAAN5Iqmkav98lR7t0eHOD1qsJ9rB9yTI3tgyTVEzY0%2FypFhVML8KcT4WyKpH5BaaZ18bzWqIFYyvKUtEZd3ImiQJFaVAtKMrwUnEek6QQiYYKaFRYzSgwR9LKh0uINT4fltpZHY%2FV2WAyN7alFRqucHXw3v7WViGwZyK%2FG3L%2B5Xh5%2BUk2k%2Fq7q0YtQYASQZYVWElz4a0CJypk5%2FNeehQlU9qLpkhJnr%2BawC%2F4eCcMRQaHUEr%2BpPKORWkdlSFM%2BrY5W5iRWmGnxHKDcgsyyGwpYqm4bpePwJf95Si8YGEGsda5%2BCxD9QuQOeXdBRNN0aXP9TnU3C6ICAueTrKwUl7XJ0SyxOYQvYkcaCtqMTO2KxeWWwmAji0uxcVSXykhfmJSKcj6%2BfQHTKLVSMIWXka1cRqGl810St%2F28v2BC1MqCaK%2Bpjb%2FPmsdMROgSWGLhzRNAqJbDUh%2B%2FYFUHJMeFyQzS1QyFX1zMskPThaapVl4xs8z5APyDzP0KQ7GHIMk8s7u%2Fbt%2FqrGEH90q1pASti3ICjDUHXb6LSaPyk%2BQYgBF%2FsQOTb8%2B838mTc5EJTQUEi6o1cdSuV7h8t4zGo7HFAbqvuAwxlnd%2Bnbeybx6G1TNBEFU5uDHZi96X8fneYcPeZB7bMKmBtLAGOrAByFI9GAEWM%2FvGz6HePY1Dwf5BjFJVWvFeIeWMVpQdMlbM3GLqyj6Se6jgf2x4sJFZwOH1ZHRHerd5OFO6kl%2BcqCLDKQGo4biZVoPJx0UPMFzvWEdfEucEtFxxVFpUWc4xolFnQUhcXiAPdR0uZSN8%2B4zkNWvgYTr0fPOgrsFdAuZaAl5n95qYdexuENDxZu%2F96LiCm8zzZvHbKCEX9W3AJLuW8tsF8ANK7BR62gxclxY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240403T080140Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIASXCYXIIFESNKSGDM%2F20240403%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=f0462a163653ded75f446584d534d11adbe78b1c4f70284ee34df0bfe8248f47",
-                  "width":100,
-                  "height":100
-               },
-               "SMALL":{
-                  "url":"https://edamam-product-images.s3.amazonaws.com/web-img/470/470026e882df183a9634545759d4a8ba-m.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEgaCXVzLWVhc3QtMSJIMEYCIQDxTKxMwSm0mTxyL%2F3%2FimQz%2BQJlpPfpV6LnARatYNOgWgIhANe0TiLaGVK1y2FpZcMnnXvKN6teRTSVnE6rLLQTJ9E3KrgFCHAQABoMMTg3MDE3MTUwOTg2IgwCzXQ3YdsBO%2BbZAgoqlQX2AKbDZ6tlVEXcIpICfmpEICp4n7vDxS3rYp8WEuTO%2FLiEjdlgILokTioFU0sLQfAJdGXgNoc5vjScPOMT32MHVpzBrLar4s2BP40L5TKhOwKn1aqABw%2BFo7%2FxSezC7VRo5X%2BdYT85wj4HdBcC%2FTDXxcgkxJxs7B%2BC3n3NmoFUtjBu8V7fAP9dCy5zh9GXdMBJ%2BLzhm%2BrkVjP1h94gpAAehAZubpXMBf2jttbTx4hH7MtBeVAAN5Iqmkav98lR7t0eHOD1qsJ9rB9yTI3tgyTVEzY0%2FypFhVML8KcT4WyKpH5BaaZ18bzWqIFYyvKUtEZd3ImiQJFaVAtKMrwUnEek6QQiYYKaFRYzSgwR9LKh0uINT4fltpZHY%2FV2WAyN7alFRqucHXw3v7WViGwZyK%2FG3L%2B5Xh5%2BUk2k%2Fq7q0YtQYASQZYVWElz4a0CJypk5%2FNeehQlU9qLpkhJnr%2BawC%2F4eCcMRQaHUEr%2BpPKORWkdlSFM%2BrY5W5iRWmGnxHKDcgsyyGwpYqm4bpePwJf95Si8YGEGsda5%2BCxD9QuQOeXdBRNN0aXP9TnU3C6ICAueTrKwUl7XJ0SyxOYQvYkcaCtqMTO2KxeWWwmAji0uxcVSXykhfmJSKcj6%2BfQHTKLVSMIWXka1cRqGl810St%2F28v2BC1MqCaK%2Bpjb%2FPmsdMROgSWGLhzRNAqJbDUh%2B%2FYFUHJMeFyQzS1QyFX1zMskPThaapVl4xs8z5APyDzP0KQ7GHIMk8s7u%2Fbt%2FqrGEH90q1pASti3ICjDUHXb6LSaPyk%2BQYgBF%2FsQOTb8%2B838mTc5EJTQUEi6o1cdSuV7h8t4zGo7HFAbqvuAwxlnd%2Bnbeybx6G1TNBEFU5uDHZi96X8fneYcPeZB7bMKmBtLAGOrAByFI9GAEWM%2FvGz6HePY1Dwf5BjFJVWvFeIeWMVpQdMlbM3GLqyj6Se6jgf2x4sJFZwOH1ZHRHerd5OFO6kl%2BcqCLDKQGo4biZVoPJx0UPMFzvWEdfEucEtFxxVFpUWc4xolFnQUhcXiAPdR0uZSN8%2B4zkNWvgYTr0fPOgrsFdAuZaAl5n95qYdexuENDxZu%2F96LiCm8zzZvHbKCEX9W3AJLuW8tsF8ANK7BR62gxclxY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240403T080140Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIASXCYXIIFESNKSGDM%2F20240403%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=f153e6c7328502a56df93ed8980d9e7b5b21f6a6b83f77990174905098af46f8",
-                  "width":200,
-                  "height":200
-               },
-               "REGULAR":{
-                  "url":"https://edamam-product-images.s3.amazonaws.com/web-img/470/470026e882df183a9634545759d4a8ba.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEgaCXVzLWVhc3QtMSJIMEYCIQDxTKxMwSm0mTxyL%2F3%2FimQz%2BQJlpPfpV6LnARatYNOgWgIhANe0TiLaGVK1y2FpZcMnnXvKN6teRTSVnE6rLLQTJ9E3KrgFCHAQABoMMTg3MDE3MTUwOTg2IgwCzXQ3YdsBO%2BbZAgoqlQX2AKbDZ6tlVEXcIpICfmpEICp4n7vDxS3rYp8WEuTO%2FLiEjdlgILokTioFU0sLQfAJdGXgNoc5vjScPOMT32MHVpzBrLar4s2BP40L5TKhOwKn1aqABw%2BFo7%2FxSezC7VRo5X%2BdYT85wj4HdBcC%2FTDXxcgkxJxs7B%2BC3n3NmoFUtjBu8V7fAP9dCy5zh9GXdMBJ%2BLzhm%2BrkVjP1h94gpAAehAZubpXMBf2jttbTx4hH7MtBeVAAN5Iqmkav98lR7t0eHOD1qsJ9rB9yTI3tgyTVEzY0%2FypFhVML8KcT4WyKpH5BaaZ18bzWqIFYyvKUtEZd3ImiQJFaVAtKMrwUnEek6QQiYYKaFRYzSgwR9LKh0uINT4fltpZHY%2FV2WAyN7alFRqucHXw3v7WViGwZyK%2FG3L%2B5Xh5%2BUk2k%2Fq7q0YtQYASQZYVWElz4a0CJypk5%2FNeehQlU9qLpkhJnr%2BawC%2F4eCcMRQaHUEr%2BpPKORWkdlSFM%2BrY5W5iRWmGnxHKDcgsyyGwpYqm4bpePwJf95Si8YGEGsda5%2BCxD9QuQOeXdBRNN0aXP9TnU3C6ICAueTrKwUl7XJ0SyxOYQvYkcaCtqMTO2KxeWWwmAji0uxcVSXykhfmJSKcj6%2BfQHTKLVSMIWXka1cRqGl810St%2F28v2BC1MqCaK%2Bpjb%2FPmsdMROgSWGLhzRNAqJbDUh%2B%2FYFUHJMeFyQzS1QyFX1zMskPThaapVl4xs8z5APyDzP0KQ7GHIMk8s7u%2Fbt%2FqrGEH90q1pASti3ICjDUHXb6LSaPyk%2BQYgBF%2FsQOTb8%2B838mTc5EJTQUEi6o1cdSuV7h8t4zGo7HFAbqvuAwxlnd%2Bnbeybx6G1TNBEFU5uDHZi96X8fneYcPeZB7bMKmBtLAGOrAByFI9GAEWM%2FvGz6HePY1Dwf5BjFJVWvFeIeWMVpQdMlbM3GLqyj6Se6jgf2x4sJFZwOH1ZHRHerd5OFO6kl%2BcqCLDKQGo4biZVoPJx0UPMFzvWEdfEucEtFxxVFpUWc4xolFnQUhcXiAPdR0uZSN8%2B4zkNWvgYTr0fPOgrsFdAuZaAl5n95qYdexuENDxZu%2F96LiCm8zzZvHbKCEX9W3AJLuW8tsF8ANK7BR62gxclxY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240403T080140Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIASXCYXIIFESNKSGDM%2F20240403%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=47f745be46f4e4855e8b7225f6b85943733359a09fbd0d3bc71b0d8480ff1bbb",
-                  "width":300,
-                  "height":300
-               },
-               "LARGE":{
-                  "url":"https://edamam-product-images.s3.amazonaws.com/web-img/470/470026e882df183a9634545759d4a8ba-l.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEgaCXVzLWVhc3QtMSJIMEYCIQDxTKxMwSm0mTxyL%2F3%2FimQz%2BQJlpPfpV6LnARatYNOgWgIhANe0TiLaGVK1y2FpZcMnnXvKN6teRTSVnE6rLLQTJ9E3KrgFCHAQABoMMTg3MDE3MTUwOTg2IgwCzXQ3YdsBO%2BbZAgoqlQX2AKbDZ6tlVEXcIpICfmpEICp4n7vDxS3rYp8WEuTO%2FLiEjdlgILokTioFU0sLQfAJdGXgNoc5vjScPOMT32MHVpzBrLar4s2BP40L5TKhOwKn1aqABw%2BFo7%2FxSezC7VRo5X%2BdYT85wj4HdBcC%2FTDXxcgkxJxs7B%2BC3n3NmoFUtjBu8V7fAP9dCy5zh9GXdMBJ%2BLzhm%2BrkVjP1h94gpAAehAZubpXMBf2jttbTx4hH7MtBeVAAN5Iqmkav98lR7t0eHOD1qsJ9rB9yTI3tgyTVEzY0%2FypFhVML8KcT4WyKpH5BaaZ18bzWqIFYyvKUtEZd3ImiQJFaVAtKMrwUnEek6QQiYYKaFRYzSgwR9LKh0uINT4fltpZHY%2FV2WAyN7alFRqucHXw3v7WViGwZyK%2FG3L%2B5Xh5%2BUk2k%2Fq7q0YtQYASQZYVWElz4a0CJypk5%2FNeehQlU9qLpkhJnr%2BawC%2F4eCcMRQaHUEr%2BpPKORWkdlSFM%2BrY5W5iRWmGnxHKDcgsyyGwpYqm4bpePwJf95Si8YGEGsda5%2BCxD9QuQOeXdBRNN0aXP9TnU3C6ICAueTrKwUl7XJ0SyxOYQvYkcaCtqMTO2KxeWWwmAji0uxcVSXykhfmJSKcj6%2BfQHTKLVSMIWXka1cRqGl810St%2F28v2BC1MqCaK%2Bpjb%2FPmsdMROgSWGLhzRNAqJbDUh%2B%2FYFUHJMeFyQzS1QyFX1zMskPThaapVl4xs8z5APyDzP0KQ7GHIMk8s7u%2Fbt%2FqrGEH90q1pASti3ICjDUHXb6LSaPyk%2BQYgBF%2FsQOTb8%2B838mTc5EJTQUEi6o1cdSuV7h8t4zGo7HFAbqvuAwxlnd%2Bnbeybx6G1TNBEFU5uDHZi96X8fneYcPeZB7bMKmBtLAGOrAByFI9GAEWM%2FvGz6HePY1Dwf5BjFJVWvFeIeWMVpQdMlbM3GLqyj6Se6jgf2x4sJFZwOH1ZHRHerd5OFO6kl%2BcqCLDKQGo4biZVoPJx0UPMFzvWEdfEucEtFxxVFpUWc4xolFnQUhcXiAPdR0uZSN8%2B4zkNWvgYTr0fPOgrsFdAuZaAl5n95qYdexuENDxZu%2F96LiCm8zzZvHbKCEX9W3AJLuW8tsF8ANK7BR62gxclxY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240403T080140Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIASXCYXIIFESNKSGDM%2F20240403%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=08dce44d440f8040c6997b8e83cd1f926d4aca4128475252e14a692e62bd0d72",
-                  "width":600,
-                  "height":600
-               }
-            },
-            "source":"Smitten Kitchen",
-            "url":"http://smittenkitchen.com/2008/02/seven-yolk-pasta-dough/",
-            "shareAs":"http://www.edamam.com/recipe/seven-yolk-pasta-dough-3d45f44e2e398b038c1113b0fd9a484c/-",
-            "yield":6.0,
-            "dietLabels":[
-               "Balanced",
-               "Low-Sodium"
-            ],
-            "healthLabels":[
-               "Sugar-Conscious",
-               "Low Potassium",
-               "Kidney-Friendly",
-               "Vegetarian",
-               "Pescatarian",
-               "Mediterranean",
-               "Peanut-Free",
-               "Tree-Nut-Free",
-               "Soy-Free",
-               "Fish-Free",
-               "Shellfish-Free",
-               "Pork-Free",
-               "Red-Meat-Free",
-               "Crustacean-Free",
-               "Celery-Free",
-               "Mustard-Free",
-               "Sesame-Free",
-               "Lupine-Free",
-               "Mollusk-Free",
-               "Alcohol-Free",
-               "Sulfite-Free",
-               "Kosher"
-            ],
-            "cautions":[
-               
-            ],
             "ingredientLines":[
                "1 3/4 cups (8 ounces) all-purpose flour",
                "6 large egg yolks",
@@ -131,15 +74,9 @@
             "totalCO2Emissions":1151.987093558,
             "co2EmissionsClass":"C",
             "totalWeight":400.54618500000004,
-            "totalTime":0.0,
+            "totalTime":100.0,
             "cuisineType":[
                "american"
-            ],
-            "mealType":[
-               "lunch/dinner"
-            ],
-            "dishType":[
-               "main course"
             ],
             "totalNutrients":{
                "ENERC_KCAL":{

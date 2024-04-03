@@ -5,22 +5,20 @@
 import XCTest
 
 private protocol MockURLRequestProvider {
-    var mockCategoryURLRequest: URLRequest? { get set }
-    var mockRecipeURLRequest: URLRequest? { get set }
+    var mockURLRequest: URLRequest? { get set }
 }
 
 private typealias MockRequestCreatorProtocol = MockURLRequestProvider & RequestCreatorProtocol
 
 private class MockRequestCreator: MockRequestCreatorProtocol {
-    var mockCategoryURLRequest: URLRequest?
-    var mockRecipeURLRequest: URLRequest?
+    var mockURLRequest: URLRequest?
 
     func createCategoryURLRequest(type: Recepies.CategoryType, text: String) -> URLRequest? {
-        mockCategoryURLRequest
+        mockURLRequest
     }
 
     func createRecipeURLRequest(uri: String) -> URLRequest? {
-        mockRecipeURLRequest
+        mockURLRequest
     }
 }
 
@@ -47,7 +45,7 @@ final class NetworkManagerTests: XCTestCase {
         // Given
         let invalidURL = URL(string: "https://www.google.com/")
         guard let invalidURL else { return }
-        requestCreator?.mockCategoryURLRequest = URLRequest(url: invalidURL)
+        requestCreator?.mockURLRequest = URLRequest(url: invalidURL)
         // When
         var recipes: [Recipe]?
         networkService?.getRecipes(type: .chicken, text: "", completion: { result in
@@ -68,7 +66,7 @@ final class NetworkManagerTests: XCTestCase {
         // Given
         let invalidURL = URL(string: "https://www.google.com/")
         guard let invalidURL else { return }
-        requestCreator?.mockRecipeURLRequest = URLRequest(url: invalidURL)
+        requestCreator?.mockURLRequest = URLRequest(url: invalidURL)
         // When
         var recipe: RecipeDetail?
         networkService?.getDetailedRecipe(url: "") { result in
@@ -92,7 +90,7 @@ final class NetworkManagerTests: XCTestCase {
         guard let jsonStubURL else {
             return
         }
-        requestCreator?.mockCategoryURLRequest = URLRequest(url: jsonStubURL)
+        requestCreator?.mockURLRequest = URLRequest(url: jsonStubURL)
         // When
         var recipes: [Recipe]?
         networkService?.getRecipes(type: .chicken, text: "", completion: { result in
@@ -116,31 +114,29 @@ final class NetworkManagerTests: XCTestCase {
 
     func testGetDetailRecipeWithJSONstubURL() throws {
         // Given
-        let fileName = "recipesStub"
+        let fileName = "detailRecipeStub"
         let jsonStubURL = makeStubURL(fileName: fileName)
         guard let jsonStubURL else {
             return
         }
-        requestCreator?.mockCategoryURLRequest = URLRequest(url: jsonStubURL)
+        requestCreator?.mockURLRequest = URLRequest(url: jsonStubURL)
         // When
-        var recipes: [Recipe]?
-        networkService?.getRecipes(type: .chicken, text: "", completion: { result in
+        var recipe: RecipeDetail?
+        networkService?.getDetailedRecipe(url: "") { result in
             switch result {
             case let .success(success):
-                recipes = success
+                recipe = success
             case .failure:
                 break
             }
             self.expectation.fulfill()
-        })
+        }
         wait(for: [expectation], timeout: 10.0)
         // Then
-        XCTAssertEqual(recipes?.count, 4)
-        XCTAssertEqual(recipes?.first?.name, "Stub")
-        XCTAssertEqual(recipes?.first?.uri, "myURI")
-        XCTAssertEqual(recipes?.first?.recipeImage, "stubImage")
-        XCTAssertEqual(recipes?.first?.calories, 100)
-        XCTAssertEqual(recipes?.first?.timeToCook, 100)
+
+        XCTAssertEqual(recipe?.name, "Stub")
+        XCTAssertEqual(recipe?.recipeImage, "Stub")
+        XCTAssertEqual(recipe?.timeToCook, 100.0)
     }
 
 //    func testPerformanceExample() throws {
@@ -157,11 +153,3 @@ final class NetworkManagerTests: XCTestCase {
         return bundleURL
     }
 }
-
-// NetworkService
-// func getRecipes(type: CategoryType, text: String, completion: @escaping (Result<[Recipe], Error>) -> ())
-// func getDetailedRecipe(url: String, completion: @escaping (Result<RecipeDetail, Error>) -> ())
-
-// RequestCreator
-// func createCategoryURLRequest(type: CategoryType, text: String) -> URLRequest?
-// func createRecipeURLRequest(uri: String) -> URLRequest?
