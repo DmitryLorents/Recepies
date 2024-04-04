@@ -54,7 +54,7 @@ final class AppCoordinator: BaseCoodinator {
         add(coordinator: favoritesCoordinator)
 
         // Set Profile
-        let profileCoordinator = ProfileCoordinator()
+        let profileCoordinator = ProfileCoordinator(builder: builder)
         let profileModelView = builder.makeProfileModule(coordinator: profileCoordinator)
         profileCoordinator.setRootController(profileModelView)
         profileCoordinator.finishFlowHandler = { [weak self] in

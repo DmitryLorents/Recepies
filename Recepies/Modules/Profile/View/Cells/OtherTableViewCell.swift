@@ -12,6 +12,8 @@ final class OtherTableViewCell: UITableViewCell {
         static let editNameButtonImage = "ipensela"
     }
 
+    static let reuseID = String(describing: OtherTableViewCell.self)
+
     // MARK: - Visual Components
 
     private let currentOptionsLabel: UILabel = {

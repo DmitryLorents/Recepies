@@ -377,6 +377,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		0A23394D2BBF2AD700CCFFC7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DBBCF6353BEE736CDE73007 /* MainTableViewCell.swift */,
+				66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		0AF88CA62BBD257C00D01F15 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,9 +551,8 @@
 		503F93E9EAFE78B3A6C8E185 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6DBBCF6353BEE736CDE73007 /* MainTableViewCell.swift */,
-				66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */,
 				77C6F76E55FA7143E14FC941 /* ProfileView.swift */,
+				0A23394D2BBF2AD700CCFFC7 /* Cells */,
 				1F73FEC6026368CEC03C8FB8 /* View */,
 			);
 			path = View;

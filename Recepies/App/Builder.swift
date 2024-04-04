@@ -20,6 +20,8 @@ protocol BuilderProtocol {
     func makeCategoryModule(coordinator: BaseModuleCoordinator, category: Category) -> CategoryView
     /// Function to  build Detail module
     func makeDetailModule(coordinator: BaseModuleCoordinator, recipe: Recipe) -> DetailView
+    /// Function to  build Partners module
+    func makePartnersModule(coordinator: BaseModuleCoordinator) -> PartnersView
 }
 
 /// Builder for all modules in app
@@ -117,6 +119,13 @@ final class Builder: BuilderProtocol {
             networkService: networkService,
             cacheService: cacheService
         )
+        view.presenter = presenter
+        return view
+    }
+
+    func makePartnersModule(coordinator: BaseModuleCoordinator) -> PartnersView {
+        let view = PartnersView()
+        let presenter = PartnersPresenter(view: view, coordinator: coordinator)
         view.presenter = presenter
         return view
     }

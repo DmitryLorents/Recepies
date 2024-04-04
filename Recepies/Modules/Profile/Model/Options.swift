@@ -19,7 +19,8 @@ struct Options: OptionsProtocol {
         [
             .init(icon: "star", nameOptions: "Bonuses"),
             .init(icon: "termsF", nameOptions: "Terms & Privacy Policy"),
-            .init(icon: "logoutF", nameOptions: "Log out")
+            .init(icon: "partners", nameOptions: "Our partners"),
+            .init(icon: "logoutF", nameOptions: "Log out"),
         ]
     }
 }
