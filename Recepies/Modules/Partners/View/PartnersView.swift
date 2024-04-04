@@ -9,8 +9,8 @@ protocol PartnersViewProtocol: AnyObject {
     /// View's presenter
     var presenter: PartnersPresenterProtocol? { get set }
     /// Change button's image
-    /// - Parameter image: image for button
-    func setLocationButtonImage(_ image: UIImage)
+    /// - Parameter isTapped: indicates wheter button is tapped or not
+    func setLocationButtonTapped(_ isTapped: Bool)
     //    /// Notify user if password format is incorrect
     //    /// - Parameter decision: defines necessity to notify the user
     //    func showIncorrectPasswordFormat(_ decision: Bool)
@@ -90,25 +90,48 @@ final class PartnersView: UIViewController {
         view.addSubviews(stubView, locationButton, offerLabel, okButton)
         view.disableTARMIC()
         setupConstraints()
+        setupNavigationAppearance()
+    }
+
+    private func setupNavigationAppearance() {
+        hideBackButton()
+        addCloseButton()
+    }
+
+    private func hideBackButton() {
+        navigationItem.setHidesBackButton(true, animated: true)
+    }
+
+    private func addCloseButton() {
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .black
+        closeButton.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
     }
 
     @objc private func okButtonAction() {
-        print(#function)
+        presenter?.didTapCloseButton()
     }
 
     @objc private func locationButtonAction() {
-        print(#function)
+        presenter?.didTapLocationButton()
     }
 
     @objc private func tapOnView() {
         print(#function)
+    }
+
+    @objc func closeButtonAction() {
+        presenter?.didTapCloseButton()
     }
 }
 
 // MARK: - PartnersView - PartnersViewProtocol
 
 extension PartnersView: PartnersViewProtocol {
-    func setLocationButtonImage(_ image: UIImage) {
+    func setLocationButtonTapped(_ isTapped: Bool) {
+        let image: UIImage = isTapped ? .locatorFill : .locator
         locationButton.setImage(image, for: .normal)
     }
 }

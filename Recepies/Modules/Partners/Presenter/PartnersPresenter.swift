@@ -5,6 +5,10 @@
 protocol PartnersPresenterProtocol: AnyObject {
     /// Main initializer
     init(view: PartnersViewProtocol, coordinator: BaseModuleCoordinator)
+    /// Acts when cancel button tapping
+    func didTapCloseButton()
+    /// Acts when location button tapped
+    func didTapLocationButton()
 }
 
 final class PartnersPresenter: PartnersPresenterProtocol {
@@ -12,6 +16,7 @@ final class PartnersPresenter: PartnersPresenterProtocol {
 
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: PartnersViewProtocol?
+    private var isLocationButtonTapped = false
 
     // MARK: - Initialization
 
@@ -21,4 +26,14 @@ final class PartnersPresenter: PartnersPresenterProtocol {
     }
 
     // MARK: - Public Methods
+
+    func didTapCloseButton() {
+        coordinator?.publicRootController.popViewController(animated: true)
+    }
+
+    func didTapLocationButton() {
+        isLocationButtonTapped.toggle()
+        view?.setLocationButtonTapped(isLocationButtonTapped)
+        // Add some location logic
+    }
 }
