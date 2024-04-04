@@ -12,6 +12,9 @@ final class AuthScreenUITests: XCTestCase {
     lazy var loginButton = app.buttons["Login"].staticTexts["Login"]
     lazy var enterPasswordSecureTextField = app.secureTextFields["Enter Password"]
     lazy var recipesScreenScrollBar = app.collectionViews.containing(.other, identifier:"Horizontal scroll bar, 1 page").element
+    lazy var warningView = app.staticTexts["Please check the accuracy of the entered credentials."]
+    lazy var emailTextFieldWarning = app.staticTexts["Incorrect format"]
+    lazy var passwordTextFieldWarning = app.staticTexts["You entered the wrong password"]
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -24,7 +27,7 @@ final class AuthScreenUITests: XCTestCase {
     }
     
     func testLoginButtonIsActive() {
-        enterUserData()
+        enterCorrectUserData()
         XCTAssert(loginButton.isEnabled)
     }
     
@@ -32,28 +35,63 @@ final class AuthScreenUITests: XCTestCase {
     func testSuccessAuthorization() throws {
         // given
         // when
-        enterUserData()
+        enterCorrectUserData()
         loginButton.tap()
         
         // then
-        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: recipesScreenScrollBar, handler: nil)
+        expectation(for: NSPredicate(format: "exists==1"), evaluatedWith: recipesScreenScrollBar, handler: nil)
         waitForExpectations(timeout: 3)
         XCTAssertTrue(recipesScreenScrollBar.exists)
     }
     
-    private func enterUserData() {
+    func testIncorrectEmailFormat() {
+        // when
+        enterUserData(user: "13.com", password: "654321")
+        // then
+        XCTAssert(emailTextFieldWarning.exists)
+    }
+    
+    func testIncorrectPasswordFormat() {
+        // when
+        enterUserData(user: "1@2.com", password: "654")
+        // then
+        loginButton.tap()
+        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: warningView, handler: nil)
+        waitForExpectations(timeout: 3)
+        XCTAssert(passwordTextFieldWarning.exists)
+        XCTAssert(warningView.exists)
+    }
+    
+    func testIncorrectUserData() {
+        // when
+        enterUserData(user: "1@22.com", password: "6542222")
+        // then
+        loginButton.tap()
+        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: warningView, handler: nil)
+        waitForExpectations(timeout: 3)
+        XCTAssert(warningView.exists)
+    }
+    
+    func testSecureYey() {}
+    
+    private func enterCorrectUserData() {
+        enterUserData(user: user, password: password)
+    }
+    
+    private func enterUserData(user: String, password: String) {
         emailTextField.tap()
         emailTextField.typeText(user)
         passwordTextField.tap()
         passwordTextField.typeText(password)
     }
 
-//    func testLaunchPerformance() throws {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTApplicationLaunchMetric()]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
+
 }
+/*
+ План испытаний
+ 1 Ввод некорректного формата почты - должна выскочить надпись Incorrect format
+ 2 Ввод неправильного пароля короче 5 символов - должна появиться надпись о неправильном пароле и красная вью внизу
+ 3 Ввести неправильные данные пользователя - должна появиться красная вью внизу
+ 4 Нажать на глаз - проверить изменение свойства isStcureEnabled
+ 5 ВВести правильные данные - должен загрузиться следующий экран
+ */
