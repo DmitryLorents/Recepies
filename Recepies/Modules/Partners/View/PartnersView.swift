@@ -54,9 +54,11 @@ final class PartnersView: UIViewController {
         return label
     }()
 
-    private let stubView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray
+    private let mapView: GMSMapView = {
+        let view = GMSMapView()
+        let coordinate = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
+        let camera = GMSCameraPosition.camera(withTarget: coordinate, zoom: 13)
+        view.camera = camera
         return view
     }()
 
@@ -87,7 +89,7 @@ final class PartnersView: UIViewController {
         title = Constants.title
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
         view.addGestureRecognizer(tapGesture)
-        view.addSubviews(stubView, locationButton, offerLabel, okButton)
+        view.addSubviews(mapView, locationButton, offerLabel, okButton)
         view.disableTARMIC()
         setupConstraints()
         setupNavigationAppearance()
@@ -165,10 +167,10 @@ private extension PartnersView {
 
     func setupStubViewConstraints() {
         NSLayoutConstraint.activate([
-            stubView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stubView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stubView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            stubView.bottomAnchor.constraint(equalTo: offerLabel.topAnchor, constant: -40)
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mapView.bottomAnchor.constraint(equalTo: offerLabel.topAnchor, constant: -40)
         ])
     }
 
@@ -176,8 +178,8 @@ private extension PartnersView {
         NSLayoutConstraint.activate([
             locationButton.heightAnchor.constraint(equalToConstant: 52),
             locationButton.widthAnchor.constraint(equalTo: locationButton.heightAnchor),
-            locationButton.trailingAnchor.constraint(equalTo: stubView.trailingAnchor, constant: -14),
-            locationButton.bottomAnchor.constraint(equalTo: stubView.bottomAnchor, constant: -14),
+            locationButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -14),
+            locationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -14),
         ])
     }
 }
