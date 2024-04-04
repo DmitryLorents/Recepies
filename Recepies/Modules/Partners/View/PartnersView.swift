@@ -8,9 +8,9 @@ import UIKit
 protocol PartnersViewProtocol: AnyObject {
     /// View's presenter
     var presenter: PartnersPresenterProtocol? { get set }
-    //    /// Notify user if email format is incorrect
-    //    /// - Parameter decision: defines necessity to notify the user
-    //    func showIncorrectEmailFormat(_ decision: Bool)
+    /// Change button's image
+    /// - Parameter image: image for button
+    func setLocationButtonImage(_ image: UIImage)
     //    /// Notify user if password format is incorrect
     //    /// - Parameter decision: defines necessity to notify the user
     //    func showIncorrectPasswordFormat(_ decision: Bool)
@@ -25,15 +25,15 @@ protocol PartnersViewProtocol: AnyObject {
 /// View to show authorization screen
 final class PartnersView: UIViewController {
     // MARK: - Constants
-    
+
     private enum Constants {
         static let title = "Our Partners"
         static let okButtonTitle = "Ok"
         static let offerLabelText = "You can get gifts and discounts from our partners"
     }
-    
+
     // MARK: - Visual components
-    
+
     private lazy var okButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .black
@@ -44,7 +44,7 @@ final class PartnersView: UIViewController {
         button.addTarget(nil, action: #selector(okButtonAction), for: .touchUpInside)
         return button
     }()
-    
+
     private let offerLabel: UILabel = {
         let label = UILabel()
         label.font = .makeVerdanaRegular(size: 18)
@@ -53,155 +53,108 @@ final class PartnersView: UIViewController {
         label.textAlignment = .left
         return label
     }()
-    
+
     private let stubView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray
         return view
     }()
-    
-    
+
+    private lazy var locationButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.locator, for: .normal)
+        button.backgroundColor = .white
+        button.addTarget(nil, action: #selector(locationButtonAction), for: .touchUpInside)
+        button.layer.cornerRadius = 52.0 / 2
+        return button
+    }()
+
     // MARK: - Public Properties
-    
+
     var presenter: PartnersPresenterProtocol?
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVIew()
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func setupVIew() {
         view.backgroundColor = .systemBackground
         title = Constants.title
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignTextFields))
-        //        view.addGestureRecognizer(tapGesture)
-        //        view.addSubviews(
-        //            loginLabel,
-        //            emailLabel,
-        //            emailTextField,
-        //            passwordLabel,
-        //            passwordTextField,
-        //            loginButton,
-        //            warningLabel,
-        //            emailWarningLabel,
-        //            passwordWarningLabel
-        //        )
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
+        view.addGestureRecognizer(tapGesture)
+        view.addSubviews(stubView, locationButton, offerLabel, okButton)
         view.disableTARMIC()
         setupConstraints()
     }
-    
+
     @objc private func okButtonAction() {
+        print(#function)
+    }
+
+    @objc private func locationButtonAction() {
+        print(#function)
+    }
+
+    @objc private func tapOnView() {
         print(#function)
     }
 }
 
-// MARK: - AuthView - AuthViewProtocol
+// MARK: - PartnersView - PartnersViewProtocol
 
-extension PartnersView: PartnersViewProtocol {}
+extension PartnersView: PartnersViewProtocol {
+    func setLocationButtonImage(_ image: UIImage) {
+        locationButton.setImage(image, for: .normal)
+    }
+}
 
 // MARK: - Constraints
 
 private extension PartnersView {
     func setupConstraints() {
-        //        setupLoginLabelConstraints()
-        //        setupEmailLabelConstraints()
-        //        setupEmailTextFieldConstraints()
-        //        setupPasswordLabelConstraints()
-        //        setupPasswordTextFieldConstraints()
-        //        setupLoginButtonConstraints()
-        //        setupWarningLabelConstraints()
-        //        setupEmailWarningLabelConstraints()
-        //        setupPasswordWarningLabelConstraints()
-        //        setupActivityIndicatorConstraints()
+        setupOkButtonConstraints()
+        setupOfferLabelConstraints()
+        setupStubViewConstraints()
+        setupLocationButtonConstraints()
     }
-    
-    //    func setupLoginLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            loginLabel.leadingAnchor.constraint(
-    //                equalToSystemSpacingAfter: view.layoutMarginsGuide.leadingAnchor,
-    //                multiplier: 1
-    //            ),
-    //            loginLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 82),
-    //        ])
-    //    }
-    //
-    //    func setupEmailLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            emailLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            emailLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 23),
-    //        ])
-    //    }
-    //
-    //    func setupEmailTextFieldConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            emailTextField.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 6),
-    //            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-    //            emailTextField.heightAnchor.constraint(equalToConstant: 50)
-    //        ])
-    //    }
-    //
-    //    func setupPasswordLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            passwordLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 23),
-    //        ])
-    //    }
-    //
-    //    func setupPasswordTextFieldConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            passwordTextField.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 7),
-    //            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-    //            passwordTextField.heightAnchor.constraint(equalToConstant: 50)
-    //        ])
-    //    }
-    //
-    //    func setupLoginButtonConstraints() {
-    //        loginButtonBottomConstraint = loginButton.bottomAnchor.constraint(
-    //            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-    //            constant: Constants.defaultLoginButtonBottomConstraintValue
-    //        )
-    //        loginButtonBottomConstraint?.isActive = true
-    //
-    //        NSLayoutConstraint.activate([
-    //            loginButton.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
-    //            loginButton.heightAnchor.constraint(equalToConstant: 48)
-    //        ])
-    //    }
-    //
-    //    func setupWarningLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            warningLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
-    //            warningLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor),
-    //            warningLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -49),
-    //            warningLabel.heightAnchor.constraint(equalToConstant: 87)
-    //        ])
-    //    }
-    //
-    //    func setupEmailWarningLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            emailWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            emailWarningLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-    //        ])
-    //    }
-    //
-    //    func setupPasswordWarningLabelConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            passwordWarningLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-    //            passwordWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
-    //        ])
-    //    }
-    //
-    //    func setupActivityIndicatorConstraints() {
-    //        NSLayoutConstraint.activate([
-    //            activityIndicatorView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
-    //            activityIndicatorView.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor),
-    //        ])
-    //    }
+
+    func setupOkButtonConstraints() {
+        NSLayoutConstraint.activate([
+            okButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            okButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            okButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -53),
+            okButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+
+    func setupOfferLabelConstraints() {
+        NSLayoutConstraint.activate([
+            offerLabel.leadingAnchor.constraint(equalTo: okButton.leadingAnchor),
+            offerLabel.trailingAnchor.constraint(equalTo: okButton.trailingAnchor),
+            offerLabel.bottomAnchor.constraint(equalTo: okButton.topAnchor, constant: -60)
+        ])
+    }
+
+    func setupStubViewConstraints() {
+        NSLayoutConstraint.activate([
+            stubView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stubView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stubView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stubView.bottomAnchor.constraint(equalTo: offerLabel.topAnchor, constant: -40)
+        ])
+    }
+
+    func setupLocationButtonConstraints() {
+        NSLayoutConstraint.activate([
+            locationButton.heightAnchor.constraint(equalToConstant: 52),
+            locationButton.widthAnchor.constraint(equalTo: locationButton.heightAnchor),
+            locationButton.trailingAnchor.constraint(equalTo: stubView.trailingAnchor, constant: -14),
+            locationButton.bottomAnchor.constraint(equalTo: stubView.bottomAnchor, constant: -14),
+        ])
+    }
 }
