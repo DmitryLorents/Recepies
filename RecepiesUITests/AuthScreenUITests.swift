@@ -94,4 +94,15 @@ final class AuthScreenUITests: XCTestCase {
  3 Ввести неправильные данные пользователя - должна появиться красная вью внизу
  4 Нажать на глаз - проверить изменение свойства isStcureEnabled
  5 ВВести правильные данные - должен загрузиться следующий экран
+ 6 Login текст присутствует
+ 7 Email adress тест присутствует
+ 8 Password text присутствует
+ 9 Email text field присутствует
+ 10 Password text field присутствует
+ 11 Login button присутствует
+ 12 Картинка с конвертом пристутсвует
+ 13 Картинка с замком присутствует
+ 14 Placeholder для email text field присутствует
+ 15 Placeholder для password text field присутствует
+ 16 Кнопка глаз присутствует
  */
