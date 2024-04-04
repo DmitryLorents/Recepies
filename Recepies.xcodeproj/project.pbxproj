@@ -20,6 +20,7 @@
 		0A2339452BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */; };
 		0A23394A2BBEDBCF00CCFFC7 /* PartnersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */; };
 		0A23394C2BBEDBE500CCFFC7 /* PartnersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */; };
+		0A2339502BBF4BE400CCFFC7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23394F2BBF4BE400CCFFC7 /* Location.swift */; };
 		0AF88CA72BBD3F3200D01F15 /* recipesStub.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF88CA52BBD1D2800D01F15 /* recipesStub.json */; };
 		0CA7B4D1A3DD4DD20FAE4266 /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D03DD2169FD2A52392B00 /* Terms.swift */; };
 		10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1388FAEF2A68B21C978530 /* MainTabBarViewController.swift */; };
@@ -208,6 +209,7 @@
 		0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMapsPrivacy.bundle; sourceTree = SOURCE_ROOT; };
 		0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersView.swift; sourceTree = "<group>"; };
 		0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersPresenter.swift; sourceTree = "<group>"; };
+		0A23394F2BBF4BE400CCFFC7 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		0AF88CA52BBD1D2800D01F15 /* recipesStub.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipesStub.json; sourceTree = "<group>"; };
 		0CE319A95DBEA6CA2FBF31E9 /* Recepies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Recepies.xcdatamodel; sourceTree = "<group>"; };
 		11256FDE9F78F74EC81DE0CA /* HitDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 		0A2339462BBEDB7400CCFFC7 /* Partners */ = {
 			isa = PBXGroup;
 			children = (
+				0A23394E2BBF4BC600CCFFC7 /* Model */,
 				0A2339482BBEDB9400CCFFC7 /* View */,
 				0A2339472BBEDB8A00CCFFC7 /* Presenter */,
 			);
@@ -384,6 +387,14 @@
 				66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		0A23394E2BBF4BC600CCFFC7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0A23394F2BBF4BE400CCFFC7 /* Location.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		0AF88CA62BBD257C00D01F15 /* Stub */ = {
@@ -1376,6 +1387,7 @@
 				0A23394A2BBEDBCF00CCFFC7 /* PartnersView.swift in Sources */,
 				19A10BD1E60E9130B6AEA253 /* Logger.swift in Sources */,
 				EC5C6CE48FAE876F26A67C89 /* LoggerInvoker.swift in Sources */,
+				0A2339502BBF4BE400CCFFC7 /* Location.swift in Sources */,
 				10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */,
 				A694EE0A49868444A7918446 /* MainTableViewCell.swift in Sources */,
 				2FE1167F48280A2B82ABACEF /* NetworkService.swift in Sources */,

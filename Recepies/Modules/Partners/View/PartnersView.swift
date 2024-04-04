@@ -11,15 +11,9 @@ protocol PartnersViewProtocol: AnyObject {
     /// Change button's image
     /// - Parameter isTapped: indicates wheter button is tapped or not
     func setLocationButtonTapped(_ isTapped: Bool)
-    //    /// Notify user if password format is incorrect
-    //    /// - Parameter decision: defines necessity to notify the user
-    //    func showIncorrectPasswordFormat(_ decision: Bool)
-    //    /// Notify user if email or password are not valid
-    //    /// - Parameter decision: defines necessity to notify the user
-    //    func showIncorrectUserData(_ decision: Bool)
-    //    /// Set password textField in secure/nonsecure mode
-    //    /// - Parameter decision: defines necessity to set secure
-    //    func setPasswordSecured(isSecured: Bool)
+    /// Moves map to new location
+    ///  - Parameter location: new location where to move
+    func moveToLocation(_ location: CLLocationCoordinate2D)
 }
 
 /// View to show authorization screen
@@ -135,6 +129,10 @@ extension PartnersView: PartnersViewProtocol {
     func setLocationButtonTapped(_ isTapped: Bool) {
         let image: UIImage = isTapped ? .locatorFill : .locator
         locationButton.setImage(image, for: .normal)
+    }
+
+    func moveToLocation(_ location: CLLocationCoordinate2D) {
+        mapView.animate(toLocation: location)
     }
 }
 

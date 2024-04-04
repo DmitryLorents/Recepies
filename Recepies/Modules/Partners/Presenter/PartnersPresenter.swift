@@ -17,6 +17,7 @@ final class PartnersPresenter: PartnersPresenterProtocol {
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: PartnersViewProtocol?
     private var isLocationButtonTapped = false
+    private let locations = Location()
 
     // MARK: - Initialization
 
@@ -34,6 +35,7 @@ final class PartnersPresenter: PartnersPresenterProtocol {
     func didTapLocationButton() {
         isLocationButtonTapped.toggle()
         view?.setLocationButtonTapped(isLocationButtonTapped)
-        // Add some location logic
+        let location = locations.getLocation(isIntialLocation: !isLocationButtonTapped)
+        view?.moveToLocation(location)
     }
 }
