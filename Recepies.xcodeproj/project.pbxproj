@@ -13,6 +13,7 @@
 		08DE279CDAFE712B9FF2A2FE /* libPods-RecepiesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371A928F702ED4C4964E260 /* libPods-RecepiesTests.a */; };
 		09EC1B82172FD72344311F32 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3242F71CE39054F17D41F7 /* UIFont+Extension.swift */; };
 		0A0076846C935C39214ADAE8 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279CBDC80641B3525226A29F /* CategoryType.swift */; };
+		0AE27BD52BBE87E600FB0B08 /* AuthScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE27BD42BBE87E600FB0B08 /* AuthScreenUITests.swift */; };
 		0AF88CA72BBD3F3200D01F15 /* recipesStub.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF88CA52BBD1D2800D01F15 /* recipesStub.json */; };
 		0CA7B4D1A3DD4DD20FAE4266 /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D03DD2169FD2A52392B00 /* Terms.swift */; };
 		10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1388FAEF2A68B21C978530 /* MainTabBarViewController.swift */; };
@@ -198,6 +199,7 @@
 		0250B5DC981F04FB46015121 /* Strings+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		0319224019CEF93B4BC80367 /* RecepiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecepiesUITests.swift; sourceTree = "<group>"; };
 		054827067F861E49F18447C3 /* RecipesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesView.swift; sourceTree = "<group>"; };
+		0AE27BD42BBE87E600FB0B08 /* AuthScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScreenUITests.swift; sourceTree = "<group>"; };
 		0AF88CA52BBD1D2800D01F15 /* recipesStub.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipesStub.json; sourceTree = "<group>"; };
 		0CE319A95DBEA6CA2FBF31E9 /* Recepies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Recepies.xcdatamodel; sourceTree = "<group>"; };
 		11256FDE9F78F74EC81DE0CA /* HitDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
@@ -878,6 +880,7 @@
 			children = (
 				0319224019CEF93B4BC80367 /* RecepiesUITests.swift */,
 				52727D0C0B6A580B683F0A77 /* RecepiesUITestsLaunchTests.swift */,
+				0AE27BD42BBE87E600FB0B08 /* AuthScreenUITests.swift */,
 			);
 			path = RecepiesUITests;
 			sourceTree = "<group>";
@@ -1257,7 +1260,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftformat >/dev/null; then swiftformat .\nelse\necho \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n\n#if which swiftformat >/dev/null; then swiftformat .\n#else\n#echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\n#fi\n";
 			showEnvVarsInLog = 0;
 		};
 		E78745A16BAE628D5C42BA60 /* Swiftlint */ = {
@@ -1459,6 +1462,7 @@
 			files = (
 				E005DD0D877572F9C79F39A5 /* RecepiesUITests.swift in Sources */,
 				125F35962B26B2F41C9A00B3 /* RecepiesUITestsLaunchTests.swift in Sources */,
+				0AE27BD52BBE87E600FB0B08 /* AuthScreenUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
