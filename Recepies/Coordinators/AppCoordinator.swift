@@ -31,7 +31,7 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Public Methods
 
     override func start() {
-        if "login" == "login" {
+        if "login" == "logi" {
             showMainTabBar()
         } else {
             showAuthScreen()

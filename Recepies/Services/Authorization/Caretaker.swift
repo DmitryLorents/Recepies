@@ -89,19 +89,31 @@ final class Caretaker: CareTakerProtocol {
     // MARK: - Private Methods
 
     private func savePassword(for user: User) {
+        print(#function)
         let _ = Keychain.save(user.password, forKey: Constants.userPassword)
+        UserDefaults.standard.setValue(user.password, forKey: Constants.userPassword)
+        print("User password: \(user.password)")
     }
 
     private func getUserPassword() -> String {
-        Keychain.load(Constants.userPassword) ?? ""
+        print(#function)
+        let keychainPassword = Keychain.load(Constants.userPassword) ?? ""
+        print("Keychain password: \(keychainPassword)")
+//        let userdefaultsPassword = UserDefaults.standard.string(forKey: Constants.userPassword) ?? ""
+//        print("UserDefaults password: \(userdefaultsPassword)")
+//        return userdefaultsPassword
+        let user = getUser()
+        let password = user?.password
+        print("Userdefaults password: \(password)")
+        return password ?? ""
     }
 
     private func save(_ user: User) {
         savePassword(for: user)
-        var userCopy = user
-        userCopy.password = ""
+//        var userCopy = user
+//        userCopy.password = ""
         do {
-            let data = try encoder.encode(userCopy)
+            let data = try encoder.encode(user)
             UserDefaults.standard.set(data, forKey: Constants.userKey)
         } catch {
             print(error)
@@ -114,7 +126,7 @@ final class Caretaker: CareTakerProtocol {
         }
         do {
             var user = try decoder.decode(User.self, from: data)
-            user.password = getUserPassword()
+//            user.password = getUserPassword()
             return user
         } catch {
             print(error)
