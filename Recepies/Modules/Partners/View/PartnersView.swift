@@ -14,6 +14,9 @@ protocol PartnersViewProtocol: AnyObject {
     /// Moves map to new location
     ///  - Parameter location: new location where to move
     func moveToLocation(_ location: CLLocationCoordinate2D)
+    /// Set markers on map
+    ///  - Parameter markers: array of markers
+    func setMarkers(_ markers: [GMSMarker])
 }
 
 /// View to show authorization screen
@@ -48,11 +51,12 @@ final class PartnersView: UIViewController {
         return label
     }()
 
-    private let mapView: GMSMapView = {
+    private lazy var mapView: GMSMapView = {
         let view = GMSMapView()
         let coordinate = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
         let camera = GMSCameraPosition.camera(withTarget: coordinate, zoom: 13)
         view.camera = camera
+        view.delegate = self
         return view
     }()
 
@@ -74,6 +78,11 @@ final class PartnersView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVIew()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.getMarkers()
     }
 
     // MARK: - Private Methods
@@ -133,6 +142,18 @@ extension PartnersView: PartnersViewProtocol {
 
     func moveToLocation(_ location: CLLocationCoordinate2D) {
         mapView.animate(toLocation: location)
+    }
+
+    func setMarkers(_ markers: [GMSMarker]) {
+        markers.forEach { $0.map = mapView }
+    }
+}
+
+// MARK: - PartnersView - GMSMapViewDelegate
+
+extension PartnersView: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        print(coordinate)
     }
 }
 

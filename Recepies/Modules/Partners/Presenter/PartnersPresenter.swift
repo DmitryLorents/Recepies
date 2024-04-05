@@ -9,6 +9,8 @@ protocol PartnersPresenterProtocol: AnyObject {
     func didTapCloseButton()
     /// Acts when location button tapped
     func didTapLocationButton()
+    /// Load markers from model and send to view
+    func getMarkers()
 }
 
 final class PartnersPresenter: PartnersPresenterProtocol {
@@ -17,7 +19,7 @@ final class PartnersPresenter: PartnersPresenterProtocol {
     private weak var coordinator: BaseModuleCoordinator?
     private weak var view: PartnersViewProtocol?
     private var isLocationButtonTapped = false
-    private let locations = Location()
+    private var locations = Location()
 
     // MARK: - Initialization
 
@@ -37,5 +39,10 @@ final class PartnersPresenter: PartnersPresenterProtocol {
         view?.setLocationButtonTapped(isLocationButtonTapped)
         let location = locations.getLocation(isIntialLocation: !isLocationButtonTapped)
         view?.moveToLocation(location)
+    }
+
+    func getMarkers() {
+        let markers = locations.markers
+        view?.setMarkers(markers)
     }
 }
