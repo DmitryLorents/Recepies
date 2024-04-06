@@ -11,6 +11,8 @@ protocol PartnersPresenterProtocol: AnyObject {
     func didTapLocationButton()
     /// Load markers from model and send to view
     func getMarkers()
+    /// Initialize opening MapMarlerDetailsView
+    func openMarkerDetailsView()
 }
 
 final class PartnersPresenter: PartnersPresenterProtocol {
@@ -44,5 +46,12 @@ final class PartnersPresenter: PartnersPresenterProtocol {
     func getMarkers() {
         let markers = locations.markers
         view?.setMarkers(markers)
+    }
+
+    func openMarkerDetailsView() {
+        guard let profileCoordinator = coordinator as? ProfileCoordinator,
+              let mapMarkersDetailsView = profileCoordinator.getMapMarkerDetails() else { return }
+        print("View created")
+        view?.showMapMarkerDetailsView(mapMarkersDetailsView)
     }
 }

@@ -33,6 +33,10 @@ final class ProfileCoordinator: BaseModuleCoordinator {
         }
     }
 
+    func getMapMarkerDetails() -> MapMarkerDetailsView? {
+        builder?.makeMapMarkerDetailsModule()
+    }
+
     // MARK: - Privat Methods
 
     private func showLogin() {

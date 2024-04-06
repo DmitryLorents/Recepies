@@ -13,6 +13,8 @@
 		08DE279CDAFE712B9FF2A2FE /* libPods-RecepiesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371A928F702ED4C4964E260 /* libPods-RecepiesTests.a */; };
 		09EC1B82172FD72344311F32 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3242F71CE39054F17D41F7 /* UIFont+Extension.swift */; };
 		0A0076846C935C39214ADAE8 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279CBDC80641B3525226A29F /* CategoryType.swift */; };
+		0A0B510A2BC10680006A3D7B /* MapMarkerDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */; };
+		0A0B510C2BC106A4006A3D7B /* MapMarkerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */; };
 		0A23393D2BBED0FB00CCFFC7 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 0A23393C2BBED0FB00CCFFC7 /* GoogleMaps */; };
 		0A23393F2BBED0FB00CCFFC7 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 0A23393E2BBED0FB00CCFFC7 /* GoogleMapsBase */; };
 		0A2339412BBED0FB00CCFFC7 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2339402BBED0FB00CCFFC7 /* GoogleMapsCore */; };
@@ -206,6 +208,8 @@
 		0250B5DC981F04FB46015121 /* Strings+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		0319224019CEF93B4BC80367 /* RecepiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecepiesUITests.swift; sourceTree = "<group>"; };
 		054827067F861E49F18447C3 /* RecipesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesView.swift; sourceTree = "<group>"; };
+		0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerDetailsPresenter.swift; sourceTree = "<group>"; };
+		0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerDetailsView.swift; sourceTree = "<group>"; };
 		0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMapsPrivacy.bundle; sourceTree = SOURCE_ROOT; };
 		0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersView.swift; sourceTree = "<group>"; };
 		0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersPresenter.swift; sourceTree = "<group>"; };
@@ -354,6 +358,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A0B51062BC1062B006A3D7B /* MapMarkerDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B51082BC1065A006A3D7B /* Presenter */,
+				0A0B51072BC10650006A3D7B /* View */,
+			);
+			path = MapMarkerDetails;
+			sourceTree = "<group>";
+		};
+		0A0B51072BC10650006A3D7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0A0B51082BC1065A006A3D7B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		0A2339462BBEDB7400CCFFC7 /* Partners */ = {
 			isa = PBXGroup;
 			children = (
@@ -680,6 +709,7 @@
 		7EE030F9714A65854D3CD067 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				0A0B51062BC1062B006A3D7B /* MapMarkerDetails */,
 				0A2339462BBEDB7400CCFFC7 /* Partners */,
 				BAAA0400715D3F5B86F84923 /* Authorization */,
 				D54AC91186D4E248B21A0CA7 /* Category */,
@@ -1358,6 +1388,7 @@
 				28341702FE58BF7E7223F251 /* AuthCoordinator.swift in Sources */,
 				C7738F5EEAC44C648B89F84F /* AuthPresenter.swift in Sources */,
 				65D18F5219535B05F90FD6D7 /* AuthService.swift in Sources */,
+				0A0B510C2BC106A4006A3D7B /* MapMarkerDetailsView.swift in Sources */,
 				34918229E827DA14D74CCA2A /* AuthView.swift in Sources */,
 				F6C56E2CCF2F231FE7672332 /* BaseCoordinator.swift in Sources */,
 				916821C0E4842DEFCB240025 /* BonusViewController.swift in Sources */,
@@ -1401,6 +1432,7 @@
 				C7967520F85596DB647A8143 /* PresenterProfile.swift in Sources */,
 				BB3E2F379A443939EED39852 /* ProfileCoordinator.swift in Sources */,
 				B58F9D6F553365AD5EE8D6B0 /* ProfileUser.swift in Sources */,
+				0A0B510A2BC10680006A3D7B /* MapMarkerDetailsPresenter.swift in Sources */,
 				F1AF3FE26169B72013E82B09 /* ProfileView.swift in Sources */,
 				F30DB307EAF98B0CEBD52006 /* Proxy.swift in Sources */,
 				6DA257926EAFF45B3251FCB0 /* Recepies.xcdatamodeld in Sources */,

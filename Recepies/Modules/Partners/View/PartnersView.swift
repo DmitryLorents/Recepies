@@ -17,6 +17,9 @@ protocol PartnersViewProtocol: AnyObject {
     /// Set markers on map
     ///  - Parameter markers: array of markers
     func setMarkers(_ markers: [GMSMarker])
+    /// Open detends sheet with marker detaile information
+    /// - Parameter view: prepared and builed view to show
+    func showMapMarkerDetailsView(_ view: MapMarkerDetailsView)
 }
 
 /// View to show authorization screen
@@ -147,6 +150,14 @@ extension PartnersView: PartnersViewProtocol {
     func setMarkers(_ markers: [GMSMarker]) {
         markers.forEach { $0.map = mapView }
     }
+
+    func showMapMarkerDetailsView(_ view: MapMarkerDetailsView) {
+        if let sheet = view.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.preferredCornerRadius = 30
+        }
+        present(view, animated: true)
+    }
 }
 
 // MARK: - PartnersView - GMSMapViewDelegate
@@ -154,6 +165,12 @@ extension PartnersView: PartnersViewProtocol {
 extension PartnersView: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         print(coordinate)
+    }
+
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print(#function)
+        presenter?.openMarkerDetailsView()
+        return true
     }
 }
 
