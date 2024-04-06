@@ -27,6 +27,7 @@ final class AuthScreenUITests: XCTestCase {
     }
     
     func testLoginButtonIsActive() {
+        print(app.debugDescription)
         enterCorrectUserData()
         XCTAssert(loginButton.isEnabled)
     }
