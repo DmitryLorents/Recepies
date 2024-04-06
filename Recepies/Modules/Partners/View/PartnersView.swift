@@ -56,7 +56,7 @@ final class PartnersView: UIViewController {
 
     private lazy var mapView: GMSMapView = {
         let view = GMSMapView()
-        let coordinate = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
+        let coordinate = Location.moscowCoordinates
         let camera = GMSCameraPosition.camera(withTarget: coordinate, zoom: 13)
         view.camera = camera
         view.delegate = self
@@ -93,8 +93,6 @@ final class PartnersView: UIViewController {
     private func setupVIew() {
         view.backgroundColor = .systemBackground
         title = Constants.title
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
-        view.addGestureRecognizer(tapGesture)
         view.addSubviews(mapView, locationButton, offerLabel, okButton)
         view.disableTARMIC()
         setupConstraints()
@@ -126,10 +124,6 @@ final class PartnersView: UIViewController {
         presenter?.didTapLocationButton()
     }
 
-    @objc private func tapOnView() {
-        print(#function)
-    }
-
     @objc func closeButtonAction() {
         presenter?.didTapCloseButton()
     }
@@ -156,26 +150,14 @@ extension PartnersView: PartnersViewProtocol {
             sheet.detents = [.medium()]
             sheet.preferredCornerRadius = 30
         }
-        let markerDataStub = MarkerInfo(
-            placeName: "PlaceName",
-            adress: "Adress",
-            discountAmount: 30,
-            promocode: "PROMOCODE30"
-        )
-        view.configureViewWith(markerDataStub)
         present(view, animated: true)
     }
 }
 
-// MARK: - PartnersView - GMSMapViewDelegate
+// MARK: - PartnersView + GMSMapViewDelegate
 
 extension PartnersView: GMSMapViewDelegate {
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print(coordinate)
-    }
-
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print(#function)
         presenter?.openMarkerDetailsView(for: marker)
         return true
     }

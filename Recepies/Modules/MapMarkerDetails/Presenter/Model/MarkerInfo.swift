@@ -14,4 +14,11 @@ struct MarkerInfo {
     let discountAmount: Int
     /// Promocode word
     let promocode: String
+
+    init(placeName: String?, adress: String?, discountAmount: Int?, promocode: String?) {
+        self.placeName = placeName ?? "No place name"
+        self.adress = adress ?? "No place adress"
+        self.discountAmount = discountAmount ?? 0
+        self.promocode = promocode ?? "No promocode"
+    }
 }
