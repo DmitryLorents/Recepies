@@ -12,6 +12,8 @@ final class MainTableViewCell: UITableViewCell {
         static let editNameButtonImage = "ipensela"
     }
 
+    static let reuseID = String(describing: MainTableViewCell.self)
+
     // MARK: - Visual Components
 
     private let avatarImageView: UIImageView = {

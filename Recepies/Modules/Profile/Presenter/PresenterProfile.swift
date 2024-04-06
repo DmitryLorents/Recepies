@@ -81,6 +81,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         case 1:
             view?.setupTermsView()
         case 2:
+            if let profileCoordinator = coordinator as? ProfileCoordinator {
+                profileCoordinator.showPartnersScren()
+            }
+        case 3:
             view?.showLogOutAlert()
         default:
             break

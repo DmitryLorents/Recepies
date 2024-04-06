@@ -33,8 +33,6 @@ final class ProfileView: UIViewController, UINavigationControllerDelegate {
     // MARK: - Constants
 
     private enum Constants {
-        static let mainTableViewCellIdentifier = "MainTableViewCell"
-        static let otherTableViewCellIdentifier = "OtherTableViewCell"
         static let editNameTitle = "Change your name and surname"
         static let showLogOutTitle = "Are you sure you want to log out?"
         static let cancelActionTitle = "Cancel"
@@ -87,8 +85,8 @@ final class ProfileView: UIViewController, UINavigationControllerDelegate {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: Constants.mainTableViewCellIdentifier)
-        tableView.register(OtherTableViewCell.self, forCellReuseIdentifier: Constants.otherTableViewCellIdentifier)
+        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.reuseID)
+        tableView.register(OtherTableViewCell.self, forCellReuseIdentifier: OtherTableViewCell.reuseID)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         setConstarint()
     }
@@ -124,7 +122,7 @@ extension ProfileView: UITableViewDataSource {
         switch items {
         case .profile:
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: Constants.mainTableViewCellIdentifier, for: indexPath
+                withIdentifier: MainTableViewCell.reuseID, for: indexPath
             )
                 as? MainTableViewCell else { return UITableViewCell() }
             guard let profile = profilePresenter?.user else { return UITableViewCell() }
@@ -140,7 +138,7 @@ extension ProfileView: UITableViewDataSource {
         case .options:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier:
-                Constants.otherTableViewCellIdentifier,
+                OtherTableViewCell.reuseID,
                 for: indexPath
             ) as? OtherTableViewCell
             else { return UITableViewCell() }
