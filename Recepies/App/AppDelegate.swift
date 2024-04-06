@@ -12,9 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         // Google maps support
         GMSServices.provideAPIKey("AIzaSyAUEcmJ4J9CVJ_SkIfiCVW7N4ZAaz_bewY")
-        // Places support
-//        GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
-
         return true
     }
 
