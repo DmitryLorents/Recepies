@@ -28,12 +28,19 @@ packages:
     url: https://github.com/Swinject/Swinject
     majorVersion: 2.8.4
 
+  GoogleMaps:
+    url: https://github.com/googlemaps/ios-maps-sdk
+    majorVersion: 8.4.0
+
 #targets
 targets:
   Recepies:
     settings:
       OTHER_SWIFT_FLAGS: "$(inherited)"
-    
+    scheme:
+      testTargets:
+        - RecepiesTests
+        - RecepiesUITests
     type: application
     platform: iOS
     sources:
@@ -41,6 +48,14 @@ targets:
     dependencies:
       - package: SortingButtonPackage
       - package: Swinject
+      - package: GoogleMaps
+        product: GoogleMaps
+      - package: GoogleMaps
+        product: GoogleMapsBase
+      - package: GoogleMaps
+        product: GoogleMapsCore
+      - package: GoogleMaps
+        product: GoogleMapsM4B
 
     attributes: 
     postCompileScripts:
@@ -142,6 +157,7 @@ targets:
   RecepiesTests:
     type: bundle.unit-test
     platform: iOS
+    scheme: {}
     sources:
       - RecepiesTests
     dependencies:
@@ -150,6 +166,7 @@ targets:
   RecepiesUITests:
     type: bundle.ui-testing
     platform: iOS
+    scheme: {}
     sources:
       - RecepiesUITests
     dependencies:

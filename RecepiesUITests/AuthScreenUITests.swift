@@ -11,7 +11,8 @@ final class AuthScreenUITests: XCTestCase {
     lazy var passwordTextField = app.secureTextFields["Enter Password"]
     lazy var loginButton = app.buttons["Login"].staticTexts["Login"]
     lazy var enterPasswordSecureTextField = app.secureTextFields["Enter Password"]
-    lazy var recipesScreenScrollBar = app.collectionViews.containing(.other, identifier:"Horizontal scroll bar, 1 page").element
+    lazy var recipesScreenScrollBar = app.collectionViews
+        .containing(.other, identifier: "Horizontal scroll bar, 1 page").element
     lazy var warningView = app.staticTexts["Please check the accuracy of the entered credentials."]
     lazy var emailTextFieldWarning = app.staticTexts["Incorrect format"]
     lazy var passwordTextFieldWarning = app.staticTexts["You entered the wrong password"]
@@ -25,33 +26,32 @@ final class AuthScreenUITests: XCTestCase {
     override func tearDownWithError() throws {
         app = nil
     }
-    
+
     func testLoginButtonIsActive() {
         print(app.debugDescription)
         enterCorrectUserData()
         XCTAssert(loginButton.isEnabled)
     }
-    
 
     func testSuccessAuthorization() throws {
         // given
         // when
         enterCorrectUserData()
         loginButton.tap()
-        
+
         // then
         expectation(for: NSPredicate(format: "exists==1"), evaluatedWith: recipesScreenScrollBar, handler: nil)
         waitForExpectations(timeout: 3)
         XCTAssertTrue(recipesScreenScrollBar.exists)
     }
-    
+
     func testIncorrectEmailFormat() {
         // when
         enterUserData(user: "13.com", password: "654321")
         // then
         XCTAssert(emailTextFieldWarning.exists)
     }
-    
+
     func testIncorrectPasswordFormat() {
         // when
         enterUserData(user: "1@2.com", password: "654")
@@ -62,7 +62,7 @@ final class AuthScreenUITests: XCTestCase {
         XCTAssert(passwordTextFieldWarning.exists)
         XCTAssert(warningView.exists)
     }
-    
+
     func testIncorrectUserData() {
         // when
         enterUserData(user: "1@22.com", password: "6542222")
@@ -72,22 +72,21 @@ final class AuthScreenUITests: XCTestCase {
         waitForExpectations(timeout: 3)
         XCTAssert(warningView.exists)
     }
-    
+
     func testSecureYey() {}
-    
+
     private func enterCorrectUserData() {
         enterUserData(user: user, password: password)
     }
-    
+
     private func enterUserData(user: String, password: String) {
         emailTextField.tap()
         emailTextField.typeText(user)
         passwordTextField.tap()
         passwordTextField.typeText(password)
     }
-
-
 }
+
 /*
  План испытаний
  1 Ввод некорректного формата почты - должна выскочить надпись Incorrect format
