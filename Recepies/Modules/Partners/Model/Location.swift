@@ -3,6 +3,7 @@
 
 import Foundation
 import GoogleMaps
+
 /// Markers info on map
 struct Location {
     /// Location of Moscow city
@@ -25,27 +26,28 @@ struct Location {
         markers[0].title = "PROMOCOD30"
         markers[0].snippet = "30"
         markers[0].icon = GMSMarker.markerImage(with: .systemMint)
-        
+
         markers[1].title = "PROMOCOD10"
         markers[1].snippet = "10"
-        
+
         markers[2].title = "PROMOCOD20"
         markers[2].snippet = "20"
-        
+
         markers[3].title = "PROMOCOD15"
         markers[3].snippet = "15"
-        
+
         markers[4].title = "PROMOCOD23"
         markers[4].snippet = "23"
-        
+
         markers[5].title = "PROMOCOD40"
         markers[5].snippet = "40"
-        
+
         markers[6].title = "PROMOCOD33"
         markers[6].snippet = "33"
-        
+
         return markers
     }()
+
     /// Return 2 variants of  location to be presented on map
     func getLocation(isIntialLocation: Bool) -> CLLocationCoordinate2D {
         isIntialLocation ? initialCoordinates : myCityCoordinates

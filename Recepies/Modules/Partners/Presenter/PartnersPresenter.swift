@@ -69,7 +69,7 @@ final class PartnersPresenter: PartnersPresenterProtocol {
         let location = CLLocation(latitude: location2D.latitude, longitude: location2D.longitude)
         geocoder.reverseGeocodeLocation(location) { places, error in
             place = places?.first
-           let markerInfo = MarkerInfo(
+            let markerInfo = MarkerInfo(
                 placeName: place?.name,
                 adress: place?.thoroughfare,
                 discountAmount: Int(marker.snippet ?? "0"),

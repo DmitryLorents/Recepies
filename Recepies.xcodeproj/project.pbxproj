@@ -363,6 +363,7 @@
 		0A0B51062BC1062B006A3D7B /* MapMarkerDetails */ = {
 			isa = PBXGroup;
 			children = (
+				0A42266A2BC11C9400709297 /* Model */,
 				0A0B51082BC1065A006A3D7B /* Presenter */,
 				0A0B51072BC10650006A3D7B /* View */,
 			);
@@ -380,7 +381,6 @@
 		0A0B51082BC1065A006A3D7B /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				0A42266A2BC11C9400709297 /* Model */,
 				0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */,
 			);
 			path = Presenter;
