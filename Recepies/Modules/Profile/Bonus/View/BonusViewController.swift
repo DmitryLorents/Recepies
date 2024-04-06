@@ -55,7 +55,7 @@ final class BonusViewController: UIViewController {
         button.setImage(UIImage(systemName: Constans.cancelButtonImage), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .gray
-        button.addTarget(self, action: #selector(tapCancel), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
         return button
     }()
 
@@ -112,7 +112,7 @@ final class BonusViewController: UIViewController {
         ])
     }
 
-    @objc private func tapCancel() {
+    @objc private func cancelButtonAction() {
         bonusPresenter?.dismisView()
     }
 }

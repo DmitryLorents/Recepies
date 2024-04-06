@@ -1,6 +1,6 @@
 // PartnersPresenter.swift
 // Copyright © RoadMap. All rights reserved.
-
+import GoogleMaps
 /// Protocol for Partners screen presenter
 protocol PartnersPresenterProtocol: AnyObject {
     /// Main initializer
@@ -12,7 +12,7 @@ protocol PartnersPresenterProtocol: AnyObject {
     /// Load markers from model and send to view
     func getMarkers()
     /// Initialize opening MapMarlerDetailsView
-    func openMarkerDetailsView()
+    func openMarkerDetailsView(for marker: GMSMarker)
 }
 
 final class PartnersPresenter: PartnersPresenterProtocol {
@@ -48,10 +48,15 @@ final class PartnersPresenter: PartnersPresenterProtocol {
         view?.setMarkers(markers)
     }
 
-    func openMarkerDetailsView() {
+    func openMarkerDetailsView(for marker: GMSMarker) {
         guard let profileCoordinator = coordinator as? ProfileCoordinator,
               let mapMarkersDetailsView = profileCoordinator.getMapMarkerDetails() else { return }
         print("View created")
         view?.showMapMarkerDetailsView(mapMarkersDetailsView)
+    }
+    // MARK: - Privat Methods
+    private func makeMarkerInfoModel(_ marker: GMSMarker) -> MarkerInfo {
+        let geocoder = CLGeocoder()
+        let place = 
     }
 }

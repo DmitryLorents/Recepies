@@ -9,6 +9,8 @@ protocol MapMarkerDetailsViewProtocol: AnyObject {
     var presenter: MapMarkerDetailsPresenterProtocol? { get set }
     /// Call to close the screen
     func closeView()
+    /// Configure view's labels
+    func configureViewWith(_ model: MarkerInfo)
 }
 
 /// Screen with number of shoes
@@ -16,54 +18,47 @@ final class MapMarkerDetailsView: UIViewController {
     // MARK: - Constants
 
     private enum Constans {
-        static let veradanaBoldFont = "Verdana-Bold"
         static let cancelButtonImage = "xmark"
         static let bonuslabelText = "Your bonuses"
-        static let countBonusLabelText = "100"
+        static let discountText = "Your discount "
+        static let percentMark = "%"
+        static let minusMark = "-"
+        static let promocode = "Promocode "
     }
 
     // MARK: - Visual Components
 
-    private let bonusLabel: UILabel = {
+    private let placeNameLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Constans.veradanaBoldFont, size: 20)
-        label.text = Constans.bonuslabelText
+        label.font = .makeVerdanaBold(size: 20)
+        label.text = "Constans.bonuslabelText"
         label.textAlignment = .center
         label.textColor = .darkGray
         return label
     }()
 
-    private let countBonusLabel: UILabel = {
+    private let adressLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Constans.veradanaBoldFont, size: 30)
-        label.textAlignment = .left
-        label.text = Constans.countBonusLabelText
+        label.font = .makeVerdanaRegular(size: 20)
+        label.textAlignment = .center
+        label.text = "Constans.countBonusLabelText"
         label.textColor = .darkGray
         return label
     }()
 
-    private let boxImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = .box
-        return imageView
-    }()
-
-    private let starImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = .starYellow
-        return imageView
+    private let promocodeLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.text = "Some text\n\n Some more text"
+        return label
     }()
 
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: Constans.cancelButtonImage), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = .gray
-        button.addTarget(self, action: #selector(tapCancel), for: .touchUpInside)
+        button.tintColor = .darkGray
+        button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
         return button
     }()
 
@@ -83,44 +78,22 @@ final class MapMarkerDetailsView: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .white
-        view.addSubview(bonusLabel)
-        view.addSubview(boxImageView)
-        view.addSubview(countBonusLabel)
-        view.addSubview(starImageView)
-        view.addSubview(cancelButton)
+        view.addSubviews(cancelButton, placeNameLabel, adressLabel, promocodeLabel)
+        view.disableTARMIC()
     }
 
-    private func setConstraint() {
-        NSLayoutConstraint.activate([
-            bonusLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 46),
-            bonusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bonusLabel.heightAnchor.constraint(equalToConstant: 24),
-            bonusLabel.widthAnchor.constraint(equalToConstant: 350),
-
-            boxImageView.topAnchor.constraint(equalTo: bonusLabel.bottomAnchor, constant: 13),
-            boxImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            boxImageView.heightAnchor.constraint(equalToConstant: 136),
-            boxImageView.widthAnchor.constraint(equalToConstant: 150),
-
-            starImageView.topAnchor.constraint(equalTo: boxImageView.bottomAnchor, constant: 32),
-            starImageView.leadingAnchor.constraint(equalTo: boxImageView.leadingAnchor, constant: 24),
-            starImageView.heightAnchor.constraint(equalToConstant: 29),
-            starImageView.widthAnchor.constraint(equalToConstant: 29),
-
-            countBonusLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 13),
-            countBonusLabel.centerYAnchor.constraint(equalTo: starImageView.centerYAnchor),
-            countBonusLabel.heightAnchor.constraint(equalToConstant: 35),
-            countBonusLabel.widthAnchor.constraint(equalToConstant: 177),
-
-            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            cancelButton.heightAnchor.constraint(equalToConstant: 30),
-            cancelButton.widthAnchor.constraint(equalToConstant: 30),
-
-        ])
+    private func makePromoText(_ model: MarkerInfo) -> NSAttributedString {
+        let discountString =
+            "\(Constans.discountText)\(Constans.minusMark)\(model.discountAmount)\(Constans.percentMark)\n\n\(Constans.promocode)"
+        let baseAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.makeVerdanaRegular(size: 16) as Any]
+        let discountText = NSMutableAttributedString(string: discountString, attributes: baseAttributes)
+        let boldAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.makeVerdanaBold(size: 16) as Any]
+        let promocodeValueText = NSAttributedString(string: model.promocode, attributes: boldAttributes)
+        discountText.append(promocodeValueText)
+        return discountText
     }
 
-    @objc private func tapCancel() {
+    @objc private func cancelButtonAction() {
         presenter?.dismisView()
     }
 }
@@ -130,5 +103,55 @@ final class MapMarkerDetailsView: UIViewController {
 extension MapMarkerDetailsView: MapMarkerDetailsViewProtocol {
     func closeView() {
         dismiss(animated: true)
+    }
+
+    func configureViewWith(_ model: MarkerInfo) {
+        placeNameLabel.text = model.placeName
+        adressLabel.text = model.adress
+        promocodeLabel.attributedText = makePromoText(model)
+    }
+}
+
+// MARK: - Constraints
+
+private extension MapMarkerDetailsView {
+    func setConstraint() {
+        placeNameLabelConstraints()
+        cancelButtonConstraints()
+        adressLabelConstraints()
+        promocodeLabelConstraints()
+    }
+
+    func placeNameLabelConstraints() {
+        NSLayoutConstraint.activate([
+            placeNameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 49),
+            placeNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            placeNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+
+    func cancelButtonConstraints() {
+        NSLayoutConstraint.activate([
+            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            cancelButton.heightAnchor.constraint(equalToConstant: 30),
+            cancelButton.widthAnchor.constraint(equalToConstant: 30),
+        ])
+    }
+
+    func adressLabelConstraints() {
+        NSLayoutConstraint.activate([
+            adressLabel.topAnchor.constraint(equalTo: placeNameLabel.bottomAnchor, constant: 8),
+            adressLabel.leadingAnchor.constraint(equalTo: placeNameLabel.leadingAnchor),
+            adressLabel.trailingAnchor.constraint(equalTo: placeNameLabel.trailingAnchor),
+        ])
+    }
+
+    func promocodeLabelConstraints() {
+        NSLayoutConstraint.activate([
+            promocodeLabel.topAnchor.constraint(equalTo: adressLabel.bottomAnchor, constant: 43),
+            promocodeLabel.leadingAnchor.constraint(equalTo: placeNameLabel.leadingAnchor),
+            promocodeLabel.trailingAnchor.constraint(equalTo: placeNameLabel.trailingAnchor),
+        ])
     }
 }

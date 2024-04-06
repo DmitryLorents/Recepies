@@ -156,6 +156,13 @@ extension PartnersView: PartnersViewProtocol {
             sheet.detents = [.medium()]
             sheet.preferredCornerRadius = 30
         }
+        let markerDataStub = MarkerInfo(
+            placeName: "PlaceName",
+            adress: "Adress",
+            discountAmount: 30,
+            promocode: "PROMOCODE30"
+        )
+        view.configureViewWith(markerDataStub)
         present(view, animated: true)
     }
 }
@@ -169,7 +176,7 @@ extension PartnersView: GMSMapViewDelegate {
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print(#function)
-        presenter?.openMarkerDetailsView()
+        presenter?.openMarkerDetailsView(for: marker)
         return true
     }
 }
