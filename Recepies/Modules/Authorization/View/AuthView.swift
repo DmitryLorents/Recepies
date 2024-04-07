@@ -26,15 +26,6 @@ final class AuthView: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let loginLabelTitle = "Login"
-        static let emailLabelTitle = "Email Adress"
-        static let emailPlaceholder = "Enter Email Address"
-        static let passwordLabelTitle = "Password"
-        static let passwordPlaceholder = "Enter Password"
-        static let loginButtonTitle = "Login"
-        static let warningLabelText = "Please check the accuracy of the entered credentials."
-        static let emailWarningText = "Incorrect format"
-        static let passwordWarningText = "You entered the wrong password"
         static let defaultLoginButtonBottomConstraintValue = -37.0
     }
 
@@ -49,7 +40,7 @@ final class AuthView: UIViewController {
 
     private let loginLabel: UILabel = {
         let label = UILabel()
-        label.text = Local.AuthScreen.LoginLabel.title // Constants.loginLabelTitle
+        label.text = Local.AuthScreen.LoginLabel.title
         label.font = .makeVerdanaBold(size: 28)
         label.textColor = .darkGrayApp
         return label
@@ -57,7 +48,7 @@ final class AuthView: UIViewController {
 
     private let emailLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.emailLabelTitle
+        label.text = Local.AuthScreen.EmailLabel.title
         label.font = .makeVerdanaBold(size: 18)
         label.textColor = .darkGrayApp
         return label
@@ -65,7 +56,7 @@ final class AuthView: UIViewController {
 
     private let passwordLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.passwordLabelTitle
+        label.text = Local.AuthScreen.PasswordLabel.title
         label.font = .makeVerdanaBold(size: 18)
         label.textColor = .darkGrayApp
         return label
@@ -73,7 +64,7 @@ final class AuthView: UIViewController {
 
     private lazy var emailTextField: UITextField = {
         let textField = createTextField()
-        textField.placeholder = Constants.emailPlaceholder
+        textField.placeholder = Local.AuthScreen.emailPlaceholder
         textField.keyboardType = .emailAddress
         textField.clearButtonMode = .whileEditing
         textField.leftView = makeLeftView(emailImageView)
@@ -83,7 +74,7 @@ final class AuthView: UIViewController {
 
     private lazy var passwordTextField: UITextField = {
         let textField = createTextField()
-        textField.placeholder = Constants.passwordPlaceholder
+        textField.placeholder = Local.AuthScreen.passwordPlaceholder
         textField.rightView = makeRightView(secureImageView)
         textField.rightViewMode = .always
         textField.leftView = makeLeftView(lockImageView)
@@ -107,7 +98,7 @@ final class AuthView: UIViewController {
         let button = UIButton()
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
-        button.setTitle(Constants.loginButtonTitle, for: .normal)
+        button.setTitle(Local.AuthScreen.LoginButton.title, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .makeVerdanaRegular(size: 16)
         button.addTarget(nil, action: #selector(loginButtonAction), for: .touchUpInside)
@@ -123,15 +114,15 @@ final class AuthView: UIViewController {
         label.clipsToBounds = true
         label.font = .makeVerdanaRegular(size: 18)
         label.textColor = .systemBackground
-        label.text = Constants.warningLabelText
+        label.text = Local.AuthScreen.WarningLabel.text
         label.numberOfLines = 0
         label.textAlignment = .center
         label.alpha = 0
         return label
     }()
 
-    private lazy var emailWarningLabel = makeAdviceRedLabel(title: Constants.emailWarningText)
-    private lazy var passwordWarningLabel = makeAdviceRedLabel(title: Constants.passwordWarningText)
+    private lazy var emailWarningLabel = makeAdviceRedLabel(title: Local.AuthScreen.emailWarningText)
+    private lazy var passwordWarningLabel = makeAdviceRedLabel(title: Local.AuthScreen.passwordWarningText)
     private let activityIndicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.hidesWhenStopped = true
@@ -205,7 +196,7 @@ final class AuthView: UIViewController {
 
     private func createTextField() -> UITextField {
         let textField = UITextField()
-        textField.placeholder = Constants.passwordPlaceholder
+        textField.placeholder = Local.AuthScreen.passwordPlaceholder
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.gray.cgColor
@@ -256,7 +247,7 @@ final class AuthView: UIViewController {
         activityIndicatorView.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.activityIndicatorView.stopAnimating()
-            self.loginButton.setTitle(Constants.loginButtonTitle, for: .normal)
+            self.loginButton.setTitle(Local.AuthScreen.LoginButton.title, for: .normal)
             self.startUserDataValidation()
         }
     }
