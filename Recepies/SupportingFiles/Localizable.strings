@@ -11,7 +11,14 @@
 "authScreen.emailLabel.title" = "Email Adress";
 "authScreen.passwordLabel.title" = "Password";
 "authScreen.emailPlaceholder" = "Enter Email Address";
+"authScreen.emailTextFieldID" = "EmailTextFieldID";
+"authScreen.passwordTextFieldID" = "PasswordTextFieldID";
 "authScreen.passwordPlaceholder" = "Enter Password";
 "authScreen.warningLabel.text" = "Please check the accuracy of the entered credentials.";
+"authScreen.warningLabelID" = "WarningLabelID";
+"authScreen.emailWarningLabelID" = "EmailWarningLabelID";
+"authScreen.passwordWarningLabelID" = "PasswordWarningLabelID";
 "authScreen.emailWarningText" = "Incorrect format";
 "authScreen.passwordWarningText" = "You entered the wrong password";
+
+"recipesScreen.viewID" = "RecipesView";

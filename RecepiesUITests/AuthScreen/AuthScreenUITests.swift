@@ -6,30 +6,10 @@ import XCTest
 
 final class AuthScreenUITests: XCTestCase {
     var app: XCUIApplication!
+    lazy var authPage = AuthPage(app: app)
+
     let user = "1@2.com"
     let password = "123456"
-    lazy var emailTextField = app.textFields["Enter Email Address"]
-    lazy var passwordTextField = app.secureTextFields["Enter Password"]
-    lazy var loginButton = app.buttons["Login"].staticTexts["Login"]
-    lazy var enterPasswordSecureTextField = app.secureTextFields["Enter Password"]
-    lazy var recipesScreenScrollBar = app.collectionViews
-        .containing(.other, identifier: "Horizontal scroll bar, 1 page").element
-    lazy var warningView = app.staticTexts["Please check the accuracy of the entered credentials."]
-    lazy var emailTextFieldWarning = app.staticTexts["Incorrect format"]
-    lazy var passwordTextFieldWarning = app.staticTexts["You entered the wrong password"]
-    lazy var loginLabel: XCUIElement = {
-        let elementId = "LoginLabel"
-        let predicate = NSPredicate(format: "identifier == '\(elementId)'")
-        let element = app.descendants(matching: .staticText).matching(predicate).element
-        return element
-    }()
-
-    lazy var authView: XCUIElement = {
-        let elementId = "AuthView"
-        let predicate = NSPredicate(format: "identifier == '\(elementId)'")
-        let element = app.descendants(matching: .other).matching(predicate).element
-        return element
-    }()
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -42,57 +22,59 @@ final class AuthScreenUITests: XCTestCase {
     }
 
     func testLoginLabelIsExisted() {
-        XCTAssert(loginLabel.exists)
+        XCTAssert(authPage.loginLabel.exists)
     }
 
     func testAuthViewIsExisted() {
-        XCTAssert(authView.exists)
+        XCTAssert(authPage.authView.exists)
     }
 
     func testLoginButtonIsActive() {
         print(app.debugDescription)
         enterCorrectUserData()
-        XCTAssert(loginButton.isEnabled)
+        XCTAssert(authPage.loginButton.isEnabled)
     }
 
     func testSuccessAuthorization() throws {
         // given
+        let recipesPage = RecipesPage(app: app)
+        let recipesView = recipesPage.view
         // when
         enterCorrectUserData()
-        loginButton.tap()
+        authPage.loginButton.tap()
 
         // then
-        expectation(for: NSPredicate(format: "exists==1"), evaluatedWith: recipesScreenScrollBar, handler: nil)
+        expectation(for: NSPredicate(format: "exists==1"), evaluatedWith: recipesView, handler: nil)
         waitForExpectations(timeout: 3)
-        XCTAssertTrue(recipesScreenScrollBar.exists)
+        XCTAssertTrue(recipesView.exists)
     }
 
     func testIncorrectEmailFormat() {
         // when
         enterUserData(user: "13.com", password: "654321")
         // then
-        XCTAssert(emailTextFieldWarning.exists)
+        XCTAssert(authPage.emailTextFieldWarning.exists)
     }
 
     func testIncorrectPasswordFormat() {
         // when
         enterUserData(user: "1@2.com", password: "654")
         // then
-        loginButton.tap()
-        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: warningView, handler: nil)
+        authPage.loginButton.tap()
+        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: authPage.warningView, handler: nil)
         waitForExpectations(timeout: 3)
-        XCTAssert(passwordTextFieldWarning.exists)
-        XCTAssert(warningView.exists)
+        XCTAssert(authPage.passwordTextFieldWarning.exists)
+        XCTAssert(authPage.warningView.exists)
     }
 
     func testIncorrectUserData() {
         // when
         enterUserData(user: "1@22.com", password: "6542222")
         // then
-        loginButton.tap()
-        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: warningView, handler: nil)
+        authPage.loginButton.tap()
+        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: authPage.warningView, handler: nil)
         waitForExpectations(timeout: 3)
-        XCTAssert(warningView.exists)
+        XCTAssert(authPage.warningView.exists)
     }
 
     func testSecureYey() {}
@@ -102,10 +84,10 @@ final class AuthScreenUITests: XCTestCase {
     }
 
     private func enterUserData(user: String, password: String) {
-        emailTextField.tap()
-        emailTextField.typeText(user)
-        passwordTextField.tap()
-        passwordTextField.typeText(password)
+        authPage.emailTextField.tap()
+        authPage.emailTextField.typeText(user)
+        authPage.passwordTextField.tap()
+        authPage.passwordTextField.typeText(password)
     }
 }
 
