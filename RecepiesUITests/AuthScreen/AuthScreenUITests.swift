@@ -16,6 +16,19 @@ final class AuthScreenUITests: XCTestCase {
     lazy var warningView = app.staticTexts["Please check the accuracy of the entered credentials."]
     lazy var emailTextFieldWarning = app.staticTexts["Incorrect format"]
     lazy var passwordTextFieldWarning = app.staticTexts["You entered the wrong password"]
+    lazy var loginLabel: XCUIElement = {
+        let elementId = "LoginLabel"
+        let predicate = NSPredicate(format: "identifier == '\(elementId)'")
+        let element = app.descendants(matching: .staticText).matching(predicate).element
+        return element
+    }()
+
+    lazy var authView: XCUIElement = {
+        let elementId = "AuthView"
+        let predicate = NSPredicate(format: "identifier == '\(elementId)'")
+        let element = app.descendants(matching: .other).matching(predicate).element
+        return element
+    }()
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -25,6 +38,14 @@ final class AuthScreenUITests: XCTestCase {
 
     override func tearDownWithError() throws {
         app = nil
+    }
+
+    func testLoginLabelIsExisted() {
+        XCTAssert(loginLabel.exists)
+    }
+
+    func testAuthViewIsExisted() {
+        XCTAssert(authView.exists)
     }
 
     func testLoginButtonIsActive() {

@@ -188,6 +188,13 @@ final class AuthView: UIViewController {
         )
         view.disableTARMIC()
         setupConstraints()
+        setupAcessabilityID()
+    }
+
+    private func setupAcessabilityID() {
+        view.accessibilityIdentifier = Local.AuthScreen.id
+        loginLabel.accessibilityIdentifier = Local.AuthScreen.LoginLabel.title
+        loginButton.accessibilityIdentifier = Local.AuthScreen.LoginButton.title
     }
 
     private func createTextField() -> UITextField {

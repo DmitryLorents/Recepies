@@ -15,6 +15,11 @@ internal enum Local {
     internal static let emailPlaceholder = Local.tr("Localizable", "authScreen.emailPlaceholder", fallback: "Enter Email Address")
     /// Incorrect format
     internal static let emailWarningText = Local.tr("Localizable", "authScreen.emailWarningText", fallback: "Incorrect format")
+    /// Localizable.strings
+    ///   Recepies
+    /// 
+    ///   Created by Dmitry on 28.03.2024.
+    internal static let id = Local.tr("Localizable", "authScreen.ID", fallback: "AuthView")
     /// Enter Password
     internal static let passwordPlaceholder = Local.tr("Localizable", "authScreen.passwordPlaceholder", fallback: "Enter Password")
     /// You entered the wrong password
@@ -28,10 +33,7 @@ internal enum Local {
       internal static let title = Local.tr("Localizable", "authScreen.loginButton.title", fallback: "Login")
     }
     internal enum LoginLabel {
-      /// Localizable.strings
-      ///   Recepies
-      /// 
-      ///   Created by Dmitry on 28.03.2024.
+      /// Login
       internal static let title = Local.tr("Localizable", "authScreen.loginLabel.title", fallback: "Login")
     }
     internal enum PasswordLabel {

@@ -1,4 +1,6 @@
 name: Recepies
+
+#settings
 settings:
   # prevent code signing 
   CODE_SIGNING_ALLOWED: NO
@@ -17,6 +19,19 @@ options:
  deploymentTarget:
   iOS: "15.0"
   postGenCommand: pod install
+
+  #schemes
+  schemes:
+  RecepiesScheme:
+    build:
+      targets:
+        Recepies: all
+        RecepiesTests: [test]
+        RecepiesUITests: [test]
+    run:
+    test:
+      debugEnabled: false
+      
 
 #packages
 packages:
@@ -158,6 +173,7 @@ targets:
     type: bundle.unit-test
     platform: iOS
     scheme: {}
+
     sources:
       - RecepiesTests
     dependencies:

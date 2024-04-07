@@ -5,6 +5,7 @@
   Created by Dmitry on 28.03.2024.
   
 */
+"authScreen.ID" = "AuthView";
 "authScreen.loginLabel.title" = "Login";
 "authScreen.loginButton.title" = "Login";
 "authScreen.emailLabel.title" = "Email Adress";
