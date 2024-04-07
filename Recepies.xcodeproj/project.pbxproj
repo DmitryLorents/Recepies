@@ -16,6 +16,7 @@
 		0A0076846C935C39214ADAE8 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279CBDC80641B3525226A29F /* CategoryType.swift */; };
 		0A8B7FAC2BC27D4500B16BCD /* AuthPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8B7FAB2BC27D4500B16BCD /* AuthPage.swift */; };
 		0AC37A332BC309BD00DAAF11 /* RecipesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC37A322BC309BD00DAAF11 /* RecipesPage.swift */; };
+		0ACC4FED2BC32EBD00E771EB /* RecipesScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC4FEC2BC32EBD00E771EB /* RecipesScreenUITests.swift */; };
 		0CA7B4D1A3DD4DD20FAE4266 /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D03DD2169FD2A52392B00 /* Terms.swift */; };
 		0F485A14F8E4E907CDC5FF9F /* libPods-RecepiesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE27DBC5BAC1EC532FB384C /* libPods-RecepiesTests.a */; };
 		10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1388FAEF2A68B21C978530 /* MainTabBarViewController.swift */; };
@@ -207,6 +208,7 @@
 		055BB234FB47D23D4E41D6BA /* libPods-RecepiesUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RecepiesUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A8B7FAB2BC27D4500B16BCD /* AuthPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPage.swift; sourceTree = "<group>"; };
 		0AC37A322BC309BD00DAAF11 /* RecipesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesPage.swift; sourceTree = "<group>"; };
+		0ACC4FEC2BC32EBD00E771EB /* RecipesScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesScreenUITests.swift; sourceTree = "<group>"; };
 		0CE319A95DBEA6CA2FBF31E9 /* Recepies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Recepies.xcdatamodel; sourceTree = "<group>"; };
 		11256FDE9F78F74EC81DE0CA /* HitDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
 		127156F4FE9EB6D08A1ED558 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				0AC37A322BC309BD00DAAF11 /* RecipesPage.swift */,
+				0ACC4FEC2BC32EBD00E771EB /* RecipesScreenUITests.swift */,
 			);
 			path = RecipesScreen;
 			sourceTree = "<group>";
@@ -1492,6 +1495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A8B7FAC2BC27D4500B16BCD /* AuthPage.swift in Sources */,
+				0ACC4FED2BC32EBD00E771EB /* RecipesScreenUITests.swift in Sources */,
 				AC3605B55F0EC9736EA53033 /* AuthScreenUITests.swift in Sources */,
 				0AC37A332BC309BD00DAAF11 /* RecipesPage.swift in Sources */,
 			);
