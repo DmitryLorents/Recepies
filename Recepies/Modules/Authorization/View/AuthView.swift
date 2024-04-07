@@ -136,7 +136,7 @@ final class AuthView: UIViewController {
 
     // MARK: - Private Properties
 
-    var loginButtonBottomConstraint: NSLayoutConstraint?
+    private var loginButtonBottomConstraint: NSLayoutConstraint?
 
     // MARK: - Life Cycle
 

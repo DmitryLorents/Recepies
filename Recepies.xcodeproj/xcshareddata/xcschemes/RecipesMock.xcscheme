@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FBCE4F9E42E8E9B8A629E07E"
-               BuildableName = "Recepies.app"
-               BlueprintName = "Recepies"
+               BlueprintIdentifier = "F4991727E66C95AD107D46E7"
+               BuildableName = "RecipesMock.app"
+               BlueprintName = "RecipesMock"
                ReferencedContainer = "container:Recepies.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,6 +49,15 @@
             ReferencedContainer = "container:Recepies.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F4991727E66C95AD107D46E7"
+            BuildableName = "RecipesMock.app"
+            BlueprintName = "RecipesMock"
+            ReferencedContainer = "container:Recepies.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -60,9 +69,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBCE4F9E42E8E9B8A629E07E"
-            BuildableName = "Recepies.app"
-            BlueprintName = "Recepies"
+            BlueprintIdentifier = "F4991727E66C95AD107D46E7"
+            BuildableName = "RecipesMock.app"
+            BlueprintName = "RecipesMock"
             ReferencedContainer = "container:Recepies.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

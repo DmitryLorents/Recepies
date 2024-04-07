@@ -14,9 +14,18 @@
 		073F9E291147353365DB2990 /* OtherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */; };
 		09EC1B82172FD72344311F32 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3242F71CE39054F17D41F7 /* UIFont+Extension.swift */; };
 		0A0076846C935C39214ADAE8 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279CBDC80641B3525226A29F /* CategoryType.swift */; };
-		0A8B7FAC2BC27D4500B16BCD /* AuthPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8B7FAB2BC27D4500B16BCD /* AuthPage.swift */; };
-		0AC37A332BC309BD00DAAF11 /* RecipesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC37A322BC309BD00DAAF11 /* RecipesPage.swift */; };
-		0ACC4FED2BC32EBD00E771EB /* RecipesScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC4FEC2BC32EBD00E771EB /* RecipesScreenUITests.swift */; };
+		0A0B510A2BC10680006A3D7B /* MapMarkerDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */; };
+		0A0B510C2BC106A4006A3D7B /* MapMarkerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */; };
+		0A23393D2BBED0FB00CCFFC7 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 0A23393C2BBED0FB00CCFFC7 /* GoogleMaps */; };
+		0A23393F2BBED0FB00CCFFC7 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 0A23393E2BBED0FB00CCFFC7 /* GoogleMapsBase */; };
+		0A2339412BBED0FB00CCFFC7 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2339402BBED0FB00CCFFC7 /* GoogleMapsCore */; };
+		0A2339432BBED0FB00CCFFC7 /* GoogleMapsM4B in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2339422BBED0FB00CCFFC7 /* GoogleMapsM4B */; };
+		0A2339452BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */; };
+		0A23394A2BBEDBCF00CCFFC7 /* PartnersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */; };
+		0A23394C2BBEDBE500CCFFC7 /* PartnersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */; };
+		0A2339502BBF4BE400CCFFC7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23394F2BBF4BE400CCFFC7 /* Location.swift */; };
+		0A42266C2BC11CAA00709297 /* MarkerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A42266B2BC11CAA00709297 /* MarkerInfo.swift */; };
+		0AF88CA72BBD3F3200D01F15 /* recipesStub.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF88CA52BBD1D2800D01F15 /* recipesStub.json */; };
 		0CA7B4D1A3DD4DD20FAE4266 /* Terms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D03DD2169FD2A52392B00 /* Terms.swift */; };
 		0F485A14F8E4E907CDC5FF9F /* libPods-RecepiesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE27DBC5BAC1EC532FB384C /* libPods-RecepiesTests.a */; };
 		10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1388FAEF2A68B21C978530 /* MainTabBarViewController.swift */; };
@@ -205,15 +214,20 @@
 		0250B5DC981F04FB46015121 /* Strings+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		0543AE381F96AA006F422008 /* Pods-RecepiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecepiesUITests.release.xcconfig"; path = "Target Support Files/Pods-RecepiesUITests/Pods-RecepiesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		054827067F861E49F18447C3 /* RecipesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesView.swift; sourceTree = "<group>"; };
-		055BB234FB47D23D4E41D6BA /* libPods-RecepiesUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RecepiesUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A8B7FAB2BC27D4500B16BCD /* AuthPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPage.swift; sourceTree = "<group>"; };
-		0AC37A322BC309BD00DAAF11 /* RecipesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesPage.swift; sourceTree = "<group>"; };
-		0ACC4FEC2BC32EBD00E771EB /* RecipesScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesScreenUITests.swift; sourceTree = "<group>"; };
+		0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerDetailsPresenter.swift; sourceTree = "<group>"; };
+		0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerDetailsView.swift; sourceTree = "<group>"; };
+		0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMapsPrivacy.bundle; sourceTree = SOURCE_ROOT; };
+		0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersView.swift; sourceTree = "<group>"; };
+		0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersPresenter.swift; sourceTree = "<group>"; };
+		0A23394F2BBF4BE400CCFFC7 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		0A42266B2BC11CAA00709297 /* MarkerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfo.swift; sourceTree = "<group>"; };
+		0AF88CA52BBD1D2800D01F15 /* recipesStub.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipesStub.json; sourceTree = "<group>"; };
 		0CE319A95DBEA6CA2FBF31E9 /* Recepies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Recepies.xcdatamodel; sourceTree = "<group>"; };
 		11256FDE9F78F74EC81DE0CA /* HitDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDTO.swift; sourceTree = "<group>"; };
 		127156F4FE9EB6D08A1ED558 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		1407D2EC570554884305ECE2 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		1DECA7F429AB845869ED50FF /* Recepies.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Recepies.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CA267001699A3E0C3DD7A24 /* libPods-RecipesMock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RecipesMock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DECA7F429AB845869ED50FF /* Recepies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recepies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F7CFC5F6A5E428F56899606 /* RecipeDTOContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDTOContainer.swift; sourceTree = "<group>"; };
 		209699D9DEAF939CF8C2912B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		21C81B4CC8AFA4F76FB39CCA /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
@@ -322,6 +336,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A23393F2BBED0FB00CCFFC7 /* GoogleMapsBase in Frameworks */,
+				0A2339432BBED0FB00CCFFC7 /* GoogleMapsM4B in Frameworks */,
+				0A2339412BBED0FB00CCFFC7 /* GoogleMapsCore in Frameworks */,
+				0A23393D2BBED0FB00CCFFC7 /* GoogleMaps in Frameworks */,
 				10DCDEA10013F5069515F358 /* SortingButtonPackage in Frameworks */,
 				D4DF328E8AD0684674676C32 /* Swinject in Frameworks */,
 				81364107A452EAEDAE5D9DA3 /* GoogleMaps in Frameworks */,
@@ -351,7 +369,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A8B7FAD2BC27FF700B16BCD /* AuthScreen */ = {
+		0A0B51062BC1062B006A3D7B /* MapMarkerDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0A42266A2BC11C9400709297 /* Model */,
+				0A0B51082BC1065A006A3D7B /* Presenter */,
+				0A0B51072BC10650006A3D7B /* View */,
+			);
+			path = MapMarkerDetails;
+			sourceTree = "<group>";
+		};
+		0A0B51072BC10650006A3D7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B510B2BC106A4006A3D7B /* MapMarkerDetailsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0A0B51082BC1065A006A3D7B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B51092BC1067F006A3D7B /* MapMarkerDetailsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0A2339462BBEDB7400CCFFC7 /* Partners */ = {
+			isa = PBXGroup;
+			children = (
+				0A23394E2BBF4BC600CCFFC7 /* Model */,
+				0A2339482BBEDB9400CCFFC7 /* View */,
+				0A2339472BBEDB8A00CCFFC7 /* Presenter */,
+			);
+			path = Partners;
+			sourceTree = "<group>";
+		};
+		0A2339472BBEDB8A00CCFFC7 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0A23394B2BBEDBE500CCFFC7 /* PartnersPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0A2339482BBEDB9400CCFFC7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0A2339492BBEDBCF00CCFFC7 /* PartnersView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0A23394D2BBF2AD700CCFFC7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DBBCF6353BEE736CDE73007 /* MainTableViewCell.swift */,
+				66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		0A23394E2BBF4BC600CCFFC7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0A23394F2BBF4BE400CCFFC7 /* Location.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0A42266A2BC11C9400709297 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0A42266B2BC11CAA00709297 /* MarkerInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0AF88CA62BBD257C00D01F15 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
 				44EEFBC05AB705E2D27795B0 /* AuthScreenUITests.swift */,
@@ -551,9 +646,8 @@
 		503F93E9EAFE78B3A6C8E185 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6DBBCF6353BEE736CDE73007 /* MainTableViewCell.swift */,
-				66EA5E1EFAF9BB86B4B8C7DD /* OtherTableViewCell.swift */,
 				77C6F76E55FA7143E14FC941 /* ProfileView.swift */,
+				0A23394D2BBF2AD700CCFFC7 /* Cells */,
 				1F73FEC6026368CEC03C8FB8 /* View */,
 			);
 			path = View;
@@ -655,6 +749,8 @@
 		7EE030F9714A65854D3CD067 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				0A0B51062BC1062B006A3D7B /* MapMarkerDetails */,
+				0A2339462BBEDB7400CCFFC7 /* Partners */,
 				BAAA0400715D3F5B86F84923 /* Authorization */,
 				D54AC91186D4E248B21A0CA7 /* Category */,
 				506E433116CE9412D6A4ACB8 /* Details */,
@@ -895,6 +991,8 @@
 		E89248BC5BBD282956AE0157 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				0A2339442BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle */,
+				0AF88CA62BBD257C00D01F15 /* Stub */,
 				67EE23E00BF8774B10708933 /* Assets.xcassets */,
 				2CE5598D065FEDBA1C568C5D /* Info.plist */,
 				F29DE525CD5C37EED049F37F /* LaunchScreen.storyboard */,
@@ -1032,10 +1130,10 @@
 			packageProductDependencies = (
 				A7C5C07472C47FC77E5141F8 /* SortingButtonPackage */,
 				00799F93B4B3201F24302C1C /* Swinject */,
-				CE290BC7135114B295B75F12 /* GoogleMaps */,
-				809FA2D6A862A449BAD45898 /* GoogleMapsBase */,
-				B792152A94200D12060BADC9 /* GoogleMapsCore */,
-				5E009214C036EA86F466EBD7 /* GoogleMapsM4B */,
+				0A23393C2BBED0FB00CCFFC7 /* GoogleMaps */,
+				0A23393E2BBED0FB00CCFFC7 /* GoogleMapsBase */,
+				0A2339402BBED0FB00CCFFC7 /* GoogleMapsCore */,
+				0A2339422BBED0FB00CCFFC7 /* GoogleMapsM4B */,
 			);
 			productName = Recepies;
 			productReference = 1DECA7F429AB845869ED50FF /* Recepies.app */;
@@ -1068,6 +1166,7 @@
 				A16813135629AF75A97AEC05 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 				5DAF443BC7C1096F62D2173E /* XCRemoteSwiftPackageReference "SortingButtonPackage" */,
 				815113465D7988D0D74D6216 /* XCRemoteSwiftPackageReference "Swinject" */,
+				0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 			);
 			productRefGroup = 459B9C482F1E2387B4813C35 /* Products */;
 			projectDirPath = "";
@@ -1099,6 +1198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F09897AA276C49715A6F90E0 /* Assets.xcassets in Resources */,
+				0A2339452BBED31000CCFFC7 /* GoogleMapsPrivacy.bundle in Resources */,
 				8BB47A11BE71670EDA56E22E /* LaunchScreen.storyboard in Resources */,
 				D7669AB39454E8F2A89BF5A1 /* Localizable.strings in Resources */,
 				FCE74C70B894FC665310248F /* detailRecipeStub.json in Resources */,
@@ -1329,6 +1429,7 @@
 				28341702FE58BF7E7223F251 /* AuthCoordinator.swift in Sources */,
 				C7738F5EEAC44C648B89F84F /* AuthPresenter.swift in Sources */,
 				65D18F5219535B05F90FD6D7 /* AuthService.swift in Sources */,
+				0A0B510C2BC106A4006A3D7B /* MapMarkerDetailsView.swift in Sources */,
 				34918229E827DA14D74CCA2A /* AuthView.swift in Sources */,
 				F6C56E2CCF2F231FE7672332 /* BaseCoordinator.swift in Sources */,
 				916821C0E4842DEFCB240025 /* BonusViewController.swift in Sources */,
@@ -1348,6 +1449,7 @@
 				D765C360EA40AA309C9405FB /* DetailPresenter.swift in Sources */,
 				756684BE6D00D907940B560C /* DetailView.swift in Sources */,
 				ABA9C4238C3A554387223B0E /* ErrorView.swift in Sources */,
+				0A42266C2BC11CAA00709297 /* MarkerInfo.swift in Sources */,
 				5CE6AA7AB3F1B78F7F1E0E83 /* FavoritesCoordinator.swift in Sources */,
 				2B8FC13AC88CD496FD6EF411 /* FavoritesPresenter.swift in Sources */,
 				DACFCDA0C6911B40C7283552 /* FavoritesView.swift in Sources */,
@@ -1355,8 +1457,10 @@
 				91C47668E514F07D13DBEBB5 /* HitDTO.swift in Sources */,
 				202EF23541658E0B341AFCDF /* InfoDTO.swift in Sources */,
 				FC67D0C485323DC9F54ED825 /* LogCommand.swift in Sources */,
+				0A23394A2BBEDBCF00CCFFC7 /* PartnersView.swift in Sources */,
 				19A10BD1E60E9130B6AEA253 /* Logger.swift in Sources */,
 				EC5C6CE48FAE876F26A67C89 /* LoggerInvoker.swift in Sources */,
+				0A2339502BBF4BE400CCFFC7 /* Location.swift in Sources */,
 				10135DB6FB89263FDD1F17BE /* MainTabBarViewController.swift in Sources */,
 				A694EE0A49868444A7918446 /* MainTableViewCell.swift in Sources */,
 				2FE1167F48280A2B82ABACEF /* NetworkService.swift in Sources */,
@@ -1364,11 +1468,13 @@
 				800B22FC8435506B9ECE8027 /* Options.swift in Sources */,
 				CAC2E0BAC0041D13C66138DE /* OtherTableViewCell.swift in Sources */,
 				94E3EDE9970F524579820597 /* PFCView.swift in Sources */,
+				0A23394C2BBEDBE500CCFFC7 /* PartnersPresenter.swift in Sources */,
 				C6E7FC8C6BA5317C76E91E0F /* PFCViewCell.swift in Sources */,
 				D43D1078E5331F5E5EBF8F2E /* PresenterBonus.swift in Sources */,
 				C7967520F85596DB647A8143 /* PresenterProfile.swift in Sources */,
 				BB3E2F379A443939EED39852 /* ProfileCoordinator.swift in Sources */,
 				B58F9D6F553365AD5EE8D6B0 /* ProfileUser.swift in Sources */,
+				0A0B510A2BC10680006A3D7B /* MapMarkerDetailsPresenter.swift in Sources */,
 				F1AF3FE26169B72013E82B09 /* ProfileView.swift in Sources */,
 				F30DB307EAF98B0CEBD52006 /* Proxy.swift in Sources */,
 				6DA257926EAFF45B3251FCB0 /* Recepies.xcdatamodeld in Sources */,
@@ -1535,6 +1641,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Recepies/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1728,6 +1835,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Recepies/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1854,6 +1962,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
 		5DAF443BC7C1096F62D2173E /* XCRemoteSwiftPackageReference "SortingButtonPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DmitryLorents/SortingButtonPackage";
@@ -1886,15 +2002,25 @@
 			package = 815113465D7988D0D74D6216 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
 		};
-		5E009214C036EA86F466EBD7 /* GoogleMapsM4B */ = {
+		0A23393C2BBED0FB00CCFFC7 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A16813135629AF75A97AEC05 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
-			productName = GoogleMapsM4B;
+			package = 0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
 		};
-		809FA2D6A862A449BAD45898 /* GoogleMapsBase */ = {
+		0A23393E2BBED0FB00CCFFC7 /* GoogleMapsBase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A16813135629AF75A97AEC05 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			package = 0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
 			productName = GoogleMapsBase;
+		};
+		0A2339402BBED0FB00CCFFC7 /* GoogleMapsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsCore;
+		};
+		0A2339422BBED0FB00CCFFC7 /* GoogleMapsM4B */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A23393B2BBED0FB00CCFFC7 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsM4B;
 		};
 		923F92607C71A56748B0A0C1 /* SortingButtonPackage */ = {
 			isa = XCSwiftPackageProductDependency;
