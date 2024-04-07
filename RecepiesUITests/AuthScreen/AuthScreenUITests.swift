@@ -1,6 +1,7 @@
 // AuthScreenUITests.swift
 // Copyright © RoadMap. All rights reserved.
 
+@testable import Recepies
 import XCTest
 
 final class AuthScreenUITests: XCTestCase {
