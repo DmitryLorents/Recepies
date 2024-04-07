@@ -32,6 +32,8 @@ internal enum Local {
     internal static let passwordWarningLabelID = Local.tr("Localizable", "authScreen.passwordWarningLabelID", fallback: "PasswordWarningLabelID")
     /// You entered the wrong password
     internal static let passwordWarningText = Local.tr("Localizable", "authScreen.passwordWarningText", fallback: "You entered the wrong password")
+    /// SecureImageViewID
+    internal static let secureImageViewID = Local.tr("Localizable", "authScreen.secureImageViewID", fallback: "SecureImageViewID")
     /// WarningLabelID
     internal static let warningLabelID = Local.tr("Localizable", "authScreen.warningLabelID", fallback: "WarningLabelID")
     internal enum EmailLabel {

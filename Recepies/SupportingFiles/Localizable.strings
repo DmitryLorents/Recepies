@@ -20,5 +20,6 @@
 "authScreen.passwordWarningLabelID" = "PasswordWarningLabelID";
 "authScreen.emailWarningText" = "Incorrect format";
 "authScreen.passwordWarningText" = "You entered the wrong password";
+"authScreen.secureImageViewID" = "SecureImageViewID";
 
 "recipesScreen.viewID" = "RecipesView";

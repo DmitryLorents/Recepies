@@ -38,10 +38,17 @@ struct AuthPage {
         return element
     }
 
+    var passwordSecureTextField: XCUIElement {
+        let id = "PasswordTextFieldID"
+        let predicate = NSPredicate(format: "identifier == '\(id)'")
+        let element = app.descendants(matching: .secureTextField).matching(predicate).element
+        return element
+    }
+
     var passwordTextField: XCUIElement {
         let id = "PasswordTextFieldID"
         let predicate = NSPredicate(format: "identifier == '\(id)'")
-        let element = app.descendants(matching: .secureTextField).matching(predicate).element // try secureTextField
+        let element = app.descendants(matching: .textField).matching(predicate).element
         return element
     }
 
@@ -63,6 +70,13 @@ struct AuthPage {
         let id = "PasswordWarningLabelID"
         let predicate = NSPredicate(format: "identifier == '\(id)'")
         let element = app.descendants(matching: .staticText).matching(predicate).element
+        return element
+    }
+
+    var secureImageView: XCUIElement {
+        let id = "SecureImageViewID"
+        let predicate = NSPredicate(format: "identifier == '\(id)'")
+        let element = app.descendants(matching: .image).matching(predicate).element
         return element
     }
 }

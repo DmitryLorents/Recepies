@@ -38,7 +38,7 @@ final class RecipesScreenUITests: XCTestCase {
     private func enterUserData(user: String, password: String) {
         authPage.emailTextField.tap()
         authPage.emailTextField.typeText(user)
-        authPage.passwordTextField.tap()
-        authPage.passwordTextField.typeText(password)
+        authPage.passwordSecureTextField.tap()
+        authPage.passwordSecureTextField.typeText(password)
     }
 }

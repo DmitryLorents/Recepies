@@ -30,7 +30,7 @@ final class AuthScreenUITests: XCTestCase {
     }
 
     func testLoginButtonIsActive() {
-        print(app.debugDescription)
+        print("\n ----", app.debugDescription, "\n-------")
         enterCorrectUserData()
         XCTAssert(authPage.loginButton.isEnabled)
     }
@@ -77,7 +77,16 @@ final class AuthScreenUITests: XCTestCase {
         XCTAssert(authPage.warningView.exists)
     }
 
-    func testSecureYey() {}
+    func testSecureYeyIsChanginTextType() {
+        // given
+        let secureImageView = authPage.secureImageView
+        XCTAssert(secureImageView.exists)
+        XCTAssert(authPage.passwordSecureTextField.exists)
+        // when
+        secureImageView.tap()
+        // then
+        XCTAssert(authPage.passwordTextField.exists)
+    }
 
     private func enterCorrectUserData() {
         enterUserData(user: user, password: password)
@@ -86,8 +95,8 @@ final class AuthScreenUITests: XCTestCase {
     private func enterUserData(user: String, password: String) {
         authPage.emailTextField.tap()
         authPage.emailTextField.typeText(user)
-        authPage.passwordTextField.tap()
-        authPage.passwordTextField.typeText(password)
+        authPage.passwordSecureTextField.tap()
+        authPage.passwordSecureTextField.typeText(password)
     }
 }
 

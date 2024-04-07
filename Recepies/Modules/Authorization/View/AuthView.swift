@@ -200,6 +200,7 @@ final class AuthView: UIViewController {
         warningLabel.accessibilityIdentifier = Local.AuthScreen.warningLabelID
         emailWarningLabel.accessibilityIdentifier = Local.AuthScreen.emailWarningLabelID
         passwordWarningLabel.accessibilityIdentifier = Local.AuthScreen.passwordWarningLabelID
+        secureImageView.accessibilityIdentifier = Local.AuthScreen.secureImageViewID
     }
 
     private func createTextField() -> UITextField {
