@@ -34,6 +34,7 @@ final class RecipesView: UIViewController {
         setTitle()
         configureCell()
         setConstraint()
+        setupAccessibility()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -42,6 +43,10 @@ final class RecipesView: UIViewController {
     }
 
     // MARK: - Private Methods
+
+    private func setupAccessibility() {
+        view.accessibilityIdentifier = Local.RecipesScreen.viewID
+    }
 
     private func deselectItem() {
         if let selectedIndex = collectionView.indexPathsForSelectedItems?.first {
