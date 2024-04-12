@@ -31,11 +31,29 @@ final class AppCoordinator: BaseCoodinator {
     // MARK: - Public Methods
 
     override func start() {
-        if "login" == "logi" {
+        if "login" == "login" {
             showMainTabBar()
         } else {
             showAuthScreen()
         }
+    }
+
+    func openFavorites() {
+        showMainTabBar()
+        mainTabBarViewController?.selectedIndex = 1
+    }
+
+    func openProfile() {
+        showMainTabBar()
+        mainTabBarViewController?.selectedIndex = 2
+    }
+
+    func change(userName: String) {
+        openProfile()
+        guard let navigationViewController = mainTabBarViewController?.children[2] as? UINavigationController,
+              let profileView = navigationViewController.topViewController as? ProfileView,
+              let profilePresenter = profileView.profilePresenter else { return }
+        profilePresenter.setUserNameTitle(name: userName)
     }
 
     // MARK: - Private Methods

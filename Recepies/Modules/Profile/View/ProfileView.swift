@@ -253,7 +253,7 @@ extension ProfileView: ProfileViewProtocol {
         let alert = UIAlertController(title: Constants.editNameTitle, message: nil, preferredStyle: .alert)
         let conformAction = UIAlertAction(title: Constants.conformActionTitle, style: .default) { [weak self] _ in
             if let text = alert.textFields?[0] {
-                self?.profilePresenter?.setTitleNameUser(name: text.text ?? "")
+                self?.profilePresenter?.setUserNameTitle(name: text.text ?? "")
             }
         }
         let cancelAction = UIAlertAction(title: Constants.cancelActionTitle, style: .default)
