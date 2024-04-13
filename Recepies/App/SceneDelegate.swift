@@ -27,11 +27,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        print(#function)
         guard let firstURL = URLContexts.first?.url,
               let components = URLComponents(url: firstURL, resolvingAgainstBaseURL: true) else { return }
         let host = components.host
-        print("Host: \(host)")
         switch host {
         case "open_favorites_screen":
             configureWindow(scene: scene) { appCoordinator in
@@ -43,16 +41,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         case "change_user_name":
             let queryItems = components.queryItems
-            print("queryItems \(queryItems)")
             let nameQuery = queryItems?.first(where: { $0.name == "name" })
-            print("nameQuery \(nameQuery)")
             let userName = nameQuery?.value ?? "No name provided"
             configureWindow(scene: scene) { appCoordinator in
                 appCoordinator?.change(userName: userName)
             }
-        case "test":
-            print("Host: \(host)")
-            print("QueryItems: \(components.queryItems)")
         default:
             print("Incorrect deeplink command")
         }
@@ -98,7 +91,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self),
                 builder: builder
             )
-//            appCoordinator?.start()
             handler(appCoordinator)
         }
     }
