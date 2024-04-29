@@ -15,7 +15,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        print(#function)
         registerDependencies()
         configureWindow(scene: scene) { appCoordinator in
             appCoordinator?.start()
