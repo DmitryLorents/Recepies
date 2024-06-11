@@ -14,7 +14,7 @@ protocol ProfilePresenterProtocol: AnyObject {
     /// Loading an alert with a name change
     func setupAlert()
     /// Changing your profile name
-    func setTitleNameUser(name: String)
+    func setUserNameTitle(name: String)
     /// Cell selection
     func didSetectItem(index: Int)
     /// Exit profile
@@ -64,7 +64,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.showImageChooser()
     }
 
-    func setTitleNameUser(name: String) {
+    func setUserNameTitle(name: String) {
         careTaker?.updateUserName(name: name)
         user = careTaker?.loadUser()
         view?.reloadData()

@@ -16,11 +16,38 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         registerDependencies()
-        configureWindow(scene: scene)
+        configureWindow(scene: scene) { appCoordinator in
+            appCoordinator?.start()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         database?.saveToUserDefaults()
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let firstURL = URLContexts.first?.url,
+              let components = URLComponents(url: firstURL, resolvingAgainstBaseURL: true) else { return }
+        let host = components.host
+        switch host {
+        case "open_favorites_screen":
+            configureWindow(scene: scene) { appCoordinator in
+                appCoordinator?.openFavorites()
+            }
+        case "open_user_profile":
+            configureWindow(scene: scene) { appCoordinator in
+                appCoordinator?.openProfile()
+            }
+        case "change_user_name":
+            let queryItems = components.queryItems
+            let nameQuery = queryItems?.first(where: { $0.name == "name" })
+            let userName = nameQuery?.value ?? "No name provided"
+            configureWindow(scene: scene) { appCoordinator in
+                appCoordinator?.change(userName: userName)
+            }
+        default:
+            print("Incorrect deeplink command")
+        }
     }
 
     private func registerDependencies() {
@@ -53,7 +80,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         serviceContainer?.register(MainTabBarViewController.self) { _ in MainTabBarViewController() }
     }
 
-    private func configureWindow(scene: UIScene) {
+    private func configureWindow(scene: UIScene, handler: (AppCoordinator?) -> ()) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
@@ -63,7 +90,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 mainTabBarViewController: serviceContainer?.resolve(MainTabBarViewController.self),
                 builder: builder
             )
-            appCoordinator?.start()
+            handler(appCoordinator)
         }
     }
 }
