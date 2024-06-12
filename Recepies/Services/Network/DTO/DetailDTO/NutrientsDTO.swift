@@ -1,5 +1,5 @@
 // NutrientsDTO.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Common Meal Nutrients
 struct NutrientsDTO: Codable {

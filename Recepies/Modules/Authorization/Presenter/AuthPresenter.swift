@@ -1,5 +1,5 @@
 // AuthPresenter.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Protocol for Authorization screen presenter
 protocol AuthPresenterProtocol: AnyObject {

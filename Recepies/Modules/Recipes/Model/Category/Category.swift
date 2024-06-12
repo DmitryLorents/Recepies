@@ -1,5 +1,5 @@
 // Category.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Main ingredient of the recipe
 struct Category {

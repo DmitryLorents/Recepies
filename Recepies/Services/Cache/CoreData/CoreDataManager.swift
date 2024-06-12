@@ -1,5 +1,5 @@
 // CoreDataManager.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 import CoreData
 import Foundation

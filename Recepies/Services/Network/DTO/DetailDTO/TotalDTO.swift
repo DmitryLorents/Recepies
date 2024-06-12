@@ -1,5 +1,5 @@
 // TotalDTO.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// TotalDTO
 struct TotalDTO: Codable {

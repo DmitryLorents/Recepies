@@ -1,5 +1,5 @@
 // Proxy.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 import UIKit
 
