@@ -1,5 +1,5 @@
 // NetworkManagerTests.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 @testable import Recepies
 import XCTest

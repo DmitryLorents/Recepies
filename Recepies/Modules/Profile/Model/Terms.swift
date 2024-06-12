@@ -1,5 +1,5 @@
 // Terms.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Data for the Terms of Use screen
 struct Terms {

@@ -1,5 +1,5 @@
 // InfoDTO.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Structure o Quantity of nutritional substance
 struct InfoDTO: Codable {

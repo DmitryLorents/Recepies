@@ -1,5 +1,5 @@
 // RecipeDTO.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// DTO for recipe
 struct RecipeDTO: Codable {

@@ -1,5 +1,5 @@
 // Recipe.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Data related to recipe
 struct Recipe: Codable {

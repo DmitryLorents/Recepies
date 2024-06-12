@@ -1,5 +1,5 @@
 // Options.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Name and picture of the profile option
 protocol OptionsProtocol {

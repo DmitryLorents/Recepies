@@ -1,5 +1,5 @@
 // RecipeDetail.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 /// Recipe details
 struct RecipeDetail {

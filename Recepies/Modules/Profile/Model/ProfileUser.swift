@@ -1,5 +1,5 @@
 // ProfileUser.swift
-// Copyright © RoadMap. All rights reserved.
+// All rights reserved.
 
 // User profile
 protocol ProfileUserProtocol {
