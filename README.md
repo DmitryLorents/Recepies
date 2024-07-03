@@ -25,20 +25,20 @@
 
 ## Screenshots
 <p align="center">
-<img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/HomeScreen.imageset/HomeScreen.png" width="140"/> <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/SeeAllScreen.imageset/SeeAllScreen.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/RecipeDetails.imageset/RecipeDetails.png" width="140"/> 
+<img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Auth.imageset/Auth.png" width="140"/> <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Categories.imageset/Categories.png" width="140"/>  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Recipe.imageset/Recipe.png" width="140"/> 
 </p>
 
 <p align="center">
-  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/Favorites.imageset/Favorites.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/CreateRecipe.imageset/CreateRecipe.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/NotificationScreen.imageset/NotificationScreen.png" width="140"/>
+  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/RecipeDetailed.imageset/RecipeDetailed.png" width="140"/>  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Favorites.imageset/Favorites.png" width="140"/>  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Profile.imageset/Profile.png" width="140"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/ProfileScreen.imageset/ProfileScreen.png" width="140"/>
+  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Terms.imageset/Terms.png" width="140"/>  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/Partners%201.imageset/Partners.png" width="140"/>
 
 ## Video demonstration of the application
 
 <p align="center">
-  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/Animation.dataset/Animation.gif" width="300"/>
+  <img src="https://github.com/DmitryLorents/Recepies/blob/develop/Recepies/SupportingFiles/Assets.xcassets/Preview/video.dataset/video.gif" width="300"/>
 </p>
 
 
