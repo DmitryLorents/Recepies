@@ -1,3 +1,53 @@
+# 🍳 Recipes  ![version](https://img.shields.io/badge/v1.0-release-green?link=release)
+
+---
+
+## Tecnical Stack:
+
+* MVP+Builder+Coordinator
+* AutoLayout programmaticaly + Snapkit
+* UICollectionViewCompositionalLayout
+* UserDefaults, CoreData, KeyChain, FileManager
+* SwiftLint, SwiftFormatter
+* REST API, JSON, URLSession
+* Swinject
+* XcodeGen
+* SwiftGen
+* SPM, CocoaPods
+* Mock Target
+* UI- , Unit-tests
+* BottomSheet with several positions
+* Shimmer Cell during loading
+* Google Maps
+* iOS 15+
+
+---
+
+## Screenshots
+<p align="center">
+<img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/HomeScreen.imageset/HomeScreen.png" width="140"/> <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/SeeAllScreen.imageset/SeeAllScreen.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/RecipeDetails.imageset/RecipeDetails.png" width="140"/> 
+</p>
+
+<p align="center">
+  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/Favorites.imageset/Favorites.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/CreateRecipe.imageset/CreateRecipe.png" width="140"/>  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/NotificationScreen.imageset/NotificationScreen.png" width="140"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/ProfileScreen.imageset/ProfileScreen.png" width="140"/>
+
+## Video demonstration of the application
+
+<p align="center">
+  <img src="https://github.com/DmitryLorents/My-Recipes-Book/blob/DimaL/ReadmeFix/My-Recipes-Book/My-Recipes-Book/SupportingFiles/Assets.xcassets/ReadmeImages/Animation.dataset/Animation.gif" width="300"/>
+</p>
+
+
+---
+
+## Description
+
+Recipes App is your personal assistant in the kitchen. Find popular recipes, sort them by calories of cookong time and save to favorites!
+The application contains a large selection of popular dishes in different categories. You have the opportunity to follow changes in your favorite chefs. My Recipe Book is also an excellent book for storing your own recipes: you can specify the composition, number of servings and cooking time. It's time to surprise your friends!
 
 
 
